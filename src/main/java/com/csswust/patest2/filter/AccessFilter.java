@@ -31,7 +31,7 @@ public class AccessFilter implements Filter {
                 e.printStackTrace();
             }
         } else {
-            if (AuthConfig.isAuth(url)) {
+            if (AuthConfig.isAuth(url, userPermisson)) {
                 try {
                     chain.doFilter(request, response);
                 } catch (Exception e) {

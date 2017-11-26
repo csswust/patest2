@@ -17,4 +17,9 @@ public class UserDaoTest extends JunitBaseServiceDaoTest {
         user.setPassword("1234");
         System.out.println(userInfoDao.insertSelective(user));
     }
+
+    @Test
+    public void deleteByPrimaryKey(){
+        System.out.println(userInfoDao.deleteByPrimaryKey(18613));
+    }
 }
