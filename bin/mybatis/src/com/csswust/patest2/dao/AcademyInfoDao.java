@@ -1,0 +1,17 @@
+package com.csswust.patest2.dao;
+
+import com.csswust.patest2.entity.AcademyInfo;
+
+public interface AcademyInfoDao {
+    int deleteByPrimaryKey(Integer acaId);
+
+    int insert(AcademyInfo record);
+
+    int insertSelective(AcademyInfo record);
+
+    AcademyInfo selectByPrimaryKey(Integer acaId);
+
+    int updateByPrimaryKeySelective(AcademyInfo record);
+
+    int updateByPrimaryKey(AcademyInfo record);
+}

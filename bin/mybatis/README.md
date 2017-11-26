@@ -1,0 +1,1 @@
+新建文件夹/src/main/java和/src/main/resource，执行generate脚本

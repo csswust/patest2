@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.SubmitInfoDao" >
+    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.SubmitInfo" >
+        <id column="subm_id" property="submId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="exam_id" property="examId" jdbcType="INTEGER" />
+        <result column="exam_paper_id" property="examPaperId" jdbcType="INTEGER" />
+        <result column="exam_param_id" property="examParamId" jdbcType="INTEGER" />
+        <result column="paper_problem_id" property="paperProblemId" jdbcType="INTEGER" />
+        <result column="problem_id" property="problemId" jdbcType="INTEGER" />
+        <result column="judger_id" property="judgerId" jdbcType="INTEGER" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="is_teacher_test" property="isTeacherTest" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="used_time" property="usedTime" jdbcType="INTEGER" />
+        <result column="used_memory" property="usedMemory" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.csswust.patest2.entity.SubmitInfo" extends="BaseResultMap" >
+        <result column="source" property="source" jdbcType="LONGVARCHAR" />
+        <result column="err_msg" property="errMsg" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        subm_id, user_id, exam_id, exam_paper_id, exam_param_id, paper_problem_id, problem_id, 
+        judger_id, ip, is_teacher_test, `status`, used_time, used_memory, create_time, modify_time
+    </sql>
+    <sql id="Blob_Column_List" >
+        `source`, err_msg
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from submit_info
+        where subm_id = #{submId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from submit_info
+        where subm_id = #{submId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.csswust.patest2.entity.SubmitInfo" useGeneratedKeys="true" keyProperty="submId" >
+        insert into submit_info (user_id, exam_id, exam_paper_id, 
+            exam_param_id, paper_problem_id, problem_id, 
+            judger_id, ip, is_teacher_test, 
+            `status`, used_time, used_memory, 
+            create_time, modify_time, `source`, 
+            err_msg)
+        values (#{userId,jdbcType=INTEGER}, #{examId,jdbcType=INTEGER}, #{examPaperId,jdbcType=INTEGER}, 
+            #{examParamId,jdbcType=INTEGER}, #{paperProblemId,jdbcType=INTEGER}, #{problemId,jdbcType=INTEGER}, 
+            #{judgerId,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{isTeacherTest,jdbcType=INTEGER}, 
+            #{status,jdbcType=INTEGER}, #{usedTime,jdbcType=INTEGER}, #{usedMemory,jdbcType=INTEGER}, 
+            #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{source,jdbcType=LONGVARCHAR}, 
+            #{errMsg,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.SubmitInfo" useGeneratedKeys="true" keyProperty="submId" >
+        insert into submit_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="examId != null" >
+                exam_id,
+            </if>
+            <if test="examPaperId != null" >
+                exam_paper_id,
+            </if>
+            <if test="examParamId != null" >
+                exam_param_id,
+            </if>
+            <if test="paperProblemId != null" >
+                paper_problem_id,
+            </if>
+            <if test="problemId != null" >
+                problem_id,
+            </if>
+            <if test="judgerId != null" >
+                judger_id,
+            </if>
+            <if test="ip != null" >
+                ip,
+            </if>
+            <if test="isTeacherTest != null" >
+                is_teacher_test,
+            </if>
+            <if test="status != null" >
+                `status`,
+            </if>
+            <if test="usedTime != null" >
+                used_time,
+            </if>
+            <if test="usedMemory != null" >
+                used_memory,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="modifyTime != null" >
+                modify_time,
+            </if>
+            <if test="source != null" >
+                `source`,
+            </if>
+            <if test="errMsg != null" >
+                err_msg,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="examId != null" >
+                #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="examPaperId != null" >
+                #{examPaperId,jdbcType=INTEGER},
+            </if>
+            <if test="examParamId != null" >
+                #{examParamId,jdbcType=INTEGER},
+            </if>
+            <if test="paperProblemId != null" >
+                #{paperProblemId,jdbcType=INTEGER},
+            </if>
+            <if test="problemId != null" >
+                #{problemId,jdbcType=INTEGER},
+            </if>
+            <if test="judgerId != null" >
+                #{judgerId,jdbcType=INTEGER},
+            </if>
+            <if test="ip != null" >
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="isTeacherTest != null" >
+                #{isTeacherTest,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="usedTime != null" >
+                #{usedTime,jdbcType=INTEGER},
+            </if>
+            <if test="usedMemory != null" >
+                #{usedMemory,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="source != null" >
+                #{source,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="errMsg != null" >
+                #{errMsg,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.SubmitInfo" >
+        update submit_info
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="examId != null" >
+                exam_id = #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="examPaperId != null" >
+                exam_paper_id = #{examPaperId,jdbcType=INTEGER},
+            </if>
+            <if test="examParamId != null" >
+                exam_param_id = #{examParamId,jdbcType=INTEGER},
+            </if>
+            <if test="paperProblemId != null" >
+                paper_problem_id = #{paperProblemId,jdbcType=INTEGER},
+            </if>
+            <if test="problemId != null" >
+                problem_id = #{problemId,jdbcType=INTEGER},
+            </if>
+            <if test="judgerId != null" >
+                judger_id = #{judgerId,jdbcType=INTEGER},
+            </if>
+            <if test="ip != null" >
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="isTeacherTest != null" >
+                is_teacher_test = #{isTeacherTest,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="usedTime != null" >
+                used_time = #{usedTime,jdbcType=INTEGER},
+            </if>
+            <if test="usedMemory != null" >
+                used_memory = #{usedMemory,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="source != null" >
+                `source` = #{source,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="errMsg != null" >
+                err_msg = #{errMsg,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where subm_id = #{submId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.SubmitInfo" >
+        update submit_info
+        set user_id = #{userId,jdbcType=INTEGER},
+            exam_id = #{examId,jdbcType=INTEGER},
+            exam_paper_id = #{examPaperId,jdbcType=INTEGER},
+            exam_param_id = #{examParamId,jdbcType=INTEGER},
+            paper_problem_id = #{paperProblemId,jdbcType=INTEGER},
+            problem_id = #{problemId,jdbcType=INTEGER},
+            judger_id = #{judgerId,jdbcType=INTEGER},
+            ip = #{ip,jdbcType=VARCHAR},
+            is_teacher_test = #{isTeacherTest,jdbcType=INTEGER},
+            `status` = #{status,jdbcType=INTEGER},
+            used_time = #{usedTime,jdbcType=INTEGER},
+            used_memory = #{usedMemory,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            `source` = #{source,jdbcType=LONGVARCHAR},
+            err_msg = #{errMsg,jdbcType=LONGVARCHAR}
+        where subm_id = #{submId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.SubmitInfo" >
+        update submit_info
+        set user_id = #{userId,jdbcType=INTEGER},
+            exam_id = #{examId,jdbcType=INTEGER},
+            exam_paper_id = #{examPaperId,jdbcType=INTEGER},
+            exam_param_id = #{examParamId,jdbcType=INTEGER},
+            paper_problem_id = #{paperProblemId,jdbcType=INTEGER},
+            problem_id = #{problemId,jdbcType=INTEGER},
+            judger_id = #{judgerId,jdbcType=INTEGER},
+            ip = #{ip,jdbcType=VARCHAR},
+            is_teacher_test = #{isTeacherTest,jdbcType=INTEGER},
+            `status` = #{status,jdbcType=INTEGER},
+            used_time = #{usedTime,jdbcType=INTEGER},
+            used_memory = #{usedMemory,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where subm_id = #{submId,jdbcType=INTEGER}
+    </update>
+</mapper>

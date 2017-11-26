@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.ExamParamDao" >
+    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.ExamParam" >
+        <id column="exa_par_id" property="exaParId" jdbcType="INTEGER" />
+        <result column="exam__id" property="examId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="know_id" property="knowId" jdbcType="INTEGER" />
+        <result column="problem_id" property="problemId" jdbcType="INTEGER" />
+        <result column="level_id" property="levelId" jdbcType="INTEGER" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        exa_par_id, exam__id, `name`, know_id, problem_id, level_id, score, create_time, 
+        modify_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from exam_param
+        where exa_par_id = #{exaParId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from exam_param
+        where exa_par_id = #{exaParId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.csswust.patest2.entity.ExamParam" useGeneratedKeys="true" keyProperty="exaParId" >
+        insert into exam_param (exam__id, `name`, know_id, 
+            problem_id, level_id, score, 
+            create_time, modify_time)
+        values (#{examId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{knowId,jdbcType=INTEGER}, 
+            #{problemId,jdbcType=INTEGER}, #{levelId,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
+            #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.ExamParam" useGeneratedKeys="true" keyProperty="exaParId" >
+        insert into exam_param
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="examId != null" >
+                exam__id,
+            </if>
+            <if test="name != null" >
+                `name`,
+            </if>
+            <if test="knowId != null" >
+                know_id,
+            </if>
+            <if test="problemId != null" >
+                problem_id,
+            </if>
+            <if test="levelId != null" >
+                level_id,
+            </if>
+            <if test="score != null" >
+                score,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="modifyTime != null" >
+                modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="examId != null" >
+                #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="knowId != null" >
+                #{knowId,jdbcType=INTEGER},
+            </if>
+            <if test="problemId != null" >
+                #{problemId,jdbcType=INTEGER},
+            </if>
+            <if test="levelId != null" >
+                #{levelId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null" >
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.ExamParam" >
+        update exam_param
+        <set >
+            <if test="examId != null" >
+                exam__id = #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="knowId != null" >
+                know_id = #{knowId,jdbcType=INTEGER},
+            </if>
+            <if test="problemId != null" >
+                problem_id = #{problemId,jdbcType=INTEGER},
+            </if>
+            <if test="levelId != null" >
+                level_id = #{levelId,jdbcType=INTEGER},
+            </if>
+            <if test="score != null" >
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null" >
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where exa_par_id = #{exaParId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.ExamParam" >
+        update exam_param
+        set exam__id = #{examId,jdbcType=INTEGER},
+            `name` = #{name,jdbcType=VARCHAR},
+            know_id = #{knowId,jdbcType=INTEGER},
+            problem_id = #{problemId,jdbcType=INTEGER},
+            level_id = #{levelId,jdbcType=INTEGER},
+            score = #{score,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        where exa_par_id = #{exaParId,jdbcType=INTEGER}
+    </update>
+</mapper>

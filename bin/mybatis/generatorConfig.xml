@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <classPathEntry location="./mysql-connector-java-5.1.18.jar"/>
+    <!-- defaultModelType表示只生成一个实体类 -->
+    <context id="Mysql2Tables" defaultModelType="flat">
+        <!-- 属性相关配置 -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <!-- 注释相关配置 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据连接相关配置 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://123.207.164.33:3306/patest2" userId="root"
+                        password="cs.swust">
+        </jdbcConnection>
+
+        <!-- JDBC类型和Java类型转换相关配置 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!-- 实体类相关配置 -->
+        <javaModelGenerator targetProject="src" targetPackage="com.csswust.patest2.entity">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- xml相关配置 -->
+        <sqlMapGenerator targetProject="src" targetPackage="com.csswust.patest2.mappers">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- dao接口相关配置 -->
+        <javaClientGenerator targetPackage="com.csswust.patest2.dao" type="XMLMAPPER"
+                             targetProject="src">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- table -->
+        <table schema="patest2" tableName="academy_info" domainObjectName="AcademyInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="aca_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="course_info" domainObjectName="CourseInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="cou_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="exam_info" domainObjectName="ExamInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="exam_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="exam_notice" domainObjectName="ExamNotice"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="exa_not_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="exam_paper" domainObjectName="ExamPaper"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="exa_pap_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="exam_param" domainObjectName="ExamParam"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="exa_par_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="exam_problem" domainObjectName="ExamProblem"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="exa_pro_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="judger_info" domainObjectName="JudgerInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="jud_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="knowledge_info" domainObjectName="KnowledgeInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="know_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="level_type" domainObjectName="LevelType"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="lev_typ_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="major_info" domainObjectName="MajorInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="maj_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="paper_problem" domainObjectName="PaperProblem"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="pap_pro_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="problem_info" domainObjectName="ProblemInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="prob_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="problem_knowledge" domainObjectName="ProblemKnowledge"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="pro_kno_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="result_info" domainObjectName="ResultInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="resu_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="site_info" domainObjectName="SiteInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="site_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="submit_info" domainObjectName="SubmitInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="subm_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="submit_result" domainObjectName="SubmitResult"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="sub_res_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="submit_similarity" domainObjectName="SubmitSimilarity"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="sub_sim_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="user_info" domainObjectName="UserInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="user_login_log" domainObjectName="UserLoginLog"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="use_log_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="user_profile" domainObjectName="UserProfile"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="use_pro_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="user_role" domainObjectName="UserRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="use_rol_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="visit_path" domainObjectName="VisitPath"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="vis_pat_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>
+
