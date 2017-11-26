@@ -19,7 +19,7 @@ public class UserDaoTest extends JunitBaseServiceDaoTest {
     }
 
     @Test
-    public void deleteByPrimaryKey(){
+    public void deleteByPrimaryKey() {
         System.out.println(userInfoDao.deleteByPrimaryKey(18613));
     }
 }

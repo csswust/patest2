@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.VisitPathDao">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM visit_path
+        WHERE 1 = 1
+        <if test="record.visPatId != null">
+            AND
+            vis_pat_id=record.visPatId
+        </if>
+        <if test="record.url != null">
+            AND
+            url=record.url
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+</mapper>

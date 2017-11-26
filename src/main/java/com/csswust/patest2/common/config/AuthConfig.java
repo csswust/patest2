@@ -12,6 +12,7 @@ import java.util.Map;
 @Component
 public class AuthConfig {
     public static boolean isAuth(String urlPath, String name) {
+        if(stringu)
         return true;
     }
 }

@@ -74,7 +74,7 @@ public class DaoImplGenerator {
                 "    public void updatInit(%s record) {\n" +
                 "        record.setModifyTime(new Date());\n" +
                 "    }\n" +
-                "}\n",calssName,calssName,calssName,calssName,calssName,daPrimaryName,calssName);
+                "}\n", calssName, calssName, calssName, calssName, calssName, daPrimaryName, calssName);
         printWriter.flush();
         printWriter.close();
     }

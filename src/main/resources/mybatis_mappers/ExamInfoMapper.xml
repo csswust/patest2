@@ -1,151 +1,153 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csswust.patest2.dao.ExamInfoDao" >
-    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.ExamInfo" >
-        <id column="exam_id" property="examId" jdbcType="INTEGER" />
-        <result column="title" property="title" jdbcType="VARCHAR" />
-        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
-        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
-        <result column="allow_ip" property="allowIp" jdbcType="VARCHAR" />
-        <result column="allow_judger_ids" property="allowJudgerIds" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+<mapper namespace="com.csswust.patest2.dao.ExamInfoDao">
+    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.ExamInfo">
+        <id column="exam_id" property="examId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="allow_ip" property="allowIp" jdbcType="VARCHAR"/>
+        <result column="allow_judger_ids" property="allowJudgerIds" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="com.csswust.patest2.entity.ExamInfo" extends="BaseResultMap" >
-        <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <resultMap id="ResultMapWithBLOBs" type="com.csswust.patest2.entity.ExamInfo" extends="BaseResultMap">
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
         exam_id, title, start_time, end_time, allow_ip, allow_judger_ids, create_time, modify_time
     </sql>
-    <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
         description
     </sql>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-        select 
-        <include refid="Base_Column_List" />
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         from exam_info
         where exam_id = #{examId,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from exam_info
         where exam_id = #{examId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.csswust.patest2.entity.ExamInfo" useGeneratedKeys="true" keyProperty="examId" >
-        insert into exam_info (title, start_time, end_time, 
-            allow_ip, allow_judger_ids, create_time, 
-            modify_time, description)
-        values (#{title,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-            #{allowIp,jdbcType=VARCHAR}, #{allowJudgerIds,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-            #{modifyTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR})
+    <insert id="insert" parameterType="com.csswust.patest2.entity.ExamInfo" useGeneratedKeys="true"
+            keyProperty="examId">
+        insert into exam_info (title, start_time, end_time,
+        allow_ip, allow_judger_ids, create_time,
+        modify_time, description)
+        values (#{title,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+        #{allowIp,jdbcType=VARCHAR}, #{allowJudgerIds,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{modifyTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.ExamInfo" useGeneratedKeys="true" keyProperty="examId" >
+    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.ExamInfo" useGeneratedKeys="true"
+            keyProperty="examId">
         insert into exam_info
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="title != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
                 title,
             </if>
-            <if test="startTime != null" >
+            <if test="startTime != null">
                 start_time,
             </if>
-            <if test="endTime != null" >
+            <if test="endTime != null">
                 end_time,
             </if>
-            <if test="allowIp != null" >
+            <if test="allowIp != null">
                 allow_ip,
             </if>
-            <if test="allowJudgerIds != null" >
+            <if test="allowJudgerIds != null">
                 allow_judger_ids,
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time,
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time,
             </if>
-            <if test="description != null" >
+            <if test="description != null">
                 description,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="title != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
                 #{title,jdbcType=VARCHAR},
             </if>
-            <if test="startTime != null" >
+            <if test="startTime != null">
                 #{startTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="endTime != null" >
+            <if test="endTime != null">
                 #{endTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="allowIp != null" >
+            <if test="allowIp != null">
                 #{allowIp,jdbcType=VARCHAR},
             </if>
-            <if test="allowJudgerIds != null" >
+            <if test="allowJudgerIds != null">
                 #{allowJudgerIds,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="description != null" >
+            <if test="description != null">
                 #{description,jdbcType=LONGVARCHAR},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.ExamInfo" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.ExamInfo">
         update exam_info
-        <set >
-            <if test="title != null" >
+        <set>
+            <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
             </if>
-            <if test="startTime != null" >
+            <if test="startTime != null">
                 start_time = #{startTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="endTime != null" >
+            <if test="endTime != null">
                 end_time = #{endTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="allowIp != null" >
+            <if test="allowIp != null">
                 allow_ip = #{allowIp,jdbcType=VARCHAR},
             </if>
-            <if test="allowJudgerIds != null" >
+            <if test="allowJudgerIds != null">
                 allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="description != null" >
+            <if test="description != null">
                 description = #{description,jdbcType=LONGVARCHAR},
             </if>
         </set>
         where exam_id = #{examId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.ExamInfo" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.ExamInfo">
         update exam_info
         set title = #{title,jdbcType=VARCHAR},
-            start_time = #{startTime,jdbcType=TIMESTAMP},
-            end_time = #{endTime,jdbcType=TIMESTAMP},
-            allow_ip = #{allowIp,jdbcType=VARCHAR},
-            allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-            description = #{description,jdbcType=LONGVARCHAR}
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+        allow_ip = #{allowIp,jdbcType=VARCHAR},
+        allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        description = #{description,jdbcType=LONGVARCHAR}
         where exam_id = #{examId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.ExamInfo" >
+    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.ExamInfo">
         update exam_info
         set title = #{title,jdbcType=VARCHAR},
-            start_time = #{startTime,jdbcType=TIMESTAMP},
-            end_time = #{endTime,jdbcType=TIMESTAMP},
-            allow_ip = #{allowIp,jdbcType=VARCHAR},
-            allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+        allow_ip = #{allowIp,jdbcType=VARCHAR},
+        allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
         where exam_id = #{examId,jdbcType=INTEGER}
     </update>
 </mapper>

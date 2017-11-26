@@ -6,6 +6,8 @@ import com.csswust.patest2.common.cache.CacheLoader;
 import com.csswust.patest2.dao.VisitPathDao;
 import com.csswust.patest2.entity.VisitPath;
 
+import java.util.List;
+
 /**
  * Created by 972536780 on 2017/11/26.
  */
@@ -25,7 +27,16 @@ public class VisitPathCache extends Cache<String, VisitPath> {
 
         @Override
         public VisitPath load(String key) throws Exception {
-            return null;
+            if (key == null) {
+                return null;
+            }
+            VisitPath visitPath = new VisitPath();
+            visitPath.setUrl(key);
+            List<VisitPath> list = visitPathDao.selectByCondition(visitPath, null);
+            if (list == null || list.size() == 0) {
+                return null;
+            }
+            return list.get(0);
         }
     }
 }

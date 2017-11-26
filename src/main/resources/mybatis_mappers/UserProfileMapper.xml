@@ -1,134 +1,136 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csswust.patest2.dao.UserProfileDao" >
-    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.UserProfile" >
-        <id column="use_pro_id" property="useProId" jdbcType="INTEGER" />
-        <result column="real_name" property="realName" jdbcType="VARCHAR" />
-        <result column="is_student" property="isStudent" jdbcType="INTEGER" />
-        <result column="class_name" property="className" jdbcType="VARCHAR" />
-        <result column="student_number" property="studentNumber" jdbcType="VARCHAR" />
-        <result column="entrance_year" property="entranceYear" jdbcType="INTEGER" />
-        <result column="major_id" property="majorId" jdbcType="INTEGER" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+<mapper namespace="com.csswust.patest2.dao.UserProfileDao">
+    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.UserProfile">
+        <id column="use_pro_id" property="useProId" jdbcType="INTEGER"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="is_student" property="isStudent" jdbcType="INTEGER"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
+        <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
+        <result column="entrance_year" property="entranceYear" jdbcType="INTEGER"/>
+        <result column="major_id" property="majorId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <sql id="Base_Column_List" >
-        use_pro_id, real_name, is_student, class_name, student_number, entrance_year, major_id, 
+    <sql id="Base_Column_List">
+        use_pro_id, real_name, is_student, class_name, student_number, entrance_year, major_id,
         create_time, modify_time
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        select 
-        <include refid="Base_Column_List" />
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
         from user_profile
         where use_pro_id = #{useProId,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from user_profile
         where use_pro_id = #{useProId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.csswust.patest2.entity.UserProfile" useGeneratedKeys="true" keyProperty="useProId" >
-        insert into user_profile (real_name, is_student, class_name, 
-            student_number, entrance_year, major_id, 
-            create_time, modify_time)
-        values (#{realName,jdbcType=VARCHAR}, #{isStudent,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, 
-            #{studentNumber,jdbcType=VARCHAR}, #{entranceYear,jdbcType=INTEGER}, #{majorId,jdbcType=INTEGER}, 
-            #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="com.csswust.patest2.entity.UserProfile" useGeneratedKeys="true"
+            keyProperty="useProId">
+        insert into user_profile (real_name, is_student, class_name,
+        student_number, entrance_year, major_id,
+        create_time, modify_time)
+        values (#{realName,jdbcType=VARCHAR}, #{isStudent,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR},
+        #{studentNumber,jdbcType=VARCHAR}, #{entranceYear,jdbcType=INTEGER}, #{majorId,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.UserProfile" useGeneratedKeys="true" keyProperty="useProId" >
+    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.UserProfile" useGeneratedKeys="true"
+            keyProperty="useProId">
         insert into user_profile
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="realName != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="realName != null">
                 real_name,
             </if>
-            <if test="isStudent != null" >
+            <if test="isStudent != null">
                 is_student,
             </if>
-            <if test="className != null" >
+            <if test="className != null">
                 class_name,
             </if>
-            <if test="studentNumber != null" >
+            <if test="studentNumber != null">
                 student_number,
             </if>
-            <if test="entranceYear != null" >
+            <if test="entranceYear != null">
                 entrance_year,
             </if>
-            <if test="majorId != null" >
+            <if test="majorId != null">
                 major_id,
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time,
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="realName != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="realName != null">
                 #{realName,jdbcType=VARCHAR},
             </if>
-            <if test="isStudent != null" >
+            <if test="isStudent != null">
                 #{isStudent,jdbcType=INTEGER},
             </if>
-            <if test="className != null" >
+            <if test="className != null">
                 #{className,jdbcType=VARCHAR},
             </if>
-            <if test="studentNumber != null" >
+            <if test="studentNumber != null">
                 #{studentNumber,jdbcType=VARCHAR},
             </if>
-            <if test="entranceYear != null" >
+            <if test="entranceYear != null">
                 #{entranceYear,jdbcType=INTEGER},
             </if>
-            <if test="majorId != null" >
+            <if test="majorId != null">
                 #{majorId,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.UserProfile" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.UserProfile">
         update user_profile
-        <set >
-            <if test="realName != null" >
+        <set>
+            <if test="realName != null">
                 real_name = #{realName,jdbcType=VARCHAR},
             </if>
-            <if test="isStudent != null" >
+            <if test="isStudent != null">
                 is_student = #{isStudent,jdbcType=INTEGER},
             </if>
-            <if test="className != null" >
+            <if test="className != null">
                 class_name = #{className,jdbcType=VARCHAR},
             </if>
-            <if test="studentNumber != null" >
+            <if test="studentNumber != null">
                 student_number = #{studentNumber,jdbcType=VARCHAR},
             </if>
-            <if test="entranceYear != null" >
+            <if test="entranceYear != null">
                 entrance_year = #{entranceYear,jdbcType=INTEGER},
             </if>
-            <if test="majorId != null" >
+            <if test="majorId != null">
                 major_id = #{majorId,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where use_pro_id = #{useProId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.UserProfile" >
+    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.UserProfile">
         update user_profile
         set real_name = #{realName,jdbcType=VARCHAR},
-            is_student = #{isStudent,jdbcType=INTEGER},
-            class_name = #{className,jdbcType=VARCHAR},
-            student_number = #{studentNumber,jdbcType=VARCHAR},
-            entrance_year = #{entranceYear,jdbcType=INTEGER},
-            major_id = #{majorId,jdbcType=INTEGER},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        is_student = #{isStudent,jdbcType=INTEGER},
+        class_name = #{className,jdbcType=VARCHAR},
+        student_number = #{studentNumber,jdbcType=VARCHAR},
+        entrance_year = #{entranceYear,jdbcType=INTEGER},
+        major_id = #{majorId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
         where use_pro_id = #{useProId,jdbcType=INTEGER}
     </update>
 </mapper>

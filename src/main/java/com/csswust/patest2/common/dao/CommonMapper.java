@@ -127,7 +127,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         try {
             Map<String, Object> param = new HashMap<String, Object>();
             param.put("record", record);
-            if (query.getPage() != null && query.getRows() != null) {
+            if (query != null && query.getPage() != null && query.getRows() != null) {
                 param.put("start", (query.getPage() - 1) * query.getRows());
                 param.put("rows", query.getRows());
             }
