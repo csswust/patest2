@@ -13,7 +13,7 @@ public class UserDaoTest extends JunitBaseServiceDaoTest {
     @Test
     public void insertSelective() {
         UserInfo user = new UserInfo();
-        user.setUsername("yangshunfeng");
+        user.setUsername("zhansan1");
         user.setPassword("1234");
         System.out.println(userInfoDao.insertSelective(user));
     }

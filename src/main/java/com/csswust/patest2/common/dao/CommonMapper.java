@@ -4,8 +4,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +14,10 @@ import java.util.Map;
 public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDaoSupport implements BaseDao<T, Q> {
     private static Logger log = LoggerFactory.getLogger(CommonMapper.class);
 
-    @Autowired
-    private SqlSessionFactory sqlSessionFactory;
+    @Resource
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        super.setSqlSessionFactory(sqlSessionFactory);
+    }
 
     public abstract String getPackage();
 
@@ -147,7 +149,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             }
             return getSqlSession().selectOne(getPackage() + "selectByConditionGetCount", param);
         } catch (Exception e) {
-            log.error("CommonMapper.selectByConditionGetCount({}) error: {}", record, e);
+            log.error("CommonMapper.selectByCondition({}) error: {}", record, e);
             return 0;
         }
     }
