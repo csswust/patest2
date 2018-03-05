@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  * @author 杨顺丰
  */
-@WebFilter(filterName = "accessFilter", urlPatterns = "/*")
+//@WebFilter(filterName = "accessFilter", urlPatterns = "/*")
 public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

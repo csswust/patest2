@@ -5,12 +5,12 @@ import com.csswust.patest2.common.cache.Cache;
 import com.csswust.patest2.common.cache.impl.VisitPathCache;
 import com.csswust.patest2.entity.VisitPath;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by 972536780 on 2017/11/20.
  */
-@Service
+@Component
 public class AuthService {
     private static Cache<String, VisitPath> cache = VisitPathCache.getInstance();
 

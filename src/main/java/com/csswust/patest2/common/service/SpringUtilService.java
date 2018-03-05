@@ -1,14 +1,16 @@
 package com.csswust.patest2.common.service;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class SpringUtilService implements ApplicationContextAware {
     private static volatile ApplicationContext applicationContext;
 
-    public void setApplicationContext(ApplicationContext applicationContext) {
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         System.out.println("注入SpringUtilService，并设置ApplicationContext");
         SpringUtilService.applicationContext = applicationContext;
     }
