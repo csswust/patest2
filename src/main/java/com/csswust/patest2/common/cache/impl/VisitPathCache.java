@@ -1,6 +1,6 @@
 package com.csswust.patest2.common.cache.impl;
 
-import com.csswust.patest2.common.SpringUtil;
+import com.csswust.patest2.common.service.SpringUtilService;
 import com.csswust.patest2.common.cache.Cache;
 import com.csswust.patest2.common.cache.CacheLoader;
 import com.csswust.patest2.dao.VisitPathDao;
@@ -23,7 +23,7 @@ public class VisitPathCache extends Cache<String, VisitPath> {
     }
 
     private final static class VisitPathCacheLoader implements CacheLoader<String, VisitPath> {
-        private VisitPathDao visitPathDao = SpringUtil.getBean("visitPathDao");
+        private VisitPathDao visitPathDao = SpringUtilService.getBean("visitPathDao");
 
         @Override
         public VisitPath load(String key) throws Exception {

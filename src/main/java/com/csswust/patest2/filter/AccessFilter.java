@@ -1,6 +1,7 @@
 package com.csswust.patest2.filter;
 
-import com.csswust.patest2.common.config.AuthConfig;
+import com.csswust.patest2.common.service.SpringUtilService;
+import com.csswust.patest2.common.service.AuthService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -33,7 +34,8 @@ public class AccessFilter implements Filter {
                 e.printStackTrace();
             }
         } else {
-            if (AuthConfig.isAuth(url, userPermisson)) {
+            AuthService authService = SpringUtilService.getBean("authService");
+            if (authService.isAuth(url, userPermisson)) {
                 try {
                     chain.doFilter(request, response);
                 } catch (Exception e) {
