@@ -3,6 +3,7 @@ package com.csswust.patest2.filter;
 import com.csswust.patest2.common.config.AuthConfig;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import java.io.IOException;
  *
  * @author 杨顺丰
  */
+@WebFilter(filterName = "accessFilter", urlPatterns = "/*")
 public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -46,11 +48,11 @@ public class AccessFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        System.out.println("权限过滤器初始化......");
     }
 
     @Override
     public void destroy() {
-
+        System.out.println("权限过滤器销毁......");
     }
 }

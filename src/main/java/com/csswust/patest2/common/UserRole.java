@@ -3,7 +3,7 @@ package com.csswust.patest2.common;
 /**
  * Created by 972536780 on 2017/11/26.
  */
-public enum AllRole {
+public enum UserRole {
     ADMIN(1, "admin"),
     TEACHER(2, "teacher"),
     STUDENT(3, "student"),
@@ -12,13 +12,13 @@ public enum AllRole {
     private int id;
     private String permisson;
 
-    AllRole(int id, String permisson) {
+    UserRole(int id, String permisson) {
         this.id = id;
         this.permisson = permisson;
     }
 
-    public static AllRole getByName(String name) {
-        for (AllRole role : AllRole.values()) {
+    public static UserRole getByName(String name) {
+        for (UserRole role : UserRole.values()) {
             if (role.getPermisson().equals(name)) {
                 return role;
             }
