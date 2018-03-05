@@ -1,7 +1,7 @@
 package com.csswust.patest2.filter;
 
-import com.csswust.patest2.common.service.SpringUtilService;
 import com.csswust.patest2.common.service.AuthService;
+import com.csswust.patest2.common.service.SpringUtilService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  * @author 杨顺丰
  */
-//@WebFilter(filterName = "accessFilter", urlPatterns = "/*")
+@WebFilter(filterName="encodingFilter",urlPatterns="/*")
 public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

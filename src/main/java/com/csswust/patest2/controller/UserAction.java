@@ -1,5 +1,7 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.service.AuthService;
+import com.csswust.patest2.common.service.SpringUtilService;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class UserAction extends BaseAction {
     public Map<String, Object> insert(UserInfo userInfo) {
         Map<String, Object> res = new HashMap<String, Object>();
         int result = userInfoService.insert(userInfo);
+        AuthService authService1 = SpringUtilService.getBean("authService");
+        System.out.println(authService1);
         res.put("status", result);
         return res;
     }

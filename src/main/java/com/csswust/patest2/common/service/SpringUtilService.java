@@ -32,10 +32,6 @@ public class SpringUtilService implements ApplicationContextAware {
         return (T) applicationContext.getBeansOfType(clazz);
     }
 
-    public static void cleanApplicationContext() {
-        applicationContext = null;
-    }
-
     private static void checkApplicationContext() {
         if (applicationContext == null) {
             throw new IllegalStateException("applicaitonContext未注入,请在applicationContext.xml中定义本SpringUtil--------<bean class='xxxx.SpringUtil' />");
