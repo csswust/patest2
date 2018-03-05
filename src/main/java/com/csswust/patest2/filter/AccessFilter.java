@@ -15,7 +15,7 @@ import java.io.IOException;
  *
  * @author 杨顺丰
  */
-@WebFilter(filterName="encodingFilter",urlPatterns="/*")
+@WebFilter(filterName = "accessFilter", urlPatterns = {"/user/*"})
 public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -43,7 +43,7 @@ public class AccessFilter implements Filter {
                 }
             } else {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-                httpServletResponse.sendRedirect("/patest/system/authError");
+                httpServletResponse.sendRedirect("/patest2/system/authError");
             }
         }
     }
