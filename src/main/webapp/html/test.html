@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="renderer" content="webkit">
+	<title>考试</title>
+	<link rel="shortcut icon" href="../img/favicon.ico" >
+	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="../css/commonet.css">
+	<link rel="stylesheet" href="../css/aexam.css">
+	<link rel="stylesheet" href="../css/test.css">
+	<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="headet"><!-- 头部菜单 --></div>
+	<div class="container-fluid">
+    <!--nav-->
+		<div class="topmenu">
+			<!-- 顶部导航 -->
+		</div>
+    <div class="col-md-10  col-md-offset-1 allcontent">
+		<div class="tip">
+			<div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
+				<a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+			</div>
+		</div>
+	<ol class="breadcrumb">
+	  <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
+	  <li class="active pageName">我的考试</li>
+	</ol>
+	<div class="border">
+        	<div class="">
+			 <div class="page-header">
+				  <h1>考试列表 <small class="nowTime"></small></h1>
+			</div>
+				<table
+					class="table table-bordered table-hover table-condensed table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Title</th>
+							<th>StartTime</th>
+							<th>EndTime</th>
+							<th>Number</th>
+							<th>State</th>			
+						</tr>
+					</thead>
+					<tbody id="listInfo">
+					</tbody>
+				</table>
+			</div>
+		<div class="row ">
+			<div class="col-md-offset-8">
+				<ul class="pagination " id="pagination"></ul>
+			</div>
+		</div>
+		</div>		
+	</div>
+  </div>
+   <div id="footer">
+         <!-- 页脚  -->  
+    </div>
+  <div class="modal fade" id="modalexamdelete">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" style="font-size:15px;">你确定要删除<span class="examquess"></span>题目吗？</h4>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary examdelete">删除</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
+</body>
+    <script id="getcontent" type="text/html">
+		 {{each data as value i}} 
+                   <tr>
+					<td><input type="checkbox" value="{{value.examId}}" name="title"/></td>
+					<td>{{++i}}</td>
+					<td><a href="editExam.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
+					<td>{{value.startTime}}</td>
+					<td>{{value.endTime}}</td>
+                   </tr>
+         {{/each}}
+	 </script>
+    <script type="text/javascript">
+		//seajs的简单配置
+		seajs.config({
+			base : '../lib/',
+			alias : {
+				jquery : 'jQuery/jquery.min.js',
+				jCookie : 'jQuery/jquery.cookie.js',
+				paginator : 'jQuery/jqPaginator.js',
+				artTemplate : 'artTemplate/artTemplate.js',
+				bootstrap : 'bootstrap/js/bootstrap.min.js',
+				datetimepicker : 'bootstrap/js/bootstrap-datetimepicker.min.js',
+				fileupload : 'jQuery/ajaxfileupload.js'
+			}
+		});
+		//加载入口模块
+		seajs.use('jquery');
+		seajs.use("../js/test.js");
+	</script>
+</html>

@@ -1,0 +1,35 @@
+.input{
+	border-radius: 0px;
+}
+.margin{
+	margin-top:30px ;
+}
+.emargin{
+	margin-top:30px;
+	margin-left:15px;
+}
+.width{
+	width: 400px;
+	height: 35px;
+}
+form{
+	margin-left:40px;
+	margin-top:40px
+}
+.a_color{
+	color:#00A2D4;
+}
+p{
+	display: inline-block;
+}
+p:hover{
+	color:#357EBD;
+	cursor:pointer;
+}
+.tent{
+	margin-bottom:30px;
+}
+/*编辑器宽度*/
+.modal-dialog{
+	width:900px;
+}

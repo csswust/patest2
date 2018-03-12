@@ -1,0 +1,50 @@
+body{
+	color:black;
+}
+.breadNav{
+	margin-top:20px;
+}
+.col-md-1{
+	padding-left:0px;
+	padding-right:0px;
+	width :9.3%;
+}
+h3{
+	text-align:center;
+}
+.savebutton{
+	margin-top:20px;
+	padding-bottom:20px;
+	float:right;
+	margin-right:5%;
+}
+.title{
+	text-align:center;
+}
+.content{
+	border:1px solid #CCC;
+}
+.row{
+	margin-left:0px;
+	margin-right:10px;
+}
+.col-md-2{
+	padding-left:0px;
+}
+.require{
+	color:red;
+}
+.form-horizontal{
+	margin-top:20px;
+}
+.tip{
+	margin-top:10px;
+}
+.testData{
+	color:#008B00;
+}
+.tips{
+	line-height:34px;
+	font-size:12px;
+	margin-left:-20px;
+}

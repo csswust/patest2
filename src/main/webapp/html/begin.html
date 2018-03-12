@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>LExamV3.0</title>
+<link rel="shortcut icon" href="../img/favicon.ico" >
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+   <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="wrap">
+	<div id="head">
+		<!-- 头部菜单 -->
+	</div>
+	<div class="container">
+		<h1 class="beginName"></h1>
+		<div class="row countdown">
+			距考试<span class="overTime day"></span>天<span class="overTime hours"></span>小时
+			<span class="overTime minute"></span>分钟<span class="overTime second"></span>秒
+		</div>
+		<div class="start "><button type="button" class="btn btn-success startAns disabled">开始答题</button></div>
+	</div>
+	</div>
+</body>
+<script type="text/javascript">
+	//seajs的简单配置
+	seajs.config({
+		base : '../lib/',
+		alias : {
+			jquery : 'jQuery/jquery.min.js',
+		}
+	});
+	//加载入口模块
+	seajs.use('jquery');
+	seajs.use("../js/begin.js");
+</script>
+</html>

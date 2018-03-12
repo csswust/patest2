@@ -1,0 +1,153 @@
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	font-family:"微软雅黑";
+	overflow-x: hidden;
+}
+.navbar{
+	margin-bottom:0px;
+}
+.navbar-default{
+	background-color:#3c8dbc;
+	border-color:#3c8dbc;
+	border-radius:0;
+}
+.navbar-default .navbar-nav>li>a{
+	color:#fff;
+}
+.navbar-right{
+	margin-right:5px;
+}
+.navbar>.nav>li>a:focus, .navbar>.nav>li>a:hover{
+	background-color:#069;
+	color:#fff;
+	/* border-left:3px solid #3c8dbc; */
+}
+.navbar-default .navbar-brand{
+	color:#fff;
+	padding:15px 75px;
+	font-weight:bold;
+	font-size:25px;
+}
+.container-fluid{
+	padding:0px;
+}
+.topmenu{
+	width:104.5%;
+	background-color:#222d32;
+	margin-left:-30px;
+}
+.navmenu{
+	height:40px;
+	width:700px;
+	background-color:#222d32;
+	margin:0 auto;
+	margin-top:-10px;
+}
+/*һ���˵�*/
+.navmenu ul{
+	list-style:none;	
+}
+.navmenu ul li{
+	float:left;
+	line-height:40px;
+	text-align:center;
+	position:relative;
+	z-index:999;
+}
+.navmenu a{
+	text-decoration:none;
+	color:#fff;
+	display:block;
+	width:100px;
+	height:40px;
+}
+.navmenu a:hover{
+	color:#fff;
+	background-color:#3c8dbc;
+	text-decoration:underline;	
+}
+/*���������˵���ʽ*/
+.navmenu ul li ul{
+	position:absolute;
+	top:40px;
+	left:0px;
+	display:none;
+	width:100px;
+	z-index:9999;
+}
+.navmenu ul li ul li{
+	float:none;
+	background-color:#222d32;
+}
+.navmenu ul li ul li a:link,ul li ul li a:visited{
+	background-color:#222d32;
+}
+.navmenu ul li ul li a:hover{
+	background-color:#3c8dbc;
+	text-decoration:underline;	
+}
+/*��껬��һ���˵���ʾ����*/
+.navmenu ul li:hover ul{
+	display:block;
+}
+.on{
+	color:#337ab7;
+	text-decoration:underline;
+}
+.onet{
+	color:#fff;
+	background-color:#3c8dbc;
+}
+.allcontent{
+	margin-top:20px !important;	
+}
+.alert{
+	margin-bottom:10px;
+	margin-top:0px !important;
+}
+.etstep{
+	 border-bottom: 1px solid #ccc;
+	 height:45px;
+}
+.etstep .col-md-3{
+	 border-right: 1px solid #ccc;
+	 padding-top: 5px;
+	 height:45px;
+	 line-height:45px;
+	 text-align:center;
+	 cursor:pointer;
+}
+.proinfo{
+	border:solid 1px #999;
+	width:100%;
+	background-color:#fff;
+	border-radius:3px;
+	margin-bottom:10px;
+}
+.opration{
+	margin-top:20px;
+	margin-bottom:10px;	
+}
+.opration .col-md-offset-2{
+	margin-left: 22.666667%;
+}
+#footer{
+	background-color: #000000;
+	color:#fff;
+	margin-top:30px;
+	padding-top:10px;
+}
+.copyright{
+	text-align:center;
+}
+.linkt{
+	font-size:20px;
+	font-weight:bold;
+}
+.contact{
+	margin-top:15px;
+	list-style-type:none;
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LExamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="head">
+    <!-- 头部菜单 -->
+</div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2">
+            <!-- 左侧导航 -->
+        </div>
+        <div class="col-md-10 main">
+            <div class="tip">
+                <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+                    <a href="#" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>小提示：出现问题刷新试试</strong>
+                </div>
+            </div>
+            <div class="row opration">
+                <div class="btn-group col-md-6" role="group">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn  btn-success add">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn  btn-warning delete">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                        </button>
+                    </div>
+                </div>
+                <!-- 		<div class="col-md-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control searTitle" /> <span
+                                    class="input-group-btn">
+                                    <button class="btn btn-primary search" type="button">&nbsp;查询</button>
+                                </span>
+                            </div>
+                        </div> -->
+            </div>
+            <!-- <div id="listInfo"  class="row"></div> -->
+            <div class="row" style="margin-top:10px;">
+                <div class="panel panel-default" style="float: left;width: 33%;">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">
+                        <h5>C程序设计</h5>
+                    </div>
+                    <!-- List group -->
+                    <ul class="list-group" id="ClistInfo">
+                    </ul>
+                </div>
+                <div class="panel panel-default" style="float: left;width: 33%">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">
+                        <h5>数据结构</h5>
+                    </div>
+                    <!-- List group -->
+                    <ul class="list-group" id="datalistInfo">
+                    </ul>
+                </div>
+                <div class="panel panel-default" style="float: left;width: 33%">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">
+                        <h5>算法分析</h5>
+                    </div>
+                    <!-- List group -->
+                    <ul class="list-group" id="algorithmlistInfo">
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="addKnow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">用户信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"><span class="require">*</span>是否课程</label>
+                            <div class="col-md-4">
+                                <select class="form-control choose">
+                                    <option value="0">否</option>
+                                    <!--<option value="1">是</option>-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group isknow">
+                            <label class="col-md-2 control-label"><span class="require">*</span>课程</label>
+                            <div class="col-md-4">
+                                <select class="form-control courseName">
+                                    <option>选择课程</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group isknow">
+                            <label class="col-md-2 control-label"><span class="require">*</span>知识点</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control knowName"/>
+                            </div>
+                        </div>
+                        <div class="form-group isCourse">
+                            <label class="col-md-2 control-label"><span class="require">*</span>课程名</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control coName"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default closebutton" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary saveData">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            jCookie: 'jQuery/jquery.cookie.js',
+            paginator: 'jQuery/jqPaginator.js',
+            jSession: 'jQuery/jquerySession.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js',
+            datetimepicker: 'bootstrap/js/bootstrap-datetimepicker.min.js',
+        }
+    });
+    //加载入口模块
+    seajs.use('jquery');
+    seajs.use("../js/knowLeage.js");
+</script>
+</html>

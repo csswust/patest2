@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>LExamV3.0</title>
+<link rel="shortcut icon" href="../img/favicon.ico" >
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/exam.css">
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+   <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+   <style> 
+    .opration .col-md-2{
+    	padding-left:10px;
+    }
+    .panel-default{
+    	border-left :4px solid #337ab7;
+    }
+    .panel-default .col-md-5, .panel-default .col-md-3,.panel-default .col-md-2{
+    	paading-left:0px;
+    	padding-right:0px;
+    }
+    </style>
+</head>
+<body>
+	<div id="head">
+		<!-- 头部菜单 -->
+	</div>
+	<div class="container-fuild">
+		<div class="row">
+			<div class="side-bar col-md-2">
+				<!-- 左侧导航 -->
+			</div>
+			<div class="col-md-10 nav-tabs-custom main">		
+                <ul class="nav nav-tabs examInfoNav">
+                 
+                </ul> 
+	            <div class="tab-content">
+					<div class="row opration">
+						<div class="col-md-2 col-md-offset-6" >
+							 <select class=" result_select form-control">
+						 	  <option value="0">----Result----</option>
+							 </select>
+						</div>
+						<div class="col-md-2" style="padding-left:0px;">
+							 <select class="result_comp form-control">
+						 	  <option value="0">----Compiler----</option>
+							 </select>
+						</div>
+						<div class="col-md-2" style="padding-left:0px;">
+							<div class="input-group">
+								<input type="text" class="form-control probId" placeholder="Problem ID"/> <span
+									class="input-group-btn">
+									<button class="btn btn-primary search" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<table class="table table-bordered table-hover table-condensed table-striped submit" >
+						<thead>
+							<tr>
+								<th>问题题目</th>
+								<th width="15%">结果</th>
+								<th width="10%">内存[KB]</th>
+								<th width="10%">时间[MS]</th>
+								<th width="10%">编译器</th>
+								<th width="15%">提交时间</th>
+								<th>IP</th>
+								<th width="5%">操作</th>
+							</tr>
+						</thead>
+						<tbody id="listInfo">
+						</tbody>
+					</table>
+                </div>
+            <div class="row paging">
+	   		    <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7;"></span> 个</div>
+		        <div class="col-md-5">
+		            <ul class="pagination " id="pagination"></ul>
+		        </div>
+	        </div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade " id="settingdata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--index/faqs  --></h4>
+      </div>
+      <div class="modal-body">
+	      <div id="code">
+	      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+	//seajs的简单配置
+	seajs.config({
+		base : '../lib/',
+		alias : {
+			  jquery : 'jQuery/jquery.min.js',
+              jCookie : 'jQuery/jquery.cookie.js',
+              paginator : 'jQuery/jqPaginator.js',
+              jSession : 'jQuery/jquerySession.js',
+              artTemplate : 'artTemplate/artTemplate.js',
+              bootstrap : 'bootstrap/js/bootstrap.min.js',
+              datetimepicker : 'bootstrap/js/bootstrap-datetimepicker.min.js',
+		}
+	});
+	//加载入口模块
+	seajs.use('jquery');
+	seajs.use("../js/mySubmit.js");
+</script>
+</html>

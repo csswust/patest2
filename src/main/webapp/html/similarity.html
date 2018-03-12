@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>LExamV3.0</title>
+<link rel="shortcut icon" href="../img/favicon.ico" >
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+   <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="head">
+		<!-- 头部菜单 -->
+	</div>
+	<div class="container-fuild">
+		<div class="row">
+			<div class="side-bar col-md-2">
+				<!-- 左侧导航 -->
+			</div>
+			<div class="col-md-10 main">
+			<div class="tip">
+			 <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+  			  <a href="#" class="close" data-dismiss="alert">
+     			 &times;
+   			  </a>
+   			  <strong>小提示：出现问题刷新试试</strong>
+			</div>
+			</div>
+			 <div class="col-md-6"  style="margin-bottom:10px;"">
+							<div class="col-md-3" style="padding:0px">
+									<input type="text" class="form-control searTitle" placeholder="考号"/>
+							</div>
+							<div class="col-md-5" style="padding:0px">
+								<div class="input-group">
+									<input type="text" class="form-control seardu col-md-3" placeholder="相似度下限"/>
+									 <span class="input-group-btn" >
+										<button class="btn btn-primary search" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询</button>
+									</span>
+								</div>					
+							</div>
+				</div>
+				<table
+					class="table table-bordered table-hover table-condensed table-striped">
+					<thead>
+						<tr>
+							<th><input type="checkbox" class="check_list" />全选</th>
+							<th>编号</th>
+							<th>提交</th>
+							<th>相似</th>
+							<th>相似度</th>				
+						</tr>
+					</thead>
+					<tbody id="listInfo">
+					</tbody>
+				</table>
+		</div>
+		<div class="row ">
+		    <div class="col-md-3 col-md-offset-4  pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
+            <div class="col-md-5">
+               <ul class="pagination " id="pagination"></ul>
+            </div>
+	   </div>
+	</div>
+</body>
+<script id="getcontent" type="text/html">
+		 {{each list as value i}} 
+                   <tr>
+					<td><input type="checkbox" name="title"/></td>
+					<td>{{value.submsId}}</td>
+					<td>{{value.problemTitle1}}{{value.userName1}}</td>
+					<td>{{value.problemTitle2}}{{value.userName2}}</td>
+					<td>{{value.similarity}}</td>
+                   </tr>
+         {{/each}}
+	 </script>
+<script type="text/javascript">
+	//seajs的简单配置
+	seajs.config({
+		base : '../lib/',
+		alias : {
+			jquery : 'jQuery/jquery.min.js',
+			paginator : 'jQuery/jqPaginator.js',
+			artTemplate : 'artTemplate/artTemplate.js',
+			bootstrap : 'bootstrap/js/bootstrap.min.js'
+		}
+	});
+	//加载入口模块
+	seajs.use('jquery');
+	seajs.use("../js/similarity.js");
+</script>
+</html>

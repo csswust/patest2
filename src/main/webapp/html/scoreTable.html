@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>LExamV3.0</title>
+<link rel="shortcut icon" href="../img/favicon.ico" >
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/exam.css">
+<style type="text/css">
+	.alert-danger,.alert-success{
+		background-color:transparent;
+		border:none;
+	}
+</style>
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+   <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="head">
+		<!-- 头部菜单 -->
+	</div>
+	<div class="container-fuild">
+		<div class="row">
+			<div class="side-bar col-md-2">
+				<!-- 左侧导航 -->
+			</div>
+			<div class="col-md-10 nav-tabs-custom" style="background:white;">		
+                <ul class="nav   nav-tabs examInfoNav">
+
+                </ul>		
+
+            <table class="table table-bordered table-hover table-condensed table-striped submit" >
+			<thead>
+			<tr class="rankInfo" >
+			
+			</tr>
+			</thead>
+			<tbody id="listInfo">
+			
+			</tbody>
+		</table>
+			</div>
+		<div class="row paging">
+	   		    <div class="col-md-3 col-md-offset-4 pagenum" >共 <span class="countnum" style="color:#337ab7;"></span> 个</div>
+		        <div class="col-md-5 ">
+		            	<ul class="pagination " id="paginationGet"></ul>
+		        </div>
+	    </div>
+		</div>
+	</div>
+	<div class="modal fade" id="notip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+		<h4 class="modal-title" id="myModalLabel">无成绩表</h4>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default closebill" data-dismiss="modal">关闭</button>
+      </div>
+    </div>    
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+	//seajs的简单配置
+	seajs.config({
+		base : '../lib/',
+		alias : {
+			  jquery : 'jQuery/jquery.min.js',
+              jCookie : 'jQuery/jquery.cookie.js',
+              paginator : 'jQuery/jqPaginator.js',
+              jSession : 'jQuery/jquerySession.js',
+              artTemplate : 'artTemplate/artTemplate.js',
+              bootstrap : 'bootstrap/js/bootstrap.min.js',
+              datetimepicker : 'bootstrap/js/bootstrap-datetimepicker.min.js',
+		}
+	});
+	//加载入口模块
+	seajs.use('jquery');
+	seajs.use("../js/scoreTable.js");
+</script>
+</html>

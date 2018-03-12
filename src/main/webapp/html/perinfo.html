@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>LexamV3.0</title>
+<link rel="shortcut icon" href="../img/favicon.ico" >
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../css/commonet.css">
+<link rel="stylesheet" href="../css/aexam.css">
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+   <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="headet">
+		<!-- 头部菜单 -->
+	</div>
+	<div class="container-fluid ">
+		<!--nav-->
+		<div class="topmenu">
+			<!-- 顶部导航 -->
+		</div>
+		 <div class="col-md-10 col-md-offset-1 allcontent">
+			  <div class="tip">
+				<div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
+					<a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+				</div>
+			   </div>
+		     <ol class="breadcrumb">
+			  <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
+			   <li class="active pageName">个人信息</li>
+			</ol>
+			<div class="peoinfo">
+              <div class="row content">
+		         <form class="form-horizontal" >
+				   <div class="form-group">
+				        <div class="col-md-2" style="text-align:center;"><h4>个人信息</h4></div>
+				   </div>
+				   <div class="form-group ">
+				    <label class="col-md-2 control-label"><span class="require">*</span>昵称：</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control  testname"  disabled="disabled" required />
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-md-2 control-label"><span class="require">*</span>邮箱：</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control mail" disabled="disabled" required />
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-md-2 control-label"><span class="require">*</span>联系地址：</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control address" disabled="disabled"  required />
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-md-2 control-label"><span class="require">*</span>联系方式：</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control telephone"  disabled="disabled" required />
+				    </div>
+				  </div>
+				   <div class="form-group">
+				    <label class="col-md-2 control-label"><span class="require">*</span>真实姓名：</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control realname" disabled="disabled" required />
+				    </div>
+				  </div>                
+				  </form>
+              </div>
+		       <div class="row saveinfo ">    
+		           <button type="button" class="btn btn-primary saveInfo "><span class="glyphicon glyphicon-floppy-disk"></span>修改</button>     
+		       </div>
+           </div>			
+		 </div>
+	</div>
+	  <div id="footer">
+      <!--      页脚 -->
+    </div>		
+</body>
+<div class="modal fade" id="perinfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">个人信息(带*必填)</h4>
+      </div> 
+      <div class="modal-body">
+					<form class="form-horizontal">				
+						<div class="form-group">
+							<label class="col-md-3 control-label"><span class="require">*</span>昵称：</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control mtestname"  />
+							</div>
+						</div>
+							<div class="form-group">
+							<label class="col-md-3 control-label"><span class="require">*</span>邮箱：</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control mmail"  />
+							</div>
+						</div>
+							<div class="form-group">
+							<label class="col-md-3 control-label"><span class="require">*</span>联系地址:</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control maddress"  />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"><span class="require">*</span>联系方式：</label>
+							<div class="col-md-4">
+								<input type="text" class="form-control mtelephone" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label"><span class="require">*</span>真实姓名：</label>
+							<div class="col-md-6">
+							  <input type="text" class="form-control realname"  required />
+							</div>
+						</div>
+					</form>
+				</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default closeper" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary saveper">保存</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<script id="getcontent" type="text/html">
+		 {{each data as value i}} 
+                   <tr>
+					<td><input type="checkbox" value="{{value.examId}}" name="title"/></td>
+					<td>{{++i}}</td>
+					<td><a href="editExam.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
+					<td>{{value.startTime}}</td>
+					<td>{{value.endTime}}</td>
+                   </tr>
+         {{/each}}
+	 </script>
+<script type="text/javascript">
+	//seajs的简单配置
+	seajs.config({
+		base : '../lib/',
+		alias : {
+			 jquery : 'jQuery/jquery.min.js',
+             jCookie : 'jQuery/jquery.cookie.js',
+             paginator : 'jQuery/jqPaginator.js',
+             artTemplate : 'artTemplate/artTemplate.js',
+             bootstrap : 'bootstrap/js/bootstrap.min.js',
+             datetimepicker : 'bootstrap/js/bootstrap-datetimepicker.min.js',
+             fileupload : 'jQuery/ajaxfileupload.js'
+		}
+	});
+	//加载入口模块
+	seajs.use('jquery');
+	seajs.use("../js/perinfo.js");
+</script>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>考试</title>
+    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/exam.css">
+    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="head"><!-- 头部菜单 --></div>
+    <div class="container-fuild">
+    <div class="row">
+    <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
+    <div class="col-md-10">
+        <div class="tip">
+            <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
+                <a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+            </div>
+        </div>
+    <ol class="breadcrumb">
+      <li><a href="index.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
+      <li><a href="exam.html">考试列表</a></li>
+      <li class="active pageName">添加考试</li>
+    </ol>
+    <div class="bank">
+        <div class="row content" >
+         <div class="step ">
+              <div class="form-group">
+                  <div class="row">
+                    
+                 </div>
+              </div>
+           </div>
+       <form class="form-horizontal" >
+        <div class="form-group">
+            <div class="row bank">
+                <div class="col-md-2">
+                   <div class="banktitle"><label class="control-label">所选题库</label></div>
+                </div>
+	            <div class="col-md-1 problem">
+	              <button type="button" class="btn btn-primary btn-sm localBank problem"><span class="glyphicon glyphicon-th-list"></span> 参考题库</button> 
+	            </div>
+            </div>                            
+       </div>
+       <div>
+         <table class="table table-bordered table-hover table-condensed table-striped" >
+            <thead id="listhead">
+        
+            </thead>
+            <tbody id="listInfo">
+             
+            </tbody>
+        </table>
+       </div>
+       </form>
+      <div class="row paging">
+         <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
+        <div class="col-md-5 ">
+            <ul class="pagination " id="pagination"></ul>
+        </div>
+        </div>
+       </div>
+       <div class="row savebutton">    
+           <button type="button" class="btn btn-primary upBank" id="justSave"><span class="glyphicon glyphicon-chevron-left"></span>上一步</button>
+           <button type="button" class="btn btn-primary downBank" id="justSave">下一步 <span class="glyphicon glyphicon-chevron-right"></span></button>         
+       </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="modaldeletebank">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" style="font-size:15px;">你确定要添加这些题目吗？</h4>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary bankdelete">删除</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
+</body>
+    <script type="text/javascript">
+        //seajs的简单配置
+        seajs.config({
+            base : '../lib/',
+            alias : {
+                jquery : 'jQuery/jquery.min.js',
+                jCookie : 'jQuery/jquery.cookie.js',
+                paginator : 'jQuery/jqPaginator.js',
+                artTemplate : 'artTemplate/artTemplate.js',
+                bootstrap : 'bootstrap/js/bootstrap.min.js',
+            }
+        });
+        //加载入口模块
+        seajs.use('jquery');
+        seajs.use("../js/editBank.js");
+    </script>
+</html>

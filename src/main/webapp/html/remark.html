@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>LExamV3.0</title>
+<link rel="shortcut icon" href="../img/favicon.ico" >
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">	
+<link rel="stylesheet" href="../lib/googleCodePrettify/css/doxy.css">
+<link rel="stylesheet" href="../css/common.css">
+<link rel="stylesheet" href="../css/exam.css">
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+<!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="head">
+		<!-- 头部菜单 -->
+	</div>
+	<div class="container-fuild">
+		<div class="row">
+			<div class="side-bar col-md-2">
+				<!-- 左侧导航 -->
+			</div>
+			<div class="col-md-10">
+				<ol class="breadcrumb" style="margin-top:20px;">
+					<li><a href="index.html"><span
+							class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
+					<li><a href="examList.html">考试列表</a></li>
+					<li class="active pageName"></li>
+				</ol>
+				<div class="row">
+					<div class="btn-group col-md-8" role="group">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn  btn-success lastInfo"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>上一个</button>
+						</div>
+						<div class="btn-group" role="group">
+							<button type="button" class="btn  btn-info nextInfo">下一个<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+						</div>
+						<div class="btn-group" role="group">
+							<button type="button" class="btn  btn-primary similarity"><span class="glyphicon glyphicon-record" aria-hidden="true"></span> 相似度检测</button>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button">本题得分</button>
+							</span> <input type="text" class="form-control" id="rscore" /> <span
+								class="input-group-btn">
+								<button class="btn btn-info submit" type="button"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> 提交</button>
+							</span>
+						</div>
+					</div>
+					<!-- /.col-lg-6 -->
+				</div>
+				<div class="nav-tabs-custom">
+					<!-- nav-tabs-custom -->
+				</div>
+				<div id="problem_similarity" style="display: none">
+					<div class="problem">
+						<h2>代码相似度</h2>
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<td>#</td>
+									<td>用户名</td>
+									<td>用户姓名</td>
+									<td>用户IP</td>
+									<td>相似度</td>
+									<td>查看代码</td>
+								</tr>
+							</thead>
+							<tbody id="problemlistInfo">
+							</tbody>
+						</table>
+					</div>
+					<div class="row ">
+						<div class="col-md-offset-8">
+							<ul class="pagination " id="pagination"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="tip">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">    
+	        <h4 class="modal-title" style="font-size:15px;">没有与此相似的代码</h4>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
+</body>
+<script id="getcontent" type="text/html">
+		 {{each data as value i}} 
+                   <tr>
+					<td>{{++i}}</td>
+					<td><a href="examInfo.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
+					<td>{{value.startTime}}</td>
+					<td>{{value.endTime}}</td>
+					<td></td>
+					<td><a href="#" id="{{value.examId}}" class="markPaper">阅卷</a></td>
+                   </tr>
+         {{/each}}
+	 </script>
+<script type="text/javascript">
+	//seajs的简单配置
+	seajs.config({
+		base : '../lib/',
+		alias : {
+			jquery : 'jQuery/jquery.min.js',
+			jCooike : 'jQuery/jquery.cookie.js',
+			paginator : 'jQuery/jqPaginator.js',
+			artTemplate : 'artTemplate/artTemplate.js',
+			bootstrap : 'bootstrap/js/bootstrap.min.js',
+		}
+	});
+	//加载入口模块
+	seajs.use('jquery');
+	seajs.use("../js/remark.js");
+</script>
+</html>

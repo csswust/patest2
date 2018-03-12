@@ -1,0 +1,127 @@
+.title >h1{
+	margin-right:30px;
+	display : inline-block;
+	color:#333;
+}
+.title>.status-ended{
+	border-radius: 4px;
+    padding: 3px 6px;
+    color: #fff;
+}
+.title >.status-ended{
+	background-color : gray;
+}
+.examTime{
+	margin:10px 0 20px;
+}
+.quesDetail >h2{
+	margin-right:30px;
+	display : inline-block;
+	color:#333;
+}
+.media-heading{
+	line-height:1.5;
+}
+.quesInfo{
+	margin-top:20px;
+}
+.CodeMirror{
+   		font-family: "Courier New";
+   		font-size:1.2;
+   		height:600px;
+ }
+.cm-s-3024-night .CodeMirror-linenumber{
+   		color:white;
+ }
+ h2{
+ 	font-size:50px;
+ 	text-align:center;
+ 	margin:5px 0px;
+ }
+ h5{
+ 	text-align:center;
+ }
+ .thumbnail{
+ 	border-radius:0px;
+ 	padding:0px;
+ 	box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
+ 	-webkit-box-shadow : 0 5px 10px 0 rgba(0,0,0,.1);
+ 	-moz-box-shadow : 0 5px 10px 0 rgba(0,0,0,.1);
+ }
+ .thumbnail:hover{
+ 	border:1px solid #2E8B57;
+ }
+ .thumbnail .caption{
+	padding:0px;
+ }
+ .status{
+ 	color:white;
+ 	line-height:1.8;
+ 	text-align:center;
+ }
+ .ac{
+ 	background-color:#5cb85c;
+ }
+ .wa{
+ 	background-color:#c9302c;
+ }
+ .ce{
+ 	background-color:#ec971f;
+ }
+ .no{
+ 	background-color:#8B7E66;
+ }
+ .examTime{
+ 	text-align:right;
+ 	letter-spacing:3px;
+ }
+ .time{
+ 	color:#d43f3a;
+ 	font-weight:bold;
+ 	font-size:25px;
+ }
+ .glyphicon{
+ 	top:2px;
+ }
+ .examName{
+  	text-align:center;
+ }
+ 
+ 
+/* .container #gongao {
+	width:1150px;
+	height:30px;
+	overflow:hidden;
+	line-height:30px;
+	font-size:13px;
+	font-family:'ËÎÌו';
+	background:#DDE5ED;
+	color:#0C77CF;
+	font-weight:bold;
+	} 
+.container #gongao #scroll_begin, #gongao #scroll_end {
+	display:inline;
+	} 
+.container #scroll_div {
+	width:900px;
+	height:30px;
+	margin:0 auto;
+	white-space: nowrap;
+	overflow:hidden;
+} */
+.sdiv:hover{
+    color:#ff0000;
+}
+
+
+.fdiv{
+  position: relative;
+  height: 20px;
+  overflow-x: hidden; 
+  text-indent:2em;
+}
+
+.sdiv{
+  position: absolute;
+}
+ 

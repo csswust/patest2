@@ -1,0 +1,26 @@
+.content{
+	padding-top:0px;
+	padding-bottom:5px !important;
+	padding-left:0px;
+	padding-right:0px;
+}
+.downInfo,.savebutton{
+	margin-top:10px;
+	float:right;
+	margin-right:5%;
+}
+.col-md-1{
+	width:10.3333%
+}
+.border{
+	border:1px solid #CCC;
+}
+.table{
+	width:99%;
+}
+.col-md-4{
+	width:31.333333%;
+}
+.col-md-8{
+	width:68.666667%;
+}

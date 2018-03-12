@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>LExamV3.0</title>
+<link rel="shortcut icon" href="../img/favicon.ico" >
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../css/common.css">
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+   <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="head">
+		<!-- 头部菜单 -->
+	</div>
+	<div class="container-fuild">
+		<div class="row">
+			<div class="side-bar col-md-2">
+				<!-- 左侧导航 -->
+			</div>
+			<div class="col-md-10">
+			<div class="tip">
+			 <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+  			  <a href="#" class="close" data-dismiss="alert">
+     			 &times;
+   			  </a>
+   			  <strong>小提示：出现问题刷新试试</strong>
+			</div>
+			</div>
+				<div class="row opration">
+					<div class="btn-group col-md-4" role="group">
+					  <div class="btn-group" role="group" >
+					  <button type="button" class="btn  btn-info delete">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+						</button>
+					  </div>
+					</div>
+					<div class="form-group col-md-8">
+						    <div class="col-md-4 col-md-offset-4">
+						   		<input class="form-control form_datetime startTime"  type="text"  placeholder="开始时间">
+							</div>
+							<div class="input-group col-md-4">
+							<input class="form-control form_datetime endTime"  type="text"  placeholder="结束时间">
+							<span class="input-group-btn">
+								<button class="btn btn-primary search" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询</button>
+							</span>
+							</div> 
+					</div>
+				</div>
+                 <table class="table table-bordered table-hover table-condensed table-striped" >
+			            <thead id="applyhead">
+			                <tr>
+			                   <td><input type="checkbox" class="check_list" />全部</td>
+			                   <td>序号</td>
+			                   <td>申请名称</td>
+			                   <td>联系电话</td>
+			                   <td>申请人</td>
+			                   <td>用户名</td>
+			                   <td>考试人数</td>
+			                   <td>开始时间</td>
+			                   <td>结束时间</td>
+			                   <td>是否通过</td>			                   
+			                   <td>操作</td>
+			                </tr>
+			            </thead>
+			            <tbody id="applyInfo">			              
+			               
+			            </tbody>
+			      </table>
+				 <div class="row paging">
+		   		    <div class="col-md-3 col-md-offset-4 pagenum" >共 <span class="countnum" style="color:#337ab7;"></span> 个</div>
+			        <div class="col-md-5 ">
+			            	<ul class="pagination " id="pagination"></ul>
+			        </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+<div class="modal fade" id="passed" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+		<h4 class="modal-title" id="myModalLabel">已通过</h4>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default closebill" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+    
+  </div>
+</div> 
+	<!-- 审核 -->
+	<div class="modal fade" id="mexamine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">审核信息(带*必填)</h4>
+	      </div> 
+	      <div class="modal-body">
+				<form class="form-horizontal">				
+					<div class="form-group">
+						<label class="col-md-2 control-label"><span class="require">*</span>审核：</label>
+						<div class="col-md-3">
+								<select class="form-control handle">
+							      	<option value="1">通过</option>
+							      	<option value="2">拒绝</option>
+						        </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label"><span class="require">*</span>金额:</label>
+						<div class="col-md-4">
+							<input type="text" class="form-control money"  />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-2 control-label"><span class="require">*</span>拒绝理由：</label>
+						<div class="col-md-6">
+							<textarea class="form-control reason" rows="4"></textarea>
+						</div>
+					</div>
+				</form>
+		  </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default closebill" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary saveapply">保存</button>
+	      </div>
+	    </div>
+	    
+	  </div>
+	</div>
+	<!-- <div class="modal fade" id="billinfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">账单信息(带*必填)</h4>
+	      </div> 
+	      <div class="modal-body">
+						<form class="form-horizontal">				
+							<div class="form-group">
+								<label class="col-md-2 control-label"><span class="require">*</span>申请人：</label>
+								<div class="col-md-4">
+									<input type="text" class="form-control apllypeo"  />
+								</div>
+							</div>
+								<div class="form-group">
+								<label class="col-md-2 control-label"><span class="require">*</span>联系方式：</label>
+								<div class="col-md-4">
+									<input type="text" class="form-control telephone"  />
+								</div>
+							</div>
+								<div class="form-group">
+								<label class="col-md-2 control-label"><span class="require">*</span>金额:</label>
+								<div class="col-md-4">
+									<input type="text" class="form-control money"  />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><span class="require">*</span>申请时间：</label>
+								<div class="col-md-4">
+									<input type="text" class="form-control applytime" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><span class="require">*</span>账单描述：</label>
+								<div class="col-md-6">
+									<textarea class="form-control billdes" rows="4"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default closebill" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary savebill">保存</button>
+	      </div>
+	    </div>
+	    
+	  </div>
+	</div> -->
+    <!-- 删除模态框 -->
+	<div class="modal fade" id="modalexamdelete">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" style="font-size:15px;">你确定要删除<span class="examquess"></span>题目吗？</h4>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary examdelete">删除</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
+</body>
+<script type="text/javascript">
+	//seajs的简单配置
+	seajs.config({
+		base : '../lib/',
+		alias : {
+			  jquery : 'jQuery/jquery.min.js',
+              jCookie : 'jQuery/jquery.cookie.js',
+              paginator : 'jQuery/jqPaginator.js',
+              artTemplate : 'artTemplate/artTemplate.js',
+              bootstrap : 'bootstrap/js/bootstrap.min.js',
+              datetimepicker : 'bootstrap/js/bootstrap-datetimepicker.min.js',
+              fileupload : 'jQuery/ajaxfileupload.js'
+		}
+	});
+	//加载入口模块
+	seajs.use('jquery');
+	seajs.use("../js/applyhandle.js");
+</script>
+</html>
