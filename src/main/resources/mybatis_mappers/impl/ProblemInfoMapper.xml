@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.ProblemInfoDao">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        FROM problem_info
+        WHERE 1 = 1
+        <if test="record.probId != null">
+            AND
+            prob_id = #{record.probId}
+        </if>
+        <if test="record.title != null">
+            AND
+            title = #{record.title}
+        </if>
+        <if test="record.levelId != null">
+            AND
+            level_id = #{record.levelId}
+        </if>
+        <if test="record.memoryLimit != null">
+            AND
+            memory_limit = #{record.memoryLimit}
+        </if>
+        <if test="record.timeLimit != null">
+            AND
+            time_limit = #{record.timeLimit}
+        </if>
+        <if test="record.codeLimit != null">
+            AND
+            code_limit = #{record.codeLimit}
+        </if>
+        <if test="record.testdataNum != null">
+            AND
+            testdata_num = #{record.testdataNum}
+        </if>
+        <if test="record.scoreRatio != null">
+            AND
+            score_ratio = #{record.scoreRatio}
+        </if>
+        <if test="record.judgeModel != null">
+            AND
+            judge_model = #{record.judgeModel}
+        </if>
+        <if test="record.author != null">
+            AND
+            author = #{record.author}
+        </if>
+        <if test="record.submitNum != null">
+            AND
+            submit_num = #{record.submitNum}
+        </if>
+        <if test="record.acceptedNum != null">
+            AND
+            accepted_num = #{record.acceptedNum}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.description != null">
+            AND
+            description = #{record.description}
+        </if>
+        <if test="record.inputTip != null">
+            AND
+            input_tip = #{record.inputTip}
+        </if>
+        <if test="record.outputTip != null">
+            AND
+            output_tip = #{record.outputTip}
+        </if>
+        <if test="record.inputSample != null">
+            AND
+            input_sample = #{record.inputSample}
+        </if>
+        <if test="record.outputSample != null">
+            AND
+            output_sample = #{record.outputSample}
+        </if>
+        <if test="record.standardSource != null">
+            AND
+            standard_source = #{record.standardSource}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM problem_info
+        WHERE 1 = 1
+        <if test="record.probId != null">
+            AND
+            prob_id = #{record.probId}
+        </if>
+        <if test="record.title != null">
+            AND
+            title = #{record.title}
+        </if>
+        <if test="record.levelId != null">
+            AND
+            level_id = #{record.levelId}
+        </if>
+        <if test="record.memoryLimit != null">
+            AND
+            memory_limit = #{record.memoryLimit}
+        </if>
+        <if test="record.timeLimit != null">
+            AND
+            time_limit = #{record.timeLimit}
+        </if>
+        <if test="record.codeLimit != null">
+            AND
+            code_limit = #{record.codeLimit}
+        </if>
+        <if test="record.testdataNum != null">
+            AND
+            testdata_num = #{record.testdataNum}
+        </if>
+        <if test="record.scoreRatio != null">
+            AND
+            score_ratio = #{record.scoreRatio}
+        </if>
+        <if test="record.judgeModel != null">
+            AND
+            judge_model = #{record.judgeModel}
+        </if>
+        <if test="record.author != null">
+            AND
+            author = #{record.author}
+        </if>
+        <if test="record.submitNum != null">
+            AND
+            submit_num = #{record.submitNum}
+        </if>
+        <if test="record.acceptedNum != null">
+            AND
+            accepted_num = #{record.acceptedNum}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.description != null">
+            AND
+            description = #{record.description}
+        </if>
+        <if test="record.inputTip != null">
+            AND
+            input_tip = #{record.inputTip}
+        </if>
+        <if test="record.outputTip != null">
+            AND
+            output_tip = #{record.outputTip}
+        </if>
+        <if test="record.inputSample != null">
+            AND
+            input_sample = #{record.inputSample}
+        </if>
+        <if test="record.outputSample != null">
+            AND
+            output_sample = #{record.outputSample}
+        </if>
+        <if test="record.standardSource != null">
+            AND
+            standard_source = #{record.standardSource}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from problem_info
+        where use_pro_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

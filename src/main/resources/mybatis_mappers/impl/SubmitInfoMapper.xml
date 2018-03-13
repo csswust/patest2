@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.SubmitInfoDao">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        FROM submit_info
+        WHERE 1 = 1
+        <if test="record.submId != null">
+            AND
+            subm_id = #{record.submId}
+        </if>
+        <if test="record.userId != null">
+            AND
+            user_id = #{record.userId}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.examPaperId != null">
+            AND
+            exam_paper_id = #{record.examPaperId}
+        </if>
+        <if test="record.examParamId != null">
+            AND
+            exam_param_id = #{record.examParamId}
+        </if>
+        <if test="record.paperProblemId != null">
+            AND
+            paper_problem_id = #{record.paperProblemId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
+        </if>
+        <if test="record.judgerId != null">
+            AND
+            judger_id = #{record.judgerId}
+        </if>
+        <if test="record.ip != null">
+            AND
+            ip = #{record.ip}
+        </if>
+        <if test="record.isTeacherTest != null">
+            AND
+            is_teacher_test = #{record.isTeacherTest}
+        </if>
+        <if test="record.status != null">
+            AND
+            status = #{record.status}
+        </if>
+        <if test="record.usedTime != null">
+            AND
+            used_time = #{record.usedTime}
+        </if>
+        <if test="record.usedMemory != null">
+            AND
+            used_memory = #{record.usedMemory}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.source != null">
+            AND
+            source = #{record.source}
+        </if>
+        <if test="record.errMsg != null">
+            AND
+            err_msg = #{record.errMsg}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM submit_info
+        WHERE 1 = 1
+        <if test="record.submId != null">
+            AND
+            subm_id = #{record.submId}
+        </if>
+        <if test="record.userId != null">
+            AND
+            user_id = #{record.userId}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.examPaperId != null">
+            AND
+            exam_paper_id = #{record.examPaperId}
+        </if>
+        <if test="record.examParamId != null">
+            AND
+            exam_param_id = #{record.examParamId}
+        </if>
+        <if test="record.paperProblemId != null">
+            AND
+            paper_problem_id = #{record.paperProblemId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
+        </if>
+        <if test="record.judgerId != null">
+            AND
+            judger_id = #{record.judgerId}
+        </if>
+        <if test="record.ip != null">
+            AND
+            ip = #{record.ip}
+        </if>
+        <if test="record.isTeacherTest != null">
+            AND
+            is_teacher_test = #{record.isTeacherTest}
+        </if>
+        <if test="record.status != null">
+            AND
+            status = #{record.status}
+        </if>
+        <if test="record.usedTime != null">
+            AND
+            used_time = #{record.usedTime}
+        </if>
+        <if test="record.usedMemory != null">
+            AND
+            used_memory = #{record.usedMemory}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.source != null">
+            AND
+            source = #{record.source}
+        </if>
+        <if test="record.errMsg != null">
+            AND
+            err_msg = #{record.errMsg}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from submit_info
+        where use_pro_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

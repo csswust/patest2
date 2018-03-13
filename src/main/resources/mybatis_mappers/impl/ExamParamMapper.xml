@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.ExamParamDao">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM exam_param
+        WHERE 1 = 1
+        <if test="record.exaParId != null">
+            AND
+            exa_par_id = #{record.exaParId}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam__id = #{record.examId}
+        </if>
+        <if test="record.name != null">
+            AND
+            name = #{record.name}
+        </if>
+        <if test="record.knowId != null">
+            AND
+            know_id = #{record.knowId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
+        </if>
+        <if test="record.levelId != null">
+            AND
+            level_id = #{record.levelId}
+        </if>
+        <if test="record.score != null">
+            AND
+            score = #{record.score}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM exam_param
+        WHERE 1 = 1
+        <if test="record.exaParId != null">
+            AND
+            exa_par_id = #{record.exaParId}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam__id = #{record.examId}
+        </if>
+        <if test="record.name != null">
+            AND
+            name = #{record.name}
+        </if>
+        <if test="record.knowId != null">
+            AND
+            know_id = #{record.knowId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
+        </if>
+        <if test="record.levelId != null">
+            AND
+            level_id = #{record.levelId}
+        </if>
+        <if test="record.score != null">
+            AND
+            score = #{record.score}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from exam_param
+        where use_pro_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.UserInfoDao">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_info
+        WHERE 1 = 1
+        <if test="record.userId != null">
+            AND
+            user_id = #{record.userId}
+        </if>
+        <if test="record.userProfileId != null">
+            AND
+            user_profile_id = #{record.userProfileId}
+        </if>
+        <if test="record.username != null">
+            AND
+            username = #{record.username}
+        </if>
+        <if test="record.password != null">
+            AND
+            password = #{record.password}
+        </if>
+        <if test="record.isTeacher != null">
+            AND
+            is_teacher = #{record.isTeacher}
+        </if>
+        <if test="record.isAdmin != null">
+            AND
+            is_admin = #{record.isAdmin}
+        </if>
+        <if test="record.isLock != null">
+            AND
+            is_lock = #{record.isLock}
+        </if>
+        <if test="record.isActive != null">
+            AND
+            is_active = #{record.isActive}
+        </if>
+        <if test="record.classroom != null">
+            AND
+            classroom = #{record.classroom}
+        </if>
+        <if test="record.lastLogin != null">
+            AND
+            last_login = #{record.lastLogin}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM user_info
+        WHERE 1 = 1
+        <if test="record.userId != null">
+            AND
+            user_id = #{record.userId}
+        </if>
+        <if test="record.userProfileId != null">
+            AND
+            user_profile_id = #{record.userProfileId}
+        </if>
+        <if test="record.username != null">
+            AND
+            username = #{record.username}
+        </if>
+        <if test="record.password != null">
+            AND
+            password = #{record.password}
+        </if>
+        <if test="record.isTeacher != null">
+            AND
+            is_teacher = #{record.isTeacher}
+        </if>
+        <if test="record.isAdmin != null">
+            AND
+            is_admin = #{record.isAdmin}
+        </if>
+        <if test="record.isLock != null">
+            AND
+            is_lock = #{record.isLock}
+        </if>
+        <if test="record.isActive != null">
+            AND
+            is_active = #{record.isActive}
+        </if>
+        <if test="record.classroom != null">
+            AND
+            classroom = #{record.classroom}
+        </if>
+        <if test="record.lastLogin != null">
+            AND
+            last_login = #{record.lastLogin}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from user_info
+        where use_pro_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
