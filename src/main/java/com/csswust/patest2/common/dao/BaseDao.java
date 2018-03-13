@@ -20,6 +20,10 @@ public interface BaseDao<T, Q> {
 
     int updateByPrimaryKey(T record);
 
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
     List<T> selectByCondition(T record, Q query);
 
     int selectByConditionGetCount(T record, Q query);

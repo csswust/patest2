@@ -8,14 +8,70 @@
         WHERE 1 = 1
         <if test="record.visPatId != null">
             AND
-            vis_pat_id=record.visPatId
+            vis_pat_id = #{record.visPatId}
         </if>
         <if test="record.url != null">
             AND
-            url=record.url
+            url = #{record.url}
+        </if>
+        <if test="record.description != null">
+            AND
+            description = #{record.description}
+        </if>
+        <if test="record.roleIds != null">
+            AND
+            role_ids = #{record.roleIds}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
         </if>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
     </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM visit_path
+        WHERE 1 = 1
+        <if test="record.visPatId != null">
+            AND
+            vis_pat_id = #{record.visPatId}
+        </if>
+        <if test="record.url != null">
+            AND
+            url = #{record.url}
+        </if>
+        <if test="record.description != null">
+            AND
+            description = #{record.description}
+        </if>
+        <if test="record.roleIds != null">
+            AND
+            role_ids = #{record.roleIds}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from visit_path
+        where use_pro_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

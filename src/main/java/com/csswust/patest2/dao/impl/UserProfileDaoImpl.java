@@ -4,9 +4,11 @@ import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.common.dao.CommonMapper;
 import com.csswust.patest2.dao.UserProfileDao;
 import com.csswust.patest2.entity.UserProfile;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class UserProfileDaoImpl extends CommonMapper<UserProfile, BaseQuery> implements UserProfileDao {
@@ -25,5 +27,16 @@ public class UserProfileDaoImpl extends CommonMapper<UserProfile, BaseQuery> imp
     @Override
     public void updatInit(UserProfile record) {
         record.setModifyTime(new Date());
+    }
+
+    @Override
+    public UserProfile selectByStudentNumber(String studentNumber) {
+        if (StringUtils.isBlank(studentNumber)) {
+            return null;
+        }
+        UserProfile record = new UserProfile();
+        record.setStudentNumber(studentNumber);
+        List<UserProfile> result = this.selectByCondition(record, new BaseQuery(1, 1));
+        return (result != null && result.size() != 0) ? result.get(0) : null;
     }
 }

@@ -14,7 +14,10 @@ public class UserActionTest extends JunitBaseActionTest {
     public void insert() throws Exception {
         res.put("username", "zhangsan");
         res.put("password", "1234");
-        MockHttpServletResponse response = request("/user/insert", res);
+        res.put("studentNumber", "5120141014");
+        res.put("teacher", "1");
+        res.put("admin", "1");
+        MockHttpServletResponse response = request("/user/insertUserInfo", res);
         System.out.println(response.getContentAsString());
     }
 }

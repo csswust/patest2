@@ -1,5 +1,6 @@
 package com.csswust.patest2.common.dao;
 
+import com.csswust.patest2.utils.ArrayUtil;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
@@ -34,6 +35,32 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             return getSqlSession().delete(getPackage() + "deleteByPrimaryKey", id);
         } catch (Exception e) {
             log.error("CommonMapper.deleteByPrimaryKey({}) error: {}", id, e);
+            return 0;
+        }
+    }
+
+    @Override
+    public int deleteByIds(String ids) {
+        List<Integer> probIdList = null;
+        try {
+            probIdList = ArrayUtil.StringToArray(ids, ",");
+        } catch (Exception e) {
+            log.error("CommonMapper.deleteByIds({}) error: {}", ids, e);
+        }
+        return this.deleteByIdsList(probIdList);
+    }
+
+    @Override
+    public int deleteByIdsList(List<Integer> idsList) {
+        if (idsList == null || idsList.size() == 0) {
+            return 0;
+        }
+        try {
+            Map<String, Object> param = new HashMap<String, Object>();
+            param.put("list", idsList);
+            return getSqlSession().delete(getPackage() + "deleteByIdsList", param);
+        } catch (Exception e) {
+            log.error("CommonMapper.deleteByIdsList({}) error: {}", idsList, e);
             return 0;
         }
     }
@@ -149,7 +176,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             }
             return getSqlSession().selectOne(getPackage() + "selectByConditionGetCount", param);
         } catch (Exception e) {
-            log.error("CommonMapper.selectByCondition({}) error: {}", record, e);
+            log.error("CommonMapper.selectByConditionGetCount({}) error: {}", record, e);
             return 0;
         }
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
-@Repository
+@Repository("visitPathDao")
 public class VisitPathDaoImpl extends CommonMapper<VisitPath, BaseQuery> implements VisitPathDao {
     @Override
     public String getPackage() {

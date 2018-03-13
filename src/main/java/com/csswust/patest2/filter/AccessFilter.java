@@ -21,30 +21,24 @@ public class AccessFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        String url = req.getServletPath();
+        String contextPath = req.getContextPath();
+        String URI = req.getRequestURI();
+        String url = URI.replace(contextPath, "");
         HttpSession session = req.getSession();
         String userPermisson = (String) session.getAttribute("userPermisson");
         if (userPermisson == null) {
             userPermisson = "not_login";
         }
-        if ("admin".equals(userPermisson) || "teacher".equals(userPermisson)) {
+        AuthService authService = SpringUtilService.getBean("authService");
+        if (authService.isAuth(url, userPermisson)) {
             try {
                 chain.doFilter(request, response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            AuthService authService = SpringUtilService.getBean("authService");
-            if (authService.isAuth(url, userPermisson)) {
-                try {
-                    chain.doFilter(request, response);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-                httpServletResponse.sendRedirect("/patest2/system/authError");
-            }
+            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+            httpServletResponse.sendRedirect("/patest2/system/authError");
         }
     }
 

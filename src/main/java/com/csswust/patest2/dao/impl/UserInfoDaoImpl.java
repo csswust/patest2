@@ -4,9 +4,11 @@ import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.common.dao.CommonMapper;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.entity.UserInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by 972536780 on 2017/11/19.
@@ -28,5 +30,16 @@ public class UserInfoDaoImpl extends CommonMapper<UserInfo, BaseQuery> implement
     @Override
     public void updatInit(UserInfo record) {
         record.setModifyTime(new Date());
+    }
+
+    @Override
+    public UserInfo selectByUsername(String username) {
+        if (StringUtils.isBlank(username)) {
+            return null;
+        }
+        UserInfo record = new UserInfo();
+        record.setUsername(username);
+        List<UserInfo> result = this.selectByCondition(record, new BaseQuery(1, 1));
+        return (result != null && result.size() != 0) ? result.get(0) : null;
     }
 }

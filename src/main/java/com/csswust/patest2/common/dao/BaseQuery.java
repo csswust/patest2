@@ -7,6 +7,15 @@ public class BaseQuery {
     private Integer page;
     private Integer rows;
 
+    public BaseQuery() {
+
+    }
+
+    public BaseQuery(Integer page, Integer rows) {
+        this.page = page;
+        this.rows = rows;
+    }
+
     public Integer getPage() {
         return page;
     }

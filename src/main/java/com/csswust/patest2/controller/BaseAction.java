@@ -11,10 +11,10 @@ import java.util.Map.Entry;
 public class BaseAction {
     // 这样是线程安全的
     @Autowired(required = false)
-    private HttpServletRequest request;
+    public HttpServletRequest request;
 
     @Autowired(required = false)
-    private HttpServletResponse response;
+    public HttpServletResponse response;
 
     public void saveSession(HttpServletRequest request, Map<String, Object> param) {
         HttpSession session = request.getSession();
