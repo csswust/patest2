@@ -1,6 +1,9 @@
 package com.csswust.patest2.dao;
 
+import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.entity.AcademyInfo;
+
+import java.util.List;
 
 public interface AcademyInfoDao {
     int deleteByPrimaryKey(Integer acaId);
@@ -14,4 +17,12 @@ public interface AcademyInfoDao {
     int updateByPrimaryKeySelective(AcademyInfo record);
 
     int updateByPrimaryKey(AcademyInfo record);
+
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
+    List<AcademyInfo> selectByCondition(AcademyInfo record, BaseQuery query);
+
+    int selectByConditionGetCount(AcademyInfo record, BaseQuery query);
 }

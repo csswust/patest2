@@ -90,26 +90,26 @@ public class UserInfoServiceImpl implements UserInfoService {
         // 判断用户是否active，并且not lock
         if (currUser.getIsLock() != 0) {
             loginRe.setStatus(-3);
-            loginRe.setDesc("重新登录，请联系管理员解锁");
+            loginRe.setDesc("账号被锁定! 请联系管理员解锁");
             return loginRe;
         }
         if (currUser.getIsActive() != 1) {
             loginRe.setStatus(-4);
-            loginRe.setDesc("你的账户未激活，请联系管理员激活");
+            loginRe.setDesc("你的账号未激活！请联系管理员激活");
             return loginRe;
         }
         // 当登录的是学生时，需要判断ip是否在限定范围内
         if (currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
             if (!"0:0:0:0:0:0:0:1".equals(IP)) {
-                String ips = null;
+                String ips = "";
                 ExamInfo examInfo = examInfoDao.selectByPrimaryKey(currUser.getExamId());
                 if (examInfo != null) {
                     ips = examInfo.getAllowIp();
-                } else {
+                }/* else {
                     loginRe.setStatus(-5);
                     loginRe.setDesc("你的账户未激活，请联系管理员激活");
                     return loginRe;
-                }
+                }*/
                 if (ips != null) {
                     String[] strs = ips.split(",");
                     if (!(Arrays.asList(strs).contains(IP))) {

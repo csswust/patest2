@@ -1,6 +1,9 @@
 package com.csswust.patest2.dao;
 
+import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.entity.SubmitSimilarity;
+
+import java.util.List;
 
 public interface SubmitSimilarityDao {
     int deleteByPrimaryKey(Integer subSimId);
@@ -14,4 +17,12 @@ public interface SubmitSimilarityDao {
     int updateByPrimaryKeySelective(SubmitSimilarity record);
 
     int updateByPrimaryKey(SubmitSimilarity record);
+
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
+    List<SubmitSimilarity> selectByCondition(SubmitSimilarity record, BaseQuery query);
+
+    int selectByConditionGetCount(SubmitSimilarity record, BaseQuery query);
 }

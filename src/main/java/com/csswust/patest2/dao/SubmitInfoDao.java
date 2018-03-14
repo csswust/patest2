@@ -1,6 +1,9 @@
 package com.csswust.patest2.dao;
 
+import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.entity.SubmitInfo;
+
+import java.util.List;
 
 public interface SubmitInfoDao {
     int deleteByPrimaryKey(Integer submId);
@@ -16,4 +19,12 @@ public interface SubmitInfoDao {
     int updateByPrimaryKeyWithBLOBs(SubmitInfo record);
 
     int updateByPrimaryKey(SubmitInfo record);
+
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
+    List<SubmitInfo> selectByCondition(SubmitInfo record, BaseQuery query);
+
+    int selectByConditionGetCount(SubmitInfo record, BaseQuery query);
 }

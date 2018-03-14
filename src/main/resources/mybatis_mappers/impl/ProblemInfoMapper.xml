@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.ProblemInfoDao">
-    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="selectByCondition" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
         SELECT
         <include refid="Base_Column_List"/>
         ,
@@ -183,9 +183,20 @@
     </select>
     <delete id="deleteByIdsList" parameterType="java.util.Map">
         delete from problem_info
-        where use_pro_id in
+        where prob_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
         </foreach>
     </delete>
+    <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List"/>
+        from problem_info
+        where prob_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

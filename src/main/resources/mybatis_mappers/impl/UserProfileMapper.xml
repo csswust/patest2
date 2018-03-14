@@ -98,4 +98,13 @@
             #{item}
         </foreach>
     </delete>
+    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from user_profile
+        where use_pro_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

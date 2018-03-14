@@ -18,5 +18,11 @@ public interface VisitPathDao {
 
     int updateByPrimaryKey(VisitPath record);
 
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
     List<VisitPath> selectByCondition(VisitPath record, BaseQuery query);
+
+    int selectByConditionGetCount(VisitPath record, BaseQuery query);
 }

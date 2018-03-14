@@ -27,4 +27,8 @@ public interface BaseDao<T, Q> {
     List<T> selectByCondition(T record, Q query);
 
     int selectByConditionGetCount(T record, Q query);
+
+    List<T> selectByIds(String ids);
+
+    List<T> selectByIdsList(List<Integer> idsList);
 }

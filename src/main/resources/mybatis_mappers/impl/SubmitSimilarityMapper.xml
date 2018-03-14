@@ -77,9 +77,18 @@
     </select>
     <delete id="deleteByIdsList" parameterType="java.util.Map">
         delete from submit_similarity
-        where use_pro_id in
+        where sub_sim_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
         </foreach>
     </delete>
+    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from submit_similarity
+        where sub_sim_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

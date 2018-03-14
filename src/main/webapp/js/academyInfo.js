@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     var pubMeth = require('../js/public.js');
     $(".userMana").next(".treeview-menu").toggle("slow");
     $(".userMana").addClass("leftActive");
-    $(".majorInfo").css("color", "white");
+    $(".academyInfo").css("color", "white");
     var program = {
         page: '1',
         schoolName: '',
@@ -20,28 +20,27 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../majorInfo/selectByCondition",
+                url: "../academyInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
-                    majId: program.id,
+                    acaId: program.id
                 },
                 success: function (result) {
                     console.log(result);
-                    $(".majorName").val(result.list[0].majorName);
-                    /*$(".schoolName").val(result.list[0].schoolName);*/
-                    $(".dschoolName option[value=" + result.academyInfoList[0].acaId + "]").attr("selected", true);
+                    /*$(".majorName").val(result.list[0].majorName);*/
+                    $(".schoolName").val(result.list[0].academyName);
                 },
                 error: function () {
                     console.log("error");
                 }
             });
         },
-        getMajor: function () {
+        getAcademyInfo: function () {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../majorInfo/selectByCondition",
+                url: "../academyInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
@@ -54,14 +53,14 @@ define(function (require, exports, module) {
                     $("#listInfo").empty();
                     var length = result.list.length;
                     for (var i = 0; i < length; i++) {
-                        program.school.push(result.academyInfoList[i].academyName);
-                        program.major.push(result.list[i].majorName);
+                        program.school.push(result.list[i].academyName);
+                        /*program.major.push(result.list[i].majorName);*/
                         $("#listInfo").append('<tr>' +
-                            '<td style="width:80px;"><input type="checkbox" value="' + result.list[i].majId + '" name="title"/></td>' +
-                            '<td>' + result.list[i].majId + '</td>' +
-                            '<td>' + result.academyInfoList[i].academyName + '</td>' +
-                            '<td>' + result.list[i].majorName + '</td>' +
-                            '<td><a href="javascript:;" class="title" value="' + result.list[i].majId + '">修改</a></td>' +
+                            '<td style="width:80px;"><input type="checkbox" value="' + result.list[i].acaId + '" name="title"/></td>' +
+                            '<td>' + result.list[i].acaId + '</td>' +
+                            '<td>' + result.list[i].academyName + '</td>' +
+                            /*'<td>' + result.list[i].majorName + '</td>' +*/
+                            '<td><a href="javascript:;" class="title" value="' + result.list[i].acaId + '">修改</a></td>' +
                             '</tr>');
                     }
                     $("#listInfo tr").each(function (i) {
@@ -71,7 +70,7 @@ define(function (require, exports, module) {
                                 backdrop: 'static'
                             });
                             $(".majorName").empty();
-                            $(".dschoolName option[value=" + 0 + "]").attr("selected", true);
+                            $(".schoolName").empty();
                             program.selectbyId();
                             isAdd = false;
                         });
@@ -82,22 +81,22 @@ define(function (require, exports, module) {
                 }
             });
         },
-        addMajor: function () {
+        addAcademyInfo: function () {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../majorInfo/insertOne",
+                url: "../academyInfo/insertOne",
                 dataType: 'json',
                 async: false,
                 data: {
-                    "majorName": program.majorName,
-                    "academyId": program.schoolName
+                    /*"academyInfo.majorName": program.majorName,*/
+                    "academyName": program.schoolName
                 },
                 success: function (result) {
                     console.log(result);
                     if (result.status > 0) {
                         $("#major").modal('hide');
-                        program.getMajor();
+                        program.getAcademyInfo();
                         pubMeth.alertInfo("alert-success", "添加成功！");
                     }
                 },
@@ -106,12 +105,12 @@ define(function (require, exports, module) {
                 }
             });
         },
-        deleteMagor: function (vals) {
+        deleteAcademyInfo: function (vals) {
             console.log(vals);
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../majorInfo/deleteByIds",
+                url: "../academyInfo/deleteByIds",
                 dataType: 'json',
                 async: false,
                 data: {
@@ -121,30 +120,30 @@ define(function (require, exports, module) {
                     console.log(result);
                     if (result.status > 0) {
                         pubMeth.alertInfo("alert-success", "删除成功！");
-                        program.getMajor();
+                        program.getAcademyInfo();
                     } else {
                         pubMeth.alertInfo("alert-danger", "删除失败！");
                     }
                 }
             });
         },
-        updateMajor: function () {
+        updateAcademyInfo: function () {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../majorInfo/updateById",
+                url: "../academyInfo/updateById",
                 dataType: 'json',
                 async: false,
                 data: {
-                    "majorName": program.majorName,
-                    "academyId": program.schoolName,
-                    "majId": program.id
+                    /*"record.majorName": program.majorName,*/
+                    "academyName": program.schoolName,
+                    "acaId": program.id
                 },
                 success: function (result) {
                     console.log(result);
                     if (result.status == 1) {
                         $("#major").modal('hide');
-                        program.getMajor();
+                        program.getAcademyInfo();
                         pubMeth.alertInfo("alert-success", "修改成功！");
                     }
                 },
@@ -152,53 +151,25 @@ define(function (require, exports, module) {
                     pubMeth.alertInfo("alert-danger", "请求失败！");
                 }
             });
-        },
-        /**
-         * 查询所有学院
-         */
-        getSchool: function () {
-            $.ajax({
-                type: "get",
-                content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../academyInfo/selectByCondition",
-                dataType: 'json',
-                async: false,
-                success: function (result) {
-                    console.log(result);
-                    program.school = result.list;
-                }
-            });
-            program.dappendSchool();
-        },
-        dappendSchool: function () {
-            $(".dschoolName").empty();
-            $(".dschoolName").append("<option value='0'>学院</option>");
-            var length = program.school.length;
-            for (var i = 0; i < length; i++) {
-                $(".dschoolName").append("<option value=" + program.school[i].acaId + ">" + program.school[i].academyName + "</option>");
-            }
-            $(".dschoolName option[value=" + 0 + "]").attr("selected", true);
-            // program.dmachange();
         }
     };
     pubMeth.getRowsnum("rowsnum");
-    program.getSchool();
-    program.getMajor();
+    program.getAcademyInfo();
     var isAdd;
     $(".add").click(function () {
         $("#major").modal();
         $(".majorName").val("");
-        $(".dschoolName option[value=" + 0 + "]").attr("selected", true);
+        $(".schoolName").val("");
         isAdd = true;
     });
     $(".saveData").click(function () {
         program.majorName = $(".majorName").val();
-        program.schoolName = $(".dschoolName option:selected").val();
+        program.schoolName = $(".schoolName").val();
         console.log(isAdd);
         if (isAdd == true) {
-            program.addMajor();
+            program.addAcademyInfo();
         } else {
-            program.updateMajor();
+            program.updateAcademyInfo();
         }
     });
     $("#delete").click(function () {
@@ -208,7 +179,7 @@ define(function (require, exports, module) {
         });
         var vals = valArr.join(',');// 转换为逗号隔开的字符串
         if (vals != "") {
-            program.deleteMagor(vals);
+            program.deleteAcademyInfo(vals);
         } else {
             pubMeth.alertInfo("alert-info", "请先勾选删除项！");
         }
@@ -229,7 +200,7 @@ define(function (require, exports, module) {
                     return;
                 }
                 program.page = num;
-                program.getMajor();
+                program.getAcademyInfo();
             }
         });
     } else {

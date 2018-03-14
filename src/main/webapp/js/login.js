@@ -25,11 +25,11 @@ $(function () {
                      program.alertInfo("alert-danger", "无此账号!");
                      }
                      else */
-                    if (result.status == "1" && result.isAdmin == "1") {
+                    if (result.loginRe.status == "1" && result.isAdmin == "1") {
                         window.location.href = "index.html";
                         document.cookie = "role=" + escape('Admin');
                     }
-                    else if (result.status == "1" && result.isAdmin == "0" && result.isTeacher == "0") {
+                    else if (result.loginRe.status == "1" && result.isAdmin == "0" && result.isTeacher == "0") {
                         var nowTime = program.getNowTime();
                         window.location.href = "examnotes.html?" + "&eId=" + result.examId;
                         document.cookie = "role=" + escape('Student');

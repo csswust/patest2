@@ -1,6 +1,9 @@
 package com.csswust.patest2.dao;
 
+import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.entity.ExamPaper;
+
+import java.util.List;
 
 public interface ExamPaperDao {
     int deleteByPrimaryKey(Integer exaPapId);
@@ -14,4 +17,12 @@ public interface ExamPaperDao {
     int updateByPrimaryKeySelective(ExamPaper record);
 
     int updateByPrimaryKey(ExamPaper record);
+
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
+    List<ExamPaper> selectByCondition(ExamPaper record, BaseQuery query);
+
+    int selectByConditionGetCount(ExamPaper record, BaseQuery query);
 }

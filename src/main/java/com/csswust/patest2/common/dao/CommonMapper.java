@@ -41,13 +41,13 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
 
     @Override
     public int deleteByIds(String ids) {
-        List<Integer> probIdList = null;
+        List<Integer> idList = null;
         try {
-            probIdList = ArrayUtil.StringToArray(ids, ",");
+            idList = ArrayUtil.StringToArray(ids, ",");
         } catch (Exception e) {
             log.error("CommonMapper.deleteByIds({}) error: {}", ids, e);
         }
-        return this.deleteByIdsList(probIdList);
+        return this.deleteByIdsList(idList);
     }
 
     @Override
@@ -56,7 +56,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             return 0;
         }
         try {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("list", idsList);
             return getSqlSession().delete(getPackage() + "deleteByIdsList", param);
         } catch (Exception e) {
@@ -150,9 +150,9 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
 
     @Override
     public List<T> selectByCondition(T record, Q query) {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         try {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("record", record);
             if (query != null && query.getPage() != null && query.getRows() != null) {
                 param.put("start", (query.getPage() - 1) * query.getRows());
@@ -168,7 +168,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
     @Override
     public int selectByConditionGetCount(T record, Q query) {
         try {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("record", record);
             if (query.getPage() != null && query.getRows() != null) {
                 param.put("start", (query.getPage() - 1) * query.getRows());
@@ -178,6 +178,33 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         } catch (Exception e) {
             log.error("CommonMapper.selectByConditionGetCount({}) error: {}", record, e);
             return 0;
+        }
+    }
+
+    @Override
+    public List<T> selectByIds(String ids) {
+        List<Integer> idList = null;
+        try {
+            idList = ArrayUtil.StringToArray(ids, ",");
+        } catch (Exception e) {
+            log.error("CommonMapper.selectByIds({}) error: {}", ids, e);
+        }
+        return this.selectByIdsList(idList);
+    }
+
+    @Override
+    public List<T> selectByIdsList(List<Integer> idsList) {
+        List<T> list = new ArrayList<>();
+        if (idsList == null || idsList.size() == 0) {
+            return list;
+        }
+        try {
+            Map<String, Object> param = new HashMap<>();
+            param.put("list", idsList);
+            return getSqlSession().selectList(getPackage() + "selectByIdsList", param);
+        } catch (Exception e) {
+            log.error("CommonMapper.selectByIdsList({}) error: {}", idsList, e);
+            return list;
         }
     }
 }

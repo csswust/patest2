@@ -140,6 +140,9 @@ public class MapperImplGenerator {
             if (file.isDirectory()) {
                 continue;
             }
+            if (!judge(file.getName())) {
+                continue;
+            }
             Element rootElement = readXml(file.getPath());
             Model model = getModel(rootElement);
             System.out.println(JSON.toJSONString(model));
@@ -150,19 +153,30 @@ public class MapperImplGenerator {
         }
     }
 
-    private static void generator(Model model, String fileName) throws IOException {
+    private static boolean judge(String fileName) {
         File newFile = new File(newPath + "/" + fileName);
         if (newFile.exists()) {
-            return;
+            return false;
         } else {
-            newFile.createNewFile();
+            try {
+                newFile.createNewFile();
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
+    }
+
+    private static void generator(Model model, String fileName) throws IOException {
+        File newFile = new File(newPath + "/" + fileName);
+        String resultMap = model.isBlob() ? "ResultMapWithBLOBs" : "BaseResultMap";
         PrintWriter printWriter = new PrintWriter(newFile);
         printWriter.printf("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
                 "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\" >\n");
         printWriter.printf("<mapper namespace=\"%s\">\n", model.getNamespace());
-        printWriter.printf("    <select id=\"selectByCondition\" resultMap=\"BaseResultMap\" parameterType=\"java.util.Map\">\n" +
-                "        SELECT\n");
+        printWriter.printf("    <select id=\"selectByCondition\" resultMap=\"%s\" parameterType=\"java.util.Map\">\n" +
+                "        SELECT\n", resultMap);
         printWriter.printf("        <include refid=\"Base_Column_List\"/>\n");
         if (model.isBlob()) {
             printWriter.printf("        ,\n" +
@@ -199,11 +213,24 @@ public class MapperImplGenerator {
                 "    </select>\n");
         printWriter.printf("    <delete id=\"deleteByIdsList\" parameterType=\"java.util.Map\">\n" +
                 "        delete from %s\n" +
-                "        where use_pro_id in\n" +
+                "        where %s in\n" +
                 "        <foreach collection=\"list\" item=\"item\" index=\"index\" open=\"(\" close=\")\" separator=\",\">\n" +
                 "            #{item}\n" +
                 "        </foreach>\n" +
-                "    </delete>\n", model.getTableName());
+                "    </delete>\n", model.getTableName(), model.getIdColumn());
+        printWriter.printf("    <select id=\"selectByIdsList\" resultMap=\"%s\" parameterType=\"java.util.Map\">\n" +
+                "        select\n" +
+                "        <include refid=\"Base_Column_List\" />\n", resultMap);
+        if (model.isBlob()) {
+            printWriter.printf("        ,\n" +
+                    "        <include refid=\"Blob_Column_List\"/>\n");
+        }
+        printWriter.printf("        from %s\n" +
+                "        where %s in\n" +
+                "        <foreach collection=\"list\" item=\"item\" index=\"index\" open=\"(\" close=\")\" separator=\",\">\n" +
+                "            #{item}\n" +
+                "        </foreach>\n" +
+                "    </select>\n", model.getTableName(), model.getIdColumn());
         printWriter.printf("</mapper>");
         printWriter.flush();
         printWriter.close();
@@ -263,7 +290,7 @@ public class MapperImplGenerator {
             in = new FileInputStream(new File(filePath));
             Document doc = reader.read(in);
             rootElement = doc.getRootElement();
-            // System.out.println("XMLUtil.readXml root name:" + rootElement.getName());
+            System.out.println("XMLUtil.readXml root name:" + rootElement.getName());
         } catch (Exception e) {
             System.err.println("XMLUtil.readXml error: " + e);
             return null;

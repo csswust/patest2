@@ -1,6 +1,9 @@
 package com.csswust.patest2.dao;
 
+import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.entity.KnowledgeInfo;
+
+import java.util.List;
 
 public interface KnowledgeInfoDao {
     int deleteByPrimaryKey(Integer knowId);
@@ -14,4 +17,12 @@ public interface KnowledgeInfoDao {
     int updateByPrimaryKeySelective(KnowledgeInfo record);
 
     int updateByPrimaryKey(KnowledgeInfo record);
+
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
+    List<KnowledgeInfo> selectByCondition(KnowledgeInfo record, BaseQuery query);
+
+    int selectByConditionGetCount(KnowledgeInfo record, BaseQuery query);
 }

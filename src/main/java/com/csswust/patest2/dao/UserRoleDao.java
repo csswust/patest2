@@ -1,6 +1,9 @@
 package com.csswust.patest2.dao;
 
+import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.entity.UserRole;
+
+import java.util.List;
 
 public interface UserRoleDao {
     int deleteByPrimaryKey(Integer useRolId);
@@ -14,4 +17,12 @@ public interface UserRoleDao {
     int updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
+
+    int deleteByIds(String ids);
+
+    int deleteByIdsList(List<Integer> idsList);
+
+    List<UserRole> selectByCondition(UserRole record, BaseQuery query);
+
+    int selectByConditionGetCount(UserRole record, BaseQuery query);
 }
