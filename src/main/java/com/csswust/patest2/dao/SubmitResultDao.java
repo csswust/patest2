@@ -1,6 +1,6 @@
 package com.csswust.patest2.dao;
 
-import com.csswust.patest2.common.dao.BaseQuery;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.SubmitResult;
 
 import java.util.List;

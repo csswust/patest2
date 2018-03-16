@@ -1,6 +1,6 @@
 package com.csswust.patest2.service.impl;
 
-import com.csswust.patest2.common.dao.BaseQuery;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserLoginLogDao;
@@ -20,8 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Service

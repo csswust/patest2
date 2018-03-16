@@ -1,7 +1,7 @@
 package com.csswust.patest2.dao.impl;
 
-import com.csswust.patest2.common.dao.BaseQuery;
-import com.csswust.patest2.common.dao.CommonMapper;
+import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.dao.common.CommonMapper;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.entity.UserInfo;
 import org.apache.commons.lang3.StringUtils;

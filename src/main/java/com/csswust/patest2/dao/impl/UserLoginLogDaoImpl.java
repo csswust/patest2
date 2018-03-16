@@ -1,7 +1,7 @@
 package com.csswust.patest2.dao.impl;
 
-import com.csswust.patest2.common.dao.BaseQuery;
-import com.csswust.patest2.common.dao.CommonMapper;
+import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.dao.common.CommonMapper;
 import com.csswust.patest2.dao.UserLoginLogDao;
 import com.csswust.patest2.entity.UserLoginLog;
 import org.springframework.stereotype.Repository;

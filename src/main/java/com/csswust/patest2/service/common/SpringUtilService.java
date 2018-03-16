@@ -1,4 +1,4 @@
-package com.csswust.patest2.common.service;
+package com.csswust.patest2.service.common;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

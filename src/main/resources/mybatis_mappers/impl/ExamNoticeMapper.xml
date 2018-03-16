@@ -28,6 +28,7 @@
             AND
             content = #{record.content}
         </if>
+        ORDER BY exa_not_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -57,6 +58,7 @@
             AND
             content = #{record.content}
         </if>
+        ORDER BY exa_not_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>

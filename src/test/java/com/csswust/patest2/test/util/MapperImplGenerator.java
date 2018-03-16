@@ -191,6 +191,7 @@ public class MapperImplGenerator {
         for (Field field : model.getBlobFieldList()) {
             printfField(printWriter, field.getColumn(), field.getProperty());
         }
+        printWriter.printf("        ORDER BY %s DESC\n", model.getIdColumn());
         printWriter.printf("        <if test=\"start != null and rows != null\">\n" +
                 "            LIMIT #{start}, #{rows}\n" +
                 "        </if>\n" +
@@ -207,6 +208,7 @@ public class MapperImplGenerator {
         for (Field field : model.getBlobFieldList()) {
             printfField(printWriter, field.getColumn(), field.getProperty());
         }
+        printWriter.printf("        ORDER BY %s DESC\n", model.getIdColumn());
         printWriter.printf("        <if test=\"start != null and rows != null\">\n" +
                 "            LIMIT #{start}, #{rows}\n" +
                 "        </if>\n" +

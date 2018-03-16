@@ -1,7 +1,7 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.common.dao.BaseDao;
-import com.csswust.patest2.common.dao.BaseQuery;
+import com.csswust.patest2.dao.common.BaseDao;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.MajorInfoDao;
@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.csswust.patest2.common.service.BatchQueryService.getFieldByList;
-import static com.csswust.patest2.common.service.BatchQueryService.selectRecordByIds;
+import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
+import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
 
 /**
  * Created by 972536780 on 2018/3/12.

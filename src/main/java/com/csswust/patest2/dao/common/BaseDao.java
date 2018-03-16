@@ -1,4 +1,4 @@
-package com.csswust.patest2.common.dao;
+package com.csswust.patest2.dao.common;
 
 import java.util.List;
 

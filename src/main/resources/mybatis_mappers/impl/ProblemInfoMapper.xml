@@ -88,6 +88,7 @@
             AND
             standard_source = #{record.standardSource}
         </if>
+        ORDER BY prob_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -177,6 +178,7 @@
             AND
             standard_source = #{record.standardSource}
         </if>
+        ORDER BY prob_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>

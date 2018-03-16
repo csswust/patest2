@@ -32,6 +32,7 @@
             AND
             value = #{record.value}
         </if>
+        ORDER BY site_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -65,6 +66,7 @@
             AND
             value = #{record.value}
         </if>
+        ORDER BY site_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>

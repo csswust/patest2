@@ -2,7 +2,7 @@ package com.csswust.patest2.service.impl;
 
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
-import com.csswust.patest2.common.dao.BaseQuery;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.MajorInfoDao;
 import com.csswust.patest2.dao.UserProfileDao;
@@ -14,7 +14,6 @@ import com.csswust.patest2.service.UserProfileService;
 import com.csswust.patest2.service.result.UserProfileLoadRe;
 import jxl.Sheet;
 import jxl.Workbook;
-import jxl.read.biff.BiffException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +74,7 @@ public class UserProfileServiceImpl extends BaseService implements UserProfileSe
             loadRe.setDesc("复制文件失败");
             return loadRe;
         }
-        InputStream in = null;
+        InputStream in;
         try {
             in = new FileInputStream(excelFile);
         } catch (FileNotFoundException e) {

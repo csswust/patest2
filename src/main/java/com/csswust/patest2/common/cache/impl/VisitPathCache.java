@@ -2,7 +2,7 @@ package com.csswust.patest2.common.cache.impl;
 
 import com.csswust.patest2.common.cache.Cache;
 import com.csswust.patest2.common.cache.CacheLoader;
-import com.csswust.patest2.common.service.SpringUtilService;
+import com.csswust.patest2.service.common.SpringUtilService;
 import com.csswust.patest2.dao.VisitPathDao;
 import com.csswust.patest2.entity.VisitPath;
 

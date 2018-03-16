@@ -1,7 +1,6 @@
 package com.csswust.patest2.controller;
 
 import com.csswust.patest2.common.Base;
-import com.csswust.patest2.common.dao.CommonMapper;
 import com.csswust.patest2.common.paramJudge.ParamCallBack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

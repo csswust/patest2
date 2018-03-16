@@ -1,11 +1,9 @@
 package com.csswust.patest2.test.dao;
 
 import com.alibaba.fastjson.JSON;
-import com.csswust.patest2.common.dao.BaseDao;
+import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.AcademyInfoDao;
-import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.entity.AcademyInfo;
-import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.test.JunitBaseServiceDaoTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -76,6 +76,7 @@
             AND
             err_msg = #{record.errMsg}
         </if>
+        ORDER BY subm_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -153,6 +154,7 @@
             AND
             err_msg = #{record.errMsg}
         </if>
+        ORDER BY subm_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>

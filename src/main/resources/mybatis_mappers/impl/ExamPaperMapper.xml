@@ -42,6 +42,7 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        ORDER BY exa_pap_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -87,6 +88,7 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        ORDER BY exa_pap_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>

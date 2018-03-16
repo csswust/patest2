@@ -1,6 +1,6 @@
-package com.csswust.patest2.common.service;
+package com.csswust.patest2.service.common;
 
-import com.csswust.patest2.common.dao.BaseDao;
+import com.csswust.patest2.dao.common.BaseDao;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

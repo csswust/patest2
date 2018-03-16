@@ -58,6 +58,7 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        ORDER BY user_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -119,6 +120,7 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        ORDER BY user_id DESC
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
