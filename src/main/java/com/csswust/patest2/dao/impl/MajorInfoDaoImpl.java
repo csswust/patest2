@@ -4,9 +4,11 @@ import com.csswust.patest2.common.dao.BaseQuery;
 import com.csswust.patest2.common.dao.CommonMapper;
 import com.csswust.patest2.dao.MajorInfoDao;
 import com.csswust.patest2.entity.MajorInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class MajorInfoDaoImpl extends CommonMapper<MajorInfo, BaseQuery> implements MajorInfoDao {
@@ -25,5 +27,16 @@ public class MajorInfoDaoImpl extends CommonMapper<MajorInfo, BaseQuery> impleme
     @Override
     public void updatInit(MajorInfo record) {
         record.setModifyTime(new Date());
+    }
+
+    @Override
+    public MajorInfo selectByMajorName(String majorName) {
+        if (StringUtils.isBlank(majorName)) {
+            return null;
+        }
+        MajorInfo record = new MajorInfo();
+        record.setMajorName(majorName);
+        List<MajorInfo> result = this.selectByCondition(record, new BaseQuery(1, 1));
+        return (result != null && result.size() != 0) ? result.get(0) : null;
     }
 }

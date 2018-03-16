@@ -14,11 +14,11 @@ define(function (require, exports, module) {
         page: '1',
         userId: '',
         className: '',
-        realName: '',
+        realName: null,
         term: '',
-        umid: '',
+        umid: null,
         mumid: '',
-        studentNum: "",
+        studentNum: null,
         schoolName: '',
         dschoolName: '',
         majorName: '',
@@ -26,36 +26,36 @@ define(function (require, exports, module) {
         major: [],
         students: [],
         html: '',
-        searTitle: '',
-        searnum: '',
-        majorValue: '',
+        searTitle: null,
+        searnum: null,
+        majorValue: null,
         count: '',
         /**
          * 展示表格
          */
         showProfile: function () {
-            var length = program.students.data.length;
+            var length = program.students.list.length;
             program.html = "";
             for (var i = 0; i < length; i++) {
-                if (program.students.data[i].schoolMajor.schoolName == null) {
-                    program.students.data[i].schoolMajor.schoolName = "";
+                if (program.students.academyInfoList[i].academyName == null) {
+                    program.students.academyInfoList[i].academyName = "";
                 }
-                if (program.students.data[i].schoolMajor.majorName == null) {
-                    program.students.data[i].schoolMajor.majorName = "";
+                if (program.students.majorInfoList[i].majorName == null) {
+                    program.students.majorInfoList[i].majorName = "";
                 }
-                if (program.students.data[i].term == null) {
-                    program.students.data[i].term == " ";
+                if (program.students.list[i].entranceYear == null) {
+                    program.students.list[i].entranceYear == " ";
                 }
                 program.html += '<tr>'
-                    + '<td style="width:80px;"><input type="checkbox" value="' + program.students.data[i].usrpfId + '" name="title"/></td>'
-                    + '<td>' + program.students.data[i].usrpfId + '</td>'
-                    + '<td>' + program.students.data[i].studentNumber + '</td>'
-                    + '<td>' + program.students.data[i].realName + '</td>'
-                    + '<td>' + program.students.data[i].schoolMajor.schoolName + '</td>'
-                    + '<td>' + program.students.data[i].schoolMajor.majorName + '</td>'
-                    + '<td>' + program.students.data[i].className + '</td>'
-                    + '<td>' + program.students.data[i].term + '</td>'
-                    + '<td><a href="javascript:;"class="title" value="' + program.students.data[i].usrpfId + '" >修改</a></td>'
+                    + '<td style="width:80px;"><input type="checkbox" value="' + program.students.list[i].useProId + '" name="title"/></td>'
+                    + '<td>' + program.students.list[i].useProId + '</td>'
+                    + '<td>' + program.students.list[i].studentNumber + '</td>'
+                    + '<td>' + program.students.list[i].realName + '</td>'
+                    + '<td>' + program.students.academyInfoList[i].academyName + '</td>'
+                    + '<td>' + program.students.majorInfoList[i].majorName + '</td>'
+                    + '<td>' + program.students.list[i].className + '</td>'
+                    + '<td>' + program.students.list[i].entranceYear + '</td>'
+                    + '<td><a href="javascript:;"class="title" value="' + program.students.list[i].useProId + '" >修改</a></td>'
                     + '</tr>';
             }
         },
@@ -64,17 +64,17 @@ define(function (require, exports, module) {
          */
         selectProfile: function () {
             $.ajax({
-                type: "get",
+                type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/selectProfileandSchoolMajorBycondition",
+                url: "../userProfile/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
-                    "umid": program.majorValue,
+                    "majorId": program.majorValue,
                     "realName": program.searTitle,
                     "studentNumber": program.searnum,
                     page: program.page,
-                    rows: pubMeth.rowsnum,
+                    rows: pubMeth.rowsnum
                 },
                 success: function (result) {
                     console.log(result);
@@ -111,30 +111,30 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/selectProfile",
+                url: "../userProfile/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
-                    usrpfId: program.userId
+                    useProId: program.userId
                 },
                 success: function (result) {
                     console.log(result);
-                    program.mumid = result.data[0].umid;
+                    program.mumid = result.list[0].majorId;
                     program.getSchool();
                     for (var i = 0; i < program.school.length; i++) {
-                        $(".schoolName").append("<option value=" + program.school[i].umid + ">" + program.school[i].schoolName + "</option>");
+                        $(".schoolName").append("<option value=" + program.school[i].acaId + ">" + program.school[i].academyName + "</option>");
                     }
-                    if (result.schoolMajor[0] != null) {
-                        program.getMajorName(result.schoolMajor[0].schoolName);
+                    if (result.academyInfoList[0] != null) {
+                        program.getMajorName(result.academyInfoList[0].acaId);
                         for (var i = 0; i < program.major.length; i++) {
-                            $(".knowName").append("<option value=" + program.major[i].umid + ">" + program.major[i].majorName + "</option>");
+                            $(".knowName").append("<option value=" + program.major[i].majId + ">" + program.major[i].majorName + "</option>");
                         }
                     }
-                    $(".schoolName option[value=" + result.schoolUmid[0] + "]").attr("selected", true);
-                    $(".studentNum").val(result.data[0].studentNumber);
-                    $(".realName").val(result.data[0].realName);
-                    $(".className").val(result.data[0].className);
-                    $(".term").val(result.data[0].term);
+                    $(".schoolName option[value=" + result.academyInfoList[0].acaId + "]").attr("selected", true);
+                    $(".studentNum").val(result.list[0].studentNumber);
+                    $(".realName").val(result.list[0].realName);
+                    $(".className").val(result.list[0].className);
+                    $(".term").val(result.list[0].entranceYear);
                     $(".knowName option[value=" + program.mumid + "]").attr("selected", true);
                 }
             });
@@ -146,7 +146,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/deleteProfile",
+                url: "../userProfile/deleteByIds",
                 dataType: 'json',
                 async: false,
                 data: {
@@ -170,17 +170,17 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/updateProfile",
+                url: "../userProfile/updateById",
                 dataType: 'json',
                 async: false,
                 data: {
-                    usrpfId: program.userId,
+                    useProId: program.userId,
                     realName: program.realName,
                     className: program.className,
                     studentNumber: program.studentNum,
                     isStudent: 1,
-                    term: program.term,
-                    umid: program.umid,
+                    entranceYear: program.term,
+                    majorId: program.umid,
                 },
                 success: function (result) {
                     console.log(result);
@@ -202,16 +202,16 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/insertProfile",
+                url: "../userProfile/insertOne",
                 dataType: 'json',
                 async: false,
                 data: {
                     realName: program.realName,
                     className: program.className,
                     studentNumber: program.studentNum,
-                    term: program.term,
+                    entranceYear: program.term,
                     isStudent: '1',
-                    umid: program.umid,
+                    majorId: program.umid,
                 },
                 success: function (result) {
                     console.log(result);
@@ -233,7 +233,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../major/selectOnlySchoolName",
+                url: "../academyInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 success: function (result) {
@@ -246,15 +246,15 @@ define(function (require, exports, module) {
         /**
          * 查询所有专业
          */
-        getMajorName: function (webschoolName) {
+        getMajorName: function (webschoolId) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../major/selectMajorName",
+                url: "../majorInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
-                    schoolName: webschoolName,
+                    academyId: webschoolId,
                 },
                 success: function (result) {
                     console.log(result);
@@ -274,24 +274,33 @@ define(function (require, exports, module) {
         },
         //上传学生名单
         importList: function () {
+            var isIgnoreError = $(".isIgnoreError")[0].checked;
             $.ajaxFileUpload({
-                url: "../user/leadUserInfo",
+                url: "../userProfile/insertByExcel",
                 secureuri: false,
                 fileElementId: "namefile",// 文件选择框的id属性
                 dataType: "json",
-                data: {},
+                data: {
+                    isIgnoreError: isIgnoreError
+                },
                 success: function (result) {
                     console.log(result);
                     console.log(result.status);
-                    if (result.status == '1') {
-                        pubMeth.alertInfo("alert-success", "上传成功");
+                    var errorList = result.userProfileLoadRe.errorList;
+                    if (result.userProfileLoadRe.status >= 0) {
+                        var x = "上传成功" + result.userProfileLoadRe.status + "条";
+                        if (errorList) {
+                            x = x + ",失败" + errorList.length + "条";
+                        }
+                        pubMeth.alertInfo("alert-success", x);
                         program.selectProfile();
                     } else {
-                        pubMeth.alertInfo("alert-warning", "上传失败");
+                        pubMeth.alertInfo("alert-danger", result.userProfileLoadRe.desc);
+                        /*pubMeth.alertInfo("alert-warning", "上传失败");*/
                     }
                 },
                 error: function () {
-                    pubMeth.alertInfo("alert-warning", "上传失败");
+                    pubMeth.alertInfo("alert-danger", "上传失败");
                 }
             });
         },
@@ -300,7 +309,7 @@ define(function (require, exports, module) {
             $(".dschoolName").append("<option>学院</option>");
             var length = program.school.length;
             for (var i = 0; i < length; i++) {
-                $(".dschoolName").append("<option value=" + program.school[i].umid + ">" + program.school[i].schoolName + "</option>");
+                $(".dschoolName").append("<option value=" + program.school[i].acaId + ">" + program.school[i].academyName + "</option>");
             }
             program.dmachange();
         },
@@ -309,13 +318,13 @@ define(function (require, exports, module) {
             $(".schoolName").append("<option>学院</option>");
             var length = program.school.length;
             for (var i = 0; i < length; i++) {
-                $(".schoolName").append("<option value=" + program.school[i].umid + ">" + program.school[i].schoolName + "</option>");
+                $(".schoolName").append("<option value=" + program.school[i].acaId + ">" + program.school[i].academyName + "</option>");
             }
             program.machange();
         },
         dmachange: function () {
             $(".dknowName").html("");
-            program.dschoolName = $(".dschoolName option:selected").text();
+            program.dschoolName = $(".dschoolName option:selected").val();
             if (program.dschoolName == "学院") {
                 $(".dknowName").html("<option>专业</option>");
                 return;
@@ -323,21 +332,21 @@ define(function (require, exports, module) {
             console.log(program.dschoolName);
             program.getMajorName(program.dschoolName);
             for (var i = 0; i < program.major.length; i++) {
-                $(".dknowName").append("<option value=" + program.major[i].umid + ">" + program.major[i].majorName + "</option>");
+                $(".dknowName").append("<option value=" + program.major[i].majId + ">" + program.major[i].majorName + "</option>");
             }
         },
         machange: function () {
             $(".knowName").html("");
-            program.schoolName = $(".schoolName option:selected").text();
+            program.schoolName = $(".schoolName option:selected").val();
             if (program.schoolName == "学院") {
                 $(".knowName").html("<option>专业</option>");
                 return;
             }
             program.getMajorName(program.schoolName);
             for (var i = 0; i < program.major.length; i++) {
-                $(".knowName").append("<option value=" + program.major[i].umid + ">" + program.major[i].majorName + "</option>");
+                $(".knowName").append("<option value=" + program.major[i].majId + ">" + program.major[i].majorName + "</option>");
             }
-        },
+        }
     };
     pubMeth.getRowsnum("rowsnum");
     program.selectProfile();
@@ -407,9 +416,9 @@ define(function (require, exports, module) {
         $('#importuser').modal({
             backdrop: 'static'
         });
-        $(".comImport").click(function () {
-            program.importList();
-        });
+    });
+    $(".comImport").click(function () {
+        program.importList();
     });
     if (program.count > 0) {
         $(".countnum").html(program.count);

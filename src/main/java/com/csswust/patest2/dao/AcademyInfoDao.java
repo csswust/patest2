@@ -25,4 +25,6 @@ public interface AcademyInfoDao {
     List<AcademyInfo> selectByCondition(AcademyInfo record, BaseQuery query);
 
     int selectByConditionGetCount(AcademyInfo record, BaseQuery query);
+
+    AcademyInfo selectByAcademyName(String academyName);
 }

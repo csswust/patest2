@@ -25,4 +25,6 @@ public interface MajorInfoDao {
     List<MajorInfo> selectByCondition(MajorInfo record, BaseQuery query);
 
     int selectByConditionGetCount(MajorInfo record, BaseQuery query);
+
+    MajorInfo selectByMajorName(String majorName);
 }

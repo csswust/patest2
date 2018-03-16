@@ -20,12 +20,14 @@ public class BatchQueryService {
      * @param <C>       参数list类型
      * @return ids
      */
-    public static <C> List<Integer> getFieldByList(List<C> paramLsit, String fieldName) {
+    public static <C> List<Integer> getFieldByList(List<C> paramLsit, String fieldName, Class<C> clz) {
         List<Integer> fieldList = new ArrayList<>();
         if (paramLsit == null || paramLsit.size() == 0) {
             return fieldList;
         }
-        Class<?> clz = paramLsit.get(0).getClass();
+        for (int i = 0; i < paramLsit.size(); i++) {
+            fieldList.add(null);
+        }
         Field field = null;
         try {
             field = clz.getDeclaredField(fieldName);
@@ -33,16 +35,25 @@ public class BatchQueryService {
         } catch (NoSuchFieldException e) {
             return fieldList;
         }
-        for (C item : paramLsit) {
+        for (int i = 0; i < paramLsit.size(); i++) {
+            C item = paramLsit.get(i);
+            if (item == null) {
+                fieldList.set(i, null);
+                continue;
+            }
             try {
                 Integer value = (Integer) field.get(item);
-                fieldList.add(value);
+                fieldList.set(i, value);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
-                fieldList.add(null);
+                fieldList.set(i, null);
             }
         }
         return fieldList;
+    }
+
+    public static <T> List<T> selectRecordByIds(List<Integer> paramLsit, String fieldName, BaseDao baseDao) {
+        return selectRecordByIds(paramLsit, fieldName, baseDao, null);
     }
 
     /**
@@ -52,24 +63,26 @@ public class BatchQueryService {
      * @param fieldName 字段名
      * @param baseDao   对应处理的dao
      * @param <T>       返回结果类似
+     * @param clz       如果结果为空，那么有t填充
      * @return 返回结果
      */
-    public static <T> List<T> selectRecordByIds(List<Integer> paramLsit, String fieldName, BaseDao baseDao) {
+    public static <T> List<T> selectRecordByIds(List<Integer> paramLsit, String fieldName, BaseDao baseDao, Class<T> clz) {
         Map<Integer, T> map = new HashMap<>();
         List<T> temp = baseDao.selectByIdsList(paramLsit);
         List<T> resultList = new ArrayList<>();
-        for (int i = 0; i < paramLsit.size(); i++) {
-            resultList.add(null);
-        }
-        if (temp == null || temp.size() == 0) {
-            return resultList;
-        }
-        Class<?> clz = temp.get(0).getClass();
         Field field = null;
+        T replace = null;
         try {
+            replace = clz.newInstance();
             field = clz.getDeclaredField(fieldName);
             field.setAccessible(true);
-        } catch (NoSuchFieldException e) {
+        } catch (Exception e) {
+            return resultList;
+        }
+        for (int i = 0; i < paramLsit.size(); i++) {
+            resultList.add(replace);
+        }
+        if (temp == null || temp.size() == 0) {
             return resultList;
         }
         for (T item : temp) {
@@ -82,9 +95,10 @@ public class BatchQueryService {
         }
         for (int i = 0; i < paramLsit.size(); i++) {
             if (paramLsit.get(i) == null) {
-                resultList.set(i, null);
+                resultList.set(i, replace);
             } else {
-                resultList.set(i, map.get(paramLsit.get(i)));
+                T reulut = map.get(paramLsit.get(i));
+                resultList.set(i, reulut == null ? replace : reulut);
             }
         }
         return resultList;

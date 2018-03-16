@@ -9,6 +9,7 @@ import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.service.BaseService;
 import com.csswust.patest2.service.UserInfoService;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
@@ -24,7 +25,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Service
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl extends BaseService implements UserInfoService {
     private static Logger log = LoggerFactory.getLogger(UserInfoServiceImpl.class);
     @Autowired
     private UserInfoDao userInfoDao;

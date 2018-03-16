@@ -202,11 +202,19 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
+        <!-- xml解析 -->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
         </dependency>
+        <!--表格处理-->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.12</version>
+        </dependency>
+        <!-- ueditor（富文本编辑器） -->
         <dependency>
             <groupId>com.baidu.ueditor</groupId>
             <artifactId>ueditor</artifactId>

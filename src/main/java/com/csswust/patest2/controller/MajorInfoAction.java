@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.csswust.patest2.common.service.BatchQueryService.getFieldByList;
+import static com.csswust.patest2.common.service.BatchQueryService.selectRecordByIds;
 
 /**
  * Created by 972536780 on 2018/3/14.
@@ -38,9 +40,9 @@ public class MajorInfoAction {
         List<MajorInfo> majorInfoList = majorInfoDao.selectByCondition(majorInfo,
                 new BaseQuery(page, rows));
         Integer total = majorInfoDao.selectByConditionGetCount(majorInfo, new BaseQuery());
-        List<AcademyInfo> academyInfoList = BatchQueryService.selectRecordByIds(
-                BatchQueryService.getFieldByList(majorInfoList, "academyId"),
-                "acaId", (BaseDao) academyInfoDao);
+        List<AcademyInfo> academyInfoList = selectRecordByIds(
+                getFieldByList(majorInfoList, "academyId", MajorInfo.class),
+                "acaId", (BaseDao) academyInfoDao, AcademyInfo.class);
         res.put("total", total);
         res.put("list", majorInfoList);
         res.put("academyInfoList", academyInfoList);
