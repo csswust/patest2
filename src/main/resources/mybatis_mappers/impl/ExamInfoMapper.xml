@@ -44,7 +44,7 @@
             AND
             description = #{record.description}
         </if>
-        ORDER BY exam_id DESC
+        <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -90,7 +90,7 @@
             AND
             description = #{record.description}
         </if>
-        ORDER BY exam_id DESC
+        <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>

@@ -38,6 +38,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
     public UserInfoInsertRe insert(UserInfo userInfo, String studentNumber) {
         UserInfoInsertRe result = new UserInfoInsertRe();
         if (StringUtils.isBlank(studentNumber)) {
+            result.setStatus(-1);
             result.setDesc("学号不能为空");
             return result;
         }
@@ -45,6 +46,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         userProfileCondition.setStudentNumber(studentNumber);
         List<UserProfile> userProfileList = userProfileDao.selectByCondition(userProfileCondition, new BaseQuery(1, 1));
         if (userProfileList == null || userProfileList.size() == 0) {
+            result.setStatus(-2);
             result.setDesc("未找到对应学号的学生");
             return result;
         }
@@ -55,6 +57,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             userInfo.setPassword(MD5Util.encode(userInfo.getPassword()));
         } catch (Exception e) {
             log.error("MD5Util.encode passwor : {} derror: {}", userInfo.getPassword(), e);
+            result.setStatus(-3);
             result.setDesc("密码加密失败");
             return result;
         }

@@ -7,7 +7,7 @@ $(function () {
             $.ajax({
                 type: "POST",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/login",
+                url: "../userInfo/login",
                 dataType: 'json',
                 async: false,
                 data: {

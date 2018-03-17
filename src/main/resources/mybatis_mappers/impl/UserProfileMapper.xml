@@ -42,7 +42,7 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
-        ORDER BY use_pro_id DESC
+        <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>
@@ -88,7 +88,7 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
-        ORDER BY use_pro_id DESC
+        <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
         </if>

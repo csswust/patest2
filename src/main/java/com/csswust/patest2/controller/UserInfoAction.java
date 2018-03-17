@@ -1,11 +1,17 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.paramJudge.StringCallBack;
+import com.csswust.patest2.dao.UserInfoDao;
+import com.csswust.patest2.dao.UserProfileDao;
+import com.csswust.patest2.dao.common.BaseDao;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserProfile;
 import com.csswust.patest2.service.UserInfoService;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,13 +19,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
+import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
+
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/userInfo")
 public class UserInfoAction extends BaseAction {
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private UserProfileDao userProfileDao;
+    @Autowired
+    private UserInfoDao userInfoDao;
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> login(
@@ -74,8 +88,36 @@ public class UserInfoAction extends BaseAction {
         return res;
     }
 
-    @RequestMapping(value = "/insertUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> insertUserInfo(
+    @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> selectByCondition(
+            UserInfo userInfo,
+            @RequestParam(required = false) String realName,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer rows) {
+        userInfo = paramVerificate(userInfo, new StringCallBack());
+        Map<String, Object> res = new HashMap<>();
+        BaseQuery baseQuery = new BaseQuery();
+        if (StringUtils.isNotBlank(realName)) {
+            UserProfile userProfile = new UserProfile();
+            userProfile.setRealName(realName);
+            List<UserProfile> userProfileList = userProfileDao.selectByCondition(userProfile, new BaseQuery());
+            List<Integer> ids = getFieldByList(userProfileList, "useProId", UserProfile.class);
+            baseQuery.setCustom("userProfileIds", ids);
+        }
+        Integer total = userInfoDao.selectByConditionGetCount(userInfo, baseQuery);
+        baseQuery.setPageRows(page, rows);
+        List<UserInfo> userInfoList = userInfoDao.selectByCondition(userInfo, baseQuery);
+        List<UserProfile> userProfileList = selectRecordByIds(
+                getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                "useProId", (BaseDao) userProfileDao, UserProfile.class);
+        res.put("total", total);
+        res.put("userInfoList", userInfoList);
+        res.put("userProfileList", userProfileList);
+        return res;
+    }
+
+    @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> insertOne(
             @RequestParam(required = true) String username,
             @RequestParam(required = true) String password,
             @RequestParam(required = true) String studentNumber,

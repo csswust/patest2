@@ -118,7 +118,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/logout",
+                url: "../userInfo/logout",
                 dataType: 'json',
                 async: false,
                 success: function (result) {

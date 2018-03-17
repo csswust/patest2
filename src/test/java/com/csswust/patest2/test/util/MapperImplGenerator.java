@@ -131,6 +131,7 @@ class Model {
 public class MapperImplGenerator {
     private static String oldPath = "E:\\javawork\\patest2\\src\\main\\resources\\mybatis_mappers";
     private static String newPath = oldPath + "/impl";
+    private static String customPath = oldPath + "/custom";
 
     public static void main(String[] args) throws IOException {
         File oldPathFile = new File(oldPath);
@@ -140,21 +141,41 @@ public class MapperImplGenerator {
             if (file.isDirectory()) {
                 continue;
             }
-            if (!judge(file.getName())) {
+            if (!judge(newPath + "/" + file.getName())) {
                 continue;
             }
             Element rootElement = readXml(file.getPath());
             Model model = getModel(rootElement);
             System.out.println(JSON.toJSONString(model));
             generator(model, file.getName());
+
+            if (!judge(customPath + "/" + file.getName())) {
+                continue;
+            }
+            generatorCustom(model, file.getName());
             if (count++ >= 100) {
                 break;
             }
         }
     }
 
-    private static boolean judge(String fileName) {
-        File newFile = new File(newPath + "/" + fileName);
+    private static void generatorCustom(Model model, String fileName) throws IOException {
+        File newFile = new File(customPath + "/" + fileName);
+        String resultMap = model.isBlob() ? "ResultMapWithBLOBs" : "BaseResultMap";
+        PrintWriter printWriter = new PrintWriter(newFile);
+        printWriter.printf("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
+                "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\" >\n" +
+                "<mapper namespace=\"%s\">\n" +
+                "    <sql id=\"custom_condition\">\n" +
+                "        ORDER BY %s DESC\n" +
+                "    </sql>\n" +
+                "</mapper>", model.getNamespace(), model.getIdColumn());
+        printWriter.flush();
+        printWriter.close();
+    }
+
+    private static boolean judge(String path) {
+        File newFile = new File(path);
         if (newFile.exists()) {
             return false;
         } else {
@@ -191,7 +212,7 @@ public class MapperImplGenerator {
         for (Field field : model.getBlobFieldList()) {
             printfField(printWriter, field.getColumn(), field.getProperty());
         }
-        printWriter.printf("        ORDER BY %s DESC\n", model.getIdColumn());
+        printWriter.printf("        <include refid=\"custom_condition\"/>\n");
         printWriter.printf("        <if test=\"start != null and rows != null\">\n" +
                 "            LIMIT #{start}, #{rows}\n" +
                 "        </if>\n" +
@@ -208,7 +229,7 @@ public class MapperImplGenerator {
         for (Field field : model.getBlobFieldList()) {
             printfField(printWriter, field.getColumn(), field.getProperty());
         }
-        printWriter.printf("        ORDER BY %s DESC\n", model.getIdColumn());
+        printWriter.printf("        <include refid=\"custom_condition\"/>\n");
         printWriter.printf("        <if test=\"start != null and rows != null\">\n" +
                 "            LIMIT #{start}, #{rows}\n" +
                 "        </if>\n" +
