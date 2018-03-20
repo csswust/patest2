@@ -27,4 +27,8 @@ public interface ProblemInfoDao {
     List<ProblemInfo> selectByCondition(ProblemInfo record, BaseQuery query);
 
     int selectByConditionGetCount(ProblemInfo record, BaseQuery query);
+
+    List<ProblemInfo> selectByIds(String ids);
+
+    List<ProblemInfo> selectByIdsList(List<Integer> idsList);
 }

@@ -77,14 +77,13 @@
             </set>
         </property>
     </bean>
-    <!-- 注册mvc驱动 -->
-    <mvc:annotation-driven conversion-service="conversionService"/>
 
     <!-- 返回json数据对时间进行格式化 -->
     <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
         <property name="simpleDateFormat" value="yyyy-MM-dd HH:mm:ss"/>
     </bean>
-    <mvc:annotation-driven>
+    <!-- 注册mvc驱动 -->
+    <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>

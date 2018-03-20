@@ -9,7 +9,7 @@ import com.csswust.patest2.dao.UserProfileDao;
 import com.csswust.patest2.entity.AcademyInfo;
 import com.csswust.patest2.entity.MajorInfo;
 import com.csswust.patest2.entity.UserProfile;
-import com.csswust.patest2.service.BaseService;
+import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.UserProfileService;
 import com.csswust.patest2.service.result.UserProfileLoadRe;
 import jxl.Sheet;

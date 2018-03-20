@@ -1,4 +1,4 @@
-package com.csswust.patest2.service;
+package com.csswust.patest2.service.common;
 
 import com.csswust.patest2.common.Base;
 

@@ -15,6 +15,8 @@ public class ProblemInfo {
 
     private Integer codeLimit;
 
+    private Integer knowId;
+
     private Integer testdataNum;
 
     private String scoreRatio;
@@ -89,6 +91,14 @@ public class ProblemInfo {
 
     public void setCodeLimit(Integer codeLimit) {
         this.codeLimit = codeLimit;
+    }
+
+    public Integer getKnowId() {
+        return knowId;
+    }
+
+    public void setKnowId(Integer knowId) {
+        this.knowId = knowId;
     }
 
     public Integer getTestdataNum() {

@@ -1,236 +1,240 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="renderer" content="webkit">
-	<title>添加问题</title>
-	<link rel="shortcut icon" href="../img/favicon.ico" >
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../css/common.css">
-	<link rel="stylesheet" href="../css/question.css">	  
-	<!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>添加问题</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/question.css">
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<div id="head"><!-- 头部菜单 --></div>
-	<div class="container-fuild">
-   <div class="row">
-    <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
-    <div class="col-md-10">
-     <div class="tip" >
-			 <div class="alert alert-warning"  id="tip">
-  			  <a href="#" class="close" data-dismiss="alert">&times;</a>
-   			  <strong>小提示：带*号的为必填，请仔细检查</strong>
-			</div>
-   </div>
-     <ol class="breadcrumb">
-	  <li><a href="index.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
-	  <li><a href="problem.html">题库列表</a></li>
-	  <li class="active pageName">添加问题</li>
-	</ol>
-	 
-   <div class="row content" >
-   <form class="form-horizontal" >
-   <div class="form-group">
-    <label class="col-md-2 control-label">标题：</label>
-    <div class="col-sm-3">
-      <input type="text" class="form-control ptitle"  required>
+<div id="head"><!-- 头部菜单 --></div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
+        <div class="col-md-10">
+            <div class="tip">
+                <div class="alert alert-warning" id="tip">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>小提示：带*号的为必填，请仔细检查</strong>
+                </div>
+            </div>
+            <ol class="breadcrumb">
+                <li><a href="index.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a>
+                </li>
+                <li><a href="problem.html">题库列表</a></li>
+                <li class="active pageName">添加问题</li>
+            </ol>
+
+            <div class="row content">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">标题：</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control ptitle" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">难度：</label>
+                        <div class="col-sm-2">
+                            <select class="form-control level">
+                                <option value="1">容易</option>
+                                <option value="2">中等</option>
+                                <option value="3">困难</option>
+                            </select>
+                        </div>
+                        <label class="col-md-1 control-label">判题程序：</label>
+                        <div class="col-sm-2">
+                            <select class="form-control judgeModel">
+                                <option value="0">标准</option>
+                                <option value="1">特殊</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">时间限制(MS)：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control limitTime" value="1000">
+                        </div>
+                        <label class="col-md-1 control-label">内存限制(KB)：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control limitMemory" value="65535">
+                        </div>
+                        <label class="col-md-1 control-label">长度限制(B)：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control codeLimit" value="5000">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">课程：</label>
+                        <div class="col-sm-2">
+                            <select class="form-control courseName">
+                            </select>
+                        </div>
+                        <label class="col-md-1 control-label">知识点：</label>
+                        <div class="col-sm-2">
+                            <select class="form-control knowName">
+                            </select>
+                        </div>
+                        <label class="col-md-1 control-label">来源：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control author">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">测试组数：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control testdataNum" value="2">
+                        </div>
+                        <label class="col-md-1 control-label">分数比例：</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control scoreRatio  scoreprop" value="50,50">
+                        </div>
+                        <div class="col-md-4 tips ScoreSetTips">用“,”隔开,各数相加等于100并无小数部分;例如：20,20,30,30</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">描述：</label>
+                        <div class="col-md-5">
+                            <script id="description" class="description" name="content" type="text/plain"></script>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">输入约定：</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control inputTip" rows="4"></textarea>
+                        </div>
+                        <label class="col-md-1 control-label">输出约定：</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control outputTip" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">样例输入：</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control inputSample" rows="4"></textarea>
+                        </div>
+                        <label class="col-md-1 control-label">样例输出：</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control outputSample" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">参考代码：</label>
+                        <div class="col-md-5">
+                            <textarea class="form-control standardSource" id="standardSource" rows="5"></textarea>
+                        </div>
+                        <div class="col-md-1">
+                            <select class="form-control selectJudId testCode">
+                                <option value="1">GCC</option>
+                                <option value="2">G++</option>
+                                <option value="3">JAVA</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <button type="button" id="testCode" class="btn btn-info testCode" data-loading-text="运行中"
+                                    autocomplete="off">
+                                <span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;测试
+                            </button>
+                        </div>
+                        </br></br></br>
+                        <div class="col-md-4 ">
+                            <p class="label submitResult" style="display:none;">wait...</p>
+                        </div>
+                    </div>
+                    <div class="form-group testDataByForm">
+                        <label class="col-md-2 control-label">测试数据：</label>
+                        <div class="col-sm-2">
+                            <select class="form-control testdatatotal" disabled>
+                                <option>选择条数</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <button type="button" class="btn btn-info searchTest">查看测试数据</button>
+                            <button type="button" class="btn btn-info formTest">通过文件修改</button>
+                            <button type="button" class="btn btn-success download">下载测试数据</button>
+                            <button type="button" class="btn btn-primary saveTestData">保存测试数据</button>
+                            <span class="testData"></span>
+                        </div>
+                    </div>
+                    <div class="form-group testDataByForm">
+                        <label class="col-md-2 control-label">输入：</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control testDataInput" rows="4"></textarea>
+                        </div>
+                        <label class="col-md-1 control-label">输出：</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control  testDataOutput" rows="4"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <div class="row savebutton">
+                    <button type="button" class="btn btn-info  save" id="saveAdd">保存并增加另一个</button>
+                    <button type="button" class="btn btn-info  save" id="saveEdtor">保存并继续编辑</button>
+                    <button type="button" class="btn btn-primary  save" id="justSave">保存</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="form-group">
-      <label class="col-md-2 control-label">难度：</label>
-    <div class="col-sm-2">
-      <select class="form-control level">
-  		<option value="0">容易</option>
-  		<option value="1">中等</option>
-	    <option value="2">困难</option>
-		</select>
-    </div>
-    <label class="col-md-1 control-label">判题程序：</label>
-    <div class="col-sm-2">
-      <select class="form-control judgeModel">
-      <option value="0">标准</option>
-      <option value="1">特殊</option>
-	</select>
-    </div>
-  </div>
-   <div class="form-group">
-	    <label class="col-md-2 control-label">时间限制(MS)：</label>
-	    <div class="col-sm-2">
-	      <input type="text" class="form-control limitTime"  value="1000" >
-	    </div>
-	    <label class="col-md-1 control-label">内存限制(KB)：</label>
-	    <div class="col-sm-2">
-	      <input type="text" class="form-control limitMemory"  value="65535" >
-	    </div>
-	    <label class="col-md-1 control-label">长度限制(B)：</label>
-	    <div class="col-sm-2">
-	     <input type="text" class="form-control codeLimit"  value="5000" >
-	    </div>
-   </div>
-   <div class="form-group">
-	    <label class="col-md-2 control-label">课程：</label>
-	    <div class="col-sm-2">
-	      <select class="form-control courseName">
-			</select>
-	    </div>
-	     <label class="col-md-1 control-label">知识点：</label>
-	    <div class="col-sm-2">
-	      <select class="form-control knowName">
-		</select>
-	    </div>
-	     <label class="col-md-1 control-label">来源：</label>
-	    <div class="col-sm-2">
-	      <input type="text" class="form-control author"  >
-	    </div>
-    </div>
-  <div class="form-group">
-  	<label class="col-md-2 control-label">测试组数：</label>
-    <div class="col-sm-2">
-      <input type="text" class="form-control testdataNum" value="2" >
-    </div>
-    <label class="col-md-1 control-label">分数比例：</label>
-    <div class="col-sm-2">
-      <input type="text" class="form-control scoreRatio  scoreprop" value="50,50">
-    </div>
-    <div class="col-md-4 tips ScoreSetTips">用“,”隔开,各数相加等于100并无小数部分;例如：20,20,30,30</div>
-  </div>
-   
-  	<div class="form-group">
-  	<label class="col-md-2 control-label">描述：</label>
-  	<div class="col-md-5">
-     <script id="description"  class="description" name="content"  type="text/plain"></script>
-    </div>
-  	</div>
-  <div class="form-group">
-   <label class="col-md-2 control-label">输入约定：</label>
-    <div class="col-md-4">
-     <textarea class="form-control inputTip" rows="4"></textarea>
-    </div>
-    <label class="col-md-1 control-label">输出约定：</label>
-    <div class="col-md-4">
-     <textarea class="form-control outputTip" rows="4"></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-   <label class="col-md-2 control-label">样例输入：</label>
-    <div class="col-md-4">
-     <textarea class="form-control inputSample" rows="4"></textarea>
-    </div>
-    <label class="col-md-1 control-label">样例输出：</label>
-    <div class="col-md-4">
-     <textarea class="form-control outputSample" rows="4"></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-  		<label class="col-md-2 control-label">参考代码：</label>
-  		<div class="col-md-5">
-     		<textarea class="form-control standardSource" id = "standardSource" rows="5"></textarea>
-    	</div>
-    	<div class="col-md-1">
-	    	<select class="form-control selectJudId testCode">
-					<option value="1">GCC</option>
-					<option value="2">G++</option>
-					<option value="3">JAVA</option>
-			</select>
-		</div>
-		<div class="col-md-1"></div>
-		<div class="col-md-1">
-	    	 <button type="button" id="testCode" class="btn btn-info testCode"  data-loading-text="运行中" autocomplete="off">
-  				<span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;测试
-			</button>
-	    </div></br></br></br>
-	    <div class="col-md-4 ">
-	         <p class="label submitResult" style="display:none;">wait...</p>
-	    </div>
-  </div>
-  	<div class="form-group testDataByForm">
-  	<label class="col-md-2 control-label">测试数据：</label>
-  	<div class="col-sm-2">
-      <select class="form-control testdatatotal" disabled>
-      <option>选择条数</option>
-	</select>
-    </div>
-    <div class="col-md-8">
-    	<button type="button" class="btn btn-info searchTest">查看测试数据</button>
-       <button type="button" class="btn btn-info formTest">通过文件修改</button>
-       <button type="button" class="btn btn-success download">下载测试数据</button>
-       <button type="button" class="btn btn-primary saveTestData">保存测试数据</button>
-       <span class="testData"></span>
-    </div>
-  	</div>
-  	<div class="form-group testDataByForm">
-   <label class="col-md-2 control-label">输入：</label>
-    <div class="col-md-4">
-     <textarea class="form-control testDataInput" rows="4"></textarea>
-    </div>
-    <label class="col-md-1 control-label">输出：</label>
-    <div class="col-md-4">
-     <textarea class="form-control  testDataOutput" rows="4"></textarea>
-    </div>
-  </div>
-   </form>
-   <div class="row savebutton">
-   		<button type="button" class="btn btn-info  save" id="saveAdd">保存并增加另一个</button>
-   		<button type="button" class="btn btn-info  save" id="saveEdtor">保存并继续编辑</button>
-   		<button type="button" class="btn btn-primary  save" id="justSave">保存</button>
-   </div>
-   </div>
-</div>
-</div>
 </div>
 <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">添加测试数据</h4>
-      </div>
-      <div class="modal-body">
-        <div class="input-group col-md-8">
-	      <input type="text" class="form-control testdata" placeholder="支持格式：zip" disabled>
-	      <span class="input-group-btn">
-	        <input type="file" id="datafile" name="zip" style="display: none">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加测试数据</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group col-md-8">
+                    <input type="text" class="form-control testdata" placeholder="支持格式：zip" disabled>
+                    <span class="input-group-btn">
+	        <input type="file" id="datafile" name="datafile" style="display: none">
 				<a class="btn btn-info file"
-				onclick="$('input[id=datafile]').click();">数据</a>
+                   onclick="$('input[id=datafile]').click();">数据</a>
 	      </span>
-    	</div>
-    	<div>
-    	<span>zip目录格式样例如下：<br />
-    	&nbsp;&nbsp;0.in<br />&nbsp;&nbsp;0.out<br />&nbsp;&nbsp;1.in<br />&nbsp;&nbsp;1.out<br />&nbsp;&nbsp;......
+                </div>
+                <div>
+    	<span>zip目录格式样例如下：<br/>
+    	&nbsp;&nbsp;0.in<br/>&nbsp;&nbsp;0.out<br/>&nbsp;&nbsp;1.in<br/>&nbsp;&nbsp;1.out<br/>&nbsp;&nbsp;......
     	</span>
-    	</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary  uploadData" data-dismiss="modal">保存</button>
-      </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary  uploadData" data-dismiss="modal">保存</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 </body>
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-    <script type="text/javascript">
-		//seajs的简单配置
-		seajs.config({
-			base : '../lib/',
-			alias : {
-				jquery : 'jQuery/jquery.min.js',
-				paginator : 'jQuery/jqPaginator.js',
-				artTemplate : 'artTemplate/artTemplate.js',
-				ueditor_config : 'ueditor/ueditor.config.js',
-				ueditor : 'ueditor/ueditor.all.min.js',
-				bootstrap : 'bootstrap/js/bootstrap.min.js',
-				fileupload : 'jQuery/ajaxfileupload.js'
-			}
-		});
-		//加载入口模块
-		seajs.use('jquery');
-		seajs.use("../js/common.js");
-		seajs.use("../js/question.js");
-	</script>
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+<script type="text/javascript">
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            paginator: 'jQuery/jqPaginator.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            ueditor_config: 'ueditor/ueditor.config.js',
+            ueditor: 'ueditor/ueditor.all.min.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js',
+            fileupload: 'jQuery/ajaxfileupload.js'
+        }
+    });
+    //加载入口模块
+    seajs.use('jquery');
+    seajs.use("../js/common.js");
+    seajs.use("../js/question.js");
+</script>
 </html>

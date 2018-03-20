@@ -57,7 +57,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../problem/selectKnowLedge",
+                url: "../courseInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 success: function (result) {
@@ -68,15 +68,32 @@ define(function (require, exports, module) {
                     $(".courseName").empty();
                     $(".courseName").append("<option>课程</option>");
                     for (var i = 0; i < length; i++) {
-                        if (result.data[i].isCourse) {
-                            pubMeth.courseName.push(result.data[i]);
-                            $(".courseName").append("<option value=" + result.data[i].knowId + ">" + result.data[i].knowName + "</option>");
-                        } else {
-                            pubMeth.course.push(result.data[i]);
-                            pubMeth.sumList.push(result.sumList[i]);
-                        }
+                        /*if (result.data[i].isCourse) {*/
+                        pubMeth.courseName.push(result.list[i]);
+                        $(".courseName").append("<option value=" + result.list[i].couId + ">" + result.list[i].courseName + "</option>");
+                        /*} else {
+                         pubMeth.course.push(result.data[i]);
+                         pubMeth.sumList.push(result.sumList[i]);
+                         }*/
                     }
                     pubMeth.onchange();
+                }
+            });
+        },
+        getKnowledgeInfo: function (courseId) {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../knowledgeInfo/selectByCondition",
+                dataType: 'json',
+                async: false,
+                data: {
+                    containSum: false,
+                    courseId: courseId
+                },
+                success: function (result) {
+                    console.log(result);
+                    pubMeth.course = result.knowledgeInfoList;
                 }
             });
         },
@@ -87,9 +104,12 @@ define(function (require, exports, module) {
                 $(".knowName").html("<option>知识点</option>");
                 return;
             }
-            for (var i = 0; i < pubMeth.course.length; i++) {
-                if (pubMeth.course[i].parentId == parentId) {
+            if (parentId) {
+                pubMeth.getKnowledgeInfo(parentId);
+                for (var i = 0; i < pubMeth.course.length; i++) {
+                    /*if (pubMeth.course[i].parentId == parentId) {*/
                     $(".knowName").append("<option value=" + pubMeth.course[i].knowId + ">" + pubMeth.course[i].knowName + "</option>");
+                    /*}*/
                 }
             }
         },

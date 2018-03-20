@@ -1,6 +1,6 @@
 package com.csswust.patest2.service.impl;
 
-import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserLoginLogDao;
@@ -9,7 +9,7 @@ import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
-import com.csswust.patest2.service.BaseService;
+import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.UserInfoService;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
@@ -42,15 +42,12 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             result.setDesc("学号不能为空");
             return result;
         }
-        UserProfile userProfileCondition = new UserProfile();
-        userProfileCondition.setStudentNumber(studentNumber);
-        List<UserProfile> userProfileList = userProfileDao.selectByCondition(userProfileCondition, new BaseQuery(1, 1));
-        if (userProfileList == null || userProfileList.size() == 0) {
+        UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
+        if (userProfile == null) {
             result.setStatus(-2);
             result.setDesc("未找到对应学号的学生");
             return result;
         }
-        UserProfile userProfile = userProfileList.get(0);
         userInfo.setUserProfileId(userProfile.getUseProId());
         userInfo.setIsActive(1);
         try {
@@ -62,6 +59,38 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             return result;
         }
         int status = userInfoDao.insertSelective(userInfo);
+        result.setStatus(status);
+        return result;
+    }
+
+    @Override
+    public APIResult update(UserInfo userInfo, String studentNumber) {
+        APIResult result = new APIResult();
+        if (StringUtils.isBlank(studentNumber)) {
+            result.setStatus(-1);
+            result.setDesc("学号不能为空");
+            return result;
+        }
+        UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
+        if (userProfile == null) {
+            result.setStatus(-2);
+            result.setDesc("未找到对应学号的学生");
+            return result;
+        }
+        userInfo.setUserProfileId(userProfile.getUseProId());
+        try {
+            if (StringUtils.isNotBlank(userInfo.getPassword())) {
+                userInfo.setPassword(MD5Util.encode(userInfo.getPassword()));
+            } else {
+                userInfo.setPassword(null);// 防止无意更改
+            }
+        } catch (Exception e) {
+            log.error("MD5Util.encode passwor : {} derror: {}", userInfo.getPassword(), e);
+            result.setStatus(-3);
+            result.setDesc("密码加密失败");
+            return result;
+        }
+        int status = userInfoDao.updateByPrimaryKeySelective(userInfo);
         result.setStatus(status);
         return result;
     }

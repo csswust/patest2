@@ -1,4 +1,4 @@
-package com.csswust.patest2.controller;
+package com.csswust.patest2.controller.common;
 
 import com.csswust.patest2.common.Base;
 import com.csswust.patest2.common.paramJudge.ParamCallBack;
@@ -65,7 +65,7 @@ public class BaseAction extends Base{
                     field.set(param, callBacks.replaceParam(value));
                 }
             } catch (Exception e) {
-                log.error("CommonMapper.paramVerificate({}, {}) error: {}", param, callBacks, e);
+                log.error("BaseAction.paramVerificate({}, {}) error: {}", param, callBacks, e);
             }
         }
         return param;

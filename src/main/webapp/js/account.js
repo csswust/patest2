@@ -108,7 +108,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/selectUserInfo",
+                url: "../userInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
@@ -136,11 +136,11 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/deleteUserInfo",
+                url: "../userInfo/deleteByIds",
                 dataType: 'json',
                 async: false,
                 data: {
-                    userIds: vals
+                    ids: vals
                 },
                 success: function (result) {
                     console.log(result);
@@ -160,7 +160,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../user/updateUserInfo",
+                url: "../userInfo/updateById",
                 dataType: 'json',
                 async: false,
                 data: {
@@ -168,18 +168,21 @@ define(function (require, exports, module) {
                     username: program.username,
                     password: program.password,
                     studentNumber: program.studentNumber,
-                    teacher: program.isTeacher,
-                    admin: program.isAdmin,
+                    isTeacher: program.isTeacher,
+                    isAdmin: program.isAdmin,
                 },
                 success: function (result) {
                     console.log(result);
-                    if (result.status == 1) {
+                    if (result.APIResult.status === 1) {
                         pubMeth.alertInfo("alert-success", "修改成功！");
                         program.selectAccount();
                         $('#user').modal('hide');
 
-                    } else {
+                    } else if (result.APIResult.status === 0) {
                         pubMeth.alertInfo("alert-danger", "修改失败！");
+                    } else {
+                        pubMeth.alertInfo("alert-danger", result.APIResult.desc);
+                        /*pubMeth.alertInfo("alert-danger", "修改失败！");*/
                     }
                 }
             });

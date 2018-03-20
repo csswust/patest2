@@ -28,16 +28,16 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../submit/selectSubmitInfo",
+                url: "../submitInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
-                    "submitInfo.status": program.statu,
-                    "submitInfo.judId": program.compiler,
-                    "submitInfo.probId": program.probId,
+                    "status": program.statu,
+                    "judgerId": program.compiler,
+                    "problemId": program.probId,
                     username: program.username,
                     page: program.page,
-                    rows: pubMeth.rowsnum,
+                    rows: pubMeth.rowsnum
                 },
                 success: function (result) {
                     program.count = result.total;
@@ -55,7 +55,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../submit/selectAllSubmitResultInfo",
+                url: "../resultInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 success: function (result) {
@@ -71,7 +71,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../system/selectJudgerInfo",
+                url: "../judgerInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 success: function (result) {
@@ -133,9 +133,9 @@ define(function (require, exports, module) {
                     + '<td class="' + statuResult + '" id=' + program.submitInfoList[i].submId + '>' + result + '</td>'
                     + '<td>' + usedMemory + '</td>'
                     + '<td>' + usedTime + '</td>'
-                    + '<td class="judId"><a class="compiler">' + program.comp[program.submitInfoList[i].judId] + '</a></td>'
-                    + '<td>' + program.submitInfoList[i].submTime + '</td>'
-                    + '<td>' + program.submitInfoList[i].submIp + '</td>'
+                    + '<td class="judId"><a class="compiler">' + program.comp[program.submitInfoList[i].judgerId] + '</a></td>'
+                    + '<td>' + program.submitInfoList[i].createTime + '</td>'
+                    + '<td>' + program.submitInfoList[i].ip + '</td>'
                     + '<td><button class="btn btn-success btn-xs reJudge" type="button" value=' + program.submitInfoList[i].submId + '>重判</button></td>'
                     + '</tr>';
             }

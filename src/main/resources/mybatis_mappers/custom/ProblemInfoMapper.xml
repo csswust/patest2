@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.ProblemInfoDao">
     <sql id="custom_condition">
+        <if test="query.customParam.title != null">
+            AND
+            title like CONCAT('%',#{query.customParam.title},'%')
+        </if>
+        <if test="query.customParam.problemIds != null">
+            AND
+            prob_id in
+            <foreach collection="query.customParam.problemIds" item="item" index="index" open="(" close=")"
+                     separator=",">
+                #{item}
+            </foreach>
+        </if>
         ORDER BY prob_id DESC
     </sql>
 </mapper>

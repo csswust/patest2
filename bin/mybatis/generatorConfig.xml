@@ -20,7 +20,7 @@
 
         <!-- 数据连接相关配置 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://123.207.164.33:3306/patest2" userId="root"
+                        connectionURL="jdbc:mysql://localhost:3306/patest2" userId="root"
                         password="cs.swust">
         </jdbcConnection>
 
@@ -47,7 +47,7 @@
         </javaClientGenerator>
 
         <!-- table -->
-        <table schema="patest2" tableName="academy_info" domainObjectName="AcademyInfo"
+        <!--<table schema="patest2" tableName="academy_info" domainObjectName="AcademyInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -118,14 +118,14 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="pap_pro_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="problem_info" domainObjectName="ProblemInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="prob_id" sqlStatement="JDBC"/>
         </table>
-        <table schema="patest2" tableName="problem_knowledge" domainObjectName="ProblemKnowledge"
+        <!--<table schema="patest2" tableName="problem_knowledge" domainObjectName="ProblemKnowledge"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -190,7 +190,7 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="vis_pat_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
     </context>
 </generatorConfiguration>
 

@@ -6,43 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <title>LExamV3.0</title>
-    <link rel="shortcut icon" href="../img/favicon.ico" >
+    <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/pro.css">
     <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-    <div id="head"><!-- 头部菜单 --></div>
-   <div class="container-fuild">
-   <div class="row">
-            <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
-          <div class="col-md-10 main">
-          <div class="tip">
-             <div class="alert alert-warning" style="margin-top:10px;" id="tip">
-              <a href="#" class="close" data-dismiss="alert">
-                 &times;
-              </a>
-              <strong>小提示：出现问题刷新试试</strong>
+<div id="head"><!-- 头部菜单 --></div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
+        <div class="col-md-10 main">
+            <div class="tip">
+                <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+                    <a href="#" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>小提示：出现问题刷新试试</strong>
+                </div>
             </div>
-          </div>
-          <div class="proinfo" style="display:none;">
-          </div>
-          <div class="row opration">
-                    <div class="btn-group col-md-2 addpro" role="group">
-                      <div class="btn-group" role="group" >
-                      <button type="button" class="btn  btn-success addbank">
+            <div class="proinfo" style="display:none;">
+            </div>
+            <div class="row opration">
+                <div class="btn-group col-md-2 addpro" role="group">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn  btn-success addbank">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加
-                      </button>
-                      <button type="button" class="btn  btn-primary backexam">
+                        </button>
+                        <button type="button" class="btn  btn-primary backexam">
                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 返回
-                      </button>
-                      </div>
-                    </div>                       
-                    <div class="col-md-9 form-inline col-md-offset-1" style="padding-right:0px;">
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-9 form-inline col-md-offset-1" style="padding-right:0px;">
                     <div class="form-group">
                         <select class="form-control courseName">
                             <option>课程</option>
@@ -55,76 +55,78 @@
                     </div>
                     <div class="form-group">
                         <select class="form-control level">
-                        <option value="">难度</option>
-                        <option value="0">容易</option>
-                        <option value="1">中等</option>
-                        <option value="2">困难</option>
+                            <option value="">难度</option>
+                            <option value="1">容易</option>
+                            <option value="2">中等</option>
+                            <option value="3">困难</option>
                         </select>
                     </div>
                     <div class="input-group">
-                            <input type="text" class="form-control searTitle"
-                                placeholder="标题"> <span class="input-group-btn">
-                                <button class="btn btn-primary search" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询</button>
+                        <input type="text" class="form-control searTitle"
+                               placeholder="标题"> <span class="input-group-btn">
+                                <button class="btn btn-primary search" type="button"><span
+                                        class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询</button>
                             </span>
-                        </div>
                     </div>
                 </div>
-          <table class="table table-bordered table-hover table-condensed table-striped" >
-            <thead>
-            <tr>
-                <th><input type="checkbox" class="check_list"/>全选</th>
-                <th>编号</th>
-                <th>题目</th>
-                <th>难度</th>
-                <th>AC/提交</th>
-                <th>创建时间</th>
-                <th>课程</th>
-                <th>知识点</th>
-            </tr>
-            </thead>
-            <tbody id="listInfo">
-            </tbody>
-        </table>
+            </div>
+            <table class="table table-bordered table-hover table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="check_list"/>全选</th>
+                    <th>编号</th>
+                    <th>题目</th>
+                    <th>难度</th>
+                    <th>AC/提交</th>
+                    <th>创建时间</th>
+                    <th>课程</th>
+                    <th>知识点</th>
+                </tr>
+                </thead>
+                <tbody id="listInfo">
+                </tbody>
+            </table>
         </div>
         <div class="row paging">
-	       	<div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
-	        <div class="col-md-5 ">
-	            <ul class="pagination " id="pagination"></ul>
-	        </div>
+            <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
+            <div class="col-md-5 ">
+                <ul class="pagination " id="pagination"></ul>
+            </div>
         </div>
-      </div>    
-   </div>
-   <div class="modal fade" id="modaladdbank">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" style="font-size:15px;">你确定要添加这些题目吗？</h4>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-	        <button type="button" class="btn btn-primary confirmadd">添加</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-     </div><!-- /.modal -->
+    </div>
+</div>
+<div class="modal fade" id="modaladdbank">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" style="font-size:15px;">你确定要添加这些题目吗？</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary confirmadd">添加</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
-   <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-    <script type="text/javascript">
-        //seajs的简单配置
-        seajs.config({
-            base : '../lib/',
-            alias : {
-                jquery : 'jQuery/jquery.min.js',
-                jCooike : 'jQuery/jquery.cookie.js',
-                jSession : 'jQuery/jquerySession.js',
-                paginator : 'jQuery/jqPaginator.js',
-                artTemplate : 'artTemplate/artTemplate.js',
-                bootstrap : 'bootstrap/js/bootstrap.min.js'
-            }
-        });
-        //加载入口模块
-        seajs.use('jquery');
-        seajs.use("../js/probank.js");
-    </script>
+<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+<script type="text/javascript">
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            jCooike: 'jQuery/jquery.cookie.js',
+            jSession: 'jQuery/jquerySession.js',
+            paginator: 'jQuery/jqPaginator.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js'
+        }
+    });
+    //加载入口模块
+    seajs.use('jquery');
+    seajs.use("../js/probank.js");
+</script>
 </html>

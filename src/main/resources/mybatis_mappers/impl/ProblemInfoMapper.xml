@@ -32,6 +32,10 @@
             AND
             code_limit = #{record.codeLimit}
         </if>
+        <if test="record.knowId != null">
+            AND
+            know_id = #{record.knowId}
+        </if>
         <if test="record.testdataNum != null">
             AND
             testdata_num = #{record.testdataNum}
@@ -121,6 +125,10 @@
         <if test="record.codeLimit != null">
             AND
             code_limit = #{record.codeLimit}
+        </if>
+        <if test="record.knowId != null">
+            AND
+            know_id = #{record.knowId}
         </if>
         <if test="record.testdataNum != null">
             AND

@@ -1,14 +1,11 @@
 package com.csswust.patest2.controller;
 
 import com.baidu.ueditor.ActionEnter;
+import com.csswust.patest2.controller.common.BaseAction;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 

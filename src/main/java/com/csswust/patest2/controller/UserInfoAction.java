@@ -1,6 +1,8 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.paramJudge.StringCallBack;
+import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserProfileDao;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -123,7 +125,7 @@ public class UserInfoAction extends BaseAction {
             @RequestParam(required = true) String studentNumber,
             @RequestParam(required = true) Integer teacher,
             @RequestParam(required = true) Integer admin) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        Map<String, Object> res = new HashMap<>();
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(username);
         userInfo.setPassword(password);
@@ -131,6 +133,24 @@ public class UserInfoAction extends BaseAction {
         userInfo.setIsAdmin(admin);
         UserInfoInsertRe result = userInfoService.insert(userInfo, studentNumber);
         res.put("userInfoInsertRe", result);
+        return res;
+    }
+
+    @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> updateById(
+            UserInfo userInfo,
+            @RequestParam(required = true) String studentNumber) {
+        Map<String, Object> res = new HashMap<>();
+        APIResult result = userInfoService.update(userInfo, studentNumber);
+        res.put("APIResult", result);
+        return res;
+    }
+
+    @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+        Map<String, Object> res = new HashMap<>();
+        int result = userInfoDao.deleteByIds(ids);
+        res.put("status", result);
         return res;
     }
 }

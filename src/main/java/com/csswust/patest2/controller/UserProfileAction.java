@@ -1,5 +1,6 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.common.paramJudge.StringCallBack;
