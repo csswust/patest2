@@ -4,4 +4,8 @@
     <sql id="custom_condition">
         ORDER BY exa_pap_id DESC
     </sql>
+    <delete id="deleteByExamId" parameterType="java.util.Map">
+        delete from exam_paper
+        where exam_id = #{examId}
+    </delete>
 </mapper>

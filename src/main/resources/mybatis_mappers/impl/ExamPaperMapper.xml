@@ -18,6 +18,10 @@
             AND
             user_id = #{record.userId}
         </if>
+        <if test="record.classroom != null">
+            AND
+            classroom = #{record.classroom}
+        </if>
         <if test="record.score != null">
             AND
             score = #{record.score}
@@ -63,6 +67,10 @@
         <if test="record.userId != null">
             AND
             user_id = #{record.userId}
+        </if>
+        <if test="record.classroom != null">
+            AND
+            classroom = #{record.classroom}
         </if>
         <if test="record.score != null">
             AND

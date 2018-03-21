@@ -4,4 +4,26 @@
     <sql id="custom_condition">
         ORDER BY exa_par_id DESC
     </sql>
+
+    <select id="getProblemNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM exam_problem,problem_info
+        WHERE problem_info.prob_id = exam_problem.problem_id
+        <if test="record.examId != null">
+            AND
+            exam_problem.exam_id = #{record.examId}
+        </if>
+        <if test="record.knowId != null">
+            AND
+            problem_info.know_id = #{record.knowId}
+        </if>
+        <if test="record.levelId != null">
+            AND
+            problem_info.level_id = #{record.levelId}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
 </mapper>

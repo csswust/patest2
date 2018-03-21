@@ -19,8 +19,6 @@ public class UserInfo {
 
     private Integer isActive;
 
-    private String classroom;
-
     private Date lastLogin;
 
     private Integer examId;
@@ -91,14 +89,6 @@ public class UserInfo {
 
     public void setIsActive(Integer isActive) {
         this.isActive = isActive;
-    }
-
-    public String getClassroom() {
-        return classroom;
-    }
-
-    public void setClassroom(String classroom) {
-        this.classroom = classroom == null ? null : classroom.trim();
     }
 
     public Date getLastLogin() {

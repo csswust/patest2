@@ -25,4 +25,6 @@ public interface ExamParamDao {
     List<ExamParam> selectByCondition(ExamParam record, BaseQuery query);
 
     int selectByConditionGetCount(ExamParam record, BaseQuery query);
+
+    int getProblemNum(ExamParam record, BaseQuery query);
 }

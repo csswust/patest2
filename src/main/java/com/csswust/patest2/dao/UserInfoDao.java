@@ -27,4 +27,6 @@ public interface UserInfoDao {
     int selectByConditionGetCount(UserInfo record, BaseQuery query);
 
     UserInfo selectByUsername(String username);
+
+    int deleteByExamId(Integer examId);
 }

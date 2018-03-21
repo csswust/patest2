@@ -12,4 +12,8 @@
         </if>
         ORDER BY user_id DESC
     </sql>
+    <delete id="deleteByExamId" parameterType="java.util.Map">
+        delete from user_info
+        where exam_id = #{examId}
+    </delete>
 </mapper>

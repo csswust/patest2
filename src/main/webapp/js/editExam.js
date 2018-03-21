@@ -87,7 +87,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../exam/selectExam",
+                url: "../examInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
@@ -95,11 +95,11 @@ define(function (require, exports, module) {
                 },
                 success: function (result) {
                     console.log(result);
-                    program.title = result.data[0].title;
-                    program.startTime = result.data[0].startTime;
-                    program.endTime = result.data[0].endTime;
-                    program.description = result.data[0].description;
-                    program.examip = result.data[0].allowIp;
+                    program.title = result.examInfoList[0].title;
+                    program.startTime = result.examInfoList[0].startTime;
+                    program.endTime = result.examInfoList[0].endTime;
+                    program.description = result.examInfoList[0].description;
+                    program.examip = result.examInfoList[0].allowIp;
                 }
             });
         },

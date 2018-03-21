@@ -30,7 +30,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../exam/selectAllExam",
+                url: "../examInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
@@ -42,9 +42,9 @@ define(function (require, exports, module) {
                 success: function (result) {
                     console.log(result);
                     program.count = result.total;
-                    program.data = result.data;
+                    program.data = result.examInfoList;
                     program.peototal = result.peopleTotal;
-                    program.KnowledgeData = result.KnowledgeData;
+                    //program.KnowledgeData = result.KnowledgeData;
                     program.showInfo();
                     $("#listInfo").empty();
                     $("#listInfo").append(program.html);
@@ -66,15 +66,15 @@ define(function (require, exports, module) {
             var order = 1;
             program.html = "";
             for (var i = 0; i < length; i++) {
-                var knowledgeData = program.KnowledgeData[i];
-                var courseName = "null";
+                //var knowledgeData = program.KnowledgeData[i];
+                /*var courseName = "null";
                 if (knowledgeData) {
                     courseName = program.findCourseName(knowledgeData.parentId);
-                }
+                }*/
                 program.html += '<tr><td><input type="checkbox" value="' + program.data[i].examId + '" name="title"/></td>'
                     + '<td>' + program.data[i].examId + '</td>'
                     + '<td><a class="title" href="editExam.html?Id=' + program.data[i].examId + '">' + program.data[i].title + '</a></td>'
-                    + '<td>' + courseName + '</td>'
+                    /*+ '<td>' + courseName + '</td>'*/
                     + '<td>' + program.peototal[i] + '</td>'
                     + '<td>' + program.data[i].startTime + '</td>'
                     + '<td>' + program.data[i].endTime + '</td>'
@@ -98,11 +98,11 @@ define(function (require, exports, module) {
                         $.ajax({
                             type: "post",
                             content: "application/x-www-form-urlencoded;charset=UTF-8",
-                            url: "../exam/deleteExam",
+                            url: "../examInfo/deleteByIds",
                             dataType: 'json',
                             async: false,
                             data: {
-                                examIds: vals
+                                ids: vals
                             },
                             success: function (result) {
                                 if (result.status == 1) {

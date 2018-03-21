@@ -38,10 +38,6 @@
             AND
             is_active = #{record.isActive}
         </if>
-        <if test="record.classroom != null">
-            AND
-            classroom = #{record.classroom}
-        </if>
         <if test="record.lastLogin != null">
             AND
             last_login = #{record.lastLogin}
@@ -99,10 +95,6 @@
         <if test="record.isActive != null">
             AND
             is_active = #{record.isActive}
-        </if>
-        <if test="record.classroom != null">
-            AND
-            classroom = #{record.classroom}
         </if>
         <if test="record.lastLogin != null">
             AND

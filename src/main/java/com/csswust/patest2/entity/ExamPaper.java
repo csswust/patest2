@@ -9,6 +9,8 @@ public class ExamPaper {
 
     private Integer userId;
 
+    private String classroom;
+
     private Integer score;
 
     private Integer acedCount;
@@ -43,6 +45,14 @@ public class ExamPaper {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(String classroom) {
+        this.classroom = classroom == null ? null : classroom.trim();
     }
 
     public Integer getScore() {

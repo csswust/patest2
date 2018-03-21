@@ -70,14 +70,14 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exa_not_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="exam_paper" domainObjectName="ExamPaper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exa_pap_id" sqlStatement="JDBC"/>
         </table>
-        <table schema="patest2" tableName="exam_param" domainObjectName="ExamParam"
+        <!--<table schema="patest2" tableName="exam_param" domainObjectName="ExamParam"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -119,12 +119,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="pap_pro_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="problem_info" domainObjectName="ProblemInfo"
+        <!--<table schema="patest2" tableName="problem_info" domainObjectName="ProblemInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="prob_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="problem_knowledge" domainObjectName="ProblemKnowledge"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -160,14 +160,14 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="sub_sim_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="user_info" domainObjectName="UserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="user_id" sqlStatement="JDBC"/>
         </table>
-        <table schema="patest2" tableName="user_login_log" domainObjectName="UserLoginLog"
+        <!--<table schema="patest2" tableName="user_login_log" domainObjectName="UserLoginLog"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

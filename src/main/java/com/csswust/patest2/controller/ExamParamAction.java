@@ -1,16 +1,16 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.CourseInfoDao;
-import com.csswust.patest2.dao.ExamProblemDao;
+import com.csswust.patest2.dao.ExamParamDao;
 import com.csswust.patest2.dao.KnowledgeInfoDao;
-import com.csswust.patest2.dao.ProblemInfoDao;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.CourseInfo;
-import com.csswust.patest2.entity.ExamProblem;
+import com.csswust.patest2.entity.ExamParam;
 import com.csswust.patest2.entity.KnowledgeInfo;
-import com.csswust.patest2.entity.ProblemInfo;
+import com.csswust.patest2.service.ExamParamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,67 +31,81 @@ import static com.csswust.patest2.service.common.BatchQueryService.selectRecordB
  * Created by 972536780 on 2018/3/19.
  */
 @RestController
-@RequestMapping("/examProblem")
-public class ExamProblemAction extends BaseAction {
-    private static Logger log = LoggerFactory.getLogger(ExamProblemAction.class);
+@RequestMapping("/examParam")
+public class ExamParamAction extends BaseAction {
+    private static Logger log = LoggerFactory.getLogger(ExamParamAction.class);
 
     @Autowired
-    private ExamProblemDao examProblemDao;
-    @Autowired
-    private ProblemInfoDao problemInfoDao;
+    private ExamParamDao examParamDao;
     @Autowired
     private KnowledgeInfoDao knowledgeInfoDao;
     @Autowired
     private CourseInfoDao courseInfoDao;
+    @Autowired
+    private ExamParamService examParamService;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
-            @RequestParam(required = true) Integer examId,
+            ExamParam examParam,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         Map<String, Object> res = new HashMap<>();
-        ExamProblem examProblem = new ExamProblem();
-        examProblem.setExamId(examId);
-        Integer total = examProblemDao.selectByConditionGetCount(examProblem, new BaseQuery());
-        List<ExamProblem> examProblemList = examProblemDao.selectByCondition(examProblem, new BaseQuery(page, rows));
-        List<ProblemInfo> problemInfoList = selectRecordByIds(
-                getFieldByList(examProblemList, "problemId", ExamProblem.class),
-                "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
+        Integer total = examParamDao.selectByConditionGetCount(examParam, new BaseQuery());
+        List<ExamParam> examParamList = examParamDao.selectByCondition(examParam, new BaseQuery(page, rows));
         List<KnowledgeInfo> knowledgeInfoList = selectRecordByIds(
-                getFieldByList(problemInfoList, "knowId", ProblemInfo.class),
+                getFieldByList(examParamList, "knowId", ExamParam.class),
                 "knowId", (BaseDao) knowledgeInfoDao, KnowledgeInfo.class);
         List<CourseInfo> courseInfoList = selectRecordByIds(
                 getFieldByList(knowledgeInfoList, "courseId", KnowledgeInfo.class),
                 "couId", (BaseDao) courseInfoDao, CourseInfo.class);
+        List<Integer> problemSumList = new ArrayList<>();
+        for (int i = 0; i < examParamList.size(); i++) {
+            ExamParam temp = new ExamParam();
+            temp.setExamId(examParamList.get(i).getExamId());
+            temp.setKnowId(examParamList.get(i).getKnowId());
+            temp.setLevelId(examParamList.get(i).getLevelId());
+            int count = examParamDao.getProblemNum(temp, new BaseQuery());
+            problemSumList.add(count);
+        }
         res.put("total", total);
-        res.put("examProblemList", examProblemList);
-        res.put("problemInfoList", problemInfoList);
+        res.put("examParamList", examParamList);
+        res.put("problemSumList", problemSumList);
         res.put("knowledgeInfoList", knowledgeInfoList);
         res.put("courseInfoList", courseInfoList);
+        return res;
+    }
+
+    @RequestMapping(value = "/selectProblemTotal", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> selectProblemTotal(
+            @RequestParam(required = false) Integer knowId,
+            @RequestParam(required = false) Integer levelId,
+            @RequestParam(required = true) Integer examId) {
+        Map<String, Object> res = new HashMap<>();
+        ExamParam temp = new ExamParam();
+        temp.setExamId(examId);
+        temp.setKnowId(knowId);
+        temp.setLevelId(levelId);
+        int count = examParamDao.getProblemNum(temp, new BaseQuery());
+        res.put("total", count);
         return res;
     }
 
     @RequestMapping(value = "/insertByArray", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertByArray(
             @RequestParam(required = true) Integer examId,
-            @RequestParam(required = true) Integer[] probIdList) {
+            @RequestParam(required = true) Integer[] knowIds,
+            @RequestParam(required = true) Integer[] levels,
+            @RequestParam(required = true) Integer[] scores) {
         Map<String, Object> res = new HashMap<>();
-        int count = 0;
-        for (int i = 0; i < probIdList.length; i++) {
-            ExamProblem examProblem = new ExamProblem();
-            examProblem.setExamId(examId);
-            examProblem.setProblemId(probIdList[i]);
-            int temp = examProblemDao.insertSelective(examProblem);
-            count = count + temp;
-        }
-        res.put("status", count);
+        APIResult result = examParamService.insertByArray(examId, knowIds, levels, scores);
+        res.put("APIResult", result);
         return res;
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
         Map<String, Object> res = new HashMap<>();
-        int result = examProblemDao.deleteByIds(ids);
+        int result = examParamDao.deleteByIds(ids);
         res.put("status", result);
         return res;
     }
