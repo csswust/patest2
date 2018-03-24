@@ -5,8 +5,6 @@ import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserProfile;
 
-import java.util.Date;
-
 /**
  * Created by 972536780 on 2018/3/12.
  */

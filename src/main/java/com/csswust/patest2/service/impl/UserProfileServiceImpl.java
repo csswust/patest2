@@ -2,15 +2,15 @@ package com.csswust.patest2.service.impl;
 
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
-import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.MajorInfoDao;
 import com.csswust.patest2.dao.UserProfileDao;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.AcademyInfo;
 import com.csswust.patest2.entity.MajorInfo;
 import com.csswust.patest2.entity.UserProfile;
-import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.UserProfileService;
+import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.result.UserProfileLoadRe;
 import jxl.Sheet;
 import jxl.Workbook;

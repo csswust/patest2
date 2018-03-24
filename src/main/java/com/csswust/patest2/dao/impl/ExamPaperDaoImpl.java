@@ -1,17 +1,15 @@
 package com.csswust.patest2.dao.impl;
 
+import com.csswust.patest2.dao.ExamPaperDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.common.CommonMapper;
-import com.csswust.patest2.dao.ExamPaperDao;
 import com.csswust.patest2.entity.ExamPaper;
-import com.csswust.patest2.utils.ArrayUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Repository

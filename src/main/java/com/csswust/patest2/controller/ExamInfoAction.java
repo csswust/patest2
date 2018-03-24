@@ -50,6 +50,7 @@ public class ExamInfoAction extends BaseAction {
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectTempProblem(
             ExamInfo examInfo,
+            @RequestParam(required = false, defaultValue = "false") Boolean isRecent,
             @RequestParam(required = false, defaultValue = "false") Boolean onlyExamInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
@@ -62,6 +63,9 @@ public class ExamInfoAction extends BaseAction {
         if (examInfo.getEndTime() != null) {
             baseQuery.setCustom("endTime", examInfo.getEndTime());
             examInfo.setEndTime(null);
+        }
+        if (isRecent) {
+            baseQuery.setCustom("isRecent", true);
         }
         Integer total = examInfoDao.selectByConditionGetCount(examInfo, baseQuery);
         baseQuery.setPageRows(page, rows);

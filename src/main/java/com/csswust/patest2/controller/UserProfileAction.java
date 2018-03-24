@@ -1,12 +1,12 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.common.BaseDao;
-import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.common.paramJudge.StringCallBack;
+import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.MajorInfoDao;
 import com.csswust.patest2.dao.UserProfileDao;
+import com.csswust.patest2.dao.common.BaseDao;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.AcademyInfo;
 import com.csswust.patest2.entity.MajorInfo;
 import com.csswust.patest2.entity.UserProfile;

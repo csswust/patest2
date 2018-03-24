@@ -1,8 +1,8 @@
 package com.csswust.patest2.dao.impl;
 
+import com.csswust.patest2.dao.VisitPathDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.common.CommonMapper;
-import com.csswust.patest2.dao.VisitPathDao;
 import com.csswust.patest2.entity.VisitPath;
 import org.springframework.stereotype.Repository;
 

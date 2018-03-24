@@ -7,6 +7,7 @@ import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.JudgeService;
+import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.utils.ArrayUtil;
 import com.csswust.patest2.utils.FileUtil;
 import com.csswust.patest2.utils.StreamUtil;
@@ -23,13 +24,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * @author 杨顺丰
  */
 @Service
-public class JudgeServiceImpl implements JudgeService {
+public class JudgeServiceImpl extends BaseService implements JudgeService {
     private static Logger log = LoggerFactory.getLogger(JudgeServiceImpl.class);
 
     @Autowired
@@ -78,87 +78,51 @@ public class JudgeServiceImpl implements JudgeService {
     @Override
     public Map<String, Object> refresh(JudgeTask judgeTask, JudgeResult judgeResult) {
         Integer submId = judgeTask.getSubmId();
-        List<SubmitResult> submitResultList = null;
         if (judgeResult.getConsoleMsg() == null) judgeResult.setConsoleMsg("");
         if (judgeResult.getErrMsg() == null) judgeResult.setErrMsg("");
+
+        List<SubmitResult> submitResultList = null;
         try {
+            // 转化执行数据
             Gson gson = new Gson();
             submitResultList = gson.fromJson(judgeResult.getConsoleMsg(), new TypeToken<List<SubmitResult>>() {
             }.getType());
-            if (submitResultList == null) {
+            if (submitResultList == null || submitResultList.size() == 0) {
                 throw new RuntimeException();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            submitResultList = new ArrayList<SubmitResult>();
-            SubmitResult submitResult = new SubmitResult(judgeTask.getSubmId(), 0, 8, -1, -1,
-                    judgeResult.getConsoleMsg());
-            Random random = new Random();
-            submitResult.setStatus(random.nextInt(2) == 0 ? 1 : random.nextInt(10));
+            log.error("gson.fromJson data: {} error: {}", getJson(judgeResult), e);
+            submitResultList = new ArrayList<>();
+            // 如果转化失败，那么就是发生了位置错误
+            SubmitResult submitResult = new SubmitResult(
+                    judgeTask.getSubmId(), 0, 10,
+                    -1, -1,
+                    judgeResult.getErrMsg());
             submitResultList.add(submitResult);
         }
+        SubmitInfo submitInfo = submitInfoDao.selectByPrimaryKey(submId);
+        if (submitInfo == null) return null;
         // 删除原来已经有的，目的是为了重判
         submitResultDao.deleteBySubmId(submId);
-        // 插入并计算总的判题结果
+        // 插入并计算总的判题结果,
         calculationResult(submId, submitResultList);
-        if (submitResultList != null && submitResultList.size() != 0) {
-            // 给考生的试题打分
-            grade(submId, submitResultList);
+        // 当提交不是老师测试时，那么需要更新paperProblem和ExamPaper
+        if (submitInfo.getIsTeacherTest() == 0) {
+            PaperProblem paperProblem = paperProblemDao.selectByPrimaryKey(submitInfo.getPaperProblemId());
+            if (paperProblem == null) return null;
+            // 给考生的试题打分，也就是更新paperProblem
+            grade(submitInfo, paperProblem, submitResultList);
             // 刷新考卷
-            refresh(submId);
+            refreshPaperById(submitInfo.getPaperProblemId());
         }
         return null;
     }
 
     /**
-     * 通过考卷刷新考生的成绩
-     */
-    private void refresh(Integer submId) {
-        SubmitInfo submitInfo = submitInfoDao.selectByPrimaryKey(submId);
-        if (submitInfo == null || submitInfo.getIsTeacherTest() != 0) {
-            return;
-        }
-        ExamPaper examPaper = null;
-        try {
-            examPaper = examPaperDao.selectByPrimaryKey(submitInfo.getExamPaperId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (examPaper == null) {
-            return;
-        }
-        PaperProblem record = new PaperProblem();
-        record.setExamPaperId(examPaper.getExaPapId());
-        List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(record, new BaseQuery());
-        int acSum = 0, score = 0, usedTime = 0;
-        for (int i = 0; i < paperProblemList.size(); i++) {
-            if (paperProblemList.get(i).getIsAced() == 1) {
-                acSum++;
-            }
-            score += paperProblemList.get(i).getScore();
-            usedTime += paperProblemList.get(i).getUsedTime();
-        }
-        examPaper.setScore(score);
-        examPaper.setAcedCount(acSum);
-        examPaper.setUsedTime(usedTime);
-        try {
-            examPaperDao.updateByPrimaryKeySelective(examPaper);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * 通过一个非测试的提交给考生打分
      */
-    private void grade(Integer submId, List<SubmitResult> submitResultList) {
-        SubmitInfo submitInfo = submitInfoDao.selectByPrimaryKey(submId);
-        if (submitInfo == null || submitInfo.getIsTeacherTest() != 0) {
-            return;
-        }
-        PaperProblem paperProblem = paperProblemDao.selectByPrimaryKey(submitInfo.getPaperProblemId());
-        ProblemInfo problemInfo = problemInfoDao
-                .selectByPrimaryKey(submitInfo.getProblemId());
+    private void grade(SubmitInfo submitInfo, PaperProblem paperProblem, List<SubmitResult> submitResultList) {
+        ProblemInfo problemInfo = problemInfoDao.selectByPrimaryKey(submitInfo.getProblemId());
         if (paperProblem == null || problemInfo == null) {
             return;
         }
@@ -216,34 +180,59 @@ public class JudgeServiceImpl implements JudgeService {
         submitInfo.setSubmId(submId);
         // 结果初始化为Oops. Waiting
         int lastStatus = 11, usedTime = -1, usedMemory = -1;
-        if (submitResultList == null || submitResultList.size() == 0) {
-            lastStatus = 10;// 如果没有取得结果，就以Unknow Error作为结果
-            submitInfo.setErrMsg(""); // 刷新错误信息
-        } else {
-            for (int i = 0; i < submitResultList.size(); i++) {
-                SubmitResult submitResult = submitResultList.get(i);
-                submitResult.setSubmitId(submId);
-                submitResultDao.insertSelective(submitResult);
-                if (submitResult.getStatus() == 1) {
-                    if (lastStatus == 11 && i == submitResultList.size() - 1) {
-                        lastStatus = 1;
-                    }
-                    usedTime = Math.max(usedTime, submitResult.getUsedTime());
-                    usedMemory = Math.max(usedMemory, submitResult.getUsedMemory());
-                } else {
-                    if (lastStatus == 11) {
-                        lastStatus = submitResult.getStatus();
-                    }
+        for (int i = 0; i < submitResultList.size(); i++) {
+            // 插入SubmitResult
+            SubmitResult submitResult = submitResultList.get(i);
+            submitResult.setSubmitId(submId);
+            submitResultDao.insertSelective(submitResult);
+            // 如果AC，则统计最大usedTime和usedMemory
+            if (submitResult.getStatus() == 1) {
+                // 如果是最后一个AC，那么记录status为AC
+                if (lastStatus == 11 && i == submitResultList.size() - 1) {
+                    lastStatus = 1;
                 }
-                if (!submitResult.getErrMsg().equals("")) {
-                    submitInfo.setErrMsg(submitResult.getErrMsg());
+                usedTime = Math.max(usedTime, submitResult.getUsedTime());
+                usedMemory = Math.max(usedMemory, submitResult.getUsedMemory());
+            } else {
+                // 遇到第一个非AC
+                if (lastStatus == 11) {
+                    lastStatus = submitResult.getStatus();
                 }
+            }
+            if (!submitResult.getErrMsg().equals("")) {
+                submitInfo.setErrMsg(submitResult.getErrMsg());
             }
         }
         submitInfo.setStatus(lastStatus);
         submitInfo.setUsedTime(usedTime);
         submitInfo.setUsedMemory(usedMemory);
         submitInfoDao.updateByPrimaryKeySelective(submitInfo);
+    }
+
+    /**
+     * 通过考卷刷新考生的成绩
+     */
+    @Override
+    public void refreshPaperById(Integer papProId) {
+        PaperProblem paperProblem = paperProblemDao.selectByPrimaryKey(papProId);
+        if (paperProblem == null) return;
+        ExamPaper examPaper = examPaperDao.selectByPrimaryKey(paperProblem.getExamPaperId());
+        if (examPaper == null) return;
+        PaperProblem record = new PaperProblem();
+        record.setExamPaperId(examPaper.getExaPapId());
+        List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(record, new BaseQuery());
+        int acSum = 0, score = 0, usedTime = 0;
+        for (int i = 0; i < paperProblemList.size(); i++) {
+            if (paperProblemList.get(i).getIsAced() == 1) {
+                acSum++;
+            }
+            score += paperProblemList.get(i).getScore();
+            usedTime += paperProblemList.get(i).getUsedTime();
+        }
+        examPaper.setScore(score);
+        examPaper.setAcedCount(acSum);
+        examPaper.setUsedTime(usedTime);
+        examPaperDao.updateByPrimaryKeySelective(examPaper);
     }
 
     @Override

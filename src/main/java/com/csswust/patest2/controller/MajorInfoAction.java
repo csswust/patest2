@@ -1,9 +1,9 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.dao.common.BaseDao;
-import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.MajorInfoDao;
+import com.csswust.patest2.dao.common.BaseDao;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.AcademyInfo;
 import com.csswust.patest2.entity.MajorInfo;
 import org.springframework.beans.factory.annotation.Autowired;

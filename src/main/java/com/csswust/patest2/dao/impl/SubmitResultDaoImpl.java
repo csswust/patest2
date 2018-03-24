@@ -1,8 +1,8 @@
 package com.csswust.patest2.dao.impl;
 
+import com.csswust.patest2.dao.SubmitResultDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.common.CommonMapper;
-import com.csswust.patest2.dao.SubmitResultDao;
 import com.csswust.patest2.entity.SubmitResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

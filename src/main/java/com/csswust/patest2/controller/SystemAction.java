@@ -4,7 +4,11 @@ import com.baidu.ueditor.ActionEnter;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.result.OnlineListRe;
+import com.csswust.patest2.utils.SystemInfo;
+import com.csswust.patest2.utils.SystemUtil;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,12 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/system")
 public class SystemAction extends BaseAction {
+    private static Logger log = LoggerFactory.getLogger(SystemAction.class);
+
     @Autowired
     private OnlineUserService onlineUserService;
 
@@ -41,6 +49,20 @@ public class SystemAction extends BaseAction {
         Map<String, Object> res = new HashMap<>();
         OnlineListRe result = onlineUserService.getOnlineList(page, rows);
         res.put("onlineListRe", result);
+        return res;
+    }
+
+    @RequestMapping(value = "/selectSystemInfo", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> selectSystemInfo() {
+        Map<String, Object> res = new HashMap<>();
+        List<SystemInfo> list = new ArrayList<SystemInfo>();
+        try {
+            list.addAll(SystemUtil.property());
+            list.addAll(SystemUtil.servlet(request));
+        } catch (Exception e) {
+            log.error("selectSystemInfo error: {}", e);
+        }
+        res.put("infoList", list);
         return res;
     }
 

@@ -3,6 +3,7 @@ package com.csswust.patest2.controller;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.PaperProblemDao;
 import com.csswust.patest2.entity.PaperProblem;
+import com.csswust.patest2.service.JudgeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class PaperProblemAction extends BaseAction {
 
     @Autowired
     private PaperProblemDao paperProblemDao;
+    @Autowired
+    private JudgeService judgeService;
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertOne(PaperProblem paperProblem) {
@@ -36,7 +39,9 @@ public class PaperProblemAction extends BaseAction {
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> updateById(PaperProblem paperProblem) {
         Map<String, Object> res = new HashMap<>();
+        // 注意,更新后要更新对应的paper
         int result = paperProblemDao.updateByPrimaryKeySelective(paperProblem);
+        judgeService.refreshPaperById(paperProblem.getPapProId());
         res.put("status", result);
         return res;
     }

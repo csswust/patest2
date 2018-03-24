@@ -11,8 +11,8 @@ import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
-import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.UserInfoService;
+import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
 import com.csswust.patest2.utils.MD5Util;
@@ -22,7 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
 
 @Service
 public class UserInfoServiceImpl extends BaseService implements UserInfoService {

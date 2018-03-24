@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by 972536780 on 2018/3/19.
  */
-public class SelectProblemDataRe extends APIResult{
+public class SelectProblemDataRe extends APIResult {
     private List<String> input;
     private List<String> output;
     private Integer total;

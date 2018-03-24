@@ -14,5 +14,7 @@ public interface JudgeService {
 
     Map<String, Object> refresh(JudgeTask judgeTask, JudgeResult judgeResult);
 
+    void refreshPaperById(Integer papProId);
+
     JudgeResult judge(JudgeTask judgeTask);
 }

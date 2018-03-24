@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.ExamInfoDao">
     <sql id="custom_condition">
+        <if test="query.customParam.startTime != null">
+            AND
+            start_time > #{query.customParam.startTime}
+        </if>
+        <if test="query.customParam.endTime != null">
+            AND
+            end_time &lt; #{query.customParam.endTime}
+        </if>
+        <if test="query.customParam.isRecent != null">
+            AND
+            end_time > now()
+        </if>
         ORDER BY exam_id DESC
     </sql>
 </mapper>

@@ -4,100 +4,100 @@ package com.csswust.patest2.service.judge;
  * @author 杨顺丰
  */
 public class JudgeTask {
-	private Integer submId;
-	private Integer limitMemory;
-	private Integer limitTime;
-	private Integer pid;
-	private Integer testdataNum;
-	private Integer language;
-	private String source;
-	private Integer judgeMode;
-	
-	public JudgeTask() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public JudgeTask(Integer submId, Integer limitMemory, Integer limitTime, Integer pid,
-			Integer testdataNum, Integer language, String source, Integer judgeMode) {
-		super();
-		this.submId = submId;
-		this.limitMemory = limitMemory;
-		this.limitTime = limitTime;
-		this.pid = pid;
-		this.testdataNum = testdataNum;
-		this.language = language;
-		this.source = source;
-		this.judgeMode = judgeMode;
-	}
+    private Integer submId;
+    private Integer limitMemory;
+    private Integer limitTime;
+    private Integer pid;
+    private Integer testdataNum;
+    private Integer language;
+    private String source;
+    private Integer judgeMode;
 
-	public Integer getSubmId() {
-		return submId;
-	}
+    public JudgeTask() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setSubmId(Integer submId) {
-		this.submId = submId;
-	}
+    public JudgeTask(Integer submId, Integer limitMemory, Integer limitTime, Integer pid,
+                     Integer testdataNum, Integer language, String source, Integer judgeMode) {
+        super();
+        this.submId = submId;
+        this.limitMemory = limitMemory;
+        this.limitTime = limitTime;
+        this.pid = pid;
+        this.testdataNum = testdataNum;
+        this.language = language;
+        this.source = source;
+        this.judgeMode = judgeMode;
+    }
 
-	public Integer getLimitMemory() {
-		return limitMemory;
-	}
+    public Integer getSubmId() {
+        return submId;
+    }
 
-	public void setLimitMemory(Integer limitMemory) {
-		this.limitMemory = limitMemory;
-	}
+    public void setSubmId(Integer submId) {
+        this.submId = submId;
+    }
 
-	public Integer getLimitTime() {
-		return limitTime;
-	}
+    public Integer getLimitMemory() {
+        return limitMemory;
+    }
 
-	public void setLimitTime(Integer limitTime) {
-		this.limitTime = limitTime;
-	}
+    public void setLimitMemory(Integer limitMemory) {
+        this.limitMemory = limitMemory;
+    }
 
-	public Integer getPid() {
-		return pid;
-	}
+    public Integer getLimitTime() {
+        return limitTime;
+    }
 
-	public void setPid(Integer pid) {
-		this.pid = pid;
-	}
+    public void setLimitTime(Integer limitTime) {
+        this.limitTime = limitTime;
+    }
 
-	public Integer getTestdataNum() {
-		return testdataNum;
-	}
+    public Integer getPid() {
+        return pid;
+    }
 
-	public void setTestdataNum(Integer testdataNum) {
-		this.testdataNum = testdataNum;
-	}
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
 
-	public Integer getLanguage() {
-		return language;
-	}
+    public Integer getTestdataNum() {
+        return testdataNum;
+    }
 
-	public void setLanguage(Integer language) {
-		this.language = language;
-	}
+    public void setTestdataNum(Integer testdataNum) {
+        this.testdataNum = testdataNum;
+    }
 
-	public String getSource() {
-		return source;
-	}
+    public Integer getLanguage() {
+        return language;
+    }
 
-	public void setSource(String source) {
-		this.source = source;
-	}
+    public void setLanguage(Integer language) {
+        this.language = language;
+    }
 
-	public Integer getJudgeMode() {
-		return judgeMode;
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public void setJudgeMode(Integer judgeMode) {
-		this.judgeMode = judgeMode;
-	}
-	
-	@Override
-	public String toString() {
-		return "JudgeTask [submId=" + submId + ", limitMemory=" + limitMemory + ", limitTime="
-				+ limitTime + ", pid=" + pid + ", testdataNum=" + testdataNum + ", language="
-				+ language + ", source=" + source + ", judgeMode=" + judgeMode + "]";
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public Integer getJudgeMode() {
+        return judgeMode;
+    }
+
+    public void setJudgeMode(Integer judgeMode) {
+        this.judgeMode = judgeMode;
+    }
+
+    @Override
+    public String toString() {
+        return "JudgeTask [submId=" + submId + ", limitMemory=" + limitMemory + ", limitTime="
+                + limitTime + ", pid=" + pid + ", testdataNum=" + testdataNum + ", language="
+                + language + ", source=" + source + ", judgeMode=" + judgeMode + "]";
+    }
 }
