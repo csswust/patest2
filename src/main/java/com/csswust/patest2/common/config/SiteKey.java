@@ -27,5 +27,6 @@ public class SiteKey {
     public final static String JUDGE_PYTHON_FILE_NAME = "judge_python_file_name";
 
     public final static String IS_LOGIN_LOCK = "is_login_lock";
+    public final static String IS_LIMIT_IP = "is_limit_ip";
 
 }

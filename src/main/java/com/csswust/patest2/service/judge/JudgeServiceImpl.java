@@ -108,6 +108,8 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         calculationResult(submId, submitResultList);
         // 当提交不是老师测试时，那么需要更新paperProblem和ExamPaper
         if (submitInfo.getIsTeacherTest() == 0) {
+            // 需要重新查询一次，应为calculationResult会更新最新结果
+            submitInfo = submitInfoDao.selectByPrimaryKey(submId);
             PaperProblem paperProblem = paperProblemDao.selectByPrimaryKey(submitInfo.getPaperProblemId());
             if (paperProblem == null) return null;
             // 给考生的试题打分，也就是更新paperProblem

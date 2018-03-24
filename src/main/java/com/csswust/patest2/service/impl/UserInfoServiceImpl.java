@@ -134,7 +134,8 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             return loginRe;
         }
         // 当登录的是学生时，需要判断ip是否在限定范围内
-        if (currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
+        int isLimitIP = Config.getToInt(SiteKey.IS_LIMIT_IP, 1);
+        if (isLimitIP == 1 && currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
             if (!"0:0:0:0:0:0:0:1".equals(IP)) {
                 String ips = "";
                 ExamInfo examInfo = examInfoDao.selectByPrimaryKey(currUser.getExamId());

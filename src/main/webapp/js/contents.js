@@ -81,7 +81,8 @@ define(function (require, exports, module) {
                 dataType: 'json',
                 async: false,
                 data: {
-                    examId: parm["eId"]
+                    examId: parm["eId"],
+                    onlyExamInfo: null
                 },
                 success: function (result) {
 

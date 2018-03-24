@@ -4,6 +4,7 @@ import com.csswust.patest2.service.common.AuthService;
 import com.csswust.patest2.service.common.SpringUtilService;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,14 @@ import java.io.IOException;
  *
  * @author 杨顺丰
  */
-// @WebFilter(filterName = "accessFilter", urlPatterns = {"/user/*"})
+@WebFilter(
+        filterName = "accessFilter",
+        urlPatterns = {"/academyInfo/*", "/courseInfo/*", "/examInfo/*",
+                "/examNotice/*", "/examPaper/*", "/examParam/*", "/examProblem/*",
+                "/judgerInfo/*", "/knowledgeInfo/*", "/majorInfo/*", "/paperProblem/*",
+                "/problemInfo/*", "/resultInfo/*", "/siteInfo/*", "/student/*",
+                "/submitInfo/*", "/submitResult/*", "/submitSimilarity/*",
+                "/system/*", "/userInfo/*", "/userProfile/*",})
 public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

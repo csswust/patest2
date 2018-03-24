@@ -358,9 +358,11 @@ define(function (require, exports, module) {
                     console.log(result);
                     if (result.status == 1) {
                         program.submitId = result.submId;
+                    } else {
+                        pubMeth.alertInfo("alert-danger", "提交失败");
                     }
                 }, error: function () {
-                    pubMeth.alertInfo("alert-info", "请求错误");
+                    pubMeth.alertInfo("alert-danger", "请求错误");
                 }
             });
         },
@@ -498,7 +500,7 @@ define(function (require, exports, module) {
         program.code = $("#standardSource").val();
         program.judId = $(".selectJudId option:selected").val();
         program.testCode();
-        if (program.submitId != '') {
+        if (program.submitId) {
             setTimeout(program.getsubmit, 500);
             setTimeout(function () {
                 $btn.button('reset');
