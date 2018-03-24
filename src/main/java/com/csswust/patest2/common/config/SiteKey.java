@@ -14,6 +14,7 @@ public class SiteKey {
 
     // temp
     public final static String UPLOAD_TEMP_DIR = "upload_temp_dir";
+    public final static String UPLOAD_UEDITOR_DIR = "upload_ueditor_dir";
 
     // judge
     public final static String JUDGE_SCRIPT_PATH = "judge_script_path";

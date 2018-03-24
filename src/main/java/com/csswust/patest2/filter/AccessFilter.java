@@ -15,14 +15,14 @@ import java.io.IOException;
  *
  * @author 杨顺丰
  */
-@WebFilter(
+/*@WebFilter(
         filterName = "accessFilter",
-        urlPatterns = {"/academyInfo/*", "/courseInfo/*", "/examInfo/*",
-                "/examNotice/*", "/examPaper/*", "/examParam/*", "/examProblem/*",
-                "/judgerInfo/*", "/knowledgeInfo/*", "/majorInfo/*", "/paperProblem/*",
-                "/problemInfo/*", "/resultInfo/*", "/siteInfo/*", "/student/*",
-                "/submitInfo/*", "/submitResult/*", "/submitSimilarity/*",
-                "/system/*", "/userInfo/*", "/userProfile/*",})
+        urlPatterns = {"/academyInfo", "/courseInfo", "/examInfo",
+                "/examNotice", "/examPaper", "/examParam", "/examProblem",
+                "/judgerInfo", "/knowledgeInfo", "/majorInfo", "/paperProblem",
+                "/problemInfo", "/resultInfo", "/siteInfo", "/student",
+                "/submitInfo", "/submitResult", "/submitSimilarity",
+                "/system", "/userInfo", "/userProfile",})*/
 public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
