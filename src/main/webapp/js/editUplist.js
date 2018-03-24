@@ -185,7 +185,7 @@ define(function (require, exports, module) {
         }
     });
     //下载学生上传模板
-    $(".downloada").attr("href", "../resource/考生信息导入模板.xls");
+    $(".downloada").attr("href", "../system/download?path=/resource&fileName=考生信息导入模板.xls&isTempPath=true");
     //点击上一步返回题库
     $(".upList").click(function () {
         if (par.examId) {

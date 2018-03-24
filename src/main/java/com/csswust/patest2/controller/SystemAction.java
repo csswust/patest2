@@ -1,6 +1,8 @@
 package com.csswust.patest2.controller;
 
 import com.baidu.ueditor.ActionEnter;
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.result.OnlineListRe;
@@ -81,10 +83,17 @@ public class SystemAction extends BaseAction {
 
     @RequestMapping(value = "/download", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<byte[]> download(
+            @RequestParam(required = true, defaultValue = "false") boolean isTempPath,
             @RequestParam(required = true) String path,
             @RequestParam(required = true) String fileName) {
         //下载文件路径
-        File file = new File(path + File.separator + fileName);
+        String tempPath = Config.get(SiteKey.UPLOAD_TEMP_DIR);
+        File file = null;
+        if (isTempPath) {
+            file = new File(tempPath + path + File.separator + fileName);
+        } else {
+            file = new File(path + File.separator + fileName);
+        }
         HttpHeaders headers = new HttpHeaders();
         //下载显示的文件名，解决中文名称乱码问题
         String downloadFielName = null;
