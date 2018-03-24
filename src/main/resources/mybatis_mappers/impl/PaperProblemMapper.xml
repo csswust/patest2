@@ -34,6 +34,10 @@
             AND
             last_submit_time = #{record.lastSubmitTime}
         </if>
+        <if test="record.submitId != null">
+            AND
+            submit_id = #{record.submitId}
+        </if>
         <if test="record.isAced != null">
             AND
             is_aced = #{record.isAced}
@@ -95,6 +99,10 @@
         <if test="record.lastSubmitTime != null">
             AND
             last_submit_time = #{record.lastSubmitTime}
+        </if>
+        <if test="record.submitId != null">
+            AND
+            submit_id = #{record.submitId}
         </if>
         <if test="record.isAced != null">
             AND

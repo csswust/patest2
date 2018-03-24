@@ -9,7 +9,7 @@ public class JudgeTask {
 	private Integer limitTime;
 	private Integer pid;
 	private Integer testdataNum;
-	private String language;
+	private Integer language;
 	private String source;
 	private Integer judgeMode;
 	
@@ -18,7 +18,7 @@ public class JudgeTask {
 	}
 	
 	public JudgeTask(Integer submId, Integer limitMemory, Integer limitTime, Integer pid,
-			Integer testdataNum, String language, String source, Integer judgeMode) {
+			Integer testdataNum, Integer language, String source, Integer judgeMode) {
 		super();
 		this.submId = submId;
 		this.limitMemory = limitMemory;
@@ -70,11 +70,11 @@ public class JudgeTask {
 		this.testdataNum = testdataNum;
 	}
 
-	public String getLanguage() {
+	public Integer getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(Integer language) {
 		this.language = language;
 	}
 

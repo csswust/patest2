@@ -1,112 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="renderer" content="webkit">
-	<title>考试</title>
-	<link rel="shortcut icon" href="../img/favicon.ico" >
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
-	<link rel="stylesheet" href="../css/common.css">
-	<link rel="stylesheet" href="../css/exam.css">
-	<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>考试</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/exam.css">
+    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
     <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<div id="head"><!-- 头部菜单 --></div>
-	<div class="container-fuild">
-   <div class="row">
-    <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
-    <div class="col-md-10 breadNav">
-     <ol class="breadcrumb">
-	  <li><a href="index.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
-	  <li><a href="examPaper.html">试卷</a></li>
-	  <li class="active userName"></li>
-	</ol>
-   <div class="row content" >
-   <form class="form-horizontal" >
-   <div class="form-group">
-        <div class="row" style="text-align:center;"><h3 class="examName"></h3></div>
-   </div>
-  <div class="form-group">
-  <div class="row">
-     <label class="col-md-2 control-label">考号：</label>
-     <div class="col-md-2 userName ExamPaper"></div>
-     <label class="col-md-2 control-label">姓名：</label>
-     <div class="col-md-2 realName ExamPaper"></div>
-     <label class="col-md-2 control-label">学号：</label>
-     <div class="col-md-2 studentNumber ExamPaper"></div>
-     </div>
-     <div class="row">
-     <label class="col-md-2 control-label">总分：</label>
-	 <div class="col-md-2 totalNum ExamPaper"></div>
-     <label class="col-md-2 control-label">AC数：</label>
-	 <div class="col-md-2 acNum ExamPaper"></div>
-	 <label class="col-md-2 control-label">时间消耗：</label>
-	 <div class="col-md-2 time ExamPaper"></div>
-	 </div>
-  </div>
-  </form>
-   </div>
-   <div class="row content" >
-   <form class="form-horizontal" >
-<!--     <div class="form-group">
-        <div class="col-md-2" style="text-align:right;"><h4>试卷问题</h4></div>
-   </div> -->
-<!--    <div class="col-md-10 col-md-offset-1"> -->
-   <table
-		class="table table-hover table-condensed table-striped">
-	   <thead>
-	   <th>序号</th>
-	   <th>问题</th>
-	    <th>ACed</th>
-	   <th>提交次数</th>
-	   <th>最后一次提交时间</th>
-	   <th>时间消耗</th>
-	   </thead>
-	   <tbody id="paperTempla">
-	   </tbody>
-	</table>
-  <!--  </div> -->
-   </form>
-   </div>
-</div>
-</div>
+<div id="head"><!-- 头部菜单 --></div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
+        <div class="col-md-10 breadNav">
+            <ol class="breadcrumb">
+                <li><a href="index.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a>
+                </li>
+                <li><a href="examPaper.html">试卷</a></li>
+                <li class="active userName"></li>
+            </ol>
+            <div class="row content">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="row" style="text-align:center;"><h3 class="examName"></h3></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col-md-2 control-label">考号：</label>
+                            <div class="col-md-2 userName ExamPaper"></div>
+                            <label class="col-md-2 control-label">姓名：</label>
+                            <div class="col-md-2 realName ExamPaper"></div>
+                            <label class="col-md-2 control-label">学号：</label>
+                            <div class="col-md-2 studentNumber ExamPaper"></div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-2 control-label">总分：</label>
+                            <div class="col-md-2 totalNum ExamPaper"></div>
+                            <label class="col-md-2 control-label">AC数：</label>
+                            <div class="col-md-2 acNum ExamPaper"></div>
+                            <label class="col-md-2 control-label">时间消耗：</label>
+                            <div class="col-md-2 time ExamPaper"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row content">
+                <form class="form-horizontal">
+                    <!--     <div class="form-group">
+                            <div class="col-md-2" style="text-align:right;"><h4>试卷问题</h4></div>
+                       </div> -->
+                    <!--    <div class="col-md-10 col-md-offset-1"> -->
+                    <table
+                            class="table table-hover table-condensed table-striped">
+                        <thead>
+                        <th>序号</th>
+                        <th>问题</th>
+                        <th>ACed</th>
+                        <th>提交次数</th>
+                        <th>最后一次提交时间</th>
+                        <th>时间消耗</th>
+                        </thead>
+                        <tbody id="paperTempla">
+                        </tbody>
+                    </table>
+                    <!--  </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script id="getcontent" type="text/html">
-		 {{each listMapProblem as value i}} 
-                   <tr>
-					<td>{{++i}}</td>
-					<td>{{value.problemName}}</td>
-					{{if value.isAced==1}}
-						<td><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:green;"></span></td>
-					{{else}}
-						<td><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red;"></span></td>
-					{{/if}}
-					<td>{{value.submitCount}}</td>
-					<td>{{value.lastSubmitTime}}</td>
-					<td>{{value.usedTime}}</td>
-                   </tr>
-         {{/each}}
-	 </script>
-    <script type="text/javascript">
-		//seajs的简单配置
-		seajs.config({
-			base : '../lib/',
-			alias : {
-				jquery : 'jQuery/jquery.min.js',
-				bootstrap : 'bootstrap/js/bootstrap.min.js',
-				artTemplate : 'artTemplate/artTemplate.js',
-			}
-		});
-		//加载入口模块
-		seajs.use('jquery');
-		seajs.use("../js/showPaper.js");
-	</script>
+    {{each paperProblemList as value i}}
+    <tr>
+        <td>{{++i}}</td>
+        <td><a href="question.html?id={{problemInfoList[i-1].probId}}">{{problemInfoList[i-1].title}}</a></td>
+        {{if value.isAced==1}}
+        <td><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:green;"></span></td>
+        {{else}}
+        <td><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red;"></span></td>
+        {{/if}}
+        <td>{{value.submitCount}}</td>
+        <td>{{value.lastSubmitTime}}</td>
+        <td>{{value.usedTime}}</td>
+    </tr>
+    {{/each}}
+</script>
+<script type="text/javascript">
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+        }
+    });
+    //加载入口模块
+    seajs.use('jquery');
+    seajs.use("../js/showPaper.js");
+</script>
 </html>

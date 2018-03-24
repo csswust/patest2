@@ -4,4 +4,28 @@
     <sql id="custom_condition">
         ORDER BY exa_pro_id DESC
     </sql>
+
+    <select id="selectByProblem" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        exam_problem.exa_pro_id,
+        exam_problem.problem_id,
+        exam_problem.exam_id
+        FROM exam_problem,problem_info
+        WHERE problem_info.prob_id = exam_problem.problem_id
+        <if test="query.customParam.examId != null">
+            AND
+            exam_problem.exam_id = #{query.customParam.examId}
+        </if>
+        <if test="query.customParam.knowId != null">
+            AND
+            problem_info.know_id = #{query.customParam.knowId}
+        </if>
+        <if test="query.customParam.levelId != null">
+            AND
+            problem_info.level_id = #{query.customParam.levelId}
+        </if>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
 </mapper>

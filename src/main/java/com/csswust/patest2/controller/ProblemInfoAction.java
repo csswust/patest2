@@ -12,7 +12,7 @@ import com.csswust.patest2.entity.CourseInfo;
 import com.csswust.patest2.entity.KnowledgeInfo;
 import com.csswust.patest2.entity.ProblemInfo;
 import com.csswust.patest2.service.ProblemInfoService;
-import com.csswust.patest2.service.result.ImportProblmDataRe;
+import com.csswust.patest2.service.result.ImportDataRe;
 import com.csswust.patest2.service.result.SelectProblemDataRe;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -89,7 +89,7 @@ public class ProblemInfoAction extends BaseAction {
     @RequestMapping(value = "/importProblmData", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<byte[]> importProblmData(
             @RequestParam(required = true) Integer probId) {
-        ImportProblmDataRe re = problemInfoService.importProblmData(probId);
+        ImportDataRe re = problemInfoService.importProblmData(probId);
         //下载文件路径
         String path = re.getFileDir();
         String filename = re.getFileName();

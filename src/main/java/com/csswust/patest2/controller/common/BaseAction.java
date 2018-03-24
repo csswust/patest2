@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class BaseAction extends Base{
+public class BaseAction extends Base {
     private static Logger log = LoggerFactory.getLogger(BaseAction.class);
     // 这样是线程安全的
     @Autowired(required = false)
@@ -47,6 +48,12 @@ public class BaseAction extends Base{
     public String getIp(HttpServletRequest request) {
         return request.getRemoteAddr();
     }
+
+    public Integer getUserId() {
+        HttpSession session = request.getSession();
+        return (Integer) session.getAttribute("userId");
+    }
+
 
     public <T> T paramVerificate(T param, ParamCallBack callBacks) {
         if (param == null) {

@@ -177,13 +177,13 @@ define(function (require, exports, module) {
 				program.selectOnline();
 			}
 		});
-		$(".gradePrint").click(function() {
+/*		$(".gradePrint").click(function() {
 //			program.selectGradeByExamId();
 			window.location.href="../exam/selectGradeByExamId?examId=" + program.examId;
 		});
 		$(".codePrint").click(function() {
 			window.location.href="../exam/selectCodeByExamId?examId=" + program.examId;
-		});
+		});*/
 //		program.getSubmitInfo();
 		
 		if(program.count > 0){

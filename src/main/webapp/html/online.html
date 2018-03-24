@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="renderer" content="webkit">
-<title>LExamV3.0</title>
-<link rel="shortcut icon" href="../img/favicon.ico" >
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/common.css">
-<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-   <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LExamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<div id="head">
-		<!-- 头部菜单 -->
-	</div>
-	<div class="container-fuild">
-		<div class="row">
-			<div class="side-bar col-md-2">
-				<!-- 左侧导航 -->
-			</div>
-			<div class="col-md-10 content">
-				<table
-					class="table table-bordered table-hover table-condensed table-striped">
-					<caption style="font-weight:bold;font-size:18px;text-align:center;color:black;">在线用户</caption>
-					<thead>
-						<tr>
-							<th>账号</th>
-							<th>姓名</th>
-							<th>学号</th>
-							<th>班级</th>
-							<th>考试地点</th>
-							<th>IP</th>				
-						</tr>
-					</thead>
-					<tbody id="listinfo">
-					</tbody>
-				</table>
-    		</div>
- 		 </div>
-		<div class="row paging">
-	       	<div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
-	        <div class="col-md-5 ">
-	            <ul class="pagination " id="pagination"></ul>
-	        </div>
+<div id="head">
+    <!-- 头部菜单 -->
+</div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2">
+            <!-- 左侧导航 -->
         </div>
-  </div>
+        <div class="col-md-10 content">
+            <table
+                    class="table table-bordered table-hover table-condensed table-striped">
+                <caption style="font-weight:bold;font-size:18px;text-align:center;color:black;">在线用户</caption>
+                <thead>
+                <tr>
+                    <th>账号</th>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>班级</th>
+                    <th>考试地点</th>
+                    <th>IP</th>
+                </tr>
+                </thead>
+                <tbody id="listinfo">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row paging">
+        <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
+        <div class="col-md-5 ">
+            <ul class="pagination " id="pagination"></ul>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript">
-	//seajs的简单配置
-	seajs.config({
-		base : '../lib/',
-		alias : {
-			jquery : 'jQuery/jquery.min.js',
-			paginator : 'jQuery/jqPaginator.js',
-			artTemplate : 'artTemplate/artTemplate.js',
-			bootstrap : 'bootstrap/js/bootstrap.min.js'
-		}
-	});
-	//加载入口模块
-	seajs.use("../js/online.js");
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            paginator: 'jQuery/jqPaginator.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js'
+        }
+    });
+    //加载入口模块
+    seajs.use("../js/online.js");
 </script>
 </html>

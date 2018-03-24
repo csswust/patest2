@@ -64,19 +64,19 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exam_id" sqlStatement="JDBC"/>
-        </table>
-        <table schema="patest2" tableName="exam_notice" domainObjectName="ExamNotice"
+        </table>-->
+        <!--<table schema="patest2" tableName="exam_notice" domainObjectName="ExamNotice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exa_not_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="exam_paper" domainObjectName="ExamPaper"
+        <!--<table schema="patest2" tableName="exam_paper" domainObjectName="ExamPaper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exa_pap_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="exam_param" domainObjectName="ExamParam"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -112,13 +112,13 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="maj_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="paper_problem" domainObjectName="PaperProblem"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="pap_pro_id" sqlStatement="JDBC"/>
-        </table>-->
+        </table>
         <!--<table schema="patest2" tableName="problem_info" domainObjectName="ProblemInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -142,14 +142,14 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="site_id" sqlStatement="JDBC"/>
-        </table>
-        <table schema="patest2" tableName="submit_info" domainObjectName="SubmitInfo"
+        </table>-->
+        <!--<table schema="patest2" tableName="submit_info" domainObjectName="SubmitInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="subm_id" sqlStatement="JDBC"/>
-        </table>
-        <table schema="patest2" tableName="submit_result" domainObjectName="SubmitResult"
+        </table>-->
+        <!--<table schema="patest2" tableName="submit_result" domainObjectName="SubmitResult"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -161,12 +161,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="sub_sim_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="user_info" domainObjectName="UserInfo"
+       <!-- <table schema="patest2" tableName="user_info" domainObjectName="UserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="user_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="user_login_log" domainObjectName="UserLoginLog"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"

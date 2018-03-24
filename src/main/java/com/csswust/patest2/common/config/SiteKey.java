@@ -25,4 +25,7 @@ public class SiteKey {
     public final static String JUDGE_GCC_FILE_NAME = "judge_gcc_file_name";
     public final static String JUDGE_GPP_FILE_NAME = "judge_gpp_file_name";
     public final static String JUDGE_PYTHON_FILE_NAME = "judge_python_file_name";
+
+    public final static String IS_LOGIN_LOCK = "is_login_lock";
+
 }

@@ -57,7 +57,7 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "POST",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../exam/updateExam",
+                url: "../examInfo/updateById",
                 dataType: "json",
                 async: false,
                 data: {

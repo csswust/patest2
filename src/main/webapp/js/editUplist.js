@@ -52,6 +52,7 @@ define(function (require, exports, module) {
         },
         //上传学生名单
         importList: function () {
+            console.log(123);
             $.ajaxFileUpload({
                 url: "../examPaper/uploadUserByExamId",
                 secureuri: false,
@@ -65,16 +66,16 @@ define(function (require, exports, module) {
                     if (result.loadResult.status > 0) {
                         pubMeth.alertInfo("alert-success", "上传成功");
                         console.log(result.loadResult.path);
-                        program.path = result.loadResultdirPath;
+                        program.path = result.loadResult.dirPath;
                         program.fileName = result.loadResult.fileName;
-                        window.location.href = '../system/download?path=' + result.path + "#fileName=" + program.fileName;
+                        window.location.href = '../system/download?path=' + program.path + "&fileName=" + program.fileName;
                         program.selectUserBaseInfo();
                     } else {
-                        pubMeth.alertInfo("alert-warning", result.loadResult.desc);
+                        pubMeth.alertInfo("alert-danger", result.loadResult.desc);
                     }
                 },
                 error: function () {
-                    pubMeth.alertInfo("alert-warning", "上传失败");
+                    pubMeth.alertInfo("alert-danger", "上传失败");
                 }
             });
         },
@@ -153,6 +154,7 @@ define(function (require, exports, module) {
         $(".pageName").text("修改考试");
         program.examId = par.Id;
     }
+
     program.selectUserBaseInfo();
     //上传学生名单
     program.pagingFun();
@@ -183,7 +185,7 @@ define(function (require, exports, module) {
         }
     });
     //下载学生上传模板
-    $(".downloada").attr("href", "../img/ListTemplate.xls");
+    $(".downloada").attr("href", "../resource/考生信息导入模板.xls");
     //点击上一步返回题库
     $(".upList").click(function () {
         if (par.examId) {

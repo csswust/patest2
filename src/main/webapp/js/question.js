@@ -345,14 +345,14 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../submit/insertSubmitInfo",
+                url: "../submitInfo/testData",
                 dataType: 'json',
                 async: false,
                 data: {
-                    "submitInfo.submSource": program.code,
-                    "submitInfo.judId": program.judId,
-                    "submitInfo.probId": program.probId,
-                    "submitInfo.isTeacherTest": '1'
+                    "source": program.code,
+                    "judgerId": program.judId,
+                    "problemId": program.probId,
+                    /*"submitInfo.isTeacherTest": '1'*/
                 },
                 success: function (result) {
                     console.log(result);
@@ -368,11 +368,11 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../submit/selectSubmitInfo",
+                url: "../submitInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
-                    "submitInfo.submId": program.submitId,
+                    "submId": program.submitId,
                 },
                 success: function (result) {
                     console.log(result);

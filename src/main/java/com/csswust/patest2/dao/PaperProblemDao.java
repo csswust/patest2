@@ -25,4 +25,6 @@ public interface PaperProblemDao {
     List<PaperProblem> selectByCondition(PaperProblem record, BaseQuery query);
 
     int selectByConditionGetCount(PaperProblem record, BaseQuery query);
+
+    int deleteByExamId(Integer examId);
 }

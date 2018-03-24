@@ -7,7 +7,7 @@ import com.csswust.patest2.dao.ProblemInfoDao;
 import com.csswust.patest2.entity.ProblemInfo;
 import com.csswust.patest2.service.ProblemInfoService;
 import com.csswust.patest2.service.common.BaseService;
-import com.csswust.patest2.service.result.ImportProblmDataRe;
+import com.csswust.patest2.service.result.ImportDataRe;
 import com.csswust.patest2.service.result.SelectProblemDataRe;
 import com.csswust.patest2.utils.FileUtil;
 import com.csswust.patest2.utils.ZipUtil;
@@ -157,8 +157,8 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
     }
 
     @Override
-    public ImportProblmDataRe importProblmData(Integer probId) {
-        ImportProblmDataRe result = new ImportProblmDataRe();
+    public ImportDataRe importProblmData(Integer probId) {
+        ImportDataRe result = new ImportDataRe();
         if (probId == null) {
             result.setStatus(-1);
             result.setDesc("问题id不能为空");

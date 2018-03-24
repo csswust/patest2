@@ -36,4 +36,9 @@ public class APIResult {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    public void setStatusAndDesc(Integer status, String desc) {
+        this.status = status;
+        this.desc = desc;
+    }
 }

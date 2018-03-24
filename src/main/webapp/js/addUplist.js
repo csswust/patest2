@@ -29,15 +29,15 @@ define(function (require, exports, module) {
 			if(length != 0){
 				var stulist = '<tr>'
 					 + '<th>序号</th>'
-		             + '<th>姓名</th>' 
+		             + '<th>姓名</th>'
 		             + '<th>学号</th>'
 		             + '<th>考号</th>'
 		             + '<th>班级</th>'
-		             + '<tr>';	
+		             + '<tr>';
 				$("#stuhead").html(stulist);
 			}
 			program.html="";
-			for(var i = 0;i<length;i++){	
+			for(var i = 0;i<length;i++){
 				var order = i+1;
 				program.html += '<tr>'
 					    +'<td>' + order + '</td>'
@@ -45,7 +45,7 @@ define(function (require, exports, module) {
 						+'<td>' + program.userProfile[i].studentNumber + '</td>'
 						+'<td>' + program.userInfo[i].username + '</td>'
 						+'<td>' + program.userProfile[i].className + '</td>'
-						+'</tr>';				
+						+'</tr>';
 			}
 		},
 		//上传学生名单
@@ -56,7 +56,7 @@ define(function (require, exports, module) {
 					fileElementId : "namefile",// 文件选择框的id属性
 					dataType : "json",
 					data : {
-						examId : program.examId					
+						examId : program.examId
 					},
 					success : function(result) {
 						console.log(result);
@@ -65,7 +65,7 @@ define(function (require, exports, module) {
                  			pubMeth.alertInfo("alert-success","上传成功");
 							console.log(result.path);
 							program.path = result.path;
-							window.location.href = '../img/'+result.path;						
+							window.location.href = '../img/'+result.path;
 							program.selectUserBaseInfo();
 						} else {
 							pubMeth.alertInfo("alert-warning","上传失败");
@@ -80,7 +80,7 @@ define(function (require, exports, module) {
 			$.ajax({
 			    type : "post",
 				content : "application/x-www-form-urlencoded;charset=UTF-8",
-				url:"../exam/selectUserBaseInfo",		
+				url:"../exam/selectUserBaseInfo",
 				dataType : 'json',
 				async : false,
 				data:{
@@ -95,10 +95,10 @@ define(function (require, exports, module) {
 	                program.count = result.total;
 	                program.showInfo();
 	        		$("#stuInfo").empty();
-	    			$("#stuInfo").append(program.html);	   
+	    			$("#stuInfo").append(program.html);
 				},
 				error:function(){
-					
+
 				}
 		});
 		},
@@ -113,23 +113,23 @@ define(function (require, exports, module) {
 				$(className).val(name);
 			});
 		},
-		
+
 	 };
-	 
+
 		 function getUrlParam(name){
 		 var reg = new RegExp();
-	    }			
+	    }
 		pubMeth.serCourse();
 		var par = pubMeth.getQueryObject();
 		if(par.examId){
 			$(".pageName").text("添加考试");
-			program.examId = par.examId;	
+			program.examId = par.examId;
 		}
 		if(par.Id){
 			$(".pageName").text("修改考试");
-			program.examId = par.Id;		
+			program.examId = par.Id;
 		}
-		program.selectUserBaseInfo(); 
+		program.selectUserBaseInfo();
 	    //上传学生名单
 	 	program.change('input[id=namefile]','.namefile');
 	 	$(".importList").show();
@@ -138,11 +138,11 @@ define(function (require, exports, module) {
 					backdrop : 'static'
 			});
 			$(".comImport").click(function(){
-				program.importList();		
+				program.importList();
 			});
 		});
-	 	 program.selectUserBaseInfo();  
-	 	$(".save").click(function(){	 				      
+	 	 program.selectUserBaseInfo();
+	 	$(".save").click(function(){
 			if(par.examId){
 				if(program.userInfo){
 					window.location.href = "test.html";
@@ -154,7 +154,7 @@ define(function (require, exports, module) {
 					 window.location.href = "exam.html";
 					} else {
 						pubMeth.alertInfo("alert-warning","考生名单没有上传");
-					}			 
+					}
 			}
 		});
 		//下载学生上传模板
@@ -168,7 +168,7 @@ define(function (require, exports, module) {
 	 		}
 	 	});
 	 	if(program.count > 0){
-		 	$.jqPaginator('#pagination', {	 		
+		 	$.jqPaginator('#pagination', {
 		    	totalCounts : program.count,
 		        visiblePages: 5,
 		        currentPage: 1,
@@ -182,5 +182,5 @@ define(function (require, exports, module) {
 					program.selectUserBaseInfo();
 		        }
 	        });
-	 	} 	 	  	
+	 	}
 });

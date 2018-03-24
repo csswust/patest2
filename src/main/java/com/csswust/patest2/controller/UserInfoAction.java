@@ -4,15 +4,18 @@ import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.UserInfoDao;
+import com.csswust.patest2.dao.UserLoginLogDao;
 import com.csswust.patest2.dao.UserProfileDao;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
+import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
 import com.csswust.patest2.service.UserInfoService;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
+import com.csswust.patest2.utils.ArrayUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +40,8 @@ public class UserInfoAction extends BaseAction {
     private UserProfileDao userProfileDao;
     @Autowired
     private UserInfoDao userInfoDao;
+    @Autowired
+    private UserLoginLogDao userLoginLogDao;
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> login(
@@ -94,6 +100,7 @@ public class UserInfoAction extends BaseAction {
     public Map<String, Object> selectByCondition(
             UserInfo userInfo,
             @RequestParam(required = false) String realName,
+            @RequestParam(required = false, defaultValue = "false") Boolean isContainIp,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         userInfo = paramVerificate(userInfo, new StringCallBack());
@@ -112,6 +119,24 @@ public class UserInfoAction extends BaseAction {
         List<UserProfile> userProfileList = selectRecordByIds(
                 getFieldByList(userInfoList, "userProfileId", UserInfo.class),
                 "useProId", (BaseDao) userProfileDao, UserProfile.class);
+        UserLoginLog userLoginLogCondition = new UserLoginLog();
+        if (isContainIp) {
+            List<String> ipList = new ArrayList<>();
+            for (int i = 0; i < userInfoList.size(); i++) {
+                UserInfo temp = userInfoList.get(i);
+                if (temp == null || temp.getUserId() == null) {
+                    ipList.add(null);
+                    continue;
+                }
+                userLoginLogCondition.setUserId(userInfo.getUserId());
+                List<UserLoginLog> list = userLoginLogDao.selectByCondition(
+                        userLoginLogCondition, new BaseQuery(1, 1));
+                if (list != null && list.size() != 0) {
+                    ipList.add(list.get(0).getLoginIp());
+                }
+            }
+            res.put("ipList", ipList);
+        }
         res.put("total", total);
         res.put("userInfoList", userInfoList);
         res.put("userProfileList", userProfileList);
@@ -151,6 +176,26 @@ public class UserInfoAction extends BaseAction {
         Map<String, Object> res = new HashMap<>();
         int result = userInfoDao.deleteByIds(ids);
         res.put("status", result);
+        return res;
+    }
+
+    @RequestMapping(value = "/releaseLockByIds", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> releaseLockByIds(@RequestParam(required = true) String ids) {
+        Map<String, Object> res = new HashMap<>();
+        List<Integer> idList = null;
+        try {
+            idList = ArrayUtil.StringToArray(ids, ",");
+        } catch (Exception e) {
+            idList = new ArrayList<>();
+        }
+        int count = 0;
+        UserInfo userInfo = new UserInfo();
+        for (int i = 0; i < idList.size(); i++) {
+            userInfo.setUserId(idList.get(i));
+            userInfo.setIsLock(0);
+            count += userInfoDao.updateByPrimaryKeySelective(userInfo);
+        }
+        res.put("status", count);
         return res;
     }
 }

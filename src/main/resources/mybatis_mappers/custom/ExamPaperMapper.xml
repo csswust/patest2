@@ -2,7 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.ExamPaperDao">
     <sql id="custom_condition">
-        ORDER BY exa_pap_id DESC
+        <if test="query.customParam.userIds != null">
+            AND
+            user_id in
+            <foreach collection="query.customParam.userIds" item="item" index="index" open="(" close=")"
+                     separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="query.customParam.sort == null">
+            ORDER BY exa_pap_id DESC
+        </if>
+        <if test="query.customParam.sort != null">
+            ORDER BY aced_count DESC,used_time ASC
+        </if>
     </sql>
     <delete id="deleteByExamId" parameterType="java.util.Map">
         delete from exam_paper

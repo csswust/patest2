@@ -146,7 +146,7 @@ define(function (require, exports, module) {
                 $.ajax({
                     type: "get",
                     content: "application/x-www-form-urlencoded;charset=UTF-8",
-                    url: "../submit/rejudgeBySubmId",
+                    url: "../submitInfo/rejudgeBySubmId",
                     dataType: 'json',
                     async: false,
                     data: {
@@ -165,15 +165,15 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../submit/selectBySubmId",
+                url: "../submitResult/selectByCondition",
                 dataType: 'json',
                 async: false,
                 data: {
-                    submId: program.submId
+                    submitId: program.submId
                 },
                 success: function (result) {
                     var acNum = 0, length = 0, flag = 1, mainHtml = "", color = "";
-                    if (result.status == 1) {
+                    /*if (result.status == 1) {*/
                         for (var i = 0, length = result.submitResultList.length; i < length; i++) {
                             if (result.submitResultList[i].status == 1) {
                                 color = "acColor";
@@ -206,7 +206,7 @@ define(function (require, exports, module) {
                             '<div class="col-md-3">Time[Ms]</div>' +
                             '<div class="col-md-3">Memory[KB]</div></div>'
                             + mainHtml + '</div></div>';
-                    }
+                    /*}*/
                 },
                 error: function () {
                     pubMeth.alertInfo("alert-info", "请求错误");
@@ -243,7 +243,7 @@ define(function (require, exports, module) {
         if (this.className == 'judId') {
             $('#settingdata').modal();
             $("#myModalLabel").text(program.problemInfoList[program.rowIndex].title);
-            $('#code').html('<textarea rows="32"  class="form-control" >' + program.submitInfoList[program.rowIndex].submSource + '</textarea>');
+            $('#code').html('<textarea rows="32"  class="form-control" >' + program.submitInfoList[program.rowIndex].source + '</textarea>');
         } else if (this.className == "ceStatus") {
             $('#settingdata').modal();
             $("#myModalLabel").text(program.problemInfoList[program.rowIndex].title);

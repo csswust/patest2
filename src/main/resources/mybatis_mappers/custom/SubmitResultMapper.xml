@@ -4,4 +4,8 @@
     <sql id="custom_condition">
         ORDER BY sub_res_id DESC
     </sql>
+    <delete id="deleteBySubmId" parameterType="java.util.Map">
+        delete from submit_result
+        where submit_id = #{submId}
+    </delete>
 </mapper>

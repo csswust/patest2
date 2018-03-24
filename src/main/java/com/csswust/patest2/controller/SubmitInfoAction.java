@@ -12,6 +12,7 @@ import com.csswust.patest2.entity.ProblemInfo;
 import com.csswust.patest2.entity.SubmitInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.service.judge.JudgeThread;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ public class SubmitInfoAction extends BaseAction {
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
             SubmitInfo submitInfo,
+            @RequestParam(required = false, defaultValue = "false") boolean onlySubmitInfo,
             @RequestParam(required = false) String username,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
@@ -63,6 +65,11 @@ public class SubmitInfoAction extends BaseAction {
         Integer total = submitInfoDao.selectByConditionGetCount(submitInfo, baseQuery);
         baseQuery.setPageRows(page, rows);
         List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(submitInfo, baseQuery);
+        res.put("total", total);
+        res.put("submitInfoList", submitInfoList);
+        if (onlySubmitInfo) {
+            return res;
+        }
         List<UserInfo> userInfoList = selectRecordByIds(
                 getFieldByList(submitInfoList, "userId", SubmitInfo.class),
                 "userId", (BaseDao) userInfoDao, UserInfo.class);
@@ -72,8 +79,6 @@ public class SubmitInfoAction extends BaseAction {
         List<ProblemInfo> problemInfoList = selectRecordByIds(
                 getFieldByList(submitInfoList, "problemId", SubmitInfo.class),
                 "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
-        res.put("total", total);
-        res.put("submitInfoList", submitInfoList);
         res.put("userInfoList", userInfoList);
         res.put("userProfileList", userProfileList);
         res.put("problemInfoList", problemInfoList);
@@ -102,6 +107,32 @@ public class SubmitInfoAction extends BaseAction {
         Map<String, Object> res = new HashMap<>();
         int result = submitInfoDao.deleteByIds(ids);
         res.put("status", result);
+        return res;
+    }
+
+    @RequestMapping(value = "/testData", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> testData(SubmitInfo submitInfo) {
+        Map<String, Object> res = new HashMap<>();
+        submitInfo.setUserId(getUserId());
+        submitInfo.setIp(getIp(request));
+        submitInfo.setIsTeacherTest(1);
+        submitInfo.setStatus(11);
+        int result = submitInfoDao.insertSelective(submitInfo);
+        res.put("status", result);
+        res.put("submId", submitInfo.getSubmId());
+        if (submitInfo.getSubmId() != null) {
+            JudgeThread.queue.add(submitInfo.getSubmId());
+        }
+        return res;
+    }
+
+    @RequestMapping(value = "/rejudgeBySubmId", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> rejudgeBySubmId(@RequestParam Integer submId) {
+        Map<String, Object> res = new HashMap<>();
+        if (submId != null) {
+            JudgeThread.queue.add(submId);
+        }
+        res.put("status", 1);
         return res;
     }
 }

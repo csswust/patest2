@@ -5,7 +5,7 @@ import com.csswust.patest2.common.APIResult;
 /**
  * Created by 972536780 on 2018/3/19.
  */
-public class ImportProblmDataRe extends APIResult {
+public class ImportDataRe extends APIResult {
     private String fileDir;
     private String fileName;
 

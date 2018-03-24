@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.PaperProblemDao">
     <sql id="custom_condition">
-        ORDER BY pap_pro_id DESC
+        ORDER BY exam_paper_id DESC,`order` ASC
     </sql>
+    <delete id="deleteByExamId" parameterType="java.util.Map">
+        delete from paper_problem
+        where exam_id = #{examId}
+    </delete>
 </mapper>

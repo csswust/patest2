@@ -17,6 +17,8 @@ public class PaperProblem {
 
     private Date lastSubmitTime;
 
+    private Integer submitId;
+
     private Integer isAced;
 
     private Integer usedTime;
@@ -83,6 +85,14 @@ public class PaperProblem {
 
     public void setLastSubmitTime(Date lastSubmitTime) {
         this.lastSubmitTime = lastSubmitTime;
+    }
+
+    public Integer getSubmitId() {
+        return submitId;
+    }
+
+    public void setSubmitId(Integer submitId) {
+        this.submitId = submitId;
     }
 
     public Integer getIsAced() {

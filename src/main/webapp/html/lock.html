@@ -1,101 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="renderer" content="webkit">
-<title>LExamV3.0</title>
-<link rel="shortcut icon" href="../img/favicon.ico" >
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/common.css">
-<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-   <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LExamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<div id="head">
-		<!-- 头部菜单 -->
-	</div>
-	<div class="container-fuild">
-		<div class="row">
-			<div class="side-bar col-md-2">
-				<!-- 左侧导航 -->
-			</div>
-			<div class="col-md-10">
-				<div class="tip">
-					 <div class="alert alert-warning" style="margin-top:10px;" id="tip">
-		  			  <a href="#" class="close" data-dismiss="alert">
-		     			 &times;
-		   			  </a>
-		   			  <strong>小提示：出现问题刷新试试</strong>
-					</div>
-				</div>
-				<div class="row opration">
-					<div class="col-md-4">
-						<button type="button" class="btn  btn-success lock">
-							<span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>批量解锁
-						</button>
-					</div>
-				</div>
-				<table
-					class="table table-bordered table-hover table-condensed table-striped">
-					
-					<thead>
-						<tr>
-							<th><input type="checkbox" class="check_list" />全选</th>
-							<th>ID</th>
-							<th>用户名</th>
-							<th>真实姓名</th>
-							<th>班级</th>
-							<th>上次登录时间</th>
-							<th>上次登录IP</th>
-							<th>本次请求登录IP</th>
-						</tr>
-					</thead>
-					<tbody id="listinfo">
-					</tbody>
-				</table>
-    		</div>
-    		
- 		 </div>
-		<div class="row paging">
-	       	<div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
-	        <div class="col-md-5 ">
-	            <ul class="pagination " id="pagination"></ul>
-	        </div>
+<div id="head">
+    <!-- 头部菜单 -->
+</div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2">
+            <!-- 左侧导航 -->
         </div>
-  </div>
-  <script id="getcontent" type="text/html">
-		 {{each data as value i}} 
-                   <tr>
-					<td><input type="checkbox" value="{{value.usrlId}}" name="title"/></td>
-					<td>{{value.usrlId}}</td>
-					<td>{{value.username}}</td>
-					<td>{{value.realname}}</td>
-					<td>{{value.classname}}</td>
-					<td>{{value.lastTime}}</td>
-					<td>{{value.lastLoginIp}}</td>
-					<td>{{value.nowLoginIp}}</td>
-                   </tr>
-         {{/each}}
-	 </script>
+        <div class="col-md-10">
+            <div class="tip">
+                <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+                    <a href="#" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>小提示：出现问题刷新试试</strong>
+                </div>
+            </div>
+            <div class="row opration">
+                <div class="col-md-4">
+                    <button type="button" class="btn  btn-success lock">
+                        <span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>批量解锁
+                    </button>
+                </div>
+            </div>
+            <table
+                    class="table table-bordered table-hover table-condensed table-striped">
+
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="check_list"/>全选</th>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>真实姓名</th>
+                    <th>班级</th>
+                    <th>上次登录时间</th>
+                    <th>上次登录IP</th>
+                    <!--<th>本次请求登录IP</th>-->
+                </tr>
+                </thead>
+                <tbody id="listinfo">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="row paging">
+        <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个</div>
+        <div class="col-md-5 ">
+            <ul class="pagination " id="pagination"></ul>
+        </div>
+    </div>
+</div>
+<script id="getcontent" type="text/html">
+    {{each userInfoList as value i}}
+    <tr>
+        <td><input type="checkbox" value="{{value.userId}}" name="title"/></td>
+        <td>{{value.userId}}</td>
+        <td>{{value.username}}</td>
+        <td>{{userProfileList[i].realName}}</td>
+        <td>{{userProfileList[i].className}}</td>
+        <td>{{value.lastLogin}}</td>
+        <td>{{ipList[i]}}</td>
+    </tr>
+    {{/each}}
+</script>
 </body>
 <script type="text/javascript">
-	//seajs的简单配置
-	seajs.config({
-		base : '../lib/',
-		alias : {
-			jquery : 'jQuery/jquery.min.js',
-			paginator : 'jQuery/jqPaginator.js',
-			artTemplate : 'artTemplate/artTemplate.js',
-			bootstrap : 'bootstrap/js/bootstrap.min.js'
-		}
-	});
-	//加载入口模块
-	seajs.use("jquery");
-	seajs.use("../js/lock.js");
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            paginator: 'jQuery/jqPaginator.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js'
+        }
+    });
+    //加载入口模块
+    seajs.use("jquery");
+    seajs.use("../js/lock.js");
 </script>
 </html>

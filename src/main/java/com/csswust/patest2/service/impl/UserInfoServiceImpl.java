@@ -1,6 +1,8 @@
 package com.csswust.patest2.service.impl;
 
 import com.csswust.patest2.common.APIResult;
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserLoginLogDao;
@@ -118,8 +120,9 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             loginRe.setDesc("密码错误");
             return loginRe;
         }
+        int isLoginLock = Config.getToInt(SiteKey.IS_LOGIN_LOCK, 1);
         // 判断用户是否active，并且not lock
-        if (currUser.getIsLock() != 0) {
+        if (isLoginLock == 1 && currUser.getIsLock() != 0) {
             loginRe.setStatus(-3);
             loginRe.setDesc("账号被锁定! 请联系管理员解锁");
             return loginRe;
@@ -168,7 +171,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         recordUser.setUserId(currUser.getUserId());
         if (currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
             // 非管理员登录后就不允许登录
-            currUser.setIsLock(1);
+            recordUser.setIsLock(1);
         }
         userInfoDao.updateByPrimaryKeySelective(recordUser);
         return loginRe;

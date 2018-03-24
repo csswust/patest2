@@ -2,8 +2,10 @@ package com.csswust.patest2.controller;
 
 import com.baidu.ueditor.ActionEnter;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.service.result.ImportProblmDataRe;
+import com.csswust.patest2.service.OnlineUserService;
+import com.csswust.patest2.service.result.OnlineListRe;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,11 +24,24 @@ import java.util.Map;
 @RestController
 @RequestMapping("/system")
 public class SystemAction extends BaseAction {
+    @Autowired
+    private OnlineUserService onlineUserService;
+
     @RequestMapping(value = "/authError", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> authError() throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("code", "权限不足");
         return map;
+    }
+
+    @RequestMapping(value = "/selectOnline", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> selectOnline(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer rows) {
+        Map<String, Object> res = new HashMap<>();
+        OnlineListRe result = onlineUserService.getOnlineList(page, rows);
+        res.put("onlineListRe", result);
+        return res;
     }
 
     @RequestMapping(value = "/ueditor", method = {RequestMethod.GET, RequestMethod.POST})

@@ -27,4 +27,6 @@ public interface SubmitResultDao {
     List<SubmitResult> selectByCondition(SubmitResult record, BaseQuery query);
 
     int selectByConditionGetCount(SubmitResult record, BaseQuery query);
+
+    int deleteBySubmId(Integer submId);
 }

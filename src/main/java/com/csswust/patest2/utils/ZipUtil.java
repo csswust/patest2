@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.*;
 
 public class ZipUtil {
@@ -223,6 +224,30 @@ public class ZipUtil {
             }
             zipOut.close();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void zipFiles(List<File> srcfile, File zipfile) {
+        byte[] buf = new byte[1024];
+        try {
+            if (!zipfile.getParentFile().exists()) {
+                zipfile.getParentFile().mkdirs();
+            }
+            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipfile));
+            for (int i = 0; i < srcfile.size(); i++) {
+                File file = (File) srcfile.get(i);
+                FileInputStream in = new FileInputStream(file);
+                out.putNextEntry(new ZipEntry(file.getName()));
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                out.closeEntry();
+                in.close();
+            }
+            out.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

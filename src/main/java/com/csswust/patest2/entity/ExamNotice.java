@@ -7,6 +7,8 @@ public class ExamNotice {
 
     private Integer examId;
 
+    private String title;
+
     private Date createTime;
 
     private Date modifyTime;
@@ -27,6 +29,14 @@ public class ExamNotice {
 
     public void setExamId(Integer examId) {
         this.examId = examId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public Date getCreateTime() {

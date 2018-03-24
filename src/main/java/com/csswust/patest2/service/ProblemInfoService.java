@@ -1,11 +1,10 @@
 package com.csswust.patest2.service;
 
 import com.csswust.patest2.common.APIResult;
-import com.csswust.patest2.service.result.ImportProblmDataRe;
+import com.csswust.patest2.service.result.ImportDataRe;
 import com.csswust.patest2.service.result.SelectProblemDataRe;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -18,5 +17,5 @@ public interface ProblemInfoService {
 
     SelectProblemDataRe selectProblemData(Integer probId);
 
-    ImportProblmDataRe importProblmData(Integer probId);
+    ImportDataRe importProblmData(Integer probId);
 }

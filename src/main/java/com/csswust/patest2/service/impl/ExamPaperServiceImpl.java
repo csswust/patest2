@@ -3,14 +3,14 @@ package com.csswust.patest2.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
-import com.csswust.patest2.dao.ExamPaperDao;
-import com.csswust.patest2.dao.UserInfoDao;
-import com.csswust.patest2.dao.UserProfileDao;
-import com.csswust.patest2.entity.ExamPaper;
-import com.csswust.patest2.entity.UserInfo;
-import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.dao.*;
+import com.csswust.patest2.dao.common.BaseDao;
+import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamPaperService;
 import com.csswust.patest2.service.common.BaseService;
+import com.csswust.patest2.service.result.DrawProblemParam;
+import com.csswust.patest2.service.result.DrawProblemRe;
 import com.csswust.patest2.service.result.ExamPaperLoadRe;
 import com.csswust.patest2.utils.MD5Util;
 import jxl.Sheet;
@@ -31,6 +31,9 @@ import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
+import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
+import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
+
 /**
  * Created by 972536780 on 2018/3/21.
  */
@@ -44,6 +47,14 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
     private UserInfoDao userInfoDao;
     @Autowired
     private UserProfileDao userProfileDao;
+    @Autowired
+    private ExamParamDao examParamDao;
+    @Autowired
+    private ExamProblemDao examProblemDao;
+    @Autowired
+    private ProblemInfoDao problemInfoDao;
+    @Autowired
+    private PaperProblemDao paperProblemDao;
 
     @Transactional
     @Override
@@ -168,7 +179,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return result;
         }
-        String fname = "loginsheet" + new Date().getTime() + ".xml";
+        String fname = "loginsheet" + new Date().getTime() + ".xls";
         File downFile = new File(path, fname);
         WritableWorkbook work = null;
         try {
@@ -219,6 +230,106 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         result.setFileName(fname);
         result.setStatus(count);
         return result;
+    }
+
+    @Transactional
+    @Override
+    public DrawProblemRe drawProblemByExamId(Integer examId) {
+        DrawProblemRe drawProblemRe = new DrawProblemRe();
+        Random random = new Random();
+        int i, j;
+        // 获取试卷列表
+        ExamPaper examPaper = new ExamPaper();
+        examPaper.setExamId(examId);
+        List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, new BaseQuery());
+        if (examPaperList == null || examPaperList.size() == 0) {
+            drawProblemRe.setStatus(-1);
+            drawProblemRe.setDesc("未添加考生");
+            return drawProblemRe;
+        }
+        // 获取试卷参数
+        ExamParam examParam = new ExamParam();
+        examParam.setExamId(examId);
+        List<ExamParam> examParamList = examParamDao.selectByCondition(examParam, new BaseQuery());
+        if (examParamList == null || examParamList.size() == 0) {
+            drawProblemRe.setStatus(-2);
+            drawProblemRe.setDesc("未添加试卷参数");
+            return drawProblemRe;
+        }
+        // 包装模板和对应的问题，目的在于优化效率
+        List<DrawProblemParam> dPPList = new ArrayList<DrawProblemParam>();
+        for (i = 0; i < examParamList.size(); i++) {
+            DrawProblemParam dpp = new DrawProblemParam();
+            BaseQuery baseQuery = new BaseQuery();
+            baseQuery.setCustom("examId", examId);
+            baseQuery.setCustom("knowId", examParamList.get(i).getKnowId());
+            baseQuery.setCustom("levelId", examParamList.get(i).getLevelId());
+            List<ExamProblem> examProblemList = examProblemDao.selectByProblem(
+                    new ExamProblem(), baseQuery);
+            if (examProblemList == null || examProblemList.size() == 0) {
+                drawProblemRe.setStatus(-3);
+                drawProblemRe.setDesc(JSON.toJSONString(examParamList.get(i)) +
+                        "试卷参数对应的题目数目为0");
+                return drawProblemRe;
+            }
+            dpp.setExamProblemList(examProblemList);
+            List<ProblemInfo> problemInfoList = selectRecordByIds(
+                    getFieldByList(examProblemList, "problemId", ExamProblem.class),
+                    "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
+            dpp.setProblemInfoList(problemInfoList);
+            dPPList.add(dpp);
+        }
+        // 对每张试卷进行抽题
+        List<PaperProblem> pPList = new ArrayList<>();
+        for (i = 0; i < examPaperList.size(); i++) { // 对每张试卷，也就是每个用户
+            // 保证不重复
+            Set<Integer> setProbId = new HashSet<>();
+            for (j = 0; j < dPPList.size(); j++) { // 对每个模板
+                int probNum = dPPList.get(j).getExamProblemList().size();
+                int result = random.nextInt(probNum);
+                boolean flag = false;
+                for (int k = result; k < result + probNum; k++) {
+                    int probId = dPPList.get(j).getExamProblemList().get(k % probNum).getProblemId();
+                    if (!setProbId.contains(probId)) {
+                        setProbId.add(probId);
+                        PaperProblem paperProblem = new PaperProblem();
+                        paperProblem.setExamId(examId);
+                        paperProblem.setExamPaperId(examPaperList.get(i).getExaPapId());
+                        paperProblem.setOrder(j);
+                        paperProblem.setExamParamId(examParamList.get(j).getExaParId());
+                        paperProblem.setProblemId(probId);
+                        paperProblem.setIsAced(0);
+                        paperProblem.setScore(0);
+                        paperProblem.setSubmitCount(0);
+                        paperProblem.setUsedTime(0);
+                        pPList.add(paperProblem);
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    drawProblemRe.setStatus(-4);
+                    drawProblemRe.setDesc("卷参数与题目数目异常，请检查重复参数是否小于或者等于对应的题目数目");
+                    return drawProblemRe;
+                }
+            }
+        }
+        // 删除之前抽的题目
+        int paperProbelmDelete = paperProblemDao.deleteByExamId(examId);
+        // 添加新抽的题目
+        int sum = 0;
+        for (i = 0; i < pPList.size(); i++) {
+            int temp = paperProblemDao.insertSelective(pPList.get(i));
+            if (temp != 1) {
+                drawProblemRe.setStatus(-5);
+                drawProblemRe.setDesc(JSON.toJSONString(pPList.get(i)) + "插入失败");
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                return drawProblemRe;
+            }
+            sum = sum + temp;
+        }
+        drawProblemRe.setStatus(sum);
+        return drawProblemRe;
     }
 
     private String getPassword(String pass) {

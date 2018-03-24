@@ -16,6 +16,10 @@
             AND
             exam_id = #{record.examId}
         </if>
+        <if test="record.title != null">
+            AND
+            title = #{record.title}
+        </if>
         <if test="record.createTime != null">
             AND
             create_time = #{record.createTime}
@@ -45,6 +49,10 @@
         <if test="record.examId != null">
             AND
             exam_id = #{record.examId}
+        </if>
+        <if test="record.title != null">
+            AND
+            title = #{record.title}
         </if>
         <if test="record.createTime != null">
             AND

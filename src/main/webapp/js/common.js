@@ -43,7 +43,7 @@ define(function (require, exports, module) {
                 + '<li><a href="exam.html" class="examList">考试管理</a></li>'
                 + '<li><a href="examPaper.html" class="paperInfo">试卷管理</a></li>'
                 + '<li><a href="examList.html" class="examination">考场管理</a></li>'
-                + '<li><a href="sexamList.html" class="similarityInfo">相似度</a></li>'
+                + '<li><a href="similarity.html" class="similarityInfo">相似度</a></li>'
                 + '</ul>'
                 + '</li>'
                 + '<li  class="tree">'
@@ -102,7 +102,7 @@ define(function (require, exports, module) {
                 + '"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span> 所有提交</a></li>'
                 + '<li role="presentation"  class="online" id="online"><a href="onlineUser.html?id='
                 + id
-                + '"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> 在线用户</a></li>'
+                + '"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> 考生名单</a></li>'
                 + '<li role="presentation"  class="rank"  id="rank"><a href="scoreTable.html?id='
                 + id
                 + '"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 成绩表</a></li>'
@@ -143,6 +143,52 @@ define(function (require, exports, module) {
                 + '</p></div></div>';
             $('body').append(footerHtml);
         },
+        importGradeByExamId: function () {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../examInfo/importGradeByExamId",
+                dataType: 'json',
+                async: false,
+                data: {
+                    examId: par.id
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status === 1) {
+                        // pubMeth.alertInfo("alert-success", "上传成功");
+                        program.path = result.fileDir;
+                        program.fileName = result.fileName;
+                        window.location.href = '../system/download?path=' + program.path + "&fileName=" + program.fileName;
+                    } else {
+                        pubMeth.alertInfo("alert-danger", result.desc);
+                    }
+                }
+            })
+        },
+        importCodeByExamId: function () {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../examInfo/importCodeByExamId",
+                dataType: 'json',
+                async: false,
+                data: {
+                    examId: par.id
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status === 1) {
+                        // pubMeth.alertInfo("alert-success", "上传成功");
+                        program.path = result.fileDir;
+                        program.fileName = result.fileName;
+                        window.location.href = '../system/download?path=' + program.path + "&fileName=" + program.fileName;
+                    } else {
+                        pubMeth.alertInfo("alert-danger", result.desc);
+                    }
+                }
+            })
+        },
         getsysname: function () {
             $.ajax({
                 type: "get",
@@ -160,9 +206,9 @@ define(function (require, exports, module) {
                             }
                         }
                     }
-                },
+                }
             })
-        },
+        }
     };
     var par = pubMeth.getQueryObject();
     program.getCookie("name");
@@ -217,5 +263,12 @@ define(function (require, exports, module) {
             program.examId = par.Id;
             window.location.href = 'editUplist.html?Id=' + program.examId;
         }
+    });
+
+    $(".gradePrint").click(function () {
+        program.importGradeByExamId();
+    });
+    $(".codePrint").click(function () {
+        program.importCodeByExamId();
     });
 });

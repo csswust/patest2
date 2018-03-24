@@ -21,6 +21,19 @@ public class SubmitResult {
 
     private String errMsg;
 
+    public SubmitResult() {
+
+    }
+
+    public SubmitResult(Integer submitId, Integer testId, Integer status, Integer usedTime, Integer usedMemory, String errMsg) {
+        this.submitId = submitId;
+        this.testId = testId;
+        this.status = status;
+        this.usedTime = usedTime;
+        this.usedMemory = usedMemory;
+        this.errMsg = errMsg;
+    }
+
     public Integer getSubResId() {
         return subResId;
     }
