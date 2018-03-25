@@ -1,5 +1,7 @@
 package com.csswust.patest2.filter;
 
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.service.common.AuthService;
 import com.csswust.patest2.service.common.SpringUtilService;
 
@@ -15,18 +17,27 @@ import java.io.IOException;
  *
  * @author 杨顺丰
  */
-/*@WebFilter(
+@WebFilter(
         filterName = "accessFilter",
-        urlPatterns = {"/academyInfo", "/courseInfo", "/examInfo",
-                "/examNotice", "/examPaper", "/examParam", "/examProblem",
-                "/judgerInfo", "/knowledgeInfo", "/majorInfo", "/paperProblem",
-                "/problemInfo", "/resultInfo", "/siteInfo", "/student",
-                "/submitInfo", "/submitResult", "/submitSimilarity",
-                "/system", "/userInfo", "/userProfile",})*/
+        urlPatterns = {"/academyInfo/*", "/courseInfo/*", "/examInfo/*",
+                "/examNotice/*", "/examPaper/*", "/examParam/*", "/examProblem/*",
+                "/judgerInfo/*", "/knowledgeInfo/*", "/majorInfo/*",
+                "/paperProblem/*", "/problemInfo/*", "/resultInfo/*",
+                "/siteInfo/*", "/student/*", "/submitInfo/*", "/submitResult/*",
+                "/submitSimilarity/*", "/system/*", "/userInfo/*", "/userProfile/*",
+        })
 public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+        Integer isAuthJudge = Config.getToInt(SiteKey.IS_AUTH_JUDGE, 1);
+        if (isAuthJudge != 1) {
+            try {
+                chain.doFilter(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         HttpServletRequest req = (HttpServletRequest) request;
         String contextPath = req.getContextPath();
         String URI = req.getRequestURI();
