@@ -226,8 +226,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return result;
         }
-        result.setDirPath(path);
-        result.setFileName(fname);
+        result.setDirPath(downFile.getPath());
         result.setStatus(count);
         return result;
     }

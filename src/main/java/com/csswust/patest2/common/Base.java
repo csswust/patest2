@@ -1,10 +1,15 @@
 package com.csswust.patest2.common;
 
 import com.alibaba.fastjson.JSON;
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,5 +50,15 @@ public class Base {
             log.error("JSON.toJSONString error: {}", e);
         }
         return "";
+    }
+
+    public static String getTempPath(String key) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String time = sdf.format(new Date());
+        return Config.get(key) + "/" + time;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getTempPath(SiteKey.UPLOAD_TEMP_DIR));
     }
 }

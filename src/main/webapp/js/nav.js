@@ -160,9 +160,9 @@ define(function (require, exports, module) {
                 '<div class="footer">' +
                 '<p>© 2012-' + program.year + '计算机科学与技术学院 数据与知识工程实验室</p>' +
                 '<p>要使用GCC编译器，请下载：' +
-                '<a href="../system/download?path=/resource&fileName=devcpp.exe&isTempPath=true">Dev cpp</a>' +
+                '<a href="../system/download?path=/static/devcpp.exe&isUeditorPath=true">Dev cpp</a>' +
                 '<span> 体验最佳浏览效果，请使用谷歌浏览器，</span>' +
-                '<a href="../system/download?path=/resource&fileName=Chrome.exe&isTempPath=true">点击下载</a>' +
+                '<a href="../system/download?path=/static/Chrome.exe&isUeditorPath=true">点击下载</a>' +
                 '</p></div></div>';
             $('body').append(footerHtml);
         }

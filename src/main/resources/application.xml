@@ -77,6 +77,13 @@
         </property>
     </bean>
 
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.163.com"/>
+        <property name="port" value="25"/>
+        <property name="Username" value="13198070503@163.com"/>
+        <property name="password" value="ysf626991"/>
+    </bean>
+
     <!-- 返回json数据对时间进行格式化 -->
     <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
         <property name="simpleDateFormat" value="yyyy-MM-dd HH:mm:ss"/>

@@ -68,7 +68,7 @@ define(function (require, exports, module) {
                         console.log(result.loadResult.path);
                         program.path = result.loadResult.dirPath;
                         program.fileName = result.loadResult.fileName;
-                        window.location.href = '../system/download?path=' + program.path + "&fileName=" + program.fileName;
+                        window.location.href = '../system/download?path=' + program.path;
                         program.selectUserBaseInfo();
                     } else {
                         pubMeth.alertInfo("alert-danger", result.loadResult.desc);
@@ -185,7 +185,7 @@ define(function (require, exports, module) {
         }
     });
     //下载学生上传模板
-    $(".downloada").attr("href", "../system/download?path=/resource&fileName=考生信息导入模板.xls&isTempPath=true");
+    $(".downloada").attr("href", "../system/download?path=/static/考生信息导入模板.xls&isUeditorPath=true");
     //点击上一步返回题库
     $(".upList").click(function () {
         if (par.examId) {

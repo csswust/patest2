@@ -231,6 +231,12 @@
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
         </dependency>
+        <!-- 邮箱功能 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
         <!-- ueditor（富文本编辑器） -->
         <dependency>
             <groupId>com.baidu.ueditor</groupId>
@@ -242,6 +248,7 @@
         <dependency>
             <groupId>com.baidu.ueditor</groupId>
             <artifactId>json</artifactId>
+            <version>1.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/json.jar</systemPath>
         </dependency>

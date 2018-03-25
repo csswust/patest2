@@ -106,20 +106,22 @@ public class SystemAction extends BaseAction {
     public ResponseEntity<byte[]> download(
             @RequestParam(required = true, defaultValue = "false") boolean isTempPath,
             @RequestParam(required = true, defaultValue = "false") boolean isUeditorPath,
-            @RequestParam(required = false) String path,
-            @RequestParam(required = false) String fileName) {
+            @RequestParam(required = false) String path) {
         //下载文件路径
-        String tempPath = Config.get(SiteKey.UPLOAD_TEMP_DIR);
         File file = null;
         if (isTempPath) {
-            file = new File(tempPath + path + File.separator + fileName);
+            // 临时路径
+            String tempPath = Config.get(SiteKey.UPLOAD_TEMP_DIR);
+            file = new File(tempPath + path);
         } else if (isUeditorPath) {
+            // ueditor路径
             String ueditorPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR);
             int index = path.indexOf("?");
             if (index != -1) path = path.substring(0, index);
             file = new File(ueditorPath + path);
         } else {
-            file = new File(path + File.separator + fileName);
+            // 非标准路径
+            file = new File(path);
         }
         if (!file.isFile() || !file.exists()) return null;
         HttpHeaders headers = new HttpHeaders();

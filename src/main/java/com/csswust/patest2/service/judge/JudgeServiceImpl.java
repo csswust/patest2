@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -244,9 +245,10 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         String sourcepath = null;
         try {
             // 获得判题源文件的文件名
+            JudgerInfo judgerInfo = judgerInfoDao.selectByPrimaryKey(judgeTask.getLanguage());
             fileName = getFileName(judgeTask.getLanguage());
             sourcepath = Config.get(SiteKey.JUDGE_SOURCE_PATH);
-            String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH);
+            String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH) + File.separator;
             String scriptName = Config.get(SiteKey.JUDGE_SCRIPT_NAME);
             // 创建源文件并写入代码 =
             FileUtil.generateFile(judgeTask.getSource(), sourcepath, fileName);
@@ -254,7 +256,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             StringBuffer cmd = new StringBuffer();
             cmd.append("python").append(" ").append(scriptPath).append(scriptName)
                     .append(" ").append(judgeTask.getPid()).append(" ")
-                    .append(judgeTask.getTestdataNum()).append(" ").append(judgeTask.getLanguage())
+                    .append(judgeTask.getTestdataNum()).append(" ").append(judgerInfo.getName())
                     .append(" ").append(judgeTask.getLimitTime()).append(" ")
                     .append(judgeTask.getLimitMemory()).append(" ")
                     .append(judgeTask.getJudgeMode());

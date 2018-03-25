@@ -184,8 +184,8 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
             return result;
         }
         if (tempFile.exists()) {
-            result.setFileDir(datadir);
-            result.setFileName(probId + ".zip");
+            result.setFileDir(datadir + "/" + probId + ".zip");
+            // result.setFileName();
             result.setStatus(1);
         } else {
             result.setStatus(-4);

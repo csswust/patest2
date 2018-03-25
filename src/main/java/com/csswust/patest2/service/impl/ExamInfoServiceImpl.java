@@ -296,8 +296,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         ZipUtil.zipFiles(srcfile, dataZipfile);
         if (result.getStatus() == 0) {
             result.setStatus(1);
-            result.setFileDir(dataZipfile.getParentFile().getPath());
-            result.setFileName(dataZipfile.getName());
+            result.setFileDir(dataZipfile.getPath());
+            // result.setFileName(dataZipfile.getName());
         }
         return result;
     }
@@ -460,8 +460,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         }
         if (result.getStatus() == 0) {
             result.setStatus(1);
-            result.setFileDir(path);
-            result.setFileName(fileName);
+            result.setFileDir(downFile.getPath());
+            //result.setFileName(fileName);
         }
         return result;
     }
