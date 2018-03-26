@@ -21,7 +21,8 @@ define(function (require, exports, module) {
         submitInfoList2: null,
         userInfoList1: null,
         userInfoList2: null,
-        userProfileList: null,
+        userProfileList1: null,
+        userProfileList2: null,
         showSimilarity: function () {
             var length = program.submitSimilarityList.length;
             program.html = "";
@@ -29,8 +30,8 @@ define(function (require, exports, module) {
                 program.html += '<tr>'
                     + '<td><input type="checkbox" name="title"/></td>'
                     + '<td>' + program.submitSimilarityList[i].subSimId + '</td>'
-                    + '<td>' + program.submitSimilarityList[i].submitId1 + '+' + program.userInfoList1[i].username + '</td>'
-                    + '<td>' + program.submitSimilarityList[i].submitId2 + '+' + program.userInfoList2[i].username + '</td>'
+                    + '<td>' + program.submitSimilarityList[i].submitId1 + '+' + program.userInfoList1[i].username + '+' + program.userProfileList1[i].realName + '</td>'
+                    + '<td>' + program.submitSimilarityList[i].submitId2 + '+' + program.userInfoList2[i].username + '+' + program.userProfileList2[i].realName +'</td>'
                     + '<td>' + program.submitSimilarityList[i].similarity + '</td>'
                     + '</tr>';
 
@@ -58,6 +59,8 @@ define(function (require, exports, module) {
                     program.submitInfoList2 = result.submitInfoList2;
                     program.userInfoList1 = result.userInfoList1;
                     program.userInfoList2 = result.userInfoList2;
+                    program.userProfileList1 = result.userProfileList1;
+                    program.userProfileList2 = result.userProfileList2;
                     /*program.userProfileList = result.userProfileList;*/
                     program.showSimilarity();
                     $("#listInfo").html("");
