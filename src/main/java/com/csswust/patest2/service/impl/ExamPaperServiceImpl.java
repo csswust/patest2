@@ -110,8 +110,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         int examPaperDelete = examPaperDao.deleteByExamId(examId);
         String examYear;  // 获取年份
         Calendar now = Calendar.getInstance();
-        examYear = String.format("%d", now.get(Calendar.YEAR));
-        String examIdFormat = String.format("%04d", examId);
+        examYear = String.format("%02d", (now.get(Calendar.YEAR)) % 2000);
+        String examIdFormat = String.format("%03d", examId % 1000);
 
         List<UserProfile> userProfileList = new ArrayList<>();
         List<UserInfo> userInfoList = new ArrayList<>();
