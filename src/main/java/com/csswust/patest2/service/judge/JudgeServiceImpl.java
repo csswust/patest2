@@ -253,7 +253,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             // 创建源文件并写入代码 =
             FileUtil.generateFile(judgeTask.getSource(), sourcepath, fileName);
             // 构建命令行命令
-            StringBuffer cmd = new StringBuffer();
+            StringBuilder cmd = new StringBuilder();
             cmd.append("python").append(" ").append(scriptPath).append(scriptName)
                     .append(" ").append(judgeTask.getPid()).append(" ")
                     .append(judgeTask.getTestdataNum()).append(" ").append(judgerInfo.getName())
@@ -270,6 +270,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             System.out.println(judgeTask + "\n" + errMsg + "\n" + consoleMsg);
             judgeResult.setErrMsg(errMsg);
             judgeResult.setConsoleMsg(consoleMsg);
+            log.error("judge \n consoleMsg :{} \n info :{}", consoleMsg, JSON.toJSONString(judgeTask));
         } catch (IOException e) {
             log.error("judge error data :{} error: {}", JSON.toJSONString(judgeResult), e);
         } finally {
