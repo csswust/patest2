@@ -4,6 +4,9 @@ import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.service.common.AuthService;
 import com.csswust.patest2.service.common.SpringUtilService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -27,37 +30,50 @@ import java.io.IOException;
                 "/submitSimilarity/*", "/system/*", "/userInfo/*", "/userProfile/*",
         })
 public class AccessFilter implements Filter {
+    private static Logger log = LoggerFactory.getLogger(AccessFilter.class);
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         Integer isAuthJudge = Config.getToInt(SiteKey.IS_AUTH_JUDGE, 1);
+        // 获取请求地址url
+        HttpServletRequest req = (HttpServletRequest) request;
+        String contextPath = req.getContextPath();
+        String URI = req.getRequestURI();
+        String url = URI.replace(contextPath, "");
+        // 获取用户角色和userId
+        HttpSession session = req.getSession();
+        String userPermisson = (String) session.getAttribute("userPermisson");
+        if (userPermisson == null) {
+            userPermisson = "not_login";
+        }
+        Integer userId = (Integer) session.getAttribute("userId");
+        MDC.put("userId", userId == null ? "未登录" : String.valueOf(userId));
+
+        // 计算相应时间
+        long startTime = System.currentTimeMillis();
         if (isAuthJudge != 1) {
             try {
                 chain.doFilter(request, response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        HttpServletRequest req = (HttpServletRequest) request;
-        String contextPath = req.getContextPath();
-        String URI = req.getRequestURI();
-        String url = URI.replace(contextPath, "");
-        HttpSession session = req.getSession();
-        String userPermisson = (String) session.getAttribute("userPermisson");
-        if (userPermisson == null) {
-            userPermisson = "not_login";
-        }
-        AuthService authService = SpringUtilService.getBean("authService");
-        if (authService.isAuth(url, userPermisson)) {
-            try {
-                chain.doFilter(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } else {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-            httpServletResponse.sendRedirect("/patest2/system/authError");
+            AuthService authService = SpringUtilService.getBean("authService");
+            if (authService.isAuth(url, userPermisson)) {
+                try {
+                    chain.doFilter(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+                httpServletResponse.sendRedirect("/patest2/system/authError");
+            }
         }
+        long endTime = System.currentTimeMillis();
+        log.info("请求地址：{}, 角色：{}, 响应时间：{}MS", url, userPermisson, endTime - startTime);
+        MDC.remove("userId");
     }
 
     @Override
