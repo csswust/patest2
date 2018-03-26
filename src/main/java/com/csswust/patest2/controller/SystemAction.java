@@ -4,11 +4,13 @@ import com.baidu.ueditor.ActionEnter;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
+import com.csswust.patest2.listener.OnlineListener;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.result.OnlineListRe;
 import com.csswust.patest2.utils.SystemInfo;
 import com.csswust.patest2.utils.SystemUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,6 +58,22 @@ public class SystemAction extends BaseAction {
         Map<String, Object> res = new HashMap<>();
         OnlineListRe result = onlineUserService.getOnlineList(page, rows);
         res.put("onlineListRe", result);
+        return res;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/signOut", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> signOut(@RequestParam String sessinoId) {
+        Map<String, Object> res = new HashMap<>();
+        if (StringUtils.isBlank(sessinoId)) {
+            return res;
+        }
+        HttpSession session = OnlineListener.onlineMap.get(sessinoId);
+        if (session == null) {
+            return res;
+        }
+        session.invalidate();
+        res.put("status", 1);
         return res;
     }
 

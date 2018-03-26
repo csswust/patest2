@@ -32,6 +32,7 @@ define(function (require, exports, module) {
                         var classroom = result.examPaperList[i].classroom;
                         var className = result.userProfileList[i].className;
                         var ip = result.userLoginLogList[i].loginIp;
+                        var sessionId = result.sessionIdList[i];
                         if (username == null || username == "undefined") {
                             username = "";
                         }
@@ -50,10 +51,36 @@ define(function (require, exports, module) {
                         if (ip == null || ip == "undefined") {
                             ip = "";
                         }
-                        $("#listinfo").append('<tr><td>' + username + '</td>' +
-                            '<td>' + realName + '</td><td>' + studentNum + '</td>' + '<td>' + className + '</td>' +
-                            '<td>' + classroom + '</td><td>' + ip + '</td></tr>');
+
+                        $("#listinfo").append('<tr>' +
+                            '<td>' + username + '</td>' +
+                            '<td>' + realName + '</td>' +
+                            '<td>' + studentNum + '</td>' +
+                            '<td>' + className + '</td>' +
+                            '<td>' + classroom + '</td>' +
+                            '<td>' + ip + '</td>' +
+                            '<td><button class="btn btn-success btn-xs signOut" type="button" value=' + sessionId + '>退出</button></td>' +
+                            '</tr>');
                     }
+                    $(".signOut").click(function () {
+                        var sessionIdValue = this.value;
+                        $.ajax({
+                            type: "get",
+                            content: "application/x-www-form-urlencoded;charset=UTF-8",
+                            url: "../system/signOut",
+                            dataType: 'json',
+                            async: false,
+                            data: {
+                                sessinoId: sessionIdValue
+                            },
+                            success: function (result) {
+                                if (result.status == 1) {
+                                    window.location.reload();
+                                }
+                            }
+                        });
+
+                    });
                 },
                 error: function () {
                     //alert("111");
