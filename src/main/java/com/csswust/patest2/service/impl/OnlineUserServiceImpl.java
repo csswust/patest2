@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,11 +44,8 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
     @Autowired
     private UserLoginLogDao userLoginLogDao;
 
-    @Override
-    public OnlineListRe getOnlineList(Integer page, Integer rows) {
+    void getEffectiveSession(List<Integer> userIdList, List<String> sessionIdList) {
         Map<String, HttpSession> map = OnlineListener.onlineMap;
-        List<Integer> userIdList = new ArrayList<>();
-        List<String> sessionIdList = new ArrayList<>();
         for (Map.Entry<String, HttpSession> entry : map.entrySet()) {
             String sessionId = entry.getKey();
             HttpSession session = entry.getValue();
@@ -60,6 +58,13 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
                 sessionIdList.add(sessionId);
             }
         }
+    }
+
+    @Override
+    public OnlineListRe getOnlineList(Integer page, Integer rows) {
+        List<Integer> userIdList = new ArrayList<>();
+        List<String> sessionIdList = new ArrayList<>();
+        getEffectiveSession(userIdList, sessionIdList);
         int start = 0, end = userIdList.size();
         if (page != null && rows != null) {
             start = (page - 1) * rows;
@@ -110,5 +115,22 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
         onlineListRe.setUserLoginLogList(userLoginLogList);
         onlineListRe.setTotal(userIdList.size());
         return onlineListRe;
+    }
+
+    @Override
+    public List<String> judgeOnline(List<Integer> userIds) {
+        List<String> judgeResult = new ArrayList<>();
+        if (userIds == null || userIds.size() == 0) return judgeResult;
+        List<Integer> userIdList = new ArrayList<>();
+        List<String> sessionIdList = new ArrayList<>();
+        getEffectiveSession(userIdList, sessionIdList);
+        Map<Integer, String> map = new HashMap<>();
+        for (int i = 0; i < userIdList.size(); i++) {
+            map.put(userIdList.get(i), sessionIdList.get(i));
+        }
+        for (Integer item : userIds) {
+            judgeResult.add(map.get(item));
+        }
+        return judgeResult;
     }
 }

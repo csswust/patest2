@@ -24,7 +24,7 @@ define(function (require, exports, module) {
         userArr: [],
         userProfileArr: [],
         listuserip: [],
-        examPaperList:[],
+        examPaperList: [],
         selectOnline: function () {
             console.log(program.examId);
             $.ajax({
@@ -36,7 +36,8 @@ define(function (require, exports, module) {
                 data: {
                     page: program.page,
                     rows: pubMeth.rowsnum,
-                    examId: program.examId
+                    examId: program.examId,
+                    containOnline: true
                 },
                 success: function (result) {
                     console.log(result);
@@ -44,10 +45,29 @@ define(function (require, exports, module) {
                     program.userArr = result.userInfoList;
                     /*program.listuserip = result.listuserReleaseLock;*/
                     program.examPaperList = result.examPaperList;
+                    program.sessinoList = result.sessinoList;
                     program.count = result.total;
                     program.showOnline();
                     $("#listInfo").empty();
                     $("#listInfo").append(program.ohtml);
+                    $(".signOut").click(function () {
+                        var sessionIdValue = this.value;
+                        $.ajax({
+                            type: "get",
+                            content: "application/x-www-form-urlencoded;charset=UTF-8",
+                            url: "../system/signOut",
+                            dataType: 'json',
+                            async: false,
+                            data: {
+                                sessinoId: sessionIdValue
+                            },
+                            success: function (result) {
+                                if (result.status == 1) {
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    });
                 }
             });
         },
@@ -56,6 +76,13 @@ define(function (require, exports, module) {
             program.ohtml = '';
             for (var i = 0; i < length; i++) {
                 var order = i + 1;
+                var loginStatus = '<td></td>';
+                if (program.sessinoList[i] === null) {
+                    loginStatus = '<td>未登录</td>';
+                } else {
+                    loginStatus = '<td>已登录<button class="btn btn-success btn-xs signOut" type="button" value='
+                        + program.sessinoList[i] + '>退出</button></td>';
+                }
                 program.ohtml += '<tr>'
                     + '<td>' + order + '</td>'
                     + '<td>' + program.userProfileArr[i].studentNumber + '</td>'
@@ -63,7 +90,8 @@ define(function (require, exports, module) {
                     + '<td>' + program.userProfileArr[i].realName + '</td>'
                     + '<td>' + program.userProfileArr[i].className + '</td>'
                     + '<td>' + program.examPaperList[i].classroom + '</td>'
-                   /* + '<td>' + program.listuserip[i].loginIp + '</td>'*/
+                    /* + '<td>' + program.listuserip[i].loginIp + '</td>'*/
+                    + loginStatus
                     + '</tr>';
             }
         },
@@ -73,13 +101,13 @@ define(function (require, exports, module) {
     program.examId = parm["id"];
     program.selectOnline();
 
-/*    $(".gradePrint").click(function () {
-//		program.selectGradeByExamId();
-        window.location.href = "../exam/selectGradeByExamId?examId=" + program.examId;
-    });
-    $(".codePrint").click(function () {
-        window.location.href = "../exam/selectCodeByExamId?examId=" + program.examId;
-    });*/
+    /*    $(".gradePrint").click(function () {
+     //		program.selectGradeByExamId();
+     window.location.href = "../exam/selectGradeByExamId?examId=" + program.examId;
+     });
+     $(".codePrint").click(function () {
+     window.location.href = "../exam/selectCodeByExamId?examId=" + program.examId;
+     });*/
 //	program.getSubmitInfo();
 
     if (program.count > 0) {

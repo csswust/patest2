@@ -6,6 +6,7 @@ import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamPaperService;
+import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.result.DrawProblemRe;
 import com.csswust.patest2.service.result.ExamPaperLoadRe;
 import org.apache.commons.lang3.StringUtils;
@@ -50,11 +51,14 @@ public class ExamPaperAction extends BaseAction {
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private SubmitInfoDao submitInfoDao;
+    @Autowired
+    private OnlineUserService onlineUserService;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
             ExamPaper examPaper,
             @RequestParam(required = false, defaultValue = "false") Boolean onlyPaper,
+            @RequestParam(required = false, defaultValue = "false") Boolean containOnline,
             @RequestParam(required = false) String userName,
             @RequestParam(required = false) String studentNumber,
             @RequestParam(required = false) Integer page,
@@ -89,8 +93,8 @@ public class ExamPaperAction extends BaseAction {
         if (onlyPaper) {
             return res;
         }
-        List<UserInfo> userInfoList = selectRecordByIds(
-                getFieldByList(examPaperList, "userId", ExamPaper.class),
+        List<Integer> userIds = getFieldByList(examPaperList, "userId", ExamPaper.class);
+        List<UserInfo> userInfoList = selectRecordByIds(userIds,
                 "userId", (BaseDao) userInfoDao, UserInfo.class);
         List<UserProfile> userProfileList = selectRecordByIds(
                 getFieldByList(userInfoList, "userProfileId", UserInfo.class),
@@ -98,7 +102,10 @@ public class ExamPaperAction extends BaseAction {
         List<ExamInfo> examInfoList = selectRecordByIds(
                 getFieldByList(examPaperList, "examId", ExamPaper.class),
                 "examId", (BaseDao) examInfoDao, ExamInfo.class);
-
+        if (containOnline) {
+            List<String> sessinoList = onlineUserService.judgeOnline(userIds);
+            res.put("sessinoList", sessinoList);
+        }
         res.put("userInfoList", userInfoList);
         res.put("userProfileList", userProfileList);
         res.put("examInfoList", examInfoList);
