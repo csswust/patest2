@@ -129,7 +129,7 @@ define(function (require, exports, module) {
                     + '<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + proTitle + '"><a href="question.html?id=' + probId + '">' + proTitle + '(' + probId + ')' + '</a></td>'
                     + '<td>' + username + '</td>'
                     + '<td>' + realName + '</td>'
-                    + '<td>' + cName + '</td>'
+                    /*+ '<td>' + cName + '</td>'*/
                     + '<td class="' + statuResult + '" id=' + program.submitInfoList[i].submId + '>' + result + '</td>'
                     + '<td>' + usedMemory + '</td>'
                     + '<td>' + usedTime + '</td>'

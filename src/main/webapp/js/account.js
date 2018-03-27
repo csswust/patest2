@@ -68,11 +68,11 @@ define(function (require, exports, module) {
                 dataType: 'json',
                 async: false,
                 data: {
-                    realName: program.realname,
-                    isAdmin: program.admin,
-                    isTeacher: program.teacher,
-                    username: program.username,
-                    studentNumber: program.studentNumber,
+                    realName: program.srealname,
+                    isAdmin: program.sadmin,
+                    isTeacher: program.steacher,
+                    username: program.susername,
+                    studentNumber: program.sstudentNumber,
                     page: program.page,
                     rows: pubMeth.rowsnum
                 },
@@ -261,19 +261,19 @@ define(function (require, exports, module) {
         }
     });
     $(".search").click(function () {
-        program.admin = $(".admin option:selected").val();
-        program.teacher = $(".teacher option:selected").val();
-        program.username = $(".susername").val();
-        program.studentNumber = $(".sstudentNumber").val();
-        console.log(program.admin);
-        if (program.admin == "管理员") {
-            program.admin = "";
+        program.sadmin = $(".admin option:selected").val();
+        program.steacher = $(".teacher option:selected").val();
+        program.susername = $(".susername").val();
+        program.sstudentNumber = $(".sstudentNumber").val();
+        console.log(program.sadmin);
+        if (program.sadmin == "管理员") {
+            program.sadmin = "";
         }
-        console.log(program.admin);
-        if (program.teacher == "老师") {
-            program.teacher = "";
+        console.log(program.sadmin);
+        if (program.steacher == "老师") {
+            program.steacher = "";
         }
-        program.realname = $(".searname").val();
+        program.srealname = $(".searname").val();
         program.selectAccount();
     });
     if (program.count > 0) {
