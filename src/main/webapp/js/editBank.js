@@ -31,7 +31,7 @@ define(function (require, exports, module) {
                 var banklist = '<tr>'
                     + '<th>序号</th>'
                     + '<th>编号</th>'
-                    + '<th style="width:200px">题目</th>'
+                    + '<th style="width:400px">题目</th>'
                     + '<th>难度</th>'
                     + '<th>课程</th>'
                     + '<th>知识点</th>'
