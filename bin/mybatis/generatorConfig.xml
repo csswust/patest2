@@ -113,12 +113,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="maj_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="paper_problem" domainObjectName="PaperProblem"
+        <!--<table schema="patest2" tableName="paper_problem" domainObjectName="PaperProblem"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="pap_pro_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="problem_info" domainObjectName="ProblemInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -191,6 +191,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="vis_pat_id" sqlStatement="JDBC"/>
         </table>-->
+        <table schema="patest2" tableName="problem_submit" domainObjectName="ProblemSubmit"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
     </context>
 </generatorConfiguration>
 
