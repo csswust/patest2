@@ -99,6 +99,7 @@ public class UserInfoAction extends BaseAction {
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
             UserInfo userInfo,
+            @RequestParam(required = false) String studentNumber,
             @RequestParam(required = false) String realName,
             @RequestParam(required = false, defaultValue = "false") Boolean isContainIp,
             @RequestParam(required = false) Integer page,
@@ -112,6 +113,11 @@ public class UserInfoAction extends BaseAction {
             List<UserProfile> userProfileList = userProfileDao.selectByCondition(userProfile, new BaseQuery());
             List<Integer> ids = getFieldByList(userProfileList, "useProId", UserProfile.class);
             baseQuery.setCustom("userProfileIds", ids);
+        }
+        if (StringUtils.isNotBlank(studentNumber)) {
+            UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
+            if (userProfile != null) userInfo.setUserProfileId(userProfile.getUseProId());
+            else userInfo.setUserProfileId(-1);
         }
         Integer total = userInfoDao.selectByConditionGetCount(userInfo, baseQuery);
         baseQuery.setPageRows(page, rows);

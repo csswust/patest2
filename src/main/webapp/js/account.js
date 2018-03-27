@@ -71,8 +71,10 @@ define(function (require, exports, module) {
                     realName: program.realname,
                     isAdmin: program.admin,
                     isTeacher: program.teacher,
+                    username: program.username,
+                    studentNumber: program.studentNumber,
                     page: program.page,
-                    rows: pubMeth.rowsnum,
+                    rows: pubMeth.rowsnum
                 },
                 success: function (result) {
                     console.log(result);
@@ -261,6 +263,8 @@ define(function (require, exports, module) {
     $(".search").click(function () {
         program.admin = $(".admin option:selected").val();
         program.teacher = $(".teacher option:selected").val();
+        program.username = $(".susername").val();
+        program.studentNumber = $(".sstudentNumber").val();
         console.log(program.admin);
         if (program.admin == "管理员") {
             program.admin = "";
