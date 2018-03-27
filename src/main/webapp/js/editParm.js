@@ -23,22 +23,27 @@ define(function (require, exports, module) {
         levelArr: '',
         scoreArr: '',
         expmArr: '',
-        expmIds: [],
         expmId: '',
         course: [],
         courseName: [],
         sumList: [],
         knowName: '',
         //添加试卷参数
-        addTemplate: function () {
-            $("#queTempla").append('<tr class=' + flag + '-' + flag + '>' +
+        addTemplate: function (exaParId) {
+            if (!exaParId) exaParId = 0;
+            $("#queTempla").append('<tr class=' + flag + '-' + exaParId + '>' +
                 '<td>' + parseInt(flag + 1) + '</td>' +
                 '<td><select class="form-control  courseName" id="courseName-' + flag + '"><option>课程</option></select></td>' +
-                '<td><select class="form-control iknowName courseName-' + flag + '"><option>知识点</option></select></td>' +
-                '<td><select class="form-control level level-' + flag + '"><option>难度</option><option value="1">容易</option><option value="2">中等</option><option value="3">困难</option></select></td>' +
+                '<td><select class="form-control iknowName" id="knowName-' + flag + '"><option>知识点</option></select></td>' +
+                '<td><select class="form-control level level-' + flag + '">' +
+                '<option>难度</option>' +
+                '<option value="1">容易</option>' +
+                '<option value="2">中等</option>' +
+                '<option value="3">困难</option>' +
+                '</select></td>' +
                 '<td><input class="form-control score score-' + flag + '"  type="text" /></td>' +
                 '<td><span class="totalpro  total-' + flag + '"></span></td>' +
-                '<td><span class="glyphicon glyphicon-remove deleteTemp" aria-hidden="true" id="' + flag + '-' + flag + '"></span></td>' +
+                '<td><span class="glyphicon glyphicon-remove deleteTemp" aria-hidden="true" id="' + flag + '-' + exaParId + '"></span></td>' +
                 '<td>' + opreation + '</td></tr>');
         },
         //插入考试参数
@@ -53,7 +58,7 @@ define(function (require, exports, module) {
                     examId: program.examId,
                     knowIds: program.kownArr,
                     levels: program.levelArr,
-                    scores: program.scoreArr,
+                    scores: program.scoreArr
                 },
                 success: function (result) {
                     console.log(result);
@@ -122,9 +127,8 @@ define(function (require, exports, module) {
                 }
             });
         },
-
         selectNum: function (index) {
-            program.know = $(".courseName-" + index + " option:selected").val();
+            program.know = $("#knowName-" + index + " option:selected").val();
             program.level = $(".level-" + index + " option:selected").val();
             if (program.level == "难度") {
                 program.level = "";
@@ -141,7 +145,7 @@ define(function (require, exports, module) {
                 data: {
                     knowId: program.know,
                     levelId: program.level,
-                    examId: program.examId,
+                    examId: program.examId
                 },
                 success: function (result) {
                     console.log(result);
@@ -168,7 +172,7 @@ define(function (require, exports, module) {
                     var length = result.examParamList.length;
                     for (var i = 0; i < length; i++) {
                         var id = "courseName-" + i;
-                        program.addTemplate();
+                        program.addTemplate(result.examParamList[i].exaParId);
                         $("#" + id).html("<option>课程</option>");
                         for (var k = 0; k < program.courseName.length; k++) {
                             $("#" + id).append("<option value=" + program.courseName[k].couId + ">" + program.courseName[k].courseName + "</option>");
@@ -178,14 +182,12 @@ define(function (require, exports, module) {
                         $("#" + id + " option[value='" + parentId + "']").attr("selected", true);
                         for (var j = 0; j < program.course.length; j++) {//知识点
                             if (program.course[j].courseId == parentId) {
-                                $(".iknowName").append("<option value=" + program.course[j].knowId + ">" + program.course[j].knowName + "</option>");
+                                $("#knowName-" + i).append("<option value=" + program.course[j].knowId + ">" + program.course[j].knowName + "</option>");
                             }
                         }
-                        $(".courseName-" + i + "  option[value='" + result.knowledgeInfoList[i].knowId + "']").attr("selected", true);
+                        $("#knowName-" + i + "  option[value='" + result.knowledgeInfoList[i].knowId + "']").attr("selected", true);
                         $(".level-" + i + " option[value='" + result.examParamList[i].levelId + "']").attr("selected", true);
                         $(".score-" + i).val(result.examParamList[i].score);
-                        program.expmIds[i] = result.examParamList[i].exaParId;
-                        /*program.selectNum(i);*/
                         $(".total-" + i).text(result.problemSumList[i]);
                     }
                 }
@@ -204,42 +206,15 @@ define(function (require, exports, module) {
                 },
                 success: function (result) {
                     console.log(result);
-                    var currId = "";
-                    var flag = 0;
-                    $(".courseName").empty();
-                    $(".courseName").append("<option>课程</option>");
-                    for (var i = 0; i < result.list.length; i++) {
-                        /*if (result.courseList[i].isCourse) {*/
-                        program.courseName.push(result.list[i]);
-                        /*$(".courseName").append("<option value=" + result.list[i].couId + ">" + result.list[i].courseName + "</option>");*/
-                        /*} else {
-                         program.course.push(result.data[i]);
-                         }*/
-                    }
+                    // 查询所有课程
+                    program.courseName = result.list;
+                    // 查询所有知识点
                     pubMeth.getKnowledgeInfo();
                     program.course = pubMeth.course;
-                    program.onchange();
                 }
             });
-        },
-        onchange: function () {
-            $(".knowName").html("");
-            var parentId = $(".courseName option:selected").val();
-            if (parentId == "课程") {
-                $(".knowName").html("<option>知识点</option>");
-                return;
-            }
-            if (parentId) {
-                pubMeth.getKnowledgeInfo(parentId);
-                for (var i = 0; i < pubMeth.course.length; i++) {
-                    /*if (pubMeth.course[i].parentId == parentId) {*/
-                    $(".knowName").append("<option value=" + pubMeth.course[i].knowId + ">" + pubMeth.course[i].knowName + "</option>");
-                    /*}*/
-                }
-            }
         }
     };
-
     //获取url
     var par = pubMeth.getQueryObject();
     if (par.examId) {
@@ -253,13 +228,8 @@ define(function (require, exports, module) {
         program.examId = par.Id;
         program.bserCourse();
         program.getExamInfoById();
-
     }
-    $(".courseName").change(function () {
-        program.onchange();
-    });
-
-    //添加问题模板
+    // 添加问题模板
     $(".addTemplate").click(function () {
         if (par.Id) {
             opreation = '<button type="button" class="btn btn-info saveTemp" id="' + flag + '+' + flag + '">保存</button>';
@@ -270,12 +240,11 @@ define(function (require, exports, module) {
             $("#courseName-" + flag).append("<option value=" + program.courseName[i].couId + ">" + program.courseName[i].courseName + "</option>");
         flag++;
     });
-    /*
-     * 保存问题模板数据
-     */
+
+    // 保存问题模板数据
     $("#queTempla").on('click', '.saveTemp', function () {
         var rowIndex = this.id.split("+")[0];
-        var knowId = $(".courseName-" + rowIndex + " option:selected").val();
+        var knowId = $("#knowName-" + rowIndex + " option:selected").val();
         var levelId = $(".level-" + rowIndex + " option:selected").val();
         var score = $(".score-" + rowIndex).val();
         var allscore = 0;
@@ -310,7 +279,6 @@ define(function (require, exports, module) {
         program.kownArr = kownArr.join(',');
         program.levelArr = levelArr.join(',');
         program.scoreArr = scoreArr.join(',');
-        program.expmArr = program.expmIds.join(',');
         if (levelId == "难度" || knowId == "知识点") {
             pubMeth.alertInfo("alert-info", "请选择难度和知识点！");
             return;
@@ -326,24 +294,20 @@ define(function (require, exports, module) {
             program.insertExamParam();
         }
     });
-    /*
-     * 查询问题总量
-     */
+    // 查询问题总量
     $("#queTempla").delegate('tr', 'change', function () {
-        program.selectNum(this.rowIndex - 2);
-
+        var index = this.className.split("-")[0];
+        program.selectNum(index);
     });
     //删除问题模板
     $("#queTempla").on('click', '.deleteTemp', function () {
-        flag--;
-        var expmlength = program.expmIds.length;
         var index = this.id.split("-")[0];
-        if (parseInt(index) + 1 > expmlength) {
+        var expmId = this.id.split("-")[1];
+        if (expmId == null || expmId == undefined || expmId == "0") {
             $("." + this.id).remove();
         } else {
             if (confirm("确定要删除该模板吗？")) {
-                var index = this.id.split("-")[0];
-                program.expmId = program.expmIds[index];
+                program.expmId = expmId;
                 program.delQuesTemp();
                 $("." + this.id).remove();
             }
@@ -351,11 +315,11 @@ define(function (require, exports, module) {
     });
     //改变
     $("#queTempla").delegate('.courseName', 'change', function () {
-        var id = this.id;
+        var id = this.id.split("-")[1];
         if (id != "") {
-            var classname = "." + id;
+            var classname = "#knowName-" + id;
             $(classname).html("");
-            var parentId = $("#" + id + " option:selected").val();
+            var parentId = $("#courseName-" + id + " option:selected").val();
             if (parentId == "课程") {
                 $(classname).html("<option>知识点</option>");
                 return;
@@ -408,7 +372,6 @@ define(function (require, exports, module) {
         program.kownArr = kownArr.join(',');
         program.levelArr = levelArr.join(',');
         program.scoreArr = scoreArr.join(',');
-        program.expmArr = program.expmIds.join(',');
         if (par.examId) {
             if (program.kownArr != "" && program.levelArr != "" && program.scoreArr != "") {
                 var num = /^[0-9]+.?[0-9]*$/;
