@@ -149,14 +149,12 @@ define(function (require, exports, module) {
                 async: false,
                 data: {
                     papProId: program.prproId,
-                    /* probId: program.probId,
-                     prproId: program.prproId,*/
                     score: program.rscore
                 },
                 success: function (result) {
                     console.log(result);
                     if (result.status == 1) {
-                        program.queryCode();
+                        program.selectPaperById();
                     } else {
                         alert("提交失败");
                     }
