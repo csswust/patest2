@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 杨顺丰
@@ -263,6 +264,13 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             // 执行
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(cmd.toString());
+            // 设置超时时间
+            boolean status = proc.waitFor(30, TimeUnit.MICROSECONDS);
+            if (!status) {
+                proc.destroy();
+                judgeResult.setErrMsg("编译或者执行超时");
+                return judgeResult;
+            }
             // 获得错误信息
             String errMsg = StreamUtil.output(proc.getErrorStream());
             // 获得控制台信息
@@ -271,7 +279,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             judgeResult.setErrMsg(errMsg);
             judgeResult.setConsoleMsg(consoleMsg);
             log.error("judge \n consoleMsg :{} \n info :{}", consoleMsg, JSON.toJSONString(judgeTask));
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("judge error data :{} error: {}", JSON.toJSONString(judgeResult), e);
         } finally {
             // 删除源文件，如果没有执行将会导致判题系统堵塞
