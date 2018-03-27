@@ -58,7 +58,6 @@ define(function (require, exports, module) {
                     if (program.count <= 0) {
                         $("#notip").modal('show');
                     } else {
-                        //var length = result.paperData.length;
                         //var titLength = result.problemNameData[0].length;
                         var userName = "", stunum = "", titName = "", content = "", realName = "", className = "",
                             score = "", acedCount = "";
@@ -66,9 +65,11 @@ define(function (require, exports, module) {
                         for (var j = 1; j <= program.problemTotal; j++) {
                             ranknav += '<th colspan="2">Q' + j + '</th>';
                         }
-
                         $(".rankInfo").html(
-                            '<th class="examid">考号</th><th>姓名</th><th class="noid">学号</th><th>班级</th>'
+                            '<th class="examid">考号</th>' +
+                            '<th>姓名</th>' +
+                            '<th class="noid">学号</th>' +
+                            '<th>班级</th>'
                             + '<th>分数</th><th>AC</th>'
                             + ranknav);
                         for (var i = 0; i < result.examPaperList.length; i++) {
@@ -76,22 +77,6 @@ define(function (require, exports, module) {
                             realName = result.userProfileList[i].realName;
                             className = result.userProfileList[i].className;
                             stunum = result.userProfileList[i].studentNumber;
-                            /*if (result.userNameData[i] == null
-                                || result.userNameData[i] == "undefined") {
-                                userName = "";
-                            }
-                            if (result.realNameData[i] == null
-                                || result.realNameData[i] == "undefined") {
-                                realName = "";
-                            }
-                            if (result.classNameData[i] == null
-                                || result.classNameData[i] == "undefined") {
-                                className = "";
-                            }
-                            if (result.studentList[i] == null
-                                || result.studentList[i] == "undefined") {
-                                stunum = "";
-                            }*/
                             titName = "";
                             for (var j = 0; j < program.problemTotal; j++) {
                                 if (result.PaperProblemList[i][j].isAced == 1) {
@@ -99,15 +84,15 @@ define(function (require, exports, module) {
                                 } else {
                                     pass = '<span class="glyphicon glyphicon-remove alert-danger" aria-hidden="true"></span>';
                                 }
+                                var title = result.ProblemInfoList[i][j].title;
                                 if (result.ProblemInfoList[i][j].title == null || result.ProblemInfoList[i][j].title == "undefined") {
-                                    result.ProblemInfoList[i][j].title = "";
+                                    title = "";
                                 }
-                                titName += '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + result.ProblemInfoList[i][j].title + '">'
-                                    + result.ProblemInfoList[i][j].title
+                                var probId = result.ProblemInfoList[i][j].probId;
+                                titName += '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + title
+                                    + '"><a href="question.html?id=' + probId + '">' + title + '</a>'
                                     + '</td>'
-                                    + '<td>'
-                                    + pass
-                                    + '</td>';
+                                    + '<td>' + pass + '</td>';
 
                             }
                             content += '<tr><td>' + userName + '</td><td>'
@@ -132,13 +117,13 @@ define(function (require, exports, module) {
     program.examId = parm["id"];
     program.getRank();
 
-/*    $(".gradePrint").click(function () {
-//		program.selectGradeByExamId();
-        window.location.href = "../exam/selectGradeByExamId?examId=" + program.examId;
-    });
-    $(".codePrint").click(function () {
-        window.location.href = "../exam/selectCodeByExamId?examId=" + program.examId;
-    });*/
+    /*    $(".gradePrint").click(function () {
+     //		program.selectGradeByExamId();
+     window.location.href = "../exam/selectGradeByExamId?examId=" + program.examId;
+     });
+     $(".codePrint").click(function () {
+     window.location.href = "../exam/selectCodeByExamId?examId=" + program.examId;
+     });*/
 //	program.getSubmitInfo();
 
     if (program.count > 0) {
