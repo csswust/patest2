@@ -248,18 +248,32 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             if (judgeTask == null) {
                 judgeResult.setErrMsg("创建任务失败");
                 return judgeResult;
+            } else {
+                String verification = judgeTask.verification();
+                if (verification != null) {
+                    judgeResult.setErrMsg(verification);
+                    return judgeResult;
+                }
             }
-            // 获得判题源文件的文件名
+            // 判题语言
             JudgerInfo judgerInfo = judgerInfoDao.selectByPrimaryKey(judgeTask.getLanguage());
+            if(judgerInfo==null) return judgeResult;
+
+            // 获取工作目录，这里面包括源码，编译后文件，允许结果文件等
+            String workPath = getPath(SiteKey.JUDGE_WORK_DIR);// 包括时间目录
+            String ownedPath = format("%d_%d_%d_%d_%d_%d",
+                    judgeTask.getSubmId(), judgeTask.getPid(), judgeTask.getLanguage(),
+                    judgeTask.getTestdataNum(), judgeTask.getLimitTime(), judgeTask.getLimitMemory());
+            String finalWorkPath = workPath + "/" + ownedPath;
+
+            // 获取源代码文件名
             fileName = getFileName(judgeTask.getLanguage());
-            sourcepath = Config.get(SiteKey.JUDGE_SOURCE_PATH);
-            String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH) + File.separator;
-            String scriptName = Config.get(SiteKey.JUDGE_SCRIPT_NAME);
-            // 创建源文件并写入代码 =
-            FileUtil.generateFile(judgeTask.getSource(), sourcepath, fileName);
+            String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH);
+            // 创建源文件并写入代码
+            FileUtil.generateFile(judgeTask.getSource(), finalWorkPath, fileName);
             // 构建命令行命令
             StringBuilder cmd = new StringBuilder();
-            cmd.append("python").append(" ").append(scriptPath).append(scriptName)
+            cmd.append("python").append(" ").append(scriptPath).append(" ").append(finalWorkPath)
                     .append(" ").append(judgeTask.getPid()).append(" ")
                     .append(judgeTask.getTestdataNum()).append(" ").append(judgerInfo.getName())
                     .append(" ").append(judgeTask.getLimitTime()).append(" ")
@@ -287,7 +301,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             log.error("judge error data :{} error: {}", JSON.toJSONString(judgeResult), e);
         } finally {
             // 删除源文件，如果没有执行将会导致判题系统堵塞
-            FileUtil.removeFile(sourcepath, fileName);
+            // FileUtil.removeFile(sourcepath, fileName);
         }
         return judgeResult;
     }

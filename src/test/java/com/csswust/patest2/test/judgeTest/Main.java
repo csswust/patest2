@@ -63,7 +63,7 @@ public class Main extends JunitBaseServiceDaoTest {
         String url = "http://39.108.123.89:8080/patest2/submitInfo/testData";
         Random random = new Random();
         Map<String, Object> params = new HashMap<>();
-        for (int i = 222; i < len; i++) {
+        for (int i = 2272; i < len; i++) {
             baseQuery.setPage(i + 1);
             problemSubmitList = problemSubmitDao.selectByCondition(condition, baseQuery);
             for (ProblemSubmit item : problemSubmitList) {
@@ -85,8 +85,8 @@ public class Main extends JunitBaseServiceDaoTest {
                     record.setNewSubmId(model.getSubmId());
                     problemSubmitDao.updateByPrimaryKeySelective(record);
                 }
-                int sleep = random.nextInt(5);
-                Thread.sleep(sleep * 1000);
+                //int sleep = random.nextInt(5);
+                Thread.sleep(300);
             }
         }
     }
