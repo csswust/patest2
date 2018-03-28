@@ -298,7 +298,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             System.out.println(judgeTask + "\n" + errMsg + "\n" + consoleMsg);
             judgeResult.setErrMsg(errMsg);
             judgeResult.setConsoleMsg(consoleMsg);
-            log.error("judge \n consoleMsg :{} \n info :{}", consoleMsg, JSON.toJSONString(judgeTask));
+            log.info("judge \nconsoleMsg :{}info :{}", consoleMsg, JSON.toJSONString(judgeTask));
         } catch (Exception e) {
             log.error("judge error data :{} error: {}", JSON.toJSONString(judgeResult), e);
         } finally {
