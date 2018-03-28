@@ -17,9 +17,13 @@ public class SiteKey {
     public final static String UPLOAD_UEDITOR_DIR = "upload_ueditor_dir";
 
     // judge
+    public final static String JUDGE_MAX_LIMIT_MEMORY = "judge_max_limit_memory";
+    public final static String JUDGE_MAX_LIMIT_TIME = "judge_max_limit_time";
+    public final static String JUDGE_MAX_TEST_NUM = "judge_max_test_num";
+    public final static String JUDGE_ALLOW_LANGUAGE = "judge_allow_language";
+
+    public final static String JUDGE_WORK_DIR = "judge_work_dir";
     public final static String JUDGE_SCRIPT_PATH = "judge_script_path";
-    public final static String JUDGE_SCRIPT_NAME = "judge_script_name";
-    public final static String JUDGE_SOURCE_PATH = "judge_source_path";
     public final static String JUDGE_STANDARD_DATA_PATH = "judge_standard_data_path";
     public final static String JUDGE_SPECIAL_DATA_PATH = "judge_special_data_path";
     public final static String JUDGE_JAVA_FILE_NAME = "judge_java_file_Name";

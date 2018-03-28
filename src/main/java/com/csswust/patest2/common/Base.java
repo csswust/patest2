@@ -52,13 +52,13 @@ public class Base {
         return "";
     }
 
-    public static String getTempPath(String key) {
+    public static String getPath(String key) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String time = sdf.format(new Date());
         return Config.get(key) + "/" + time;
     }
 
     public static void main(String[] args) {
-        System.out.println(getTempPath(SiteKey.UPLOAD_TEMP_DIR));
+        System.out.println(getPath(SiteKey.UPLOAD_TEMP_DIR));
     }
 }
