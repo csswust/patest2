@@ -13,6 +13,7 @@ import com.csswust.patest2.utils.FileUtil;
 import com.csswust.patest2.utils.StreamUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,9 +66,9 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
                 return null;
             }
             String source = submitInfo.getSource();
+            if (StringUtils.isBlank(source)) return null;
             Integer timeLimit = problemInfo.getTimeLimit();
             Integer memoryLimit = problemInfo.getMemoryLimit();
-            String language = judgerInfo.getName();
             Integer judgeModel = problemInfo.getJudgeModel();
             Integer testdataNum = problemInfo.getTestdataNum();
             return new JudgeTask(submId, memoryLimit, timeLimit, probId,
@@ -82,7 +83,6 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         Integer submId = judgeTask.getSubmId();
         if (judgeResult.getConsoleMsg() == null) judgeResult.setConsoleMsg("");
         if (judgeResult.getErrMsg() == null) judgeResult.setErrMsg("");
-
         List<SubmitResult> submitResultList = null;
         try {
             // 转化执行数据
@@ -245,6 +245,10 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         String fileName = null;
         String sourcepath = null;
         try {
+            if (judgeTask == null) {
+                judgeResult.setErrMsg("创建任务失败");
+                return judgeResult;
+            }
             // 获得判题源文件的文件名
             JudgerInfo judgerInfo = judgerInfoDao.selectByPrimaryKey(judgeTask.getLanguage());
             fileName = getFileName(judgeTask.getLanguage());

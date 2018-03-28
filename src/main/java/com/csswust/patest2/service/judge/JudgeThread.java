@@ -1,6 +1,8 @@
 package com.csswust.patest2.service.judge;
 
 import com.csswust.patest2.service.JudgeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -12,6 +14,8 @@ import java.util.concurrent.Executors;
  * @author 杨顺丰
  */
 public class JudgeThread implements Runnable {
+    private static Logger log = LoggerFactory.getLogger(JudgeThread.class);
+
     // 任务队列
     public static ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(10000, true);
     // 更新试卷线程池
@@ -32,7 +36,7 @@ public class JudgeThread implements Runnable {
                     judgeService.refresh(judgeTask, judgeResult);
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("JudgeThread 判题任务队列异常：{}", e);
             }
         }
     }
