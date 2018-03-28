@@ -18,6 +18,7 @@ public class SiteKey {
     public final static String JUDGE_MAX_LIMIT_TIME = "judge_max_limit_time";
     public final static String JUDGE_MAX_TEST_NUM = "judge_max_test_num";
     public final static String JUDGE_ALLOW_LANGUAGE = "judge_allow_language";
+    public final static String JUDGE_MAX_RUN_TIME = "judge_max_run_time";
 
     public final static String JUDGE_WORK_DIR = "judge_work_dir";
     public final static String JUDGE_SCRIPT_PATH = "judge_script_path";

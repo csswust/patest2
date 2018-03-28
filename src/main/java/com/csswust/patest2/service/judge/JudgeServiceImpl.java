@@ -257,7 +257,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             }
             // 判题语言
             JudgerInfo judgerInfo = judgerInfoDao.selectByPrimaryKey(judgeTask.getLanguage());
-            if(judgerInfo==null) return judgeResult;
+            if (judgerInfo == null) return judgeResult;
 
             // 获取工作目录，这里面包括源码，编译后文件，允许结果文件等
             String workPath = getPath(SiteKey.JUDGE_WORK_DIR);// 包括时间目录
@@ -273,17 +273,19 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             FileUtil.generateFile(judgeTask.getSource(), finalWorkPath, fileName);
             // 构建命令行命令
             StringBuilder cmd = new StringBuilder();
-            cmd.append("python").append(" ").append(scriptPath).append(" ").append(finalWorkPath)
-                    .append(" ").append(judgeTask.getPid()).append(" ")
-                    .append(judgeTask.getTestdataNum()).append(" ").append(judgerInfo.getName())
-                    .append(" ").append(judgeTask.getLimitTime()).append(" ")
-                    .append(judgeTask.getLimitMemory()).append(" ")
-                    .append(judgeTask.getJudgeMode());
+            cmd.append("python").append(" ").append(scriptPath)
+                    .append(" ").append(finalWorkPath)
+                    .append(" ").append(judgeTask.getPid())
+                    .append(" ").append(judgeTask.getTestdataNum())
+                    .append(" ").append(judgerInfo.getName())
+                    .append(" ").append(judgeTask.getLimitTime())
+                    .append(" ").append(judgeTask.getLimitMemory())
+                    .append(" ").append(judgeTask.getJudgeMode());
             // 执行
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(cmd.toString());
             // 设置超时时间
-            boolean status = proc.waitFor(30, TimeUnit.SECONDS);
+            boolean status = proc.waitFor(Config.getToInt(SiteKey.JUDGE_MAX_RUN_TIME), TimeUnit.SECONDS);
             if (!status) {
                 proc.destroy();
                 judgeResult.setErrMsg("编译或者执行超时");
