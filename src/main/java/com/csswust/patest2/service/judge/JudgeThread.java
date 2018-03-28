@@ -17,7 +17,7 @@ public class JudgeThread implements Runnable {
     private static Logger log = LoggerFactory.getLogger(JudgeThread.class);
 
     // 任务队列
-    public static ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(10000, true);
+    public static ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(100000, true);
     // 更新试卷线程池
     public static ExecutorService executor = Executors.newFixedThreadPool(5);
 
