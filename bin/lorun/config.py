@@ -1,16 +1,6 @@
-﻿
-# temp path
-tempdata_path='/home/csexam/patest/Lo-runner-master/demo/tmpdata'
-
-# temp file name
-temp_file_name='tmp.out'
-
-# test data
-standard_testdata_path='/home/csexam/patest/Lo-runner-master/demo/testdata'
-special_testdata_path='/home/csexam/patest/Lo-runner-master/demo/special'
-
-# source path
-source_path='/home/csexam/patest/Lo-runner-master/demo/srcdata'
+﻿# test data
+standard_testdata_path='/root/installtion/patest2/judgework/testdata'
+special_testdata_path='/root/installtion/patest2/judgework/special'
 
 # gcc and g++ executable file name
 exec_name='main' 

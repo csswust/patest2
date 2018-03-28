@@ -8,28 +8,21 @@ import time
 class TimeOutException(Exception):
     pass
 
-
-def clearTempDir(path):
-    paths = os.listdir(path)
-    for file_name in paths:
-        os.remove(os.path.join(path, file_name))
-
-
-def compile(language):
+def compile(workPath, language):
     def handle(signum, frame):
         raise TimeOutException("compile timeOut")
 
     language = language.lower()
     build_cmd = {
-        "gcc": "gcc %s -o %s " % (os.path.join(cfg.source_path, cfg.gcc_file_name), cfg.exec_name),
-        "g++": "g++ %s -o %s " % (os.path.join(cfg.source_path, cfg.gpp_file_name), cfg.exec_name),
-        "java": "javac %s -d %s " % (os.path.join(cfg.source_path, cfg.java_file_name), cfg.tempdata_path),
-        "python": "python -m py_compile %s " % (os.path.join(cfg.source_path, cfg.python_file_name))
+        "gcc": "gcc %s -o %s " % (os.path.join(workPath, cfg.gcc_file_name), os.path.join(workPath, cfg.exec_name)),
+        "g++": "g++ %s -o %s " % (os.path.join(workPath, cfg.gpp_file_name), os.path.join(workPath, cfg.exec_name)),
+        "java": "javac %s -d %s " % (os.path.join(workPath, cfg.java_file_name), workPath),
+        "python": "python -m py_compile %s " % (os.path.join(workPath, cfg.python_file_name))
     }
     if language not in build_cmd.keys():
         return False
-    fdout = open("templog.out", 'w')
-    fderr = open("templog.err", 'w')
+    fdout = open(os.path.join(workPath, "compilelog.out"), 'w')
+    fderr = open(os.path.join(workPath, "compilelog.err"), 'w')
     p = subprocess.Popen(build_cmd[language], shell=True, stdout=fdout, stderr=fderr)
     try:
         signal.signal(signal.SIGALRM, handle)
@@ -38,7 +31,7 @@ def compile(language):
         signal.alarm(0)
         if p.returncode == 0:
             return True, None
-        return False, get_text_file("templog.err")
+        return False, get_text_file(os.path.join(workPath, "compilelog.err"))
     except TimeOutException, e:
         return False, "compile timeOut"
     except Exception, e:
@@ -58,18 +51,17 @@ def get_text_file(filename):
     return content
 
 
-def run(language, testdata_path, standout_path, limitTime, limitMemory):
+def run(workPath, index, language, testdata_path, standout_path, limitTime, limitMemory):
     language = language.lower()
     cmd = ''
     if language == 'java':
-        cmd = 'java -classpath %s %s ' % (cfg.tempdata_path, cfg.java_file_name_no_ext)
+        cmd = 'java -classpath %s %s ' % (workPath, cfg.java_file_name_no_ext)
     elif language == 'python':
-        cmd = 'python %s ' % (os.path.join(cfg.source_path, cfg.python_file_name_no_ext + ".pyc"))
+        cmd = 'python %s ' % (os.path.join(workPath, cfg.python_file_name_no_ext + ".pyc"))
     else:
-        cmd = './%s ' % (cfg.exec_name)
+        cmd = '.%s ' % (os.path.join(workPath, cfg.exec_name))
     fin = open(testdata_path)
-    ftemp = open(cfg.temp_file_name, 'w')
-    ftemp = open(os.path.join(cfg.tempdata_path, cfg.temp_file_name), 'w')
+    ftemp = open(os.path.join(workPath, index + ".out"), 'w')
     runcfg = {
         'args': shlex.split(cmd),
         'fd_in': fin.fileno(),
@@ -81,7 +73,7 @@ def run(language, testdata_path, standout_path, limitTime, limitMemory):
     fin.close()
     ftemp.close()
     if res['result'] == 0:
-        ftemp = open(os.path.join(cfg.tempdata_path, cfg.temp_file_name))
+        ftemp = open(os.path.join(workPath, index + ".out"))
         fout = open(standout_path)
         res['result'] = lorun.check(fout.fileno(), ftemp.fileno())
         fout.close()
@@ -99,8 +91,8 @@ def getResult(testdata_id, res, errMsg, useTime, useMemory):
     }
 
 
-def judge(pid, testDataNum, language, limitTime, limitMemory, testModel):
-    compileRes, compileResMsg = compile(language)
+def judge(workPath, pid, testDataNum, language, limitTime, limitMemory, testModel):
+    compileRes, compileResMsg = compile(workPath, language)
     ans = []
     if compileRes == True:
         if testModel == '1':
@@ -115,7 +107,7 @@ def judge(pid, testDataNum, language, limitTime, limitMemory, testModel):
             else:
                 stdin_path = os.path.join(testDataPath, str(i) + '.in')
                 stdout_path = os.path.join(testDataPath, str(i) + '.out')
-                res = run(language, stdin_path, stdout_path, limitTime, limitMemory)
+                res = run(workPath, i, language, stdin_path, stdout_path, limitTime, limitMemory)
                 ans.append(getResult(i, res['result'] + 1, '', res['timeused'], res['memoryused']))
     else:
         ans.append(getResult(-1, 8, compileResMsg, -1, -1))
@@ -123,21 +115,22 @@ def judge(pid, testDataNum, language, limitTime, limitMemory, testModel):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 7:
+    if len(sys.argv) != 8:
         exit(-1)
     else:
         try:
-            pid = sys.argv[1]
-            testDataDum = sys.argv[2]
-            language = sys.argv[3]
-            limitTime = sys.argv[4]
-            limitMemory = sys.argv[5]
-            testModel = sys.argv[6]
-            data = judge(pid, testDataDum, language, limitTime, limitMemory, testModel)
+            workPath = sys.argv[1]
+            pid = sys.argv[2]
+            testDataDum = sys.argv[3]
+            language = sys.argv[4]
+            limitTime = sys.argv[5]
+            limitMemory = sys.argv[6]
+            testModel = sys.argv[7]
+            data = judge(workPath, pid, testDataDum, language, limitTime, limitMemory, testModel)
             jsonStr = json.dumps(data)
             print jsonStr
         except Exception, e:
             print e
             pass
         finally:
-            clearTempDir(cfg.tempdata_path)
+            pass
