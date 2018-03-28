@@ -307,6 +307,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             log.info("judge \nconsoleMsg :{}info :{}", consoleMsg, JSON.toJSONString(judgeTask));
         } catch (Exception e) {
             log.error("judge error data :{} error: {}", JSON.toJSONString(judgeResult), e);
+            judgeResult.setErrMsg(e.getMessage());
         } finally {
             // 删除源文件，如果没有执行将会导致判题系统堵塞
             if (finalWorkPath != null) {
