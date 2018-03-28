@@ -1,6 +1,6 @@
 ﻿# test data
-standard_testdata_path='/root/installtion/patest2/judgework/testdata'
-special_testdata_path='/root/installtion/patest2/judgework/special'
+standard_testdata_path='/root/installtion/patest2/judge/testdata'
+special_testdata_path='/root/installtion/patest2/judge/special'
 
 # gcc and g++ executable file name
 exec_name='main.exe'
