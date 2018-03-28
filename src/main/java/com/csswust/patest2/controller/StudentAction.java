@@ -5,7 +5,7 @@ import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
-import com.csswust.patest2.service.judge.JudgeThread;
+import com.csswust.patest2.listener.ApplicationStartListener;
 import com.csswust.patest2.utils.ArrayUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -222,7 +222,7 @@ public class StudentAction extends BaseAction {
         res.put("status", result);
         res.put("submId", submitInfo.getSubmId());
         if (submitInfo.getSubmId() != null) {
-            JudgeThread.queue.add(submitInfo.getSubmId());
+            ApplicationStartListener.queue.add(submitInfo.getSubmId());
         }
         return res;
     }

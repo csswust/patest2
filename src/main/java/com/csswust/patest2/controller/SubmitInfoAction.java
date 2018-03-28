@@ -12,7 +12,7 @@ import com.csswust.patest2.entity.ProblemInfo;
 import com.csswust.patest2.entity.SubmitInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserProfile;
-import com.csswust.patest2.service.judge.JudgeThread;
+import com.csswust.patest2.listener.ApplicationStartListener;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,7 +121,7 @@ public class SubmitInfoAction extends BaseAction {
         res.put("status", result);
         res.put("submId", submitInfo.getSubmId());
         if (submitInfo.getSubmId() != null) {
-            JudgeThread.queue.add(submitInfo.getSubmId());
+            ApplicationStartListener.queue.add(submitInfo.getSubmId());
         }
         return res;
     }
@@ -130,7 +130,7 @@ public class SubmitInfoAction extends BaseAction {
     public Map<String, Object> rejudgeBySubmId(@RequestParam Integer submId) {
         Map<String, Object> res = new HashMap<>();
         if (submId != null) {
-            JudgeThread.queue.add(submId);
+            ApplicationStartListener.queue.add(submId);
         }
         res.put("status", 1);
         return res;

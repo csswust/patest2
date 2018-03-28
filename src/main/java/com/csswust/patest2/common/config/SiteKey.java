@@ -14,6 +14,8 @@ public class SiteKey {
     public final static String UPLOAD_UEDITOR_DIR = "upload_ueditor_dir";
 
     // judge
+    public final static String JUDGE_TASK_QUEUE_TOTAL = "judge_task_queue_total";
+    public final static String JUDGE_THREAD_POOL_NUM = "judge_thread_pool_num";
     public final static String JUDGE_MAX_LIMIT_MEMORY = "judge_max_limit_memory";
     public final static String JUDGE_MAX_LIMIT_TIME = "judge_max_limit_time";
     public final static String JUDGE_MAX_TEST_NUM = "judge_max_test_num";

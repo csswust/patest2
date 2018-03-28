@@ -4,9 +4,8 @@ import com.csswust.patest2.service.JudgeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import static com.csswust.patest2.listener.ApplicationStartListener.queue;
+import static com.csswust.patest2.listener.ApplicationStartListener.refreshExecutor;
 
 /**
  * 判题主线程，特别警告：此线程只能开启一个
@@ -15,11 +14,6 @@ import java.util.concurrent.Executors;
  */
 public class JudgeThread implements Runnable {
     private static Logger log = LoggerFactory.getLogger(JudgeThread.class);
-
-    // 任务队列
-    public static ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(100000, true);
-    // 更新试卷线程池
-    public static ExecutorService executor = Executors.newFixedThreadPool(5);
 
     @Override
     public void run() {
@@ -32,7 +26,7 @@ public class JudgeThread implements Runnable {
                 // 提交任务
                 JudgeResult judgeResult = judgeService.judge(judgeTask);
                 // 刷新试卷
-                executor.execute(() -> {
+                refreshExecutor.execute(() -> {
                     judgeService.refresh(judgeTask, judgeResult);
                 });
             } catch (Exception e) {
@@ -43,16 +37,9 @@ public class JudgeThread implements Runnable {
 
     private JudgeService judgeService;
 
-    private JudgeThread() {
+    public JudgeThread(JudgeService judgeService) {
         super();
-    }
-
-    private static class Single {
-        private final static JudgeThread INSTANCE = new JudgeThread();
-    }
-
-    public static JudgeThread getInstance() {
-        return Single.INSTANCE;
+        this.judgeService = judgeService;
     }
 
     public JudgeService getJudgeService() {
