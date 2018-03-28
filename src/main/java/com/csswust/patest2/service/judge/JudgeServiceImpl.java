@@ -288,7 +288,10 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(cmd.toString());
             // 设置超时时间
-            boolean status = proc.waitFor(Config.getToInt(SiteKey.JUDGE_MAX_RUN_TIME), TimeUnit.SECONDS);
+            int timeOut = Config.getToInt(SiteKey.JUDGE_MAX_RUN_TIME);
+            int maxJudgeTime = judgeTask.getTestdataNum() * judgeTask.getLimitTime();
+            timeOut = Math.min(timeOut, maxJudgeTime);
+            boolean status = proc.waitFor(timeOut, TimeUnit.SECONDS);
             if (!status) {
                 proc.destroy();
                 judgeResult.setErrMsg("编译或者执行超时");

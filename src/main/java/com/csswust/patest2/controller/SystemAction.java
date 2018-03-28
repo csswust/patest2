@@ -91,7 +91,7 @@ public class SystemAction extends BaseAction {
                 Integer submId = item.getCurrSubmId();
                 if (submId != null) {
                     long time = now.getTime() - item.getStartDate().getTime();
-                    String temp = format(", %d: %d", submId, time);
+                    String temp = format("%d: %d, ", submId, time);
                     judgeStatus.append(temp);
                 }
             }
