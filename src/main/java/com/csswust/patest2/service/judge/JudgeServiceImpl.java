@@ -241,7 +241,6 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
     public JudgeResult judge(JudgeTask judgeTask) {
         JudgeResult judgeResult = new JudgeResult();
         String fileName = null;
-        String sourcepath = null;
         try {
             if (judgeTask == null) {
                 judgeResult.setErrMsg("创建任务失败");
