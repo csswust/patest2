@@ -143,6 +143,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // 更新paperProblem的isAced和usedTime
         if (paperProblem.getIsAced() != 1) {
             paperProblem.setSubmitId(submitInfo.getSubmId());
             if (submitInfo.getStatus() != 1) {
@@ -166,6 +167,8 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             }
             ans = (sum * 1.0 / 100) * allScore;
         }
+        if (ans < 0) ans = 0;
+        if (ans > allScore) ans = allScore;
         if (ans > paperProblem.getScore()) {
             paperProblem.setScore((int) ans);
         }
