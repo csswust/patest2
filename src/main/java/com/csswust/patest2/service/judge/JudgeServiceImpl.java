@@ -206,7 +206,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
                     lastStatus = submitResult.getStatus();
                 }
             }
-            if (!submitResult.getErrMsg().equals("")) {
+            if (StringUtils.isNotBlank(submitResult.getErrMsg())) {
                 submitInfo.setErrMsg(submitResult.getErrMsg());
             }
         }
