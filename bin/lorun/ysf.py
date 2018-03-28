@@ -1,11 +1,13 @@
 import sys, os, subprocess, lorun, shlex
 import config as cfg
 import json, string
-import signal  
-import time  
+import signal
+import time
 
-class TimeOutException(Exception):  
+
+class TimeOutException(Exception):
     pass
+
 
 def clearTempDir(path):
     paths = os.listdir(path)
@@ -14,8 +16,9 @@ def clearTempDir(path):
 
 
 def compile(language):
-    def handle(signum, frame):  
+    def handle(signum, frame):
         raise TimeOutException("compile timeOut")
+
     language = language.lower()
     build_cmd = {
         "gcc": "gcc %s -o %s " % (os.path.join(cfg.source_path, cfg.gcc_file_name), cfg.exec_name),
@@ -27,7 +30,7 @@ def compile(language):
         return False
     fdout = open("templog.out", 'w')
     fderr = open("templog.err", 'w')
-    p = subprocess.Popen(build_cmd[language],shell=True,stdout=fdout,stderr=fderr)
+    p = subprocess.Popen(build_cmd[language], shell=True, stdout=fdout, stderr=fderr)
     try:
         signal.signal(signal.SIGALRM, handle)
         signal.alarm(1)
@@ -36,10 +39,11 @@ def compile(language):
         if p.returncode == 0:
             return True, None
         return False, get_text_file("templog.err")
-    except TimeOutException, e:  
+    except TimeOutException, e:
         return False, "compile timeOut"
     except Exception, e:
         return False, "compile error"
+
 
 def get_text_file(filename):
     if not os.path.exists(filename):
@@ -52,7 +56,8 @@ def get_text_file(filename):
     content = f.read()
     f.close()
     return content
-        
+
+
 def run(language, testdata_path, standout_path, limitTime, limitMemory):
     language = language.lower()
     cmd = ''
@@ -133,6 +138,6 @@ if __name__ == '__main__':
             print jsonStr
         except Exception, e:
             print e
-    	    pass
+            pass
         finally:
             clearTempDir(cfg.tempdata_path)
