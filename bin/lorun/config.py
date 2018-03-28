@@ -3,11 +3,11 @@ standard_testdata_path='/root/installtion/patest2/judgework/testdata'
 special_testdata_path='/root/installtion/patest2/judgework/special'
 
 # gcc and g++ executable file name
-exec_name='main' 
+exec_name='main.exe'
 
 # java file name
 java_file_name='Main.java'
-java_file_name_no_ext='Main'
+java_file_name_no_ext='Main.class'
 
 # gcc file name
 gcc_file_name='main.c'

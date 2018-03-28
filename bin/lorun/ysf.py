@@ -8,6 +8,7 @@ import time
 class TimeOutException(Exception):
     pass
 
+
 def compile(workPath, language):
     def handle(signum, frame):
         raise TimeOutException("compile timeOut")
@@ -26,7 +27,7 @@ def compile(workPath, language):
     p = subprocess.Popen(build_cmd[language], shell=True, stdout=fdout, stderr=fderr)
     try:
         signal.signal(signal.SIGALRM, handle)
-        signal.alarm(1)
+        signal.alarm(5)
         out, err = p.communicate()
         signal.alarm(0)
         if p.returncode == 0:
@@ -59,9 +60,9 @@ def run(workPath, index, language, testdata_path, standout_path, limitTime, limi
     elif language == 'python':
         cmd = 'python %s ' % (os.path.join(workPath, cfg.python_file_name_no_ext + ".pyc"))
     else:
-        cmd = '.%s ' % (os.path.join(workPath, cfg.exec_name))
+        cmd = '%s ' % (os.path.join(workPath, cfg.exec_name))
     fin = open(testdata_path)
-    ftemp = open(os.path.join(workPath, index + ".out"), 'w')
+    ftemp = open(os.path.join(workPath, str(index) + ".out"), 'w')
     runcfg = {
         'args': shlex.split(cmd),
         'fd_in': fin.fileno(),
@@ -73,7 +74,7 @@ def run(workPath, index, language, testdata_path, standout_path, limitTime, limi
     fin.close()
     ftemp.close()
     if res['result'] == 0:
-        ftemp = open(os.path.join(workPath, index + ".out"))
+        ftemp = open(os.path.join(workPath, str(index) + ".out"))
         fout = open(standout_path)
         res['result'] = lorun.check(fout.fileno(), ftemp.fileno())
         fout.close()
