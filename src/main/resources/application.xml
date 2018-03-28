@@ -45,7 +45,6 @@
         <property name="removeAbandonedTimeout" value="${druid.removeAbandonedTimeout}"/>
         <property name="removeAbandoned" value="${druid.removeAbandoned}"/>
         <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}"/>
-        <property name="numTestsPerEvictionRun" value="${druid.numTestsPerEvictionRun}"/>
         <property name="validationQuery" value="${druid.validationQuery}"/>
         <property name="testWhileIdle" value="${druid.testWhileIdle}"/>
         <property name="testOnBorrow" value="${druid.testOnBorrow}"/>
