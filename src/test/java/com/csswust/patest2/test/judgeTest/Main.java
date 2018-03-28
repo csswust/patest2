@@ -59,11 +59,11 @@ public class Main extends JunitBaseServiceDaoTest {
         BaseQuery baseQuery = new BaseQuery();
         baseQuery.setRows(10);
         List<ProblemSubmit> problemSubmitList;
-        String cookies = "JSESSIONID=4BD5F23257E333C3D4F45A4233149F35";
+        String cookies = "JSESSIONID=1906A09874333968A560FABA69E7A0CA";
         String url = "http://39.108.123.89:8080/patest2/submitInfo/testData";
         Random random = new Random();
         Map<String, Object> params = new HashMap<>();
-        for (int i = 2272; i < len; i++) {
+        for (int i = 3846; i < len; i++) {
             baseQuery.setPage(i + 1);
             problemSubmitList = problemSubmitDao.selectByCondition(condition, baseQuery);
             for (ProblemSubmit item : problemSubmitList) {
