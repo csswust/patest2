@@ -2,7 +2,7 @@ import sys, os, subprocess, lorun, shlex
 import config as cfg
 import json, string
 import signal
-import time
+import datetime
 
 
 class TimeOutException(Exception):
@@ -129,6 +129,9 @@ if __name__ == '__main__':
             testModel = sys.argv[7]
             data = judge(workPath, pid, testDataDum, language, limitTime, limitMemory, testModel)
             jsonStr = json.dumps(data)
+            nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+            resultFile = open(os.path.join(workPath, nowTime + ".result"), 'w')
+            resultFile.write(jsonStr)
             print jsonStr
         except Exception, e:
             print e

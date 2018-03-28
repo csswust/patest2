@@ -120,7 +120,7 @@ public class JudgeTask {
         if (testdataNum > maxTestNum) return "testdataNum不能大于maxTestNum";
         String allowLanguage = Config.get(SiteKey.JUDGE_ALLOW_LANGUAGE);
         if (language == null) return "language不能为空";
-        if (allowLanguage.contains(String.valueOf(language)))
+        if (!allowLanguage.contains(String.valueOf(language)))
             return "language不在allowLanguage允许范围内";
         return null;
     }
