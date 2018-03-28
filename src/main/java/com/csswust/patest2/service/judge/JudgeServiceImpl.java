@@ -13,6 +13,7 @@ import com.csswust.patest2.utils.FileUtil;
 import com.csswust.patest2.utils.StreamUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -244,6 +246,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
     public JudgeResult judge(JudgeTask judgeTask) {
         JudgeResult judgeResult = new JudgeResult();
         String fileName = null;
+        String finalWorkPath = null;
         try {
             if (judgeTask == null) {
                 judgeResult.setErrMsg("创建任务失败");
@@ -264,7 +267,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             String ownedPath = format("%d_%d_%d_%d_%d_%d",
                     judgeTask.getSubmId(), judgeTask.getPid(), judgeTask.getLanguage(),
                     judgeTask.getTestdataNum(), judgeTask.getLimitTime(), judgeTask.getLimitMemory());
-            String finalWorkPath = workPath + "/" + ownedPath;
+            finalWorkPath = workPath + "/" + ownedPath;
 
             // 获取源代码文件名
             fileName = getFileName(judgeTask.getLanguage());
@@ -303,7 +306,12 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             log.error("judge error data :{} error: {}", JSON.toJSONString(judgeResult), e);
         } finally {
             // 删除源文件，如果没有执行将会导致判题系统堵塞
-            // FileUtil.removeFile(sourcepath, fileName);
+            if (finalWorkPath != null) {
+                int isDeleteDir = Config.getToInt(SiteKey.JUDGE_IS_DELETE_DIR);
+                if (isDeleteDir == 1) {
+                    FileUtils.deleteQuietly(new File(finalWorkPath));
+                }
+            }
         }
         return judgeResult;
     }

@@ -4,8 +4,10 @@ import com.baidu.ueditor.ActionEnter;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
+import com.csswust.patest2.listener.ApplicationStartListener;
 import com.csswust.patest2.listener.OnlineListener;
 import com.csswust.patest2.service.OnlineUserService;
+import com.csswust.patest2.service.judge.JudgeThread;
 import com.csswust.patest2.service.result.OnlineListRe;
 import com.csswust.patest2.utils.SystemInfo;
 import com.csswust.patest2.utils.SystemUtil;
@@ -29,10 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/system")
@@ -85,6 +84,18 @@ public class SystemAction extends BaseAction {
         try {
             list.addAll(SystemUtil.property());
             list.addAll(SystemUtil.servlet(request));
+            List<JudgeThread> judgeThreadlist = ApplicationStartListener.judgeThreadList;
+            StringBuilder judgeStatus = new StringBuilder();
+            Date now = new Date();
+            for (JudgeThread item : judgeThreadlist) {
+                Integer submId = item.getCurrSubmId();
+                if (submId != null) {
+                    long time = now.getTime() - item.getStartDate().getTime();
+                    String temp = format(", %d: %d", submId, time);
+                    judgeStatus.append(temp);
+                }
+            }
+            list.add(new SystemInfo("judgeStatus", "判题状态", judgeStatus));
         } catch (Exception e) {
             log.error("selectSystemInfo error: {}", e);
         }

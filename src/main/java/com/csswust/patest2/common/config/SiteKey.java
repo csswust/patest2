@@ -23,6 +23,7 @@ public class SiteKey {
     public final static String JUDGE_MAX_RUN_TIME = "judge_max_run_time";
 
     public final static String JUDGE_WORK_DIR = "judge_work_dir";
+    public final static String JUDGE_IS_DELETE_DIR = "judge_is_delete_dir";
     public final static String JUDGE_SCRIPT_PATH = "judge_script_path";
     public final static String JUDGE_STANDARD_DATA_PATH = "judge_standard_data_path";
     public final static String JUDGE_SPECIAL_DATA_PATH = "judge_special_data_path";

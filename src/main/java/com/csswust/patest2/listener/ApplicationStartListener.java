@@ -10,6 +10,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,6 +33,8 @@ public class ApplicationStartListener implements ServletContextListener {
     public static ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<>(
             Config.getToInt(SiteKey.JUDGE_TASK_QUEUE_TOTAL), true);
 
+    public static List<JudgeThread> judgeThreadList = new ArrayList<>();
+
     @Override
     public void contextDestroyed(ServletContextEvent servletContext) {
 
@@ -44,7 +48,9 @@ public class ApplicationStartListener implements ServletContextListener {
         int num = Config.getToInt(SiteKey.JUDGE_THREAD_POOL_NUM);
         // 启动判题线程
         for (int i = 0; i < num; i++) {
-            judgeExecutor.execute(new JudgeThread(judgeService));
+            JudgeThread judgeThread = new JudgeThread(judgeService);
+            judgeThreadList.add(judgeThread);
+            judgeExecutor.execute(judgeThread);
         }
     }
 }
