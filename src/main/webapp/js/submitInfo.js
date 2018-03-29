@@ -92,7 +92,8 @@ define(function (require, exports, module) {
                     usedMemory = program.submitInfoList[i].usedMemory;
                     usedTime = program.submitInfoList[i].usedTime;
                     var className = '';
-                    if (program.submitInfoList[i].status == 2) {//PE
+                    if (program.submitInfoList[i].status === 2 ||
+                        program.submitInfoList[i].status === 12) {//PE
                         className = 'label-primary';
                     } else if (program.submitInfoList[i].status == 5) {//WA
                         className = 'label-danger';
