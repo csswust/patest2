@@ -96,10 +96,11 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             log.error("gson.fromJson data: {} error: {}", getJson(judgeResult), e);
             submitResultList = new ArrayList<>();
             // 如果转化失败，那么就是发生了位置错误
+            String errMsg = judgeResult.getErrMsg();
+            if(StringUtils.isBlank(errMsg)) errMsg = judgeResult.getConsoleMsg();
             SubmitResult submitResult = new SubmitResult(
                     judgeTask.getSubmId(), 0, 10,
-                    -1, -1,
-                    judgeResult.getErrMsg());
+                    -1, -1, errMsg);
             submitResultList.add(submitResult);
         }
         SubmitInfo submitInfo = submitInfoDao.selectByPrimaryKey(submId);
