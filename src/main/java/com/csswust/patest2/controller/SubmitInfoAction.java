@@ -187,6 +187,7 @@ public class SubmitInfoAction extends BaseAction {
                 if (submitInfoList == null || submitInfoList.size() == 0) return;
                 for (SubmitInfo item : submitInfoList) {
                     if (item == null || item.getSubmId() == null) continue;
+                    if (ApplicationStartListener.queue.contains(item.getSubmId())) continue;
                     ApplicationStartListener.queue.add(item.getSubmId());
                 }
                 try {
