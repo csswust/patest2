@@ -130,22 +130,24 @@ if __name__ == '__main__':
     if len(sys.argv) != 8:
         exit(-1)
     else:
+        jsonStr = ""
+        workPath = sys.argv[1]
+        pid = sys.argv[2]
+        testDataDum = sys.argv[3]
+        language = sys.argv[4]
+        limitTime = sys.argv[5]
+        limitMemory = sys.argv[6]
+        testModel = sys.argv[7]
         try:
-            workPath = sys.argv[1]
-            pid = sys.argv[2]
-            testDataDum = sys.argv[3]
-            language = sys.argv[4]
-            limitTime = sys.argv[5]
-            limitMemory = sys.argv[6]
-            testModel = sys.argv[7]
             data = judge(workPath, pid, testDataDum, language, limitTime, limitMemory, testModel)
             jsonStr = json.dumps(data)
-            nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
-            resultFile = open(os.path.join(workPath, nowTime + ".result"), 'w')
-            resultFile.write(jsonStr)
             print jsonStr
         except Exception, e:
+            jsonStr = e.message
             print e
             pass
         finally:
+            nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+            resultFile = open(os.path.join(workPath, nowTime + ".result"), 'w')
+            resultFile.write(jsonStr)
             pass
