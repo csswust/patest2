@@ -50,6 +50,15 @@ public class SystemAction extends BaseAction {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/refreshConfig", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> refreshConfig() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        Config.refresh();
+        map.put("status", 1);
+        return map;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/selectOnline", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectOnline(
             @RequestParam(required = false) Integer page,

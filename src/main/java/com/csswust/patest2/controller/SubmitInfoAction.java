@@ -176,7 +176,6 @@ public class SubmitInfoAction extends BaseAction {
             if (total == 0) return;
             // 开始重判
             Integer rejudgeSingleNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_NUM);
-            Integer rejudgeWaitTime = Config.getToInt(SiteKey.REJUDGE_WAIT_TIME);
             int len = total % rejudgeSingleNum != 0 ?
                     total / rejudgeSingleNum + 1 : total / rejudgeSingleNum;
             BaseQuery baseQuery = new BaseQuery();
@@ -191,6 +190,7 @@ public class SubmitInfoAction extends BaseAction {
                     ApplicationStartListener.queue.add(item.getSubmId());
                 }
                 try {
+                    Integer rejudgeWaitTime = Config.getToInt(SiteKey.REJUDGE_WAIT_TIME);
                     Thread.sleep(rejudgeWaitTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

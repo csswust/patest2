@@ -12,10 +12,15 @@ import java.util.Properties;
  * Created by 972536780 on 2017/11/20.
  */
 public class Config {
-    private static Map<String, String> configFile = new HashMap<>();
+    private static volatile Map<String, String> configFile;
 
     static {
+        refresh();
+    }
+
+    public static void refresh() {
         Properties prop = new Properties();
+        Map<String, String> copy = new HashMap<>();
         try {
             String path = Config.class.getClassLoader().getResource("config.properties").getPath();
             InputStream in = new BufferedInputStream(new FileInputStream(path));
@@ -25,6 +30,7 @@ public class Config {
                 String key = it.next();
                 configFile.put(key, prop.getProperty(key));
             }
+            configFile = copy;
             in.close();
         } catch (Exception e) {
             e.printStackTrace();
