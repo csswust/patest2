@@ -109,6 +109,7 @@ public class SystemAction extends BaseAction {
         //String rootPath = request.getServletContext().getRealPath("/");
         String rootPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR);
         String action = request.getParameter("action");
+        // conf.json文件必须放在rootPath/conf/目录下
         String result = new ActionEnter(request, rootPath).exec();
         if (action != null && (action.equals("listfile") || action.equals("listimage"))) {
             rootPath = rootPath.replace("\\", "/");

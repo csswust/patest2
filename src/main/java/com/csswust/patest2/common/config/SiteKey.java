@@ -40,4 +40,6 @@ public class SiteKey {
     public final static String REJUDGE_SINGLE_NUM = "rejudge_single_num";
     public final static String REJUDGE_WAIT_TIME = "rejudge_wait_time";
     public final static String REJUDGE_TASK_QUEUE_TOTAL = "rejudge_task_queue_total";
+
+    public final static String IS_SCORE_PRESENTATION_ERROR = "is_score_presentation_error";
 }

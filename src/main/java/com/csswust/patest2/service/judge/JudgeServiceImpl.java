@@ -162,9 +162,16 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             int sum = 0;
             for (int i = 0; i < submitResultList.size(); i++) {
                 Integer testId = submitResultList.get(i).getTestId();
-                if (submitResultList.get(i).getStatus() == 1 && testId != null && testId >= 0
-                        && testId < ScoreRatioList.size()) {
-                    sum = sum + ScoreRatioList.get(testId);
+                if (testId != null && testId >= 0 && testId < ScoreRatioList.size()) {
+                    if (submitResultList.get(i).getStatus() == 1) {
+                        sum = sum + ScoreRatioList.get(testId);
+                    } else if (submitResultList.get(i).getStatus() == 2) {
+                        // pe是否计算分数
+                        int is_score_pe = Config.getToInt(SiteKey.IS_SCORE_PRESENTATION_ERROR, 0);
+                        if (is_score_pe == 1) {
+                            sum = sum + ScoreRatioList.get(testId);
+                        }
+                    }
                 }
             }
             ans = (sum * 1.0 / 100) * allScore;
