@@ -62,19 +62,23 @@ def run(workPath, index, language, testdata_path, standout_path, limitTime, limi
     else:
         cmd = '%s ' % (os.path.join(workPath, cfg.exec_name))
     fin = open(testdata_path)
-    ftemp = open(os.path.join(workPath, str(index) + ".out"), 'w')
+    ftemppath = os.path.join(workPath, str(index) + ".out")
+    ftemp = open(ftemppath, 'w')
     runcfg = {
         'args': shlex.split(cmd),
         'fd_in': fin.fileno(),
         'fd_out': ftemp.fileno(),
         'timelimit': int(limitTime),
         'memorylimit': int(limitMemory),
+        'trace': True,
+        'calls': [],
+        'files': {}
     }
     res = lorun.run(runcfg)
     fin.close()
     ftemp.close()
     if res['result'] == 0:
-        ftemp = open(os.path.join(workPath, str(index) + ".out"))
+        ftemp = open(ftemppath)
         fout = open(standout_path)
         res['result'] = lorun.check(fout.fileno(), ftemp.fileno())
         fout.close()
