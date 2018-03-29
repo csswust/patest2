@@ -133,13 +133,13 @@ public class SubmitInfoAction extends BaseAction {
     @RequestMapping(value = "/rejudgeBySubmId", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> rejudgeBySubmId(
             @RequestParam(required = false) Integer submId,
-            @RequestParam(required = false) Boolean isWaitStatus,
+            @RequestParam(required = false) Integer status,
             @RequestParam(required = false) Integer probId) {
         Map<String, Object> res = new HashMap<>();
         if (submId != null) {
             ApplicationStartListener.queue.add(submId);
-        } else if (isWaitStatus != null || probId != null) {
-            asynRejudge(isWaitStatus, probId);
+        } else if (status != null || probId != null) {
+            asynRejudge(status, probId);
         }
         res.put("status", 1);
         return res;
@@ -148,9 +148,9 @@ public class SubmitInfoAction extends BaseAction {
     public static ExecutorService rejudgeExecutor = Executors.newFixedThreadPool(
             Config.getToInt(SiteKey.REJUDGE_TASK_QUEUE_TOTAL));
 
-    private void asynRejudge(Boolean isWaitStatus, Integer probId) {
+    private void asynRejudge(Integer status, Integer probId) {
         RejudgeThread rejudgeThread = new RejudgeThread();
-        if (isWaitStatus != null) rejudgeThread.setStatus(11);
+        if (status == 10 || status == 11 || status == 12) rejudgeThread.setStatus(status);
         rejudgeThread.setProbId(probId);
         rejudgeExecutor.execute(rejudgeThread);
     }
