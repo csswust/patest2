@@ -143,7 +143,6 @@ define(function (require, exports, module) {
             }
             $('#listInfo').html(html);
             $(".reJudge").click(function () {
-
                 var subIdValue = this.value;
                 $.ajax({
                     type: "get",
@@ -156,7 +155,7 @@ define(function (require, exports, module) {
                     },
                     success: function (result) {
                         if (result.status == 1) {
-                            window.location.reload();
+                            program.getSubmitInfo();
                         }
                     }
                 });
@@ -197,13 +196,6 @@ define(function (require, exports, module) {
                     program.statuhtml = '<div class="panel panel-default"><div class="panel-body">' +
                         '<div class="page-header">' +
                         '<h3>测试数据组数：' + length + '<small>&nbsp&nbsp&nbsp;通过数：' + acNum + '</small></h3></div>' +
-                        /*'<table style="border:1px solid black">'+'<tr>'+'<td>Test</td>'+'<td>Result</td>'+'<td>Time[Ms]</td>'+'<td>Memory[KB]</td>'+'</tr>'+'</table>'*/
-                        /*'<table id=listhead style="border:1px solid black">'*/
-                        /*'<tr><td>'+123+'</td>'
-                         +'<td>'+123+'</td>'
-                         +'<td>'+123+'</td>'
-                         +'</tr>'*/
-                        /*+'</table>'*/
                         '<div class="row"><div class="col-md-3">Test</div>' +
                         '<div class="col-md-3">Result</div>' +
                         '<div class="col-md-3">Time[Ms]</div>' +

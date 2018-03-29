@@ -170,7 +170,7 @@ define(function (require, exports, module) {
                     },
                     success: function (result) {
                         if (result.status == 1) {
-                            window.location.reload();
+                            program.getSubmitInfo();
                         }
                     }
                 });
