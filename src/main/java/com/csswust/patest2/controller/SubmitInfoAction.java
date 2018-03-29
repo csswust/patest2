@@ -1,5 +1,7 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.ProblemInfoDao;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
 import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
@@ -127,12 +131,86 @@ public class SubmitInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/rejudgeBySubmId", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> rejudgeBySubmId(@RequestParam Integer submId) {
+    public Map<String, Object> rejudgeBySubmId(
+            @RequestParam(required = false) Integer submId,
+            @RequestParam(required = false) Boolean isWaitStatus,
+            @RequestParam(required = false) Integer probId) {
         Map<String, Object> res = new HashMap<>();
         if (submId != null) {
             ApplicationStartListener.queue.add(submId);
+        } else if (isWaitStatus != null || probId != null) {
+            asynRejudge(isWaitStatus, probId);
         }
         res.put("status", 1);
         return res;
+    }
+
+    public static ExecutorService rejudgeExecutor = Executors.newFixedThreadPool(
+            Config.getToInt(SiteKey.REJUDGE_TASK_QUEUE_TOTAL));
+
+    private void asynRejudge(Boolean isWaitStatus, Integer probId) {
+        RejudgeThread rejudgeThread = new RejudgeThread();
+        if (isWaitStatus != null) rejudgeThread.setStatus(11);
+        rejudgeThread.setProbId(probId);
+        rejudgeExecutor.execute(rejudgeThread);
+    }
+
+    private final class RejudgeThread implements Runnable {
+        private Integer status;
+        private Integer probId;
+
+        public RejudgeThread() {
+        }
+
+        public RejudgeThread(Integer status, Integer probId) {
+            this.status = status;
+            this.probId = probId;
+        }
+
+        @Override
+        public void run() {
+            SubmitInfo record = new SubmitInfo();
+            record.setStatus(status);
+            record.setProblemId(probId);
+            int total = submitInfoDao.selectByConditionGetCount(record, new BaseQuery());
+            if (total == 0) return;
+            // 开始重判
+            Integer rejudgeSingleNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_NUM);
+            Integer rejudgeWaitTime = Config.getToInt(SiteKey.REJUDGE_WAIT_TIME);
+            int len = total % rejudgeSingleNum != 0 ?
+                    total / rejudgeSingleNum + 1 : total / rejudgeSingleNum;
+            BaseQuery baseQuery = new BaseQuery();
+            baseQuery.setRows(rejudgeSingleNum);
+            for (int i = 0; i < len; i++) {
+                baseQuery.setPage(i + 1);
+                List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(record, baseQuery);
+                if (submitInfoList == null || submitInfoList.size() == 0) return;
+                for (SubmitInfo item : submitInfoList) {
+                    if (item == null || item.getSubmId() == null) continue;
+                    ApplicationStartListener.queue.add(item.getSubmId());
+                }
+                try {
+                    Thread.sleep(rejudgeWaitTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public Integer getStatus() {
+            return status;
+        }
+
+        public void setStatus(Integer status) {
+            this.status = status;
+        }
+
+        public Integer getProbId() {
+            return probId;
+        }
+
+        public void setProbId(Integer probId) {
+            this.probId = probId;
+        }
     }
 }

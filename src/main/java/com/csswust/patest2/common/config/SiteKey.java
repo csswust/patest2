@@ -36,4 +36,8 @@ public class SiteKey {
     public final static String IS_LOGIN_LOCK = "is_login_lock";
     public final static String IS_LIMIT_IP = "is_limit_ip";
     public final static String IS_AUTH_JUDGE = "is_auth_judge";
+
+    public final static String REJUDGE_SINGLE_NUM = "rejudge_single_num";
+    public final static String REJUDGE_WAIT_TIME = "rejudge_wait_time";
+    public final static String REJUDGE_TASK_QUEUE_TOTAL = "rejudge_task_queue_total";
 }

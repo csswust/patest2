@@ -59,11 +59,11 @@ public class Main extends JunitBaseServiceDaoTest {
         BaseQuery baseQuery = new BaseQuery();
         baseQuery.setRows(10);
         List<ProblemSubmit> problemSubmitList;
-        String cookies = "JSESSIONID=8551A52E34CC2842B2ACAF7E884C3E0F";
+        String cookies = "JSESSIONID=708EDE2C37ED4C0E495B25363D5EA7ED";
         String url = "http://39.108.123.89:8080/patest2/submitInfo/testData";
         Random random = new Random();
         Map<String, Object> params = new HashMap<>();
-        for (int i = 7905; i < len; i++) {
+        for (int i = 8949; i < len; i++) {
             baseQuery.setPage(i + 1);
             problemSubmitList = problemSubmitDao.selectByCondition(condition, baseQuery);
             for (ProblemSubmit item : problemSubmitList) {
@@ -74,7 +74,13 @@ public class Main extends JunitBaseServiceDaoTest {
                 params.put("source", source);
                 params.put("judgerId", judgerId);
                 params.put("problemId", problemId);
-                String result = HttpRequest.sendPost(url, params, cookies);
+                String result;
+                try {
+                    result = HttpRequest.sendPost(url, params, cookies);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
+                }
                 System.out.println(result);
                 Gson gson = new Gson();
                 Result model = gson.fromJson(result, new TypeToken<Result>() {
