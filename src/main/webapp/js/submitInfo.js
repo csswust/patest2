@@ -263,7 +263,7 @@ define(function (require, exports, module) {
         $(".countnum").html(program.count);
         $.jqPaginator('#pagination', {
             totalCounts: program.count,
-            visiblePages: 5,
+            visiblePages: 10,
             currentPage: 1,
             pageSize: parseInt(pubMeth.rowsnum),
             first: '<li class="first"><a href="javascript:;">首页</a></li>',
