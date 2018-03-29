@@ -258,6 +258,10 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
                     return judgeResult;
                 }
             }
+            SubmitInfo record = new SubmitInfo();
+            record.setSubmId(judgeTask.getSubmId());
+            record.setStatus(12);// judgeing
+            submitInfoDao.updateByPrimaryKeySelective(record);
             // 判题语言
             JudgerInfo judgerInfo = judgerInfoDao.selectByPrimaryKey(judgeTask.getLanguage());
             if (judgerInfo == null) return judgeResult;
