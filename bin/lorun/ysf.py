@@ -41,14 +41,21 @@ def compile(workPath, language):
 
 def get_text_file(filename):
     if not os.path.exists(filename):
-        print("ERROR: file not exit: %s" % (filename))
-        return None
+        return "ERROR: file not exit: %s" % (filename)
     if not os.path.isfile(filename):
-        print("ERROR: %s not a filename." % (filename))
-        return None
-    f = open(filename, "r")
-    content = f.read()
-    f.close()
+        return "ERROR: %s not a filename." % (filename)
+    file = open(filename, "r")
+    content = ""
+    i = 0
+    while 1:
+        line = file.readline()
+        if not line:
+            break
+        i = i + 1
+        content += line
+        if i >= 50: break
+        if len(content) > 10000: break
+    file.close()
     return content
 
 

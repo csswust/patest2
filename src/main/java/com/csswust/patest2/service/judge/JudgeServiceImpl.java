@@ -302,13 +302,14 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             int timeOut = Config.getToInt(SiteKey.JUDGE_MAX_RUN_TIME);
             // int maxJudgeTime = judgeTask.getTestdataNum() * judgeTask.getLimitTime();
             // timeOut = Math.min(timeOut, maxJudgeTime);
+            // 这里有个坑，当cpu负载太高的时候，可能很多代码没办法正确判断
             boolean status = proc.waitFor(timeOut, TimeUnit.SECONDS);
             if (!status) {
                 proc.destroy();
                 judgeResult.setErrMsg("编译或者执行超时");
                 return judgeResult;
             }
-            // 获得错误信息
+            // 获得错误信息，由于缓冲区原因，当error信息非常大的时候，会导致线程阻塞
             String errMsg = StreamUtil.output(proc.getErrorStream());
             // 获得控制台信息
             String consoleMsg = StreamUtil.output(proc.getInputStream());

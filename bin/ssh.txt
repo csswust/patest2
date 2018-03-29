@@ -1,0 +1,2 @@
+./catalina.sh jpda start
+python /root/installtion/patest2/judge/script/ysf.py /root/installtion/patest2/judge/demoTest 46 6 g++ 1000 65535 0
