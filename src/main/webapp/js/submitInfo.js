@@ -259,12 +259,15 @@ define(function (require, exports, module) {
             $("#code").html(program.statuhtml);
         }
     });
+    var par = pubMeth.getQueryObject();
+    var currPage = 1;
+    if (par.page !== null && par.page !== undefined) currPage = parseInt(par.page);
     if (program.count > 0) {
         $(".countnum").html(program.count);
         $.jqPaginator('#pagination', {
             totalCounts: program.count,
             visiblePages: 10,
-            currentPage: 1,
+            currentPage: currPage,
             pageSize: parseInt(pubMeth.rowsnum),
             first: '<li class="first"><a href="javascript:;">首页</a></li>',
             last: '<li class="last"><a href="javascript:;">尾页</a></li>',
