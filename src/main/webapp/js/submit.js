@@ -132,7 +132,8 @@ define(function (require, exports, module) {
                 if (program.problemInfoList[i] != null) {
                     probId = program.problemInfoList[i].probId;
                 }
-                if (program.submitInfoList[i].status == 8) {
+                if (program.submitInfoList[i].status == 8 ||
+                    program.submitInfoList[i].status === 10) {
                     statuResult = "ceStatus";
                 } else {
                     statuResult = "noCeStatus";
