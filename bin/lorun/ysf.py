@@ -143,7 +143,7 @@ if __name__ == '__main__':
             jsonStr = json.dumps(data)
             print jsonStr
         except Exception, e:
-            jsonStr = e.message
+            jsonStr = e
             print e
             pass
         finally:
