@@ -28,7 +28,7 @@ public class Config {
             Iterator<String> it = prop.stringPropertyNames().iterator();
             while (it.hasNext()) {
                 String key = it.next();
-                configFile.put(key, prop.getProperty(key));
+                copy.put(key, prop.getProperty(key));
             }
             configFile = copy;
             in.close();
