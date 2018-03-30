@@ -140,7 +140,7 @@ if __name__ == '__main__':
         testModel = sys.argv[7]
         try:
             data = judge(workPath, pid, testDataDum, language, limitTime, limitMemory, testModel)
-            jsonStr = json.dumps(data)
+            jsonStr = json.dumps(data,ensure_ascii=False)
             print jsonStr
         except Exception, e:
             jsonStr = str(e)
