@@ -170,7 +170,6 @@ public class ExamPaperAction extends BaseAction {
                 record.setUserId(userInfo.getUserId());
                 record.setExamId(examId);
                 userInfoDao.updateByPrimaryKeySelective(userInfo);
-
             }
             res.put("status", status);
         }

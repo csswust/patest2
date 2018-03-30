@@ -125,7 +125,10 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             return result;
         }
         // 删除原本的数据
-        int userInfoDelete = userInfoDao.deleteByExamId(examId);
+        // int userInfoDelete = userInfoDao.deleteByExamId(examId);
+        UserInfo userCondition = new UserInfo();
+        userCondition.setExamId(examId);
+        int index = userInfoDao.selectByConditionGetCount(userCondition, new BaseQuery());
         int examPaperDelete = examPaperDao.deleteByExamId(examId);
         String examYear;  // 获取年份
         Calendar now = Calendar.getInstance();
@@ -137,7 +140,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         List<String> passwordList = new ArrayList<>();
         List<ExamPaper> examPaperList = new ArrayList<>();
         Random random = new Random();
-        int count = 0, flag = 0;
+        int count = 0, flag = index + 1;
         here:
         for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
             Sheet sheet = workbook.getSheet(i);
@@ -153,7 +156,9 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                     break here;
                 }
                 UserInfo userInfo = new UserInfo();
-                userInfo.setUsername(examYear + examIdFormat + studentNumber);
+                String indexString = String.format("%04d", flag % 10000);
+                String numberString = String.format("%4s", studentNumber);
+                userInfo.setUsername(examYear + examIdFormat + indexString + numberString);
                 userInfo.setUserProfileId(userProfile.getUseProId());
                 StringBuilder StringBuilder = new StringBuilder();
                 for (int l = 0; l < 8; l++) {
@@ -266,7 +271,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             drawProblemRe.setDesc("未添加考生");
             return drawProblemRe;
         }
-        if (userId != null && examPaperList.size() != 1) {
+        if (userId != null && (examPaperList.size() != 1
+                || examPaperList.get(0).getUserId().intValue() != userId.intValue())) {
             drawProblemRe.setStatus(-500);
             drawProblemRe.setDesc("发生了未知异常");
             return drawProblemRe;
@@ -341,7 +347,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         // 删除之前抽的题目
         int paperProbelmDelete = 0;
         if (userId == null) paperProbelmDelete = paperProblemDao.deleteByExamId(examId);
-        /*else {
+        else {
             PaperProblem paperProblem = new PaperProblem();
             paperProblem.setExamPaperId(examPaperList.get(0).getExaPapId());
             List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(
@@ -349,7 +355,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             for (PaperProblem item : paperProblemList) {
                 paperProbelmDelete += paperProblemDao.deleteByPrimaryKey(item.getPapProId());
             }
-        }*/
+        }
         // 添加新抽的题目
         int sum = 0;
         for (i = 0; i < pPList.size(); i++) {
