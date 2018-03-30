@@ -208,7 +208,7 @@ public class ExamPaperAction extends BaseAction {
     public Map<String, Object> drawProblem(
             @RequestParam(required = true) Integer examId) {
         Map<String, Object> res = new HashMap<>();
-        DrawProblemRe re = examPaperService.drawProblemByExamId(examId);
+        DrawProblemRe re = examPaperService.drawProblemByExamId(examId, null);
         res.put("drawProblemRe", re);
         return res;
     }

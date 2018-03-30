@@ -10,5 +10,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ExamPaperService {
     ExamPaperLoadRe insertByExcel(MultipartFile file, Integer examId, boolean isIgnoreError);
 
-    DrawProblemRe drawProblemByExamId(Integer examId);
+    DrawProblemRe drawProblemByExamId(Integer examId, Integer userId);
 }

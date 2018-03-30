@@ -252,13 +252,14 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
 
     @Transactional
     @Override
-    public DrawProblemRe drawProblemByExamId(Integer examId) {
+    public DrawProblemRe drawProblemByExamId(Integer examId, Integer userId) {
         DrawProblemRe drawProblemRe = new DrawProblemRe();
         Random random = new Random();
         int i, j;
         // 获取试卷列表
         ExamPaper examPaper = new ExamPaper();
         examPaper.setExamId(examId);
+        if (userId != null) examPaper.setUserId(userId);// 对单个用户抽题
         List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, new BaseQuery());
         if (examPaperList == null || examPaperList.size() == 0) {
             drawProblemRe.setStatus(-1);
@@ -275,7 +276,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             return drawProblemRe;
         }
         // 包装模板和对应的问题，目的在于优化效率
-        List<DrawProblemParam> dPPList = new ArrayList<DrawProblemParam>();
+        List<DrawProblemParam> dPPList = new ArrayList<>();
         for (i = 0; i < examParamList.size(); i++) {
             DrawProblemParam dpp = new DrawProblemParam();
             BaseQuery baseQuery = new BaseQuery();
@@ -327,13 +328,23 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 }
                 if (!flag) {
                     drawProblemRe.setStatus(-4);
-                    drawProblemRe.setDesc("卷参数与题目数目异常，请检查重复参数是否小于或者等于对应的题目数目");
+                    drawProblemRe.setDesc("试卷参数与题目数目异常，请检查重复参数是否小于或者等于对应的题目数目");
                     return drawProblemRe;
                 }
             }
         }
         // 删除之前抽的题目
-        int paperProbelmDelete = paperProblemDao.deleteByExamId(examId);
+        int paperProbelmDelete = 0;
+        if (userId == null) paperProbelmDelete = paperProblemDao.deleteByExamId(examId);
+        else {
+            PaperProblem paperProblem = new PaperProblem();
+            paperProblem.setExamPaperId(examPaperList.get(0).getExaPapId());
+            List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(
+                    paperProblem, new BaseQuery());
+            for (PaperProblem item : paperProblemList) {
+                paperProbelmDelete += paperProblemDao.deleteByPrimaryKey(item.getPapProId());
+            }
+        }
         // 添加新抽的题目
         int sum = 0;
         for (i = 0; i < pPList.size(); i++) {
