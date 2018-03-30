@@ -147,17 +147,26 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             int rowNum = sheet.getRows();
             for (int j = 1; j < rowNum; j++) {
                 String studentNumber = sheet.getCell(0, j).getContents();
+                if (studentNumber == null || studentNumber.length() < 4) {
+                    result.setStatus(-9);
+                    result.setUserNameError(studentNumber);
+                    result.setDesc("学号长度必须大于4");
+                    break here;
+                }
                 String classRoom = sheet.getCell(1, j).getContents();
                 UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
                 if (userProfile == null) {
-                    result.setStatus(-9);
+                    result.setStatus(-10);
                     result.setUserNameError(studentNumber);
                     result.setDesc(studentNumber + "学号不存在信息");
                     break here;
                 }
                 UserInfo userInfo = new UserInfo();
-                String indexString = String.format("%04d", flag % 10000);
-                String numberString = String.format("%4s", studentNumber);
+                String indexString = null;
+                if (flag >= 10000) indexString = String.valueOf(flag);
+                else indexString = String.format("%04d", flag % 10000);
+                int lenth = studentNumber.length();
+                String numberString = studentNumber.substring(lenth - 4, lenth);
                 userInfo.setUsername(examYear + examIdFormat + indexString + numberString);
                 userInfo.setUserProfileId(userProfile.getUseProId());
                 StringBuilder StringBuilder = new StringBuilder();
@@ -171,7 +180,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 userInfo.setIsActive(1);
                 int temp = userInfoDao.insertSelective(userInfo);
                 if (temp != 1) {
-                    result.setStatus(-10);
+                    result.setStatus(-11);
                     result.setUserNameError(studentNumber);
                     result.setDesc(JSON.toJSONString(userInfo) + "插入失败");
                     break here;
@@ -187,7 +196,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 examPaper.setScore(0);
                 temp = examPaperDao.insertSelective(examPaper);
                 if (temp != 1) {
-                    result.setStatus(-11);
+                    result.setStatus(-12);
                     result.setUserNameError(studentNumber);
                     result.setDesc(JSON.toJSONString(examPaper) + "插入失败");
                     break here;
@@ -209,7 +218,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         try {
             work = Workbook.createWorkbook(downFile);
         } catch (IOException e) {
-            result.setStatus(-12);
+            result.setStatus(-13);
             result.setDesc("创建WritableWorkbook失败");
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -233,7 +242,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 sheet.addCell(new Label(5, i + 1, examPaperList.get(i).getClassroom()));
             }
         } catch (WriteException e) {
-            result.setStatus(-13);
+            result.setStatus(-14);
             result.setDesc("构建sheet出现异常：" + e.getMessage());
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -244,7 +253,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             work.write();
             work.close();
         } catch (Exception e) {
-            result.setStatus(-14);
+            result.setStatus(-15);
             result.setDesc("写入excel出现异常：" + e.getMessage());
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

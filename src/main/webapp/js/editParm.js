@@ -70,7 +70,7 @@ define(function (require, exports, module) {
                             $(".saveTemp").css("display", "none");
                         }
                     } else {
-                        pubMeth.alertInfo("alert-warning", "添加失败！");
+                        pubMeth.alertInfo("alert-danger", result.APIResult.desc);
                     }
                 },
                 error: function () {
@@ -97,7 +97,7 @@ define(function (require, exports, module) {
                         window.location.href = 'editUplist.html?Id=' + program.examId;
                     }
                     else {
-                        pubMeth.alertInfo("alert-warning", "修改失败！");
+                        pubMeth.alertInfo("alert-danger", result.APIResult.desc);
                     }
                 },
                 error: function () {
