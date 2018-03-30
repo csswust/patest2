@@ -35,6 +35,7 @@ define(function (require, exports, module) {
                     "status": program.statu,
                     "judgerId": program.compiler,
                     "problemId": program.probId,
+                    submId: program.ssubmId,
                     username: program.username,
                     page: program.page,
                     rows: pubMeth.rowsnum
@@ -219,6 +220,7 @@ define(function (require, exports, module) {
         program.probId = $(".probId").val();
         program.statu = $(".result_select option:selected").val();
         program.compiler = $(".result_comp option:selected").val();
+        program.ssubmId = $(".ssubmId").val();
         if (program.statu == 0) {
             program.statu = "";
         }
