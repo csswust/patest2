@@ -148,7 +148,9 @@ define(function (require, exports, module) {
                         $(".submitResult").html('<span class="' + statuResult + '" id=' + program.submitResult.submId + '>' + result + '</span>');
 
                         $(".submitResult").css('display', 'block');
-                        if (program.submitResult.status == 11) {
+                        if (program.submitResult.status === 11
+                            ||program.submitResult.status === 12
+                            ||program.submitResult.status === 13) {
                             setTimeout(program.getsubmit, 500);
                         }
                     }
