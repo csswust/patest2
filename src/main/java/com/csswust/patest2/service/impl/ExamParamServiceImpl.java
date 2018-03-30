@@ -1,8 +1,10 @@
 package com.csswust.patest2.service.impl;
 
 import com.csswust.patest2.common.APIResult;
+import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.ExamParamDao;
 import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.ExamParam;
 import com.csswust.patest2.service.ExamParamService;
 import com.csswust.patest2.service.common.BaseService;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
@@ -22,6 +25,8 @@ import static com.csswust.patest2.service.common.BatchQueryService.getFieldByLis
 public class ExamParamServiceImpl extends BaseService implements ExamParamService {
     @Autowired
     private ExamParamDao examParamDao;
+    @Autowired
+    private ExamInfoDao examInfoDao;
 
     @Transactional
     @Override
@@ -32,9 +37,26 @@ public class ExamParamServiceImpl extends BaseService implements ExamParamServic
             result.setDesc("考试id不能为空");
             return result;
         }
-        if (knowIds.length != levels.length || levels.length != scores.length) {
+        ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
+        if (examInfo == null) {
             result.setStatus(-2);
-            result.setDesc("考试id不能为空");
+            result.setDesc("当前考试不存在，可能已被删除");
+            return result;
+        }
+        Date date = new Date();
+        if (date.getTime() > examInfo.getEndTime().getTime()) {
+            result.setStatus(-3);
+            result.setDesc("考试已结束，不能修改参数信息");
+            return result;
+        }
+        if (date.getTime() > examInfo.getStartTime().getTime()) {
+            result.setStatus(-4);
+            result.setDesc("考试进行中，不能修改参数信息");
+            return result;
+        }
+        if (knowIds.length != levels.length || levels.length != scores.length) {
+            result.setStatus(-5);
+            result.setDesc("参数信息个数不匹配");
             return result;
         }
         ExamParam examParam = new ExamParam();
@@ -51,7 +73,7 @@ public class ExamParamServiceImpl extends BaseService implements ExamParamServic
             int x = examParamDao.insertSelective(temp);
             if (x == 0) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                result.setStatus(-3);
+                result.setStatus(-6);
                 result.setDesc("插入失败");
                 return result;
             }

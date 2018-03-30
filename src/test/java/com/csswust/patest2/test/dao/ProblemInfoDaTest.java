@@ -44,12 +44,16 @@ public class ProblemInfoDaTest extends JunitBaseServiceDaoTest {
             record.setProbId(problemInfo.getProbId());
             String proTestData = path + "/" + i;
             int count = 0, j = 0;
+            long max = Config.getToLong(SiteKey.SELECT_PROBLEM_DATA_MAX);
             while (true) {
                 File inFile = new File(proTestData + "/" + j + ".in");
                 File outFile = new File(proTestData + "/" + j + ".out");
                 if (inFile.exists() && outFile.exists()) {
                     count++;
                     j++;
+                    if (inFile.length() > max / 2) {
+                        System.err.println(i);
+                    }
                 } else break;
             }
             if (count == 0) {
@@ -62,10 +66,10 @@ public class ProblemInfoDaTest extends JunitBaseServiceDaoTest {
                 if (j == count - 1) riod += (num + shengyu);
                 else riod += num;
             }
-            System.out.println(count + " " + riod);
-            record.setTestdataNum(count);
+            //System.out.println(count + " " + riod);
+            /*record.setTestdataNum(count);
             record.setScoreRatio(riod);
-            problemInfoDao.updateByPrimaryKeySelective(record);
+            problemInfoDao.updateByPrimaryKeySelective(record);*/
         }
     }
 }

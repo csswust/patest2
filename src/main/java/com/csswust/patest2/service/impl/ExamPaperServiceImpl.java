@@ -55,6 +55,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private PaperProblemDao paperProblemDao;
+    @Autowired
+    private ExamInfoDao examInfoDao;
 
     @Transactional
     @Override
@@ -65,8 +67,25 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             result.setDesc("考试Id不能为空");
             return result;
         }
-        if (multipartFile.isEmpty()) {
+        ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
+        if (examInfo == null) {
             result.setStatus(-2);
+            result.setDesc("当前考试不存在，可能已被删除");
+            return result;
+        }
+        Date date = new Date();
+        if (date.getTime() > examInfo.getEndTime().getTime()) {
+            result.setStatus(-3);
+            result.setDesc("考试已结束，不能修改考试名单");
+            return result;
+        }
+        if (date.getTime() > examInfo.getStartTime().getTime()) {
+            result.setStatus(-4);
+            result.setDesc("考试进行中，不能修改考试名单");
+            return result;
+        }
+        if (multipartFile.isEmpty()) {
+            result.setStatus(-5);
             result.setDesc("上传文件为空");
             return result;
         }
@@ -83,7 +102,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         } catch (Exception e) {
             log.error("multipartFile.transferTo file: {} error: {}",
                     tempFile.getAbsoluteFile(), e);
-            result.setStatus(-3);
+            result.setStatus(-6);
             result.setDesc("复制文件失败");
             return result;
         }
@@ -92,7 +111,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             in = new FileInputStream(tempFile);
         } catch (Exception e) {
             log.error("new FileInputStream file: {} error: {}", tempFile.getPath(), e);
-            result.setStatus(-4);
+            result.setStatus(-7);
             result.setDesc("创建文件流失败");
             return result;
         }
@@ -101,7 +120,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             workbook = Workbook.getWorkbook(in);
         } catch (Exception e) {
             log.error("Workbook.getWorkbook file: {} error: {}", tempFile.getPath(), e);
-            result.setStatus(-5);
+            result.setStatus(-8);
             result.setDesc("解析excel失败");
             return result;
         }
@@ -128,7 +147,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 String classRoom = sheet.getCell(1, j).getContents();
                 UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
                 if (userProfile == null) {
-                    result.setStatus(-6);
+                    result.setStatus(-9);
                     result.setUserNameError(studentNumber);
                     result.setDesc(studentNumber + "学号不存在信息");
                     break here;
@@ -147,7 +166,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 userInfo.setIsActive(1);
                 int temp = userInfoDao.insertSelective(userInfo);
                 if (temp != 1) {
-                    result.setStatus(-7);
+                    result.setStatus(-10);
                     result.setUserNameError(studentNumber);
                     result.setDesc(JSON.toJSONString(userInfo) + "插入失败");
                     break here;
@@ -163,7 +182,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 examPaper.setScore(0);
                 temp = examPaperDao.insertSelective(examPaper);
                 if (temp != 1) {
-                    result.setStatus(-8);
+                    result.setStatus(-11);
                     result.setUserNameError(studentNumber);
                     result.setDesc(JSON.toJSONString(examPaper) + "插入失败");
                     break here;
@@ -185,7 +204,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         try {
             work = Workbook.createWorkbook(downFile);
         } catch (IOException e) {
-            result.setStatus(-9);
+            result.setStatus(-12);
             result.setDesc("创建WritableWorkbook失败");
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -209,7 +228,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 sheet.addCell(new Label(5, i + 1, examPaperList.get(i).getClassroom()));
             }
         } catch (WriteException e) {
-            result.setStatus(-10);
+            result.setStatus(-13);
             result.setDesc("构建sheet出现异常：" + e.getMessage());
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -220,7 +239,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             work.write();
             work.close();
         } catch (Exception e) {
-            result.setStatus(-11);
+            result.setStatus(-14);
             result.setDesc("写入excel出现异常：" + e.getMessage());
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
