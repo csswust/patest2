@@ -116,7 +116,7 @@ public class JudgeTask {
         if (limitTime < 0) return "limitTime不能小于0";
         if (limitTime > maxLimitTime) return "limitTime不能大于maxLimitTime";
         Integer maxTestNum = Config.getToInt(SiteKey.JUDGE_MAX_TEST_NUM);
-        if (testdataNum < 0) return "testdataNum不能小于0";
+        if (testdataNum < 1) return "testdataNum不能小于1";
         if (testdataNum > maxTestNum) return "testdataNum不能大于maxTestNum";
         String allowLanguage = Config.get(SiteKey.JUDGE_ALLOW_LANGUAGE);
         if (language == null) return "language不能为空";

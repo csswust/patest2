@@ -7,7 +7,9 @@ exec_name='main.exe'
 
 # java file name
 java_file_name='Main.java'
-java_file_name_no_ext='Main.class'
+
+# not can Maix.class
+java_file_name_no_ext='Main'
 
 # gcc file name
 gcc_file_name='main.c'

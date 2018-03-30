@@ -1,11 +1,8 @@
 package com.csswust.patest2.test.judgeTest;
 
-import com.csswust.patest2.dao.ProblemInfoDao;
 import com.csswust.patest2.dao.ProblemSubmitDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.ProblemInfo;
 import com.csswust.patest2.entity.ProblemSubmit;
-import com.csswust.patest2.entity.SubmitResult;
 import com.csswust.patest2.test.JunitBaseServiceDaoTest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,32 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Created by 972536780 on 2018/3/27.
- */
-
-class Result {
-    private Integer submId;
-    private Integer status;
-
-    public Integer getSubmId() {
-        return submId;
-    }
-
-    public void setSubmId(Integer submId) {
-        this.submId = submId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-}
-
-public class Main extends JunitBaseServiceDaoTest {
+public class SubmitAllTest extends JunitBaseServiceDaoTest {
     @Autowired
     private ProblemSubmitDao problemSubmitDao;
 
