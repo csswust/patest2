@@ -36,7 +36,8 @@ public class CheckResultTest extends JunitBaseServiceDaoTest {
             int newStatus = submitInfo.getStatus();
             update(i, newStatus);
             if (oldStatus + 1 != newStatus) {
-                System.out.printf("%d:%d  %d:%d\n", i, oldStatus + 1, newSubmId, newStatus);
+                System.out.printf("%d %d %d %d %d %d\n", i, oldStatus + 1, newSubmId,
+                        newStatus, problemSubmit.getUserId(), problemSubmit.getProblemId());
                 count++;
                 // if (count >= 10) break;
             }
