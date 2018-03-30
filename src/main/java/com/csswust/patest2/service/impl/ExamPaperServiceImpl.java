@@ -266,6 +266,11 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             drawProblemRe.setDesc("未添加考生");
             return drawProblemRe;
         }
+        if (userId != null && examPaperList.size() != 1) {
+            drawProblemRe.setStatus(-500);
+            drawProblemRe.setDesc("发生了未知异常");
+            return drawProblemRe;
+        }
         // 获取试卷参数
         ExamParam examParam = new ExamParam();
         examParam.setExamId(examId);
@@ -336,7 +341,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         // 删除之前抽的题目
         int paperProbelmDelete = 0;
         if (userId == null) paperProbelmDelete = paperProblemDao.deleteByExamId(examId);
-        else {
+        /*else {
             PaperProblem paperProblem = new PaperProblem();
             paperProblem.setExamPaperId(examPaperList.get(0).getExaPapId());
             List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(
@@ -344,7 +349,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             for (PaperProblem item : paperProblemList) {
                 paperProbelmDelete += paperProblemDao.deleteByPrimaryKey(item.getPapProId());
             }
-        }
+        }*/
         // 添加新抽的题目
         int sum = 0;
         for (i = 0; i < pPList.size(); i++) {

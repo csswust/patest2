@@ -6,6 +6,7 @@ import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.listener.ApplicationStartListener;
+import com.csswust.patest2.service.ExamPaperService;
 import com.csswust.patest2.utils.ArrayUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -47,13 +48,15 @@ public class StudentAction extends BaseAction {
     private UserProfileDao userProfileDao;
     @Autowired
     private SubmitResultDao submitResultDao;
+    @Autowired
+    private ExamPaperService examPaperService;
 
     @RequestMapping(value = "/selectMyProblem", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectMyProblem(@RequestParam Integer examId) {
         Map<String, Object> res = new HashMap<>();
         Integer userId = getUserId();
         UserInfo userInfo = userInfoDao.selectByPrimaryKey(userId);
-        if (examId == null || userInfo == null) {
+        if (userId == null || examId == null || userInfo == null) {
             return res;
         }
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
@@ -75,6 +78,10 @@ public class StudentAction extends BaseAction {
         record.setExamPaperId(examPaper.getExaPapId());
         //取出该试卷的所有提交记录
         List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(record, new BaseQuery());
+        // 如果paperProblemList==null，那么当前用户未抽题
+        if (paperProblemList == null || paperProblemList.size() == 0) {
+            examPaperService.drawProblemByExamId(examId, userId);
+        }
         List<ExamParam> examParamList = new ArrayList<>();
         List<ProblemInfo> problemInfoList = new ArrayList<>();
         int sumScore = 0;
