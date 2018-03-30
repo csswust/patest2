@@ -169,10 +169,10 @@ public class SubmitInfoAction extends BaseAction {
 
         @Override
         public void run() {
-            SubmitInfo record = new SubmitInfo();
-            record.setStatus(status);
-            record.setProblemId(probId);
-            int total = submitInfoDao.selectByConditionGetCount(record, new BaseQuery());
+            SubmitInfo condition = new SubmitInfo();
+            condition.setStatus(status);
+            condition.setProblemId(probId);
+            int total = submitInfoDao.selectByConditionGetCount(condition, new BaseQuery());
             if (total == 0) return;
             // 开始重判
             Integer rejudgeSingleNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_NUM);
@@ -180,13 +180,17 @@ public class SubmitInfoAction extends BaseAction {
                     total / rejudgeSingleNum + 1 : total / rejudgeSingleNum;
             BaseQuery baseQuery = new BaseQuery();
             baseQuery.setRows(rejudgeSingleNum);
+            SubmitInfo record = new SubmitInfo();
             for (int i = 0; i < len; i++) {
                 baseQuery.setPage(i + 1);
-                List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(record, baseQuery);
+                List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(condition, baseQuery);
                 if (submitInfoList == null || submitInfoList.size() == 0) return;
                 for (SubmitInfo item : submitInfoList) {
                     if (item == null || item.getSubmId() == null) continue;
                     if (ApplicationStartListener.queue.contains(item.getSubmId())) continue;
+                    record.setSubmId(item.getSubmId());
+                    record.setStatus(13);// 更新为Rejudge.Waiting
+                    submitInfoDao.updateByPrimaryKeySelective(record);
                     ApplicationStartListener.queue.add(item.getSubmId());
                 }
                 try {

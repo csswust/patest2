@@ -147,7 +147,7 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
                     } else {
                         inputString = FileUtil.readFile(datadir, i + ".in");
                     }
-                    File outputFile = new File(datadir, i + ".in");
+                    File outputFile = new File(datadir, i + ".out");
                     if (outputFile.exists() && outputFile.length() > maxSize) {
                         outputString = "The file is beyond the limit, please download the file to view";
                     } else {

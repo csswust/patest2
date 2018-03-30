@@ -116,7 +116,8 @@ define(function (require, exports, module) {
                         className = 'label-primary';
                     } else if (program.submitInfoList[i].status == 5) {//WA
                         className = 'label-danger';
-                    } else if (program.submitInfoList[i].status == 11) {//OW
+                    } else if (program.submitInfoList[i].status == 11||
+                        program.submitInfoList[i].status == 13) {//OW
                         className = 'label-default';
                     } else if (program.submitInfoList[i].status == 10) {//OW
                         className = 'label-info';
