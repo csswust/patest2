@@ -136,12 +136,23 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
         int count = 0;
         if (problemInfo != null) {
             count = problemInfo.getTestdataNum();
+            long maxSize = Config.getToLong(SiteKey.SELECT_PROBLEM_DATA_MAX);
             for (int i = 0; i < count; i++) {
                 String inputString = null;
                 String outputString = null;
                 try {
-                    inputString = FileUtil.readFile(datadir, i + ".in");
-                    outputString = FileUtil.readFile(datadir, i + ".out");
+                    File inputFile = new File(datadir, i + ".in");
+                    if (inputFile.exists() && inputFile.length() > maxSize) {
+                        inputString = "The file is beyond the limit, please download the file to view";
+                    } else {
+                        inputString = FileUtil.readFile(datadir, i + ".in");
+                    }
+                    File outputFile = new File(datadir, i + ".in");
+                    if (outputFile.exists() && outputFile.length() > maxSize) {
+                        outputString = "The file is beyond the limit, please download the file to view";
+                    } else {
+                        outputString = FileUtil.readFile(datadir, i + ".out");
+                    }
                 } catch (Exception e) {
                     log.error("FileUtil.readFile file: {}", datadir + " " + i);
                 }

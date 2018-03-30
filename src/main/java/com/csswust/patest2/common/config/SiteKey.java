@@ -42,4 +42,6 @@ public class SiteKey {
     public final static String REJUDGE_TASK_QUEUE_TOTAL = "rejudge_task_queue_total";
 
     public final static String IS_SCORE_PRESENTATION_ERROR = "is_score_presentation_error";
+
+    public final static String SELECT_PROBLEM_DATA_MAX = "select_problem_data_max";
 }

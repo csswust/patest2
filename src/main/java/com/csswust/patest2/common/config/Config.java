@@ -61,4 +61,20 @@ public class Config {
             return defaultValue;
         }
     }
+
+    public static long getToLong(String key) {
+        try {
+            return Long.parseLong(configFile.get(key));
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public static long getToLong(String key, long defaultValue) {
+        try {
+            return Long.parseLong(configFile.get(key));
+        } catch (Exception e) {
+            return defaultValue;
+        }
+    }
 }
