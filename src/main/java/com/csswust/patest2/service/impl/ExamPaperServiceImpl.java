@@ -165,6 +165,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 String indexString = null;
                 if (flag >= 10000) indexString = String.valueOf(flag);
                 else indexString = String.format("%04d", flag % 10000);
+
                 int lenth = studentNumber.length();
                 String numberString = studentNumber.substring(lenth - 4, lenth);
                 userInfo.setUsername(examYear + examIdFormat + indexString + numberString);
@@ -206,6 +207,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 passwordList.add(StringBuilder.toString());
                 examPaperList.add(examPaper);
                 count = count + 1;
+                flag = flag + 1;
             }
         }
         if (result.getStatus() != 0) {
