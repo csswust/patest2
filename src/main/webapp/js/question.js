@@ -341,6 +341,27 @@ define(function (require, exports, module) {
                 }
             });
         },
+        importData: function () {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../problemInfo/importProblmData",
+                dataType: 'json',
+                async: false,
+                data: {
+                    probId: program.probId
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status === 1) {
+                        program.path = result.fileDir;
+                        window.location.href = '../system/download?path=' + program.path;
+                    } else {
+                        pubMeth.alertInfo("alert-danger", result.desc);
+                    }
+                }
+            });
+        },
         testCode: function () {
             $.ajax({
                 type: "post",
@@ -513,7 +534,7 @@ define(function (require, exports, module) {
 
     });
     $(".download").click(function () {
-        window.location.href = "../problemInfo/importProblmData?probId=" + program.probId;
+        program.importData();
     });
     $(".saveTestData").click(function () {
         program.saveTestData();

@@ -90,32 +90,9 @@ public class ProblemInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/importProblmData", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<byte[]> importProblmData(
-            @RequestParam(required = true) Integer probId) {
-        ImportDataRe re = problemInfoService.importProblmData(probId);
-        //下载文件路径
-        String path = re.getFileDir();
-        String filename = re.getFileName();
-        File file = new File(path + File.separator + re.getFileName());
-        HttpHeaders headers = new HttpHeaders();
-        //下载显示的文件名，解决中文名称乱码问题
-        String downloadFielName = null;
-        try {
-            downloadFielName = new String(filename.getBytes("UTF-8"), "iso-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        //通知浏览器以attachment（下载方式）打开图片
-        headers.setContentDispositionFormData("attachment", downloadFielName);
-        //application/octet-stream ： 二进制流数据（最常见的文件下载）。
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        try {
-            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
-                    headers, HttpStatus.CREATED);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Object importProblmData(@RequestParam Integer probId) {
+        if (probId == null) return null;
+        return problemInfoService.importProblmData(probId);
     }
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
