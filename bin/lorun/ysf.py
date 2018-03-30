@@ -76,10 +76,7 @@ def run(workPath, index, language, testdata_path, standout_path, limitTime, limi
         'fd_in': fin.fileno(),
         'fd_out': ftemp.fileno(),
         'timelimit': int(limitTime),
-        'memorylimit': int(limitMemory),
-        'trace': True,
-        'calls': [],
-        'files': {}
+        'memorylimit': int(limitMemory)
     }
     res = lorun.run(runcfg)
     fin.close()
