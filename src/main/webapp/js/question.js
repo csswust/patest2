@@ -383,11 +383,13 @@ define(function (require, exports, module) {
                     if (program.submitResult == null) {
                         $(".submitResult").show().delay(1000).fadeOut();
                     } else {
-                        if (program.submitResult.status == 2) {//PE
+                        if (program.submitResult.status === 2 ||
+                            program.submitInfoList.status === 12) {//PE
                             className = 'label-primary';
                         } else if (program.submitResult.status == 5) {//WA
                             className = 'label-danger';
-                        } else if (program.submitResult.status == 11) {//OW
+                        } else if (program.submitResult.status === 11
+                            || program.submitInfoList[i].status === 13) {//OW
                             className = 'label-default';
                         } else if (program.submitResult.status == 10) {//OW
                             className = 'label-info';
