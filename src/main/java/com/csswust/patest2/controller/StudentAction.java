@@ -81,6 +81,7 @@ public class StudentAction extends BaseAction {
         // 如果paperProblemList==null，那么当前用户未抽题
         if (paperProblemList == null || paperProblemList.size() == 0) {
             examPaperService.drawProblemByExamId(examId, userId);
+            paperProblemList = paperProblemDao.selectByCondition(record, new BaseQuery());
         }
         List<ExamParam> examParamList = new ArrayList<>();
         List<ProblemInfo> problemInfoList = new ArrayList<>();
