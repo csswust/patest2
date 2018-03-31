@@ -316,12 +316,19 @@ define(function (require, exports, module) {
         }
     });
     $(".search").click(function () {
-        program.page = "1";
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         if (program.queryCondition()) {
             program.searchProblem();
         } else {
             program.getProblemInfo();
         }
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
     if (program.count > 0) {
         $(".countnum").html(program.count);

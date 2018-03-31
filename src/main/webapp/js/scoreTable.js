@@ -58,7 +58,6 @@ define(function (require, exports, module) {
                     if (program.count <= 0) {
                         $("#notip").modal('show');
                     } else {
-                        //var titLength = result.problemNameData[0].length;
                         var userName = "", stunum = "", titName = "", content = "", realName = "", className = "",
                             score = "", acedCount = "";
                         var ranknav = '';
@@ -109,22 +108,12 @@ define(function (require, exports, module) {
                     }
                 }
             });
-
         },
     };
     pubMeth.getRowsnum("rowsnum");
     var parm = pubMeth.getQueryObject();
     program.examId = parm["id"];
     program.getRank();
-
-    /*    $(".gradePrint").click(function () {
-     //		program.selectGradeByExamId();
-     window.location.href = "../exam/selectGradeByExamId?examId=" + program.examId;
-     });
-     $(".codePrint").click(function () {
-     window.location.href = "../exam/selectCodeByExamId?examId=" + program.examId;
-     });*/
-//	program.getSubmitInfo();
 
     if (program.count > 0) {
         $(".countnum").html(program.count);
@@ -147,5 +136,4 @@ define(function (require, exports, module) {
     } else {
         $(".pagenum").css("display", "none");
     }
-
 });

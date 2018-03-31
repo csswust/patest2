@@ -159,6 +159,10 @@ define(function (require, exports, module) {
 
 
     $(".search").click(function () {
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         program.startTime = $(".startTime").val();
         program.endTime = $(".endTime").val();
         if (program.startTime == "" || program.endTime == "") {
@@ -166,11 +170,14 @@ define(function (require, exports, module) {
         } else {
             if (pubMeth.legTimeRange(program.startTime, program.endTime)) {
                 program.getExamInfo();
+                $(".countnum").html(program.count);
+                $('#pagination').jqPaginator('option', {
+                    totalCounts: program.count
+                });
             } else {
                 pubMeth.alertInfo("alert-info", "开始日期不能大于结束日期");
             }
         }
-
     });
     $(".addExam").click(function () {
         window.location.href = "editExam.html";

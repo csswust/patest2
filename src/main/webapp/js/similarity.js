@@ -77,9 +77,17 @@ define(function (require, exports, module) {
     program.examId = par.id;
     program.searchbyid();
     $(".search").click(function () {
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         program.stunum = $(".searTitle").val();
         program.seardu = $(".seardu ").val();
         program.searchbyid();
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
 
     if (program.count > 0) {

@@ -83,7 +83,6 @@ define(function (require, exports, module) {
                     "judgerId": program.compiler,
                     "problemId": program.probId,
                     "userId": program.userId,
-                    //"submitInfo.examId" : program.examId,
                     page: program.page,
                     rows: pubMeth.rowsnum,
                 },
@@ -94,7 +93,6 @@ define(function (require, exports, module) {
                     program.userProfileList = result.userProfileList;
                     program.userInfoList = result.userInfoList;
                     program.problemInfoList = result.problemInfoList;
-
                     $("#listInfo").empty();
                     program.showProblem();
                 }
@@ -175,32 +173,9 @@ define(function (require, exports, module) {
                         }
                     }
                 });
-
             });
-            if (program.count > 0) {
-                $(".countnum").html(program.count);
-                $(".pagenum").css("display", "block");
-                $.jqPaginator('#pagination', {
-                    totalCounts: program.count,
-                    visiblePages: 5,
-                    currentPage: 1,
-                    pageSize: parseInt(pubMeth.rowsnum),
-                    first: '<li class="first"><a href="javascript:;">首页</a></li>',
-                    last: '<li class="last"><a href="javascript:;">尾页</a></li>',
-                    page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-                    onPageChange: function (num, type) {
-                        if (type == 'init') {
-                            return;
-                        }
-                        program.page = num;
-                        program.getSubmitInfo();
-                    }
-                });
-            } else {
-                $(".pagenum").css("display", "none");
-            }
-        },
 
+        },
         getSubmitResult: function () {
             $.ajax({
                 type: "get",
@@ -213,7 +188,6 @@ define(function (require, exports, module) {
                 },
                 success: function (result) {
                     var acNum = 0, length = 0, flag = 1, mainHtml = "", color = "";
-                    /*if (result.status == 1) {*/
                     for (var i = 0, length = result.submitResultList.length; i < length; i++) {
                         if (result.submitResultList[i].status == 1) {
                             color = "acColor";
@@ -234,19 +208,11 @@ define(function (require, exports, module) {
                     program.statuhtml = '<div class="panel panel-default"><div class="panel-body">' +
                         '<div class="page-header">' +
                         '<h3>测试数据组数：' + length + '<small>&nbsp&nbsp&nbsp;通过数：' + acNum + '</small></h3></div>' +
-                        /*'<table style="border:1px solid black">'+'<tr>'+'<td>Test</td>'+'<td>Result</td>'+'<td>Time[Ms]</td>'+'<td>Memory[KB]</td>'+'</tr>'+'</table>'*/
-                        /*'<table id=listhead style="border:1px solid black">'*/
-                        /*'<tr><td>'+123+'</td>'
-                         +'<td>'+123+'</td>'
-                         +'<td>'+123+'</td>'
-                         +'</tr>'*/
-                        /*+'</table>'*/
                         '<div class="row"><div class="col-md-3">Test</div>' +
                         '<div class="col-md-3">Result</div>' +
                         '<div class="col-md-3">Time[Ms]</div>' +
                         '<div class="col-md-3">Memory[KB]</div></div>'
                         + mainHtml + '</div></div>';
-                    /*}*/
                 },
                 error: function () {
                     pubMeth.alertInfo("alert-info", "请求错误");
@@ -265,8 +231,11 @@ define(function (require, exports, module) {
 
     program.getSubmitInfo();
 
-
     $(".search").click(function () {
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         var statuValue = $(".result_select option:selected").val();
         var compValue = $(".result_comp option:selected").val();
         if (statuValue != 0) {
@@ -280,8 +249,11 @@ define(function (require, exports, module) {
             program.compiler = "";
         }
         program.probId = $(".probId").val();
-
         program.getSubmitInfo();
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
 
     $("tbody").delegate('td', 'click', function () {
@@ -302,5 +274,26 @@ define(function (require, exports, module) {
             $("#code").html(program.statuhtml);
         }
     });
-//	program.getSubmitInfo();
+    if (program.count > 0) {
+        $(".countnum").html(program.count);
+        $(".pagenum").css("display", "block");
+        $.jqPaginator('#pagination', {
+            totalCounts: program.count,
+            visiblePages: 5,
+            currentPage: 1,
+            pageSize: parseInt(pubMeth.rowsnum),
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            last: '<li class="last"><a href="javascript:;">尾页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (num, type) {
+                if (type == 'init') {
+                    return;
+                }
+                program.page = num;
+                program.getSubmitInfo();
+            }
+        });
+    } else {
+        $(".pagenum").css("display", "none");
+    }
 });

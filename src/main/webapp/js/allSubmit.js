@@ -268,6 +268,10 @@ define(function (require, exports, module) {
     program.getSubmitInfo();
 
     $(".search").click(function () {
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         var statuValue = $(".result_select option:selected").val();
         var compValue = $(".result_comp option:selected").val();
         if (statuValue != 0) {
@@ -284,6 +288,10 @@ define(function (require, exports, module) {
 
         program.userId = $(".userId").val();
         program.getSubmitInfo();
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
 
     $("tbody").delegate('td', 'click', function () {

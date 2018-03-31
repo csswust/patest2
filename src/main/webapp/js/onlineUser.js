@@ -43,7 +43,6 @@ define(function (require, exports, module) {
                     console.log(result);
                     program.userProfileArr = result.userProfileList;
                     program.userArr = result.userInfoList;
-                    /*program.listuserip = result.listuserReleaseLock;*/
                     program.examPaperList = result.examPaperList;
                     program.sessinoList = result.sessinoList;
                     program.count = result.total;
@@ -90,25 +89,15 @@ define(function (require, exports, module) {
                     + '<td>' + program.userProfileArr[i].realName + '</td>'
                     + '<td>' + program.userProfileArr[i].className + '</td>'
                     + '<td>' + program.examPaperList[i].classroom + '</td>'
-                    /* + '<td>' + program.listuserip[i].loginIp + '</td>'*/
                     + loginStatus
                     + '</tr>';
             }
-        },
+        }
     };
     pubMeth.getRowsnum("rowsnum");
     var parm = pubMeth.getQueryObject();
     program.examId = parm["id"];
     program.selectOnline();
-
-    /*    $(".gradePrint").click(function () {
-     //		program.selectGradeByExamId();
-     window.location.href = "../exam/selectGradeByExamId?examId=" + program.examId;
-     });
-     $(".codePrint").click(function () {
-     window.location.href = "../exam/selectCodeByExamId?examId=" + program.examId;
-     });*/
-//	program.getSubmitInfo();
 
     if (program.count > 0) {
         $(".countnum").html(program.count);
@@ -131,5 +120,4 @@ define(function (require, exports, module) {
     } else {
         $(".pagenum").css("display", "none");
     }
-
 });

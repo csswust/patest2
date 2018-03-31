@@ -138,12 +138,19 @@ define(function (require, exports, module) {
         },
         ser: function () {
             $(".search").click(function () {
-
+                program.page = 1;
+                $('#pagination').jqPaginator('option', {
+                    currentPage: program.page
+                });
                 program.studentNumber = $(".searTitle").val();
                 program.examId = $(".searExamName").val();
                 program.searuserName = $(".searuserName").val();
                 console.log(program.studentNumber);
                 program.getPaper();
+                $(".countnum").html(program.count);
+                $('#pagination').jqPaginator('option', {
+                    totalCounts: program.count
+                });
             });
         }
     };

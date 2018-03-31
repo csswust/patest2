@@ -261,6 +261,10 @@ define(function (require, exports, module) {
         }
     });
     $(".search").click(function () {
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         program.sadmin = $(".admin option:selected").val();
         program.steacher = $(".teacher option:selected").val();
         program.susername = $(".susername").val();
@@ -275,6 +279,10 @@ define(function (require, exports, module) {
         }
         program.srealname = $(".searname").val();
         program.selectAccount();
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
     if (program.count > 0) {
         $(".countnum").html(program.count);
