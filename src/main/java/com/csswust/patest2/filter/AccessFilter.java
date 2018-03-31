@@ -35,7 +35,7 @@ public class AccessFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        Integer isAuthJudge = Config.getToInt(SiteKey.IS_AUTH_JUDGE, 1);
+        Integer isAuthJudge = Config.getToInt(SiteKey.IS_AUTH_JUDGE, SiteKey.IS_AUTH_JUDGE_DE);
         // 获取请求地址url
         HttpServletRequest req = (HttpServletRequest) request;
         String contextPath = req.getContextPath();

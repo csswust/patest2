@@ -121,7 +121,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             loginRe.setDesc("密码错误");
             return loginRe;
         }
-        int isLoginLock = Config.getToInt(SiteKey.IS_LOGIN_LOCK, 1);
+        int isLoginLock = Config.getToInt(SiteKey.IS_LOGIN_LOCK, SiteKey.IS_LOGIN_LOCK_DE);
         // 判断用户是否active，并且not lock
         if (isLoginLock == 1 && currUser.getIsLock() != 0) {
             loginRe.setStatus(-3);
@@ -134,7 +134,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             return loginRe;
         }
         // 当登录的是学生时，需要判断ip是否在限定范围内
-        int isLimitIP = Config.getToInt(SiteKey.IS_LIMIT_IP, 1);
+        int isLimitIP = Config.getToInt(SiteKey.IS_LIMIT_IP, SiteKey.IS_LIMIT_IP_DE);
         if (isLimitIP == 1 && currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
             if (!"0:0:0:0:0:0:0:1".equals(IP)) {
                 String ips = "";
