@@ -16,6 +16,14 @@
             AND
             name = #{record.name}
         </if>
+        <if test="record.type != null">
+            AND
+            type = #{record.type}
+        </if>
+        <if test="record.display != null">
+            AND
+            display = #{record.display}
+        </if>
         <if test="record.extra != null">
             AND
             extra = #{record.extra}
@@ -49,6 +57,14 @@
         <if test="record.name != null">
             AND
             name = #{record.name}
+        </if>
+        <if test="record.type != null">
+            AND
+            type = #{record.type}
+        </if>
+        <if test="record.display != null">
+            AND
+            display = #{record.display}
         </if>
         <if test="record.extra != null">
             AND

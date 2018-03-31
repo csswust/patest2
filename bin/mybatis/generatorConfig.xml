@@ -20,7 +20,7 @@
 
         <!-- 数据连接相关配置 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/patest2" userId="root"
+                        connectionURL="jdbc:mysql://39.108.123.89:3306/patest2" userId="root"
                         password="cs.swust">
         </jdbcConnection>
 

@@ -27,4 +27,6 @@ public interface SiteInfoDao {
     List<SiteInfo> selectByCondition(SiteInfo record, BaseQuery query);
 
     int selectByConditionGetCount(SiteInfo record, BaseQuery query);
+
+    SiteInfo selectByName(String name);
 }

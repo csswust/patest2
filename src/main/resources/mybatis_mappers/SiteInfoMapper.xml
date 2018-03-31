@@ -4,6 +4,8 @@
     <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.SiteInfo" >
         <id column="site_id" property="siteId" jdbcType="INTEGER" />
         <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="display" property="display" jdbcType="VARCHAR" />
         <result column="extra" property="extra" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
@@ -12,7 +14,7 @@
         <result column="value" property="value" jdbcType="LONGVARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-        site_id, `name`, extra, create_time, modify_time
+        site_id, `name`, `type`, display, extra, create_time, modify_time
     </sql>
     <sql id="Blob_Column_List" >
         `value`
@@ -30,16 +32,24 @@
         where site_id = #{siteId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.csswust.patest2.entity.SiteInfo" useGeneratedKeys="true" keyProperty="siteId" >
-        insert into site_info (`name`, extra, create_time, 
-            modify_time, `value`)
-        values (#{name,jdbcType=VARCHAR}, #{extra,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-            #{modifyTime,jdbcType=TIMESTAMP}, #{value,jdbcType=LONGVARCHAR})
+        insert into site_info (`name`, `type`, display, 
+            extra, create_time, modify_time, 
+            `value`)
+        values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{display,jdbcType=VARCHAR}, 
+            #{extra,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+            #{value,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.csswust.patest2.entity.SiteInfo" useGeneratedKeys="true" keyProperty="siteId" >
         insert into site_info
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="name != null" >
                 `name`,
+            </if>
+            <if test="type != null" >
+                `type`,
+            </if>
+            <if test="display != null" >
+                display,
             </if>
             <if test="extra != null" >
                 extra,
@@ -57,6 +67,12 @@
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="name != null" >
                 #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="display != null" >
+                #{display,jdbcType=VARCHAR},
             </if>
             <if test="extra != null" >
                 #{extra,jdbcType=VARCHAR},
@@ -78,6 +94,12 @@
             <if test="name != null" >
                 `name` = #{name,jdbcType=VARCHAR},
             </if>
+            <if test="type != null" >
+                `type` = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="display != null" >
+                display = #{display,jdbcType=VARCHAR},
+            </if>
             <if test="extra != null" >
                 extra = #{extra,jdbcType=VARCHAR},
             </if>
@@ -96,6 +118,8 @@
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.SiteInfo" >
         update site_info
         set `name` = #{name,jdbcType=VARCHAR},
+            `type` = #{type,jdbcType=INTEGER},
+            display = #{display,jdbcType=VARCHAR},
             extra = #{extra,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP},
@@ -105,6 +129,8 @@
     <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.SiteInfo" >
         update site_info
         set `name` = #{name,jdbcType=VARCHAR},
+            `type` = #{type,jdbcType=INTEGER},
+            display = #{display,jdbcType=VARCHAR},
             extra = #{extra,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP}
