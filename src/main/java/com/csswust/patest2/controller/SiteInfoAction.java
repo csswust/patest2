@@ -47,12 +47,15 @@ public class SiteInfoAction {
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> updateById(@RequestParam Integer siteId,
+                                          @RequestParam String display,
                                           @RequestParam String value) {
         Map<String, Object> res = new HashMap<>();
-        if (siteId == null || StringUtils.isBlank(value)) return null;
+        if (siteId == null || StringUtils.isBlank(value) ||
+                StringUtils.isBlank(display)) return null;
         SiteInfo siteInfo = new SiteInfo();
         siteInfo.setSiteId(siteId);
         siteInfo.setValue(value);
+        siteInfo.setDisplay(display);
         int result = siteInfoDao.updateByPrimaryKeySelective(siteInfo);
         // 刷新配置
         if (result == 1) Config.refreshSiteInfo(siteInfoDao, siteId);
@@ -74,6 +77,4 @@ public class SiteInfoAction {
         res.put("status", result);
         return res;
     }
-
-
 }
