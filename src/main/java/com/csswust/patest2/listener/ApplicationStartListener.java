@@ -47,7 +47,7 @@ public class ApplicationStartListener implements ServletContextListener {
         // 获取配置文件和siteInfo
         Config.refreshConfig();
         SiteInfoDao siteInfoDao = context.getBean(SiteInfoDao.class);
-        Config.refreshSiteInfo(siteInfoDao);
+        Config.refreshSiteInfo(siteInfoDao, null);
 
         // 初始化判题线程池和更新试卷线程池
         int num = Config.getToInt(SiteKey.JUDGE_THREAD_POOL_NUM);
