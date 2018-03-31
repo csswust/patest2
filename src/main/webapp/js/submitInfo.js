@@ -42,6 +42,7 @@ define(function (require, exports, module) {
                 },
                 success: function (result) {
                     program.count = result.total;
+                    $(".countnum").html(program.count);
                     console.log(result.submitInfoList);
                     program.submitInfoList = result.submitInfoList;
                     program.userProfileList = result.userProfileList;
@@ -258,7 +259,7 @@ define(function (require, exports, module) {
     var currPage = 1;
     if (par.page !== null && par.page !== undefined) currPage = parseInt(par.page);
     if (program.count > 0) {
-        $(".countnum").html(program.count);
+        // $(".countnum").html(program.count);
         $.jqPaginator('#pagination', {
             totalCounts: program.count,
             visiblePages: 10,

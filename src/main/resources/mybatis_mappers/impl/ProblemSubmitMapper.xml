@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.ProblemSubmitDao">
+    <select id="selectByCondition" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        FROM problem_submit
+        WHERE 1 = 1
+        <if test="record.id != null">
+            AND
+            id = #{record.id}
+        </if>
+        <if test="record.userId != null">
+            AND
+            user_id = #{record.userId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
+        </if>
+        <if test="record.submitTime != null">
+            AND
+            submit_time = #{record.submitTime}
+        </if>
+        <if test="record.status != null">
+            AND
+            status = #{record.status}
+        </if>
+        <if test="record.timeUsed != null">
+            AND
+            time_used = #{record.timeUsed}
+        </if>
+        <if test="record.memoryUsed != null">
+            AND
+            memory_used = #{record.memoryUsed}
+        </if>
+        <if test="record.judgerId != null">
+            AND
+            judger_id = #{record.judgerId}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.paperId != null">
+            AND
+            paper_id = #{record.paperId}
+        </if>
+        <if test="record.paperProblemId != null">
+            AND
+            paper_problem_id = #{record.paperProblemId}
+        </if>
+        <if test="record.ip != null">
+            AND
+            ip = #{record.ip}
+        </if>
+        <if test="record.printRequest != null">
+            AND
+            print_request = #{record.printRequest}
+        </if>
+        <if test="record.newSubmId != null">
+            AND
+            new_subm_id = #{record.newSubmId}
+        </if>
+        <if test="record.newStatus != null">
+            AND
+            new_status = #{record.newStatus}
+        </if>
+        <if test="record.source != null">
+            AND
+            source = #{record.source}
+        </if>
+        <if test="record.extra != null">
+            AND
+            extra = #{record.extra}
+        </if>
+        <include refid="custom_condition"/>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM problem_submit
+        WHERE 1 = 1
+        <if test="record.id != null">
+            AND
+            id = #{record.id}
+        </if>
+        <if test="record.userId != null">
+            AND
+            user_id = #{record.userId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
+        </if>
+        <if test="record.submitTime != null">
+            AND
+            submit_time = #{record.submitTime}
+        </if>
+        <if test="record.status != null">
+            AND
+            status = #{record.status}
+        </if>
+        <if test="record.timeUsed != null">
+            AND
+            time_used = #{record.timeUsed}
+        </if>
+        <if test="record.memoryUsed != null">
+            AND
+            memory_used = #{record.memoryUsed}
+        </if>
+        <if test="record.judgerId != null">
+            AND
+            judger_id = #{record.judgerId}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.paperId != null">
+            AND
+            paper_id = #{record.paperId}
+        </if>
+        <if test="record.paperProblemId != null">
+            AND
+            paper_problem_id = #{record.paperProblemId}
+        </if>
+        <if test="record.ip != null">
+            AND
+            ip = #{record.ip}
+        </if>
+        <if test="record.printRequest != null">
+            AND
+            print_request = #{record.printRequest}
+        </if>
+        <if test="record.newSubmId != null">
+            AND
+            new_subm_id = #{record.newSubmId}
+        </if>
+        <if test="record.newStatus != null">
+            AND
+            new_status = #{record.newStatus}
+        </if>
+        <if test="record.source != null">
+            AND
+            source = #{record.source}
+        </if>
+        <if test="record.extra != null">
+            AND
+            extra = #{record.extra}
+        </if>
+        <include refid="custom_condition"/>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from problem_submit
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List"/>
+        from problem_submit
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
