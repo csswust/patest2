@@ -24,6 +24,7 @@ define(function (require, exports, module) {
         nextId: '',
         eId: '',
         status: [],
+        comp: [],
         getExamInfo: function () {
             $.ajax({
                 type: "post",
@@ -74,6 +75,22 @@ define(function (require, exports, module) {
                 }
             });
         },
+        getCompiler: function () {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../judgerInfo/selectByCondition",
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    program.comp[0] = "unknow";
+                    for (var i = 0; i < result.data.length; i++) {
+                        program.comp[result.data[i].judId] = result.data[i].name;
+                        $(".selectJudId").append('<option value="' + result.data[i].judId + '">' + result.data[i].repr + '</option>');
+                    }
+                }
+            });
+        },
         submit: function () {
             $.ajax({
                 type: "post",
@@ -84,8 +101,7 @@ define(function (require, exports, module) {
                 data: {
                     "source": program.code,
                     "judgerId": program.judId,
-                    "paperProblemId": program.papbId,
-                    /*"submitInfo.isTeacherTest": '0'*/
+                    "paperProblemId": program.papbId
                 },
                 success: function (result) {
                     console.log(result);
@@ -94,15 +110,6 @@ define(function (require, exports, module) {
                     } else {
                         pubMeth.alertInfo("alert-info", result.desc);
                     }
-                    /*else if (result.status == -1) {
-                     pubMeth.alertInfo("alert-info", "考试未开始");
-                     }
-                     else if (result.status == -2) {
-                     pubMeth.alertInfo("alert-info", "考试已结束");
-                     }
-                     else if (result.status == -3) {
-                     pubMeth.alertInfo("alert-info", "代码长度超出限制");
-                     }*/
                 }, error: function () {
                     pubMeth.alertInfo("alert-info", "请求错误");
                 }
@@ -126,12 +133,12 @@ define(function (require, exports, module) {
                         $(".submitResult").show().delay(1000).fadeOut();
                     } else {
                         if (program.submitResult.status === 2 ||
-                            program.submitInfoList.status === 12) {//PE
+                            program.submitResult.status === 12) {//PE
                             className = 'label-primary';
                         } else if (program.submitResult.status == 5) {//WA
                             className = 'label-danger';
                         } else if (program.submitResult.status === 11
-                            || program.submitInfoList[i].status === 13) {//OW
+                            || program.submitResult.status === 13) {//OW
                             className = 'label-default';
                         } else if (program.submitResult.status == 10) {//OW
                             className = 'label-info';
@@ -151,8 +158,8 @@ define(function (require, exports, module) {
 
                         $(".submitResult").css('display', 'block');
                         if (program.submitResult.status === 11
-                            ||program.submitResult.status === 12
-                            ||program.submitResult.status === 13) {
+                            || program.submitResult.status === 12
+                            || program.submitResult.status === 13) {
                             setTimeout(program.getsubmit, 500);
                         }
                     }
@@ -197,20 +204,12 @@ define(function (require, exports, module) {
                     program.statuhtml = '<div class="panel panel-default"><div class="panel-body">' +
                         '<div class="page-header">' +
                         '<h3>测试数据组数：' + length + '<small>&nbsp&nbsp&nbsp;通过数：' + acNum + '</small></h3></div>' +
-                        /*'<table style="border:1px solid black">'+'<tr>'+'<td>Test</td>'+'<td>Result</td>'+'<td>Time[Ms]</td>'+'<td>Memory[KB]</td>'+'</tr>'+'</table>'*/
-                        /*'<table id=listhead style="border:1px solid black">'*/
-                        /*'<tr><td>'+123+'</td>'
-                         +'<td>'+123+'</td>'
-                         +'<td>'+123+'</td>'
-                         +'</tr>'*/
-                        /*+'</table>'*/
                         '<div class="row"><div class="col-md-1">Test</div>' +
                         '<div class="col-md-4">Result</div>' +
                         '<div class="col-md-2">Time[Ms]</div>' +
                         '<div class="col-md-2">Memory[KB]</div>' +
                         '<div class="col-md-3">Ratio[%]</div></div>'
                         + mainHtml + '</div></div>';
-                    /*}*/
                 },
                 error: function () {
                     pubMeth.alertInfo("alert-info", "请求错误");
@@ -239,6 +238,7 @@ define(function (require, exports, module) {
     program.eId = par.eId;
     program.getProById();
     program.getStatus();
+    program.getCompiler();
     program.getExamInfo();
 
     if (program.preId != null) {

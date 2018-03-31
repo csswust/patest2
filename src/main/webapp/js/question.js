@@ -405,12 +405,12 @@ define(function (require, exports, module) {
                         $(".submitResult").show().delay(1000).fadeOut();
                     } else {
                         if (program.submitResult.status === 2 ||
-                            program.submitInfoList.status === 12) {//PE
+                            program.submitResult.status === 12) {//PE
                             className = 'label-primary';
                         } else if (program.submitResult.status == 5) {//WA
                             className = 'label-danger';
                         } else if (program.submitResult.status === 11
-                            || program.submitInfoList[i].status === 13) {//OW
+                            || program.submitResult.status === 13) {//OW
                             className = 'label-default';
                         } else if (program.submitResult.status == 10) {//OW
                             className = 'label-info';
