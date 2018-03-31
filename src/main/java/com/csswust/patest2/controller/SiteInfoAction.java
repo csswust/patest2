@@ -1,8 +1,10 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.dao.SiteInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.SiteInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +39,21 @@ public class SiteInfoAction {
         return res;
     }
 
+    @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String, Object> updateAll(@RequestParam Integer siteId,
+                                         @RequestParam String value) {
+        Map<String, Object> res = new HashMap<>();
+        if (siteId == null || StringUtils.isBlank(value)) return null;
+        SiteInfo siteInfo = new SiteInfo();
+        siteInfo.setSiteId(siteId);
+        siteInfo.setValue(value);
+        int result = siteInfoDao.updateByPrimaryKeySelective(siteInfo);
+        // 刷新配置
+        if (result == 1) Config.refreshSiteInfo(siteInfoDao, siteId);
+        res.put("status", result);
+        return res;
+    }
+
     @RequestMapping(value = "/updateAll", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> updateAll(Integer[] siteIds, String[] values) {
         Map<String, Object> res = new HashMap<>();
@@ -50,4 +67,6 @@ public class SiteInfoAction {
         res.put("status", result);
         return res;
     }
+
+
 }

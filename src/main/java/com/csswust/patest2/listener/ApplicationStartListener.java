@@ -2,6 +2,7 @@ package com.csswust.patest2.listener;
 
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
+import com.csswust.patest2.dao.SiteInfoDao;
 import com.csswust.patest2.service.JudgeService;
 import com.csswust.patest2.service.judge.JudgeThread;
 import org.springframework.context.ApplicationContext;
@@ -24,14 +25,13 @@ import java.util.concurrent.Executors;
 @WebListener
 public class ApplicationStartListener implements ServletContextListener {
     // 判题线程池
-    public static ExecutorService judgeExecutor = Executors.newFixedThreadPool(
-            Config.getToInt(SiteKey.JUDGE_THREAD_POOL_NUM));
+    public static ExecutorService judgeExecutor;
     // 更新试卷线程池
-    public static ExecutorService refreshExecutor = Executors.newFixedThreadPool(
-            Config.getToInt(SiteKey.JUDGE_THREAD_POOL_NUM));
+    public static ExecutorService refreshExecutor;
+    // 重判线程池
+    public static ExecutorService rejudgeExecutor;
     // 任务队列
-    public static ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<>(
-            Config.getToInt(SiteKey.JUDGE_TASK_QUEUE_TOTAL), true);
+    public static ArrayBlockingQueue<Integer> queue;
 
     public static List<JudgeThread> judgeThreadList = new ArrayList<>();
 
@@ -44,8 +44,18 @@ public class ApplicationStartListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContext) {
         ApplicationContext context = WebApplicationContextUtils
                 .getWebApplicationContext(servletContext.getServletContext());
-        JudgeService judgeService = context.getBean(JudgeService.class);
+        // 获取配置文件和siteInfo
+        Config.refreshConfig();
+        SiteInfoDao siteInfoDao = context.getBean(SiteInfoDao.class);
+        Config.refreshSiteInfo(siteInfoDao);
+
+        // 初始化判题线程池和更新试卷线程池
         int num = Config.getToInt(SiteKey.JUDGE_THREAD_POOL_NUM);
+        judgeExecutor = Executors.newFixedThreadPool(num);
+        refreshExecutor = Executors.newFixedThreadPool(num);
+        JudgeService judgeService = context.getBean(JudgeService.class);
+        queue = new ArrayBlockingQueue<>(Config.getToInt(SiteKey.JUDGE_TASK_QUEUE_TOTAL), true);
+        rejudgeExecutor = Executors.newFixedThreadPool(Config.getToInt(SiteKey.REJUDGE_TASK_QUEUE_TOTAL));
         // 启动判题线程
         for (int i = 0; i < num; i++) {
             JudgeThread judgeThread = new JudgeThread(judgeService);

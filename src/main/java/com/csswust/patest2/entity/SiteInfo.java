@@ -7,6 +7,10 @@ public class SiteInfo {
 
     private String name;
 
+    private Integer type;
+
+    private String display;
+
     private String extra;
 
     private Date createTime;
@@ -29,6 +33,22 @@ public class SiteInfo {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display == null ? null : display.trim();
     }
 
     public String getExtra() {

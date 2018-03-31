@@ -1,26 +1,31 @@
 package com.csswust.patest2.common.config;
 
+import com.csswust.patest2.controller.SubmitInfoAction;
+import com.csswust.patest2.dao.SiteInfoDao;
+import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.entity.SiteInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by 972536780 on 2017/11/20.
  */
 public class Config {
-    private static volatile Map<String, String> configFile;
+    private static Logger log = LoggerFactory.getLogger(Config.class);
+    private static volatile Map<String, String> configFile = new ConcurrentHashMap<>();
 
-    static {
-        refresh();
-    }
-
-    public static void refresh() {
+    // 刷新配置文件的配置
+    public static void refreshConfig() {
         Properties prop = new Properties();
-        Map<String, String> copy = new HashMap<>();
         try {
             String path = Config.class.getClassLoader().getResource("config.properties").getPath();
             InputStream in = new BufferedInputStream(new FileInputStream(path));
@@ -28,12 +33,29 @@ public class Config {
             Iterator<String> it = prop.stringPropertyNames().iterator();
             while (it.hasNext()) {
                 String key = it.next();
-                copy.put(key, prop.getProperty(key));
+                configFile.put(key, prop.getProperty(key));
             }
-            configFile = copy;
             in.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("读取config.properties出错 error: {}", e);
+        }
+    }
+
+    // 刷新siteInfo中的信息，siteInfo优先于config
+    public static void refreshSiteInfo(SiteInfoDao siteInfoDao, Integer siteId) {
+        try {
+            SiteInfo siteInfo = new SiteInfo();
+            if (siteId != null) siteInfo.setSiteId(siteId);
+            List<SiteInfo> siteInfoList = siteInfoDao.selectByCondition(siteInfo, new BaseQuery());
+            if (siteInfoList == null || siteInfoList.size() == 0) return;
+            for (SiteInfo item : siteInfoList) {
+                if (item == null) continue;
+                if (item.getName() == null) continue;
+                if (item.getValue() == null) continue;
+                configFile.put(item.getName(), item.getValue());
+            }
+        } catch (Exception e) {
+            log.error("读取SiteInfo出错 error: {}", e);
         }
     }
 
