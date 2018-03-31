@@ -275,7 +275,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             if (judgerInfo == null) return judgeResult;
 
             // 获取工作目录，这里面包括源码，编译后文件，允许结果文件等
-            String workPath = getPath(SiteKey.JUDGE_WORK_DIR);// 包括时间目录
+            String workPath = getPath(SiteKey.JUDGE_WORK_DIR, SiteKey.JUDGE_WORK_DIR_DE);// 包括时间目录
             String ownedPath = format("%d_%d_%d_%d_%d_%d",
                     judgeTask.getSubmId(), judgeTask.getPid(), judgeTask.getLanguage(),
                     judgeTask.getTestdataNum(), judgeTask.getLimitTime(), judgeTask.getLimitMemory());
@@ -283,7 +283,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
 
             // 获取源代码文件名
             fileName = getFileName(judgeTask.getLanguage());
-            String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH);
+            String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH, SiteKey.JUDGE_SCRIPT_PATH_DE);
             // 创建源文件并写入代码
             FileUtil.generateFile(judgeTask.getSource(), finalWorkPath, fileName);
             // 构建命令行命令
@@ -300,7 +300,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(cmd.toString());
             // 设置超时时间
-            int timeOut = Config.getToInt(SiteKey.JUDGE_MAX_RUN_TIME);
+            int timeOut = Config.getToInt(SiteKey.JUDGE_MAX_RUN_TIME, SiteKey.JUDGE_MAX_RUN_TIME_DE);
             // int maxJudgeTime = judgeTask.getTestdataNum() * judgeTask.getLimitTime();
             // timeOut = Math.min(timeOut, maxJudgeTime);
             // 这里有个坑，当cpu负载太高的时候，可能很多代码没办法正确判断
@@ -324,7 +324,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         } finally {
             // 删除源文件，如果没有执行将会导致判题系统堵塞
             if (finalWorkPath != null) {
-                int isDeleteDir = Config.getToInt(SiteKey.JUDGE_IS_DELETE_DIR);
+                int isDeleteDir = Config.getToInt(SiteKey.JUDGE_IS_DELETE_DIR, SiteKey.JUDGE_IS_DELETE_DIR_DE);
                 if (isDeleteDir == 1) {
                     FileUtils.deleteQuietly(new File(finalWorkPath));
                 }
@@ -333,13 +333,20 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         return judgeResult;
     }
 
+    private final static String[] strings = new String[]{
+            SiteKey.JUDGE_GCC_FILE_NAME,
+            SiteKey.JUDGE_GPP_FILE_NAME,
+            SiteKey.JUDGE_JAVA_FILE_NAME,
+            SiteKey.JUDGE_PYTHON_FILE_NAME
+    };
+    private final static String[] defaultValue = new String[]{
+            SiteKey.JUDGE_GCC_FILE_NAME_DE,
+            SiteKey.JUDGE_GPP_FILE_NAME_DE,
+            SiteKey.JUDGE_JAVA_FILE_NAME_DE,
+            SiteKey.JUDGE_PYTHON_FILE_NAME_DE
+    };
+
     private String getFileName(Integer language) {
-        String[] strings = new String[]{
-                SiteKey.JUDGE_GCC_FILE_NAME,
-                SiteKey.JUDGE_GPP_FILE_NAME,
-                SiteKey.JUDGE_JAVA_FILE_NAME,
-                SiteKey.JUDGE_PYTHON_FILE_NAME
-        };
-        return Config.get(strings[language - 1]);
+        return Config.get(strings[language - 1], defaultValue[language - 1]);
     }
 }

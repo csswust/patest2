@@ -44,7 +44,7 @@ public class ProblemInfoDaTest extends JunitBaseServiceDaoTest {
             record.setProbId(problemInfo.getProbId());
             String proTestData = path + "/" + i;
             int count = 0, j = 0;
-            long max = Config.getToLong(SiteKey.SELECT_PROBLEM_DATA_MAX);
+            long max = Config.getToLong(SiteKey.SELECT_PROBLEM_DATA_MAX, SiteKey.SELECT_PROBLEM_DATA_MAX_DE);
             while (true) {
                 File inFile = new File(proTestData + "/" + j + ".in");
                 File outFile = new File(proTestData + "/" + j + ".out");

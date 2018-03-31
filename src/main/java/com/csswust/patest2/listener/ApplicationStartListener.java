@@ -50,12 +50,12 @@ public class ApplicationStartListener implements ServletContextListener {
         Config.refreshSiteInfo(siteInfoDao, null);
 
         // 初始化判题线程池和更新试卷线程池
-        int num = Config.getToInt(SiteKey.JUDGE_THREAD_POOL_NUM);
+        int num = Config.getToInt(SiteKey.JUDGE_THREAD_POOL_NUM, SiteKey.JUDGE_THREAD_POOL_NUM_DE);
         judgeExecutor = Executors.newFixedThreadPool(num);
         refreshExecutor = Executors.newFixedThreadPool(num);
         JudgeService judgeService = context.getBean(JudgeService.class);
-        queue = new ArrayBlockingQueue<>(Config.getToInt(SiteKey.JUDGE_TASK_QUEUE_TOTAL), true);
-        rejudgeExecutor = Executors.newFixedThreadPool(Config.getToInt(SiteKey.REJUDGE_TASK_QUEUE_TOTAL));
+        queue = new ArrayBlockingQueue<>(Config.getToInt(SiteKey.JUDGE_TASK_QUEUE_TOTAL, SiteKey.JUDGE_TASK_QUEUE_TOTAL_DE), true);
+        rejudgeExecutor = Executors.newFixedThreadPool(Config.getToInt(SiteKey.REJUDGE_TASK_QUEUE_TOTAL, SiteKey.REJUDGE_TASK_QUEUE_TOTAL_DE));
         // 启动判题线程
         for (int i = 0; i < num; i++) {
             JudgeThread judgeThread = new JudgeThread(judgeService);

@@ -115,7 +115,7 @@ public class SystemAction extends BaseAction {
 
     @RequestMapping(value = "/ueditor", method = {RequestMethod.GET, RequestMethod.POST})
     public String ueditor() {
-        String rootPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR);
+        String rootPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR, SiteKey.UPLOAD_UEDITOR_DIR_DE);
         String action = request.getParameter("action");
         // conf.json文件必须放在rootPath/conf/目录下
         String result = new ActionEnter(request, rootPath).exec();
@@ -152,11 +152,11 @@ public class SystemAction extends BaseAction {
         File file = null;
         if (isTempPath) {
             // 临时路径
-            String tempPath = Config.get(SiteKey.UPLOAD_TEMP_DIR);
+            String tempPath = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE);
             file = new File(tempPath + path);
         } else if (isUeditorPath) {
             // ueditor路径
-            String ueditorPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR);
+            String ueditorPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR, SiteKey.UPLOAD_UEDITOR_DIR_DE);
             int index = path.indexOf("?");
             if (index != -1) path = path.substring(0, index);
             file = new File(ueditorPath + path);

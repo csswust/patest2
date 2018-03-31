@@ -167,7 +167,7 @@ public class SubmitInfoAction extends BaseAction {
             int total = submitInfoDao.selectByConditionGetCount(condition, new BaseQuery());
             if (total == 0) return;
             // 开始重判
-            Integer rejudgeSingleNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_NUM);
+            Integer rejudgeSingleNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_NUM,SiteKey.REJUDGE_SINGLE_NUM_DE);
             int len = total % rejudgeSingleNum != 0 ?
                     total / rejudgeSingleNum + 1 : total / rejudgeSingleNum;
             BaseQuery baseQuery = new BaseQuery();
@@ -186,7 +186,7 @@ public class SubmitInfoAction extends BaseAction {
                     ApplicationStartListener.queue.add(item.getSubmId());
                 }
                 try {
-                    Integer rejudgeWaitTime = Config.getToInt(SiteKey.REJUDGE_WAIT_TIME);
+                    Integer rejudgeWaitTime = Config.getToInt(SiteKey.REJUDGE_WAIT_TIME,SiteKey.REJUDGE_WAIT_TIME_DE);
                     Thread.sleep(rejudgeWaitTime);
                 } catch (InterruptedException e) {
                     log.error("Thread.sleep error: {}", e);

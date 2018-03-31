@@ -1,13 +1,12 @@
 package com.csswust.patest2.common.cache;
 
 import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.*;
-
-import static com.csswust.patest2.common.config.SiteKey.CACHE_GET_TIMEOUT;
 
 /**
  * Created by 972536780 on 2017/11/26.
@@ -38,7 +37,7 @@ public class Cache<K, V> {
         }
         FutureTask<V> task = map.get(key);
         try {
-            return task.get(Config.getToInt(CACHE_GET_TIMEOUT), TimeUnit.MILLISECONDS);
+            return task.get(Config.getToInt(SiteKey.CACHE_GET_TIMEOUT, SiteKey.CACHE_GET_TIMEOUT_DE), TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             log.error("cache get error InterruptedException: {}", e);
         } catch (ExecutionException e) {

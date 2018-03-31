@@ -51,13 +51,9 @@ public class Base {
         return "";
     }
 
-    public static String getPath(String key) {
+    public static String getPath(String key, String defaultValue) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String time = sdf.format(new Date());
-        return Config.get(key) + "/" + time;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getPath(SiteKey.UPLOAD_TEMP_DIR));
+        return Config.get(key, defaultValue) + "/" + time;
     }
 }

@@ -57,7 +57,7 @@ public class UserProfileServiceImpl extends BaseService implements UserProfileSe
             loadRe.setDesc("上传文件为空");
             return loadRe;
         }
-        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR);
+        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE);
         String filename = multipartFile.getOriginalFilename() + (new Date().getTime());
         File filepath = new File(path, filename);
         //判断路径是否存在，如果不存在就创建一个

@@ -196,7 +196,7 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
 
         Integer length = dataList.size();
-        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR) + File.separator + new Date().getTime() + "/";
+        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE) + File.separator + new Date().getTime() + "/";
         // 在服务器端创建文件夹
         String examTitle = getFileName(examInfo.getTitle());
         File file = new File(path + examTitle);
@@ -334,7 +334,7 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             return result;
         }
 
-        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR) + File.separator + new Date().getTime();
+        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE) + File.separator + new Date().getTime();
         String examTitle = getFileName(examInfo.getTitle());
         String fileName = examTitle + ".xls";
         File downFile = new File(path, fileName);

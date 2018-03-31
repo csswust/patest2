@@ -58,22 +58,22 @@ public class Config {
         }
     }
 
-    public static String get(String key) {
+/*    public static String get(String key) {
         return configFile.get(key);
-    }
+    }*/
 
     public static String get(String key, String defaultValue) {
         String result = configFile.get(key);
         return result == null ? defaultValue : result;
     }
 
-    public static int getToInt(String key) {
+/*    public static int getToInt(String key) {
         try {
             return Integer.parseInt(configFile.get(key));
         } catch (Exception e) {
             return 0;
         }
-    }
+    }*/
 
     public static int getToInt(String key, int defaultValue) {
         try {
@@ -83,13 +83,13 @@ public class Config {
         }
     }
 
-    public static long getToLong(String key) {
+/*    public static long getToLong(String key) {
         try {
             return Long.parseLong(configFile.get(key));
         } catch (Exception e) {
             return 0;
         }
-    }
+    }*/
 
     public static long getToLong(String key, long defaultValue) {
         try {

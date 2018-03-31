@@ -41,7 +41,7 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
             result.setDesc("输入数据和输出数据组数不一致");
             return result;
         }
-        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH) + File.separator + probId;
+        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH, SiteKey.JUDGE_STANDARD_DATA_PATH_DE) + File.separator + probId;
         File file = new File(datadir);
         if (file.exists()) {
             File[] files = file.listFiles();
@@ -82,7 +82,7 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
             result.setDesc("上传文件为空");
             return result;
         }
-        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR);
+        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE);
         String filename = zipFile.getOriginalFilename() + (new Date().getTime());
         File filepath = new File(path, filename);
         //判断路径是否存在，如果不存在就创建一个
@@ -98,7 +98,7 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
             result.setDesc("复制文件失败");
             return result;
         }
-        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH) + File.separator + probId;
+        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH, SiteKey.JUDGE_STANDARD_DATA_PATH_DE) + File.separator + probId;
         File file = new File(datadir);
         if (file.exists()) {
             File[] files = file.listFiles();
@@ -132,11 +132,11 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
         List<String> input = new ArrayList<String>();
         List<String> output = new ArrayList<String>();
         ProblemInfo problemInfo = problemInfoDao.selectByPrimaryKey(probId);
-        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH) + File.separator + probId;
+        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH, SiteKey.JUDGE_STANDARD_DATA_PATH_DE) + File.separator + probId;
         int count = 0;
         if (problemInfo != null) {
             count = problemInfo.getTestdataNum();
-            long maxSize = Config.getToLong(SiteKey.SELECT_PROBLEM_DATA_MAX);
+            long maxSize = Config.getToLong(SiteKey.SELECT_PROBLEM_DATA_MAX, SiteKey.SELECT_PROBLEM_DATA_MAX_DE);
             for (int i = 0; i < count; i++) {
                 String inputString = null;
                 String outputString = null;
@@ -175,7 +175,7 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
             result.setDesc("问题id不能为空");
             return result;
         }
-        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH);
+        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH,SiteKey.JUDGE_STANDARD_DATA_PATH_DE);
         File tempFile = new File(datadir + File.separator + probId);
         if (!tempFile.exists()) {
             result.setStatus(-2);

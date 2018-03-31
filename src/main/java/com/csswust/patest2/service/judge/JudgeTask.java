@@ -109,16 +109,16 @@ public class JudgeTask {
         if (submId == null || submId < 0) return "submId不能为空";
         if (pid == null || pid < 0) return "pid不能为空";
         if (StringUtils.isBlank(source)) return "source不能为空";
-        Integer maxLimitMemory = Config.getToInt(SiteKey.JUDGE_MAX_LIMIT_MEMORY);
+        Integer maxLimitMemory = Config.getToInt(SiteKey.JUDGE_MAX_LIMIT_MEMORY, SiteKey.JUDGE_MAX_LIMIT_MEMORY_DE);
         if (limitMemory < 0) return "limitMemory不能小于0";
         if (limitMemory > maxLimitMemory) return "limitMemory不能大于maxLimitMemory";
-        Integer maxLimitTime = Config.getToInt(SiteKey.JUDGE_MAX_LIMIT_TIME);
+        Integer maxLimitTime = Config.getToInt(SiteKey.JUDGE_MAX_LIMIT_TIME, SiteKey.JUDGE_MAX_LIMIT_TIME_DE);
         if (limitTime < 0) return "limitTime不能小于0";
         if (limitTime > maxLimitTime) return "limitTime不能大于maxLimitTime";
-        Integer maxTestNum = Config.getToInt(SiteKey.JUDGE_MAX_TEST_NUM);
+        Integer maxTestNum = Config.getToInt(SiteKey.JUDGE_MAX_TEST_NUM, SiteKey.JUDGE_MAX_TEST_NUM_DE);
         if (testdataNum < 1) return "testdataNum不能小于1";
         if (testdataNum > maxTestNum) return "testdataNum不能大于maxTestNum";
-        String allowLanguage = Config.get(SiteKey.JUDGE_ALLOW_LANGUAGE);
+        String allowLanguage = Config.get(SiteKey.JUDGE_ALLOW_LANGUAGE, SiteKey.JUDGE_ALLOW_LANGUAGE_DE);
         if (language == null) return "language不能为空";
         if (!allowLanguage.contains(String.valueOf(language)))
             return "language不在allowLanguage允许范围内";
