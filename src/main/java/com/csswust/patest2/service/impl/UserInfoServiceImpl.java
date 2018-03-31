@@ -15,7 +15,7 @@ import com.csswust.patest2.service.UserInfoService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
-import com.csswust.patest2.utils.MD5Util;
+import com.csswust.patest2.utils.CipherUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,9 +54,9 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         userInfo.setUserProfileId(userProfile.getUseProId());
         userInfo.setIsActive(1);
         try {
-            userInfo.setPassword(MD5Util.encode(userInfo.getPassword()));
+            userInfo.setPassword(CipherUtil.encode(userInfo.getPassword()));
         } catch (Exception e) {
-            log.error("MD5Util.encode passwor : {} derror: {}", userInfo.getPassword(), e);
+            log.error("CipherUtil.encode passwor : {} derror: {}", userInfo.getPassword(), e);
             result.setStatus(-3);
             result.setDesc("密码加密失败");
             return result;
@@ -83,12 +83,12 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         userInfo.setUserProfileId(userProfile.getUseProId());
         try {
             if (StringUtils.isNotBlank(userInfo.getPassword())) {
-                userInfo.setPassword(MD5Util.encode(userInfo.getPassword()));
+                userInfo.setPassword(CipherUtil.encode(userInfo.getPassword()));
             } else {
                 userInfo.setPassword(null);// 防止无意更改
             }
         } catch (Exception e) {
-            log.error("MD5Util.encode passwor : {} derror: {}", userInfo.getPassword(), e);
+            log.error("CipherUtil.encode passwor : {} derror: {}", userInfo.getPassword(), e);
             result.setStatus(-3);
             result.setDesc("密码加密失败");
             return result;
@@ -102,9 +102,9 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
     public LoginRe login(String username, String password, String IP) {
         LoginRe loginRe = new LoginRe();
         try {
-            password = MD5Util.encode(password);
+            password = CipherUtil.encode(password);
         } catch (Exception e) {
-            log.error("MD5Util.encode password : {} derror: {}", password, e);
+            log.error("CipherUtil.encode password : {} derror: {}", password, e);
             loginRe.setDesc("密码加密失败");
             return loginRe;
         }

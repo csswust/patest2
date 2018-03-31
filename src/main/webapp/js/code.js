@@ -148,7 +148,6 @@ define(function (require, exports, module) {
                             className = 'label-warning';
                         }
                         result = '<span class="label ' + className + '">' + program.status[program.submitResult.status] + '</span>';
-
                         if (program.submitResult.status == 8 ||
                             program.submitResult.status === 10) {
                             statuResult = "ceStatus";

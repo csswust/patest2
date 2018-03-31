@@ -12,7 +12,7 @@ import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.result.DrawProblemParam;
 import com.csswust.patest2.service.result.DrawProblemRe;
 import com.csswust.patest2.service.result.ExamPaperLoadRe;
-import com.csswust.patest2.utils.MD5Util;
+import com.csswust.patest2.utils.CipherUtil;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -388,9 +388,9 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
     private String getPassword(String pass) {
         //设置密码
         try {
-            return MD5Util.encode(pass);
+            return CipherUtil.encode(pass);
         } catch (Exception e) {
-            log.error("MD5Util.encode({}) error: {}", pass, e);
+            log.error("CipherUtil.encode({}) error: {}", pass, e);
         }
         return null;
     }

@@ -9,7 +9,7 @@ import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamInfoService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.result.ImportDataRe;
-import com.csswust.patest2.utils.MD5Util;
+import com.csswust.patest2.utils.CipherUtil;
 import com.csswust.patest2.utils.ZipUtil;
 import jxl.Workbook;
 import jxl.format.Alignment;
@@ -243,7 +243,7 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                     String enter = "\r\n";
                     SubmitInfo submitInfo = submitInfoList.get(j);
                     String codeTemp = submitInfo == null ? "该考生没有提交代码" : submitInfo.getSource();
-                    String code = MD5Util.encode(codeTemp);
+                    String code = CipherUtil.encode(codeTemp);
                     try {
                         buff = new BufferedOutputStream(out);
                         String dateString = "null";
