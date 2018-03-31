@@ -42,10 +42,12 @@ public class Config {
     }
 
     // 刷新siteInfo中的信息，siteInfo优先于config
-    public static void refreshSiteInfo(SiteInfoDao siteInfoDao) {
+    public static void refreshSiteInfo(SiteInfoDao siteInfoDao, Integer siteId) {
         try {
             SiteInfo siteInfo = new SiteInfo();
+            if (siteId != null) siteInfo.setSiteId(siteId);
             List<SiteInfo> siteInfoList = siteInfoDao.selectByCondition(siteInfo, new BaseQuery());
+            if (siteInfoList == null || siteInfoList.size() == 0) return;
             for (SiteInfo item : siteInfoList) {
                 if (item == null) continue;
                 if (item.getName() == null) continue;
