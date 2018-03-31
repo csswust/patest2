@@ -33,3 +33,11 @@ p:hover{
 .modal-dialog{
 	width:900px;
 }
+
+.main table{
+	margin-top: 30px;
+}
+.main table thead tr th,
+.main table tbody tr td{
+	text-align: center;
+}
