@@ -182,12 +182,19 @@ define(function (require, exports, module) {
     pubMeth.serCourse();
 
     $(".search").click(function () {
-        program.page = "1";
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         if (program.queryCondition()) {
             program.searchProblem();
         } else {
             program.getProblemInfo();
         }
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
     $(".addProblem").click(function () {
         window.location.href = "question.html";

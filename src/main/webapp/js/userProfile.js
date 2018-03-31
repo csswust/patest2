@@ -402,6 +402,10 @@ define(function (require, exports, module) {
         }
     });
     $(".search").click(function () {
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
         program.majorValue = $(".dknowName option:selected").val();
         program.searnum = $(".searnum").val();
         program.searTitle = $(".searTitle").val();
@@ -409,6 +413,10 @@ define(function (require, exports, module) {
             program.majorValue = '';
         }
         program.selectProfile();
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
     //上传学生名单
     program.change('input[id=namefile]', '.namefile');

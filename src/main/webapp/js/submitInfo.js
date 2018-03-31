@@ -36,18 +36,16 @@ define(function (require, exports, module) {
                     "judgerId": program.compiler,
                     "problemId": program.probId,
                     submId: program.ssubmId,
-                    username: program.username,
+                    username: program.susername,
                     page: program.page,
                     rows: pubMeth.rowsnum
                 },
                 success: function (result) {
                     program.count = result.total;
-                    $(".countnum").html(program.count);
                     console.log(result.submitInfoList);
                     program.submitInfoList = result.submitInfoList;
                     program.userProfileList = result.userProfileList;
                     program.userInfoList = result.userInfoList;
-                    /*		console.log(program.userProfileList);*/
                     program.problemInfoList = result.problemInfoList;
                     program.showProblem();
                 }
@@ -99,7 +97,7 @@ define(function (require, exports, module) {
                         className = 'label-primary';
                     } else if (program.submitInfoList[i].status == 5) {//WA
                         className = 'label-danger';
-                    } else if (program.submitInfoList[i].status == 11||
+                    } else if (program.submitInfoList[i].status == 11 ||
                         program.submitInfoList[i].status == 13) {//OW
                         className = 'label-default';
                     } else if (program.submitInfoList[i].status == 10) {//OW
@@ -217,8 +215,11 @@ define(function (require, exports, module) {
     program.getCompiler();
     program.getSubmitInfo();
     $(".search").click(function () {
-        program.page = "1";
-        program.userId = $(".userId").val();
+        program.page = 1;
+        $('#pagination').jqPaginator('option', {
+            currentPage: program.page
+        });
+        program.susername = $(".susername").val();
         program.probId = $(".probId").val();
         program.statu = $(".result_select option:selected").val();
         program.compiler = $(".result_comp option:selected").val();
@@ -230,10 +231,15 @@ define(function (require, exports, module) {
             program.compiler = "";
         }
         program.getSubmitInfo();
+        $(".countnum").html(program.count);
+        $('#pagination').jqPaginator('option', {
+            totalCounts: program.count
+        });
     });
     $(".reset").click(function () {
         $(".probId").val("");
         $(".userId").val("");
+        $(".susername").val("");
         $(".result_comp option:first").prop("selected", true);
         $(".result_select option:first").prop("selected", true);
     });
@@ -259,7 +265,7 @@ define(function (require, exports, module) {
     var currPage = 1;
     if (par.page !== null && par.page !== undefined) currPage = parseInt(par.page);
     if (program.count > 0) {
-        // $(".countnum").html(program.count);
+        $(".countnum").html(program.count);
         $.jqPaginator('#pagination', {
             totalCounts: program.count,
             visiblePages: 10,

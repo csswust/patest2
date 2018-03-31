@@ -57,13 +57,11 @@ public class SubmitInfoAction extends BaseAction {
             @RequestParam(required = false) String username,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        submitInfo = paramVerificate(submitInfo, new StringCallBack());
+        if (submitInfo == null) return null;
         Map<String, Object> res = new HashMap<>();
         if (StringUtils.isNotBlank(username)) {
             UserInfo userInfo = userInfoDao.selectByUsername(username);
-            if (userInfo != null) {
-                submitInfo.setUserId(userInfo.getUserId());
-            }
+            submitInfo.setUserId(userInfo == null ? -1 : userInfo.getUserId());
         }
         BaseQuery baseQuery = new BaseQuery();
         Integer total = submitInfoDao.selectByConditionGetCount(submitInfo, baseQuery);
