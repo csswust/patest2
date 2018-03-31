@@ -39,9 +39,15 @@ public class SiteInfoAction {
         return res;
     }
 
+    @RequestMapping(value = "/selectByName", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object selectByName(@RequestParam String name) {
+        if (StringUtils.isBlank(name)) return null;
+        return siteInfoDao.selectByName(name);
+    }
+
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> updateAll(@RequestParam Integer siteId,
-                                         @RequestParam String value) {
+    public Map<String, Object> updateById(@RequestParam Integer siteId,
+                                          @RequestParam String value) {
         Map<String, Object> res = new HashMap<>();
         if (siteId == null || StringUtils.isBlank(value)) return null;
         SiteInfo siteInfo = new SiteInfo();
@@ -64,6 +70,7 @@ public class SiteInfoAction {
             siteInfo.setValue(values[i]);
             result += siteInfoDao.updateByPrimaryKeySelective(siteInfo);
         }
+        if (result > 0) Config.refreshSiteInfo(siteInfoDao, null);
         res.put("status", result);
         return res;
     }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 import static com.csswust.patest2.common.config.SiteKey.CACHE_GET_TIMEOUT;
-import static com.csswust.patest2.common.config.SiteKey.CACHE_GET_TIMEOUT_DEFAULT;
 
 /**
  * Created by 972536780 on 2017/11/26.
@@ -39,7 +38,7 @@ public class Cache<K, V> {
         }
         FutureTask<V> task = map.get(key);
         try {
-            return task.get(Config.getToInt(CACHE_GET_TIMEOUT, CACHE_GET_TIMEOUT_DEFAULT), TimeUnit.MILLISECONDS);
+            return task.get(Config.getToInt(CACHE_GET_TIMEOUT), TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             log.error("cache get error InterruptedException: {}", e);
         } catch (ExecutionException e) {

@@ -6,7 +6,6 @@ package com.csswust.patest2.common.config;
 public class SiteKey {
     // cache本地缓存获取结果的超时时间，单位ms
     public final static String CACHE_GET_TIMEOUT = "cache_get_timeout";
-    public final static int CACHE_GET_TIMEOUT_DEFAULT = 10000;
 
     // temp
     public final static String UPLOAD_TEMP_DIR = "upload_temp_dir";
