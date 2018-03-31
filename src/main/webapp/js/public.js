@@ -12,7 +12,7 @@ define(function (require, exports, module) {
         sumList: [],
         alertInfo: function (className, info) {
             if ($(".tip").text().trim() == "") {
-                $(".tip").html(' <div class="alert  ' + className + '"  id="tip">' +
+                $(".tip").html(' <div class="alert  ' + className + '"  style="margin-top: 10px;" id="tip">' +
                     '<a href="#" class="close" data-dismiss="alert">&times;</a>' +
                     '<strong>' + info + '</strong></div>');
             } else {
