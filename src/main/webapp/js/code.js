@@ -149,13 +149,13 @@ define(function (require, exports, module) {
                         }
                         result = '<span class="label ' + className + '">' + program.status[program.submitResult.status] + '</span>';
 
-                        if (program.submitResult.status == 8) {
+                        if (program.submitResult.status == 8 ||
+                            program.submitResult.status === 10) {
                             statuResult = "ceStatus";
                         } else {
                             statuResult = "noCeStatus";
                         }
                         $(".submitResult").html('<span class="' + statuResult + '" id=' + program.submitResult.submId + '>' + result + '</span>');
-
                         $(".submitResult").css('display', 'block');
                         if (program.submitResult.status === 11
                             || program.submitResult.status === 12
