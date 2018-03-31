@@ -29,15 +29,10 @@ p:hover{
 .tent{
 	margin-bottom:30px;
 }
-/*编辑器宽度*/
-.modal-dialog{
-	width:900px;
+#settingdata .modal-dialog{
+    width: 1200px;
+    height:600px;
 }
-
 .main table{
 	margin-top: 30px;
-}
-.main table thead tr th,
-.main table tbody tr td{
-	text-align: center;
 }

@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     require('jquery');
     require('bootstrap');
+    require('paginator');
     require('ueditor_config');
     require('ueditor');
     require('../js/common.js');
@@ -21,6 +22,28 @@ define(function (require, exports, module) {
         dataName: '',
         data: [],
         rowsnum: '',
+        page: "1",
+        infoId: "",
+        infoName: "",
+        infoContent: "",
+        modifyTime: "",
+        selectById: function (id) {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../siteInfo/selectByCondition",
+                dataType: 'json',
+                async: false,
+                data: {
+                    siteId: id
+                },
+                success: function (result) {
+                    console.log(result);
+                    program.content = result.data[0].value;
+                    program.display = result.data[0].display;
+                }
+            });
+        },
         getSiteInfo: function () {
             $.ajax({
                 type: "get",
@@ -28,50 +51,70 @@ define(function (require, exports, module) {
                 url: "../siteInfo/selectByCondition",
                 dataType: 'json',
                 async: false,
-                data: {},
+                data: {
+                    page: program.page,
+                    rows: pubMeth.rowsnum
+                },
                 success: function (result) {
                     console.log(result);
                     if (result.status == "1") {
+                        program.count=  result.total;
                         var length = result.data.length;
+                        program.html="";
                         for (var i = 0; i < length; i++) {
-                            if (result.data[i].name == "FAQs") {
-                                program.faqs = result.data[i].value;
-                            }
-                            if (result.data[i].name == "index") {
-                                program.index = result.data[i].value;
-                            }
-                            if (result.data[i].name == "examNotes") {
-                                program.examNotes = result.data[i].value;
-                            }
-                            if (result.data[i].name == "rows") {
-                                $(".rowsNum").val(result.data[i].value);
-                            }
-                            if (result.data[i].name == "systemname") {
-                                $(".systemName").val(result.data[i].value);
-                            }
-                            if (result.data[i].name == "footer") {
-                                $(".footerName").val(result.data[i].value);
-                            }
-                            program.data[i] = {};
-                            program.data[i].name = result.data[i].name;
-                            program.data[i].stioId = result.data[i].siteId;
-                            program.data[i].values = result.data[i].value;
+                            var content = "";
+                            if(result.data[i].type===1) content=result.data[i].value;
+                            else content="通过修改查看";
+                            program.html += '<tr>'
+                                +'<td>'+result.data[i].siteId+'</td>'
+                                +'<td>'+result.data[i].name+'</td>'
+                                +'<td>'+result.data[i].display+'</td>'
+                                +'<td>'+content+'</td>'
+                                +'<td>'+result.data[i].modifyTime+'</td>'
+                                + '<td><a href="javascript:;" class="title" value="'
+                                + result.data[i].siteId + '"'+'stype="'+result.data[i].type+'"'+'>修改</a></td>'
+                                + '</tr>';
                         }
+                        $("#listInfo").empty();
+                        $("#listInfo").append(program.html);
+                        $("#listInfo tr").each(function (i) {
+                            $("td:last a.title", this).click(function () {
+                                program.siteId = $(this).attr("value");
+                                program.stype = $(this).attr("stype");
+                                program.selectById(program.siteId);
+                                if(program.stype == 1){
+                                    $('#oneInput').modal({
+                                        backdrop: 'static'
+                                    });
+                                    $(".display").val(program.display);
+                                    $(".parameterValue").val(program.content);
+                                }
+                                if(program.stype == 2){
+                                    $('#settingdata').modal({
+                                        backdrop:'static'
+                                    });
+                                    $("#myModalLabe2").text(program.display);
+                                    ue.ready(function () {
+                                        ue.setContent(program.content);
+                                    });
+                                }
+                            });
+                        });
                     }
                 }
             });
         },
-        update: function (stoIds, values) {
+        update: function () {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../siteInfo/updateAll",
+                url: "../siteInfo/updateById",
                 dataType: 'json',
                 async: false,
-                traditional: true,//传数组
                 data: {
-                    siteIds: stoIds,
-                    values: values
+                    siteId: program.siteId,
+                    value: program.content,
+                    display:program.display
                 },
                 success: function (result) {
                     console.log(result);
@@ -84,11 +127,15 @@ define(function (require, exports, module) {
             });
         }
     };
+
+
+
+    pubMeth.getRowsnum("rowsnum");
     program.getSiteInfo();
 
     var ue = UE.getEditor('data', {
-        /* initialFrameWidth:868 ,//初始化编辑器宽度,默认1000
-         */           initialFrameHeight: 200  //初始化编辑器高度,默认320
+        initialFrameWidth:1170 ,//初始化编辑器宽度,默认1000
+        initialFrameHeight: 400  //初始化编辑器高度,默认320
     });
     $(".index").click(function () {
         $('#settingdata').modal();
@@ -115,52 +162,76 @@ define(function (require, exports, module) {
         program.dataName = this.className;
     });
     $(".save").click(function () {
-        if (program.dataName == "faqs") {
-            ue.ready(function () {
-                program.faqs = ue.getContent();
-            });
-        }
-        if (program.dataName == "index") {
-            ue.ready(function () {
-                program.index = ue.getContent();
-            });
-        }
-        if (program.dataName == "examNotes") {
-            ue.ready(function () {
-                program.examNotes = ue.getContent();
-            });
+        ue.ready(function () {
+            program.content = ue.getContent();
+        });
+        if (program.siteId != "") {
+            program.update();
         }
         $('#settingdata').modal("hide");
+        program.getSiteInfo();
     });
-    $(".savedata").click(function () {
-        var webName = $(".systemName").val();
-        var copyright = $(".footerName").val();
-        var rowsNum = $(".rowsNum").val();
-        var stoIds = [],
-            values = [];
-        for (var i = 0; i < program.data.length; i++) {
-            if (program.data[i].name == "FAQs") {
-                program.data[i].value = program.faqs;
-            }
-            if (program.data[i].name == "examNotes") {
-                program.data[i].value = program.examNotes;
-            }
-            if (program.data[i].name == "index") {
-                program.data[i].value = program.index;
-            }
-            if (program.data[i].name == "rows") {
-                program.data[i].value = rowsNum;
-            }
-            if (program.data[i].name == "systemname") {
-                program.data[i].value = webName;
-            }
-            if (program.data[i].name == "footer") {
-                program.data[i].value = copyright;
-            }
-            stoIds[i] = program.data[i].stioId;
-            values[i] = program.data[i].value;
+    $(".saveData").click(function () {
+        program.display = $(".display").val();
+        program.content = $(".parameterValue").val();
+        console.log(program.siteId);
+        if (program.siteId != "") {
+            program.update();
         }
-        console.log(stoIds, values);
-        program.update(stoIds, values);
-    })
+        $("#oneInput").modal('hide');
+        program.getSiteInfo();
+    });
+    // $(".savedata").click(function () {
+    //     var webName = $(".systemName").val();
+    //     var copyright = $(".footerName").val();
+    //     var rowsNum = $(".rowsNum").val();
+    //     var stoIds = [],
+    //         values = [];
+    //     for (var i = 0; i < program.data.length; i++) {
+    //         if (program.data[i].name == "FAQs") {
+    //             program.data[i].value = program.faqs;
+    //         }
+    //         if (program.data[i].name == "examNotes") {
+    //             program.data[i].value = program.examNotes;
+    //         }
+    //         if (program.data[i].name == "index") {
+    //             program.data[i].value = program.index;
+    //         }
+    //         if (program.data[i].name == "rows") {
+    //             program.data[i].value = rowsNum;
+    //         }
+    //         if (program.data[i].name == "systemname") {
+    //             program.data[i].value = webName;
+    //         }
+    //         if (program.data[i].name == "footer") {
+    //             program.data[i].value = copyright;
+    //         }
+    //         stoIds[i] = program.data[i].stioId;
+    //         values[i] = program.data[i].value;
+    //     }
+    //     console.log(stoIds, values);
+    //     program.update(stoIds, values);
+    // })
+
+    if (program.count > 0) {
+        $(".countnum").html(program.count);
+        $.jqPaginator('#pagination', {
+            totalCounts: program.count,
+            visiblePages: 5,
+            currentPage: 1,
+            pageSize: parseInt(pubMeth.rowsnum),
+            first: '<li class="first"><a href="javascript:;">首页</a></li>',
+            last: '<li class="last"><a href="javascript:;">尾页</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (num, type) {
+                if (type == 'init') {
+                    return;
+                }
+                program.page = num;
+                program.getSiteInfo();
+            }
+        });
+    } else {
+        $(".pagenum").css("display", "none");
+    }
 });

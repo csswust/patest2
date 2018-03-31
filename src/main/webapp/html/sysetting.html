@@ -25,48 +25,105 @@
         <div class="side-bar col-md-2">
             <!-- 左侧导航 -->
         </div>
-        <div class="col-md-10 ">
-            <div class="tip"></div>
-            <form>
-                <div class="form-group margin ">
-                    <label>系统名称：</label>
-                    <input class="form-control input width systemName"/>
+        <div class="col-md-10 main">
+            <table class="table table-bordered table-hover table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名称</th>
+                        <th>描述</th>
+                        <th>参数值</th>
+                        <th>修改时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="listInfo">
+
+                </tbody>
+            </table>
+            <div class="row paging">
+                <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个
                 </div>
-                <div class="form-group margin">
-                    <label>页脚信息：</label>
-                    <input class="form-control input width footerName"/>
+                <div class="col-md-5 ">
+                    <ul class="pagination " id="pagination"></ul>
                 </div>
-                <div class="form-group margin">
-                    <label>每页显示条数：</label>
-                    <input class="form-control input width rowsNum"/>
-                </div>
-                <div class="form-group margin">
-                    <label>首页数据：</label>
-                    <p class="index">homedata.eait_webpages</p>
-                </div>
-                <div class="form-group margin">
-                    <label>FAQS&nbsp;&nbsp;&nbsp;&nbsp;：</label>
-                    <p class="faqs">faqsdata.eait_webpages</p>
-                </div>
-                <div class="form-group margin">
-                    <label>考试须知&nbsp;&nbsp;&nbsp;&nbsp;：</label>
-                    <p class="examNotes">examNotesdata.eait_webpages</p>
-                </div>
-                <div class="margin">
-                    <button type="button" class="btn btn-primary savedata">保存修改数据</button>
-                </div>
-            </form>
+            </div>
         </div>
+        <!--<div class="col-md-10 ">-->
+            <!--<div class="tip"></div>-->
+            <!--<form>-->
+                <!--<div class="form-group margin ">-->
+                    <!--<label>系统名称：</label>-->
+                    <!--<input class="form-control input width systemName"/>-->
+                <!--</div>-->
+                <!--<div class="form-group margin">-->
+                    <!--<label>页脚信息：</label>-->
+                    <!--<input class="form-control input width footerName"/>-->
+                <!--</div>-->
+                <!--<div class="form-group margin">-->
+                    <!--<label>每页显示条数：</label>-->
+                    <!--<input class="form-control input width rowsNum"/>-->
+                <!--</div>-->
+                <!--<div class="form-group margin">-->
+                    <!--<label>首页数据：</label>-->
+                    <!--<p class="index">homedata.eait_webpages</p>-->
+                <!--</div>-->
+                <!--<div class="form-group margin">-->
+                    <!--<label>FAQS&nbsp;&nbsp;&nbsp;&nbsp;：</label>-->
+                    <!--<p class="faqs">faqsdata.eait_webpages</p>-->
+                <!--</div>-->
+                <!--<div class="form-group margin">-->
+                    <!--<label>考试须知&nbsp;&nbsp;&nbsp;&nbsp;：</label>-->
+                    <!--<p class="examNotes">examNotesdata.eait_webpages</p>-->
+                <!--</div>-->
+                <!--<div class="margin">-->
+                    <!--<button type="button" class="btn btn-primary savedata">保存修改数据</button>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
     </div>
 </div>
 <!-- Modal -->
+<!--单行输入框-->
+<div class="modal fade" id="oneInput" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabe1">系统参数设置</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>描述：</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control display"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>参数值：</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control parameterValue"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closebutton" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary saveData">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--加载文本编译器-->
 <div class="modal fade" id="settingdata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel"><!--index/faqs  --></h4>
+                <h4 class="modal-title" id="myModalLabe2"><!--考试须知--></h4>
             </div>
             <div class="modal-body">
                 <script id="data" name="content" type="text/plain"></script>
@@ -86,6 +143,7 @@
         alias: {
             jquery: 'jQuery/jquery.min.js',
             bootstrap: 'bootstrap/js/bootstrap.min.js',
+            paginator: 'jQuery/jqPaginator.js',
             ueditor_config: 'ueditor/ueditor.config.js',
             ueditor: 'ueditor/ueditor.all.min.js',
         }
