@@ -114,8 +114,7 @@ public class SystemAction extends BaseAction {
 
 
     @RequestMapping(value = "/ueditor", method = {RequestMethod.GET, RequestMethod.POST})
-    public String ueditor() throws Exception {
-        //String rootPath = request.getServletContext().getRealPath("/");
+    public String ueditor() {
         String rootPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR);
         String action = request.getParameter("action");
         // conf.json文件必须放在rootPath/conf/目录下
@@ -134,9 +133,11 @@ public class SystemAction extends BaseAction {
             out.write(result);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("out.writer data:{} error: {}", result, e);
         } finally {
-            out.close();
+            if (out != null) {
+                out.close();
+            }
         }
         return null;
     }
@@ -170,7 +171,7 @@ public class SystemAction extends BaseAction {
         try {
             downloadFielName = new String(file.getName().getBytes("UTF-8"), "iso-8859-1");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            log.error("field.get data:{} error: {}", file.getName(), e);
         }
         //通知浏览器以attachment（下载方式）打开图片
         headers.setContentDispositionFormData("attachment", downloadFielName);
@@ -180,7 +181,7 @@ public class SystemAction extends BaseAction {
             return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
                     headers, HttpStatus.CREATED);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("data:{} error: {}", file.getName(), e);
         }
         return null;
     }

@@ -97,7 +97,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             submitResultList = new ArrayList<>();
             // 如果转化失败，那么就是发生了位置错误
             String errMsg = judgeResult.getErrMsg();
-            if(StringUtils.isBlank(errMsg)) errMsg = judgeResult.getConsoleMsg();
+            if (StringUtils.isBlank(errMsg)) errMsg = judgeResult.getConsoleMsg();
             SubmitResult submitResult = new SubmitResult(
                     judgeTask.getSubmId(), 0, 10,
                     -1, -1, errMsg);
@@ -144,7 +144,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         try {
             ScoreRatioList = ArrayUtil.StringToArray(problemInfo.getScoreRatio(), ",");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ArrayUtil.StringToArray({}) error: {}", problemInfo.getScoreRatio(), e);
         }
         // 更新paperProblem的isAced和usedTime
         if (paperProblem.getIsAced() != 1) {

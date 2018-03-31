@@ -311,7 +311,7 @@ public class StudentAction extends BaseAction {
         try {
             scoreRatioList = ArrayUtil.StringToArray(problemInfo.getScoreRatio(), ",");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("ArrayUtil.StringToArray({}) error: {}", problemInfo.getScoreRatio(), e);
         }
         res.put("scoreRatioList", scoreRatioList);
         res.put("submitResultList", submitResultList);

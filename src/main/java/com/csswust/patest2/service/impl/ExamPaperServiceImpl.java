@@ -387,10 +387,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         //设置密码
         try {
             return MD5Util.encode(pass);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("MD5Util.encode({}) error: {}", pass, e);
         }
         return null;
     }

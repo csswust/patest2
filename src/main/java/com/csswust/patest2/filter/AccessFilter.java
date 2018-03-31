@@ -56,7 +56,7 @@ public class AccessFilter implements Filter {
             try {
                 chain.doFilter(request, response);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("chain.doFilter data:{} error: {}", url, e);
             }
         } else {
             AuthService authService = SpringUtilService.getBean("authService");
@@ -64,7 +64,7 @@ public class AccessFilter implements Filter {
                 try {
                     chain.doFilter(request, response);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error("chain.doFilter data:{} error: {}", url, e);
                 }
             } else {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;

@@ -192,7 +192,7 @@ public class SubmitInfoAction extends BaseAction {
                     Integer rejudgeWaitTime = Config.getToInt(SiteKey.REJUDGE_WAIT_TIME);
                     Thread.sleep(rejudgeWaitTime);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    log.error("Thread.sleep error: {}", e);
                 }
             }
         }

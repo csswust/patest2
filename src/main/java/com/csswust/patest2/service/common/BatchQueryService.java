@@ -1,6 +1,9 @@
 package com.csswust.patest2.service.common;
 
+import com.alibaba.fastjson.JSON;
 import com.csswust.patest2.dao.common.BaseDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,6 +15,8 @@ import java.util.Map;
  * Created by 972536780 on 2018/3/14.
  */
 public class BatchQueryService {
+    private static Logger log = LoggerFactory.getLogger(BatchQueryService.class);
+
     /**
      * 通过list和字段名，反射获取主键列表
      *
@@ -45,7 +50,7 @@ public class BatchQueryService {
                 Integer value = (Integer) field.get(item);
                 fieldList.set(i, value);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                log.error("field.get data:{} error: {}", JSON.toJSONString(item), e);
                 fieldList.set(i, null);
             }
         }
@@ -90,7 +95,7 @@ public class BatchQueryService {
                 Integer value = (Integer) field.get(item);
                 map.put(value, item);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                log.error("field.get data:{} error: {}", JSON.toJSONString(item), e);
             }
         }
         for (int i = 0; i < paramLsit.size(); i++) {
