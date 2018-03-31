@@ -136,13 +136,13 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="resu_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="site_info" domainObjectName="SiteInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="site_id" sqlStatement="JDBC"/>
-        </table>-->
+        </table>
         <!--<table schema="patest2" tableName="submit_info" domainObjectName="SubmitInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -191,12 +191,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="vis_pat_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="problem_submit" domainObjectName="ProblemSubmit"
+        <!--<table schema="patest2" tableName="problem_submit" domainObjectName="ProblemSubmit"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
     </context>
 </generatorConfiguration>
 

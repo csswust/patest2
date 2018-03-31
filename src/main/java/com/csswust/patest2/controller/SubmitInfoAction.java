@@ -143,14 +143,11 @@ public class SubmitInfoAction extends BaseAction {
         return res;
     }
 
-    public static ExecutorService rejudgeExecutor = Executors.newFixedThreadPool(
-            Config.getToInt(SiteKey.REJUDGE_TASK_QUEUE_TOTAL));
-
     private void asynRejudge(Integer status, Integer probId) {
         RejudgeThread rejudgeThread = new RejudgeThread();
         if (status == 10 || status == 11 || status == 12) rejudgeThread.setStatus(status);
         rejudgeThread.setProbId(probId);
-        rejudgeExecutor.execute(rejudgeThread);
+        ApplicationStartListener.rejudgeExecutor.execute(rejudgeThread);
     }
 
     private final class RejudgeThread implements Runnable {

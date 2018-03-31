@@ -53,7 +53,7 @@ public class SystemAction extends BaseAction {
     @RequestMapping(value = "/refreshConfig", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> refreshConfig() throws Exception {
         Map<String, Object> map = new HashMap<>();
-        Config.refresh();
+        Config.refreshConfig();
         map.put("status", 1);
         return map;
     }
