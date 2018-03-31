@@ -1,6 +1,5 @@
 package com.csswust.patest2.common.config;
 
-import com.csswust.patest2.controller.SubmitInfoAction;
 import com.csswust.patest2.dao.SiteInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.SiteInfo;

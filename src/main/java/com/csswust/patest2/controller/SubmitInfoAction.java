@@ -2,7 +2,6 @@ package com.csswust.patest2.controller;
 
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
-import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.ProblemInfoDao;
 import com.csswust.patest2.dao.SubmitInfoDao;
@@ -27,8 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
 import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
