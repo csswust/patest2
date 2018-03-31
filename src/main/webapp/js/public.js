@@ -117,21 +117,14 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../siteInfo/selectByCondition",
+                url: "../siteInfo/selectByName",
                 dataType: 'json',
                 async: false,
                 data: {
                     name: "rows"
                 },
                 success: function (result) {
-                    if (result.status == "1") {
-                        var length = result.data.length;
-                        for (var i = 0; i < length; i++) {
-                            if (result.data[i].name == "rows") {
-                                pubMeth.rowsnum = result.data[i].value;
-                            }
-                        }
-                    }
+                    pubMeth.rowsnum = result.value;
                 }
             });
         }

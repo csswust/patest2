@@ -193,21 +193,16 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../siteInfo/selectByCondition",
+                url: "../siteInfo/selectByName",
                 dataType: 'json',
                 async: false,
-                data: {},
+                data: {
+                    name: "systemname"
+                },
                 success: function (result) {
-                    if (result.status == "1") {
-                        var length = result.data.length;
-                        for (var i = 0; i < length; i++) {
-                            if (result.data[i].name == "systemname") {
-                                program.systename = result.data[i].value;
-                            }
-                        }
-                    }
+                    program.systename = result.value;
                 }
-            })
+            });
         }
     };
     var par = pubMeth.getQueryObject();

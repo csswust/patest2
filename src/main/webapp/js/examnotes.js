@@ -12,20 +12,15 @@ define(function (require, exports, module) {
             $.ajax({
                 type: "get",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "../siteInfo/selectByCondition",
+                url: "../siteInfo/selectByName",
                 dataType: 'json',
                 async: false,
                 data: {
                     name: "examnotes"
                 },
                 success: function (result) {
-                    var length = result.data.length;
-                    for (var i = 0; i < length; i++) {
-                        if (result.data[i].name.toLowerCase() == "examnotes") {
-                            program.examNotes = result.data[i].value;
-                            $(".examnotes").html(program.examNotes);
-                        }
-                    }
+                    program.examNotes = result.value;
+                    $(".examnotes").html(program.examNotes);
                 }
             });
         },
