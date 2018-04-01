@@ -134,8 +134,7 @@ if __name__ == '__main__':
         file_name = sys.argv[8]
         exec_file_name = sys.argv[9]
         try:
-            data = judge(workPath, pid, testDataDum, language, limitTime, limitMemory, testdata_path, file_name,
-                         exec_file_name)
+            data = judge(workPath, pid, testDataDum, language, limitTime, limitMemory, testdata_path, file_name, exec_file_name)
             jsonStr = json.dumps(data, ensure_ascii=False)
             print jsonStr
         except Exception, e:

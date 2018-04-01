@@ -303,6 +303,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
                     .append(" ").append(judgeTask.getLimitTime())
                     .append(" ").append(judgeTask.getLimitMemory())
                     .append(" ").append(testdata_path)
+                    .append(" ").append(fileName)
                     .append(" ").append(execFileName);
             // 执行
             Runtime rt = Runtime.getRuntime();
