@@ -55,6 +55,7 @@ public class ExamInfoAction extends BaseAction {
             @RequestParam(required = false, defaultValue = "false") Boolean onlyExamInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if (examInfo == null) return null;
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
         if (examInfo.getStartTime() != null) {
@@ -77,8 +78,8 @@ public class ExamInfoAction extends BaseAction {
             return res;
         }
         List<Integer> peopleTotal = new ArrayList<>();
-        List<Integer> statusList = new ArrayList<Integer>();
-        List<Integer> proState = new ArrayList<Integer>();
+        List<Integer> statusList = new ArrayList<>();
+        List<Integer> proState = new ArrayList<>();
         ExamPaper examPaper = new ExamPaper();
         Date time = new Date();
         for (int i = 0; i < examInfoList.size(); i++) {
@@ -125,7 +126,7 @@ public class ExamInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         int result = examInfoDao.deleteByIds(ids);
         res.put("status", result);
@@ -162,9 +163,10 @@ public class ExamInfoAction extends BaseAction {
 
     @RequestMapping(value = "/rankingByGrade", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> rankingByGrade(
-            @RequestParam(required = true) Integer examId,
+            @RequestParam Integer examId,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if (examId == null) return null;
         Map<String, Object> res = new HashMap<>();
         ExamPaper examPaper = new ExamPaper();
         examPaper.setExamId(examId);
@@ -206,12 +208,14 @@ public class ExamInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/importCodeByExamId", method = {RequestMethod.GET, RequestMethod.POST})
-    public ImportDataRe importCodeByExamId(@RequestParam(required = true) Integer examId) {
+    public ImportDataRe importCodeByExamId(@RequestParam Integer examId) {
+        if (examId == null) return null;
         return examInfoService.importCodeByExamId(examId);
     }
 
     @RequestMapping(value = "/importGradeByExamId", method = {RequestMethod.GET, RequestMethod.POST})
-    public ImportDataRe importGradeByExamId(@RequestParam(required = true) Integer examId) {
+    public ImportDataRe importGradeByExamId(@RequestParam Integer examId) {
+        if (examId == null) return null;
         return examInfoService.importGradeByExamId(examId);
     }
 }

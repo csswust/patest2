@@ -29,11 +29,14 @@ public class SubmitResultAction extends BaseAction {
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
-            SubmitResult submitResult,
+            @RequestParam Integer submitId,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if (submitId == null) return null;
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
+        SubmitResult submitResult = new SubmitResult();
+        submitResult.setSubmitId(submitId);
         Integer total = submitResultDao.selectByConditionGetCount(submitResult, baseQuery);
         baseQuery.setPageRows(page, rows);
         List<SubmitResult> submitResultList = submitResultDao.selectByCondition(

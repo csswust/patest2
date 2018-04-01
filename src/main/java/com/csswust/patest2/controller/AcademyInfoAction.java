@@ -28,7 +28,8 @@ public class AcademyInfoAction extends BaseAction {
             AcademyInfo academyInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        if (academyInfo == null) return null;
+        Map<String, Object> res = new HashMap<>();
         List<AcademyInfo> academyInfoList = academyInfoDao.selectByCondition(academyInfo,
                 new BaseQuery(page, rows));
         Integer total = academyInfoDao.selectByConditionGetCount(academyInfo, new BaseQuery());
@@ -39,7 +40,7 @@ public class AcademyInfoAction extends BaseAction {
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertOne(AcademyInfo academyInfo) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        Map<String, Object> res = new HashMap<>();
         int result = academyInfoDao.insertSelective(academyInfo);
         res.put("status", result);
         return res;
@@ -47,7 +48,7 @@ public class AcademyInfoAction extends BaseAction {
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> updateById(AcademyInfo academyInfo) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        Map<String, Object> res = new HashMap<>();
         int result = academyInfoDao.updateByPrimaryKeySelective(academyInfo);
         res.put("status", result);
         return res;
@@ -55,7 +56,7 @@ public class AcademyInfoAction extends BaseAction {
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        Map<String, Object> res = new HashMap<>();
         int result = academyInfoDao.deleteByIds(ids);
         res.put("status", result);
         return res;

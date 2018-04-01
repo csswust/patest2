@@ -63,6 +63,7 @@ public class ExamPaperAction extends BaseAction {
             @RequestParam(required = false) String studentNumber,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if (examPaper == null) return null;
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(userName)) {
@@ -113,7 +114,8 @@ public class ExamPaperAction extends BaseAction {
     }
 
     @RequestMapping(value = "/selectPaperById", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectPaperById(@RequestParam(required = true) Integer exaPapId) {
+    public Map<String, Object> selectPaperById(@RequestParam Integer exaPapId) {
+        if (exaPapId == null) return null;
         Map<String, Object> res = new HashMap<>();
         ExamPaper examPaper = examPaperDao.selectByPrimaryKey(exaPapId);
         if (examPaper == null) {
@@ -149,9 +151,8 @@ public class ExamPaperAction extends BaseAction {
     }
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> insertOne(
-            @RequestParam(required = true) Integer examId,
-            @RequestParam(required = true) String userName) {
+    public Map<String, Object> insertOne(@RequestParam Integer examId, @RequestParam String userName) {
+        if (examId == null || StringUtils.isBlank(userName)) return null;
         Map<String, Object> res = new HashMap<>();
         UserInfo userInfo = userInfoDao.selectByUsername(userName);
         if (userInfo == null) {
@@ -185,7 +186,7 @@ public class ExamPaperAction extends BaseAction {
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         int result = examPaperDao.deleteByIds(ids);
         res.put("status", result);
@@ -194,9 +195,11 @@ public class ExamPaperAction extends BaseAction {
 
     @RequestMapping(value = "/uploadUserByExamId", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> uploadUserByExamId(
-            @RequestParam(required = true) Integer examId,
-            @RequestParam(required = true) MultipartFile namefile,
+            @RequestParam Integer examId,
+            @RequestParam MultipartFile namefile,
             @RequestParam(required = false, defaultValue = "false") Boolean isIgnoreError) {
+        if (examId == null) return null;
+        if (namefile == null) return null;
         Map<String, Object> res = new HashMap<>();
         ExamPaperLoadRe re = examPaperService.insertByExcel(namefile, examId, isIgnoreError);
         res.put("loadResult", re);
@@ -205,7 +208,8 @@ public class ExamPaperAction extends BaseAction {
 
     @RequestMapping(value = "/drawProblem", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> drawProblem(
-            @RequestParam(required = true) Integer examId) {
+            @RequestParam Integer examId) {
+        if (examId == null) return null;
         Map<String, Object> res = new HashMap<>();
         DrawProblemRe re = examPaperService.drawProblemByExamId(examId, null);
         res.put("drawProblemRe", re);

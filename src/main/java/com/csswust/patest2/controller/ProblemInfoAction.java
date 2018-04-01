@@ -49,8 +49,9 @@ public class ProblemInfoAction extends BaseAction {
 
     @RequestMapping(value = "/uploadDataByFile", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> uploadDataByFile(
-            @RequestParam(required = true, value = "datafile") MultipartFile namefile,
-            @RequestParam(required = true) Integer probId) {
+            @RequestParam(value = "datafile") MultipartFile namefile,
+            @RequestParam Integer probId) {
+        if (probId == null) return null;
         Map<String, Object> res = new HashMap<>();
         APIResult result = problemInfoService.insertProblemData(probId, namefile);
         res.put("APIResult", result);
@@ -71,8 +72,8 @@ public class ProblemInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/selectProblemData", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectProblemData(
-            @RequestParam(required = true) Integer probId) {
+    public Map<String, Object> selectProblemData(@RequestParam Integer probId) {
+        if(probId==null) return null;
         Map<String, Object> res = new HashMap<>();
         SelectProblemDataRe re = problemInfoService.selectProblemData(probId);
         res.put("selectProblemDataRe", re);
@@ -90,6 +91,7 @@ public class ProblemInfoAction extends BaseAction {
             ProblemInfo problemInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if(problemInfo==null) return null;
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(problemInfo.getTitle())) {
@@ -113,7 +115,7 @@ public class ProblemInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/selectByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> selectByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         List<ProblemInfo> problemInfoList = problemInfoDao.selectByIds(ids);
         res.put("problemInfoList", problemInfoList);
@@ -138,7 +140,7 @@ public class ProblemInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         int result = problemInfoDao.deleteByIds(ids);
         res.put("status", result);

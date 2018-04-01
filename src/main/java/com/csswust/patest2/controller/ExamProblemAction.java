@@ -46,9 +46,10 @@ public class ExamProblemAction extends BaseAction {
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
-            @RequestParam(required = true) Integer examId,
+            @RequestParam Integer examId,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if(examId==null) return null;
         Map<String, Object> res = new HashMap<>();
         ExamProblem examProblem = new ExamProblem();
         examProblem.setExamId(examId);
@@ -73,8 +74,8 @@ public class ExamProblemAction extends BaseAction {
 
     @RequestMapping(value = "/insertByArray", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertByArray(
-            @RequestParam(required = true) Integer examId,
-            @RequestParam(required = true) Integer[] probIdList) {
+            @RequestParam Integer examId,
+            @RequestParam Integer[] probIdList) {
         Map<String, Object> res = new HashMap<>();
         if (examId == null) return null;
         if (probIdList == null || probIdList.length == 0) {
@@ -95,7 +96,7 @@ public class ExamProblemAction extends BaseAction {
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         int result = examProblemDao.deleteByIds(ids);
         res.put("status", result);

@@ -49,6 +49,7 @@ public class ExamParamAction extends BaseAction {
             ExamParam examParam,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if (examParam == null) return null;
         Map<String, Object> res = new HashMap<>();
         Integer total = examParamDao.selectByConditionGetCount(examParam, new BaseQuery());
         List<ExamParam> examParamList = examParamDao.selectByCondition(examParam, new BaseQuery(page, rows));
@@ -79,7 +80,8 @@ public class ExamParamAction extends BaseAction {
     public Map<String, Object> selectProblemTotal(
             @RequestParam(required = false) Integer knowId,
             @RequestParam(required = false) Integer levelId,
-            @RequestParam(required = true) Integer examId) {
+            @RequestParam Integer examId) {
+        if (examId == null) return null;
         Map<String, Object> res = new HashMap<>();
         ExamParam temp = new ExamParam();
         temp.setExamId(examId);
@@ -92,10 +94,11 @@ public class ExamParamAction extends BaseAction {
 
     @RequestMapping(value = "/insertByArray", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertByArray(
-            @RequestParam(required = true) Integer examId,
-            @RequestParam(required = true) Integer[] knowIds,
-            @RequestParam(required = true) Integer[] levels,
-            @RequestParam(required = true) Integer[] scores) {
+            @RequestParam Integer examId,
+            @RequestParam Integer[] knowIds,
+            @RequestParam Integer[] levels,
+            @RequestParam Integer[] scores) {
+        if (examId == null) return null;
         Map<String, Object> res = new HashMap<>();
         APIResult result = examParamService.insertByArray(examId, knowIds, levels, scores);
         res.put("APIResult", result);

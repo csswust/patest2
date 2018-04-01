@@ -32,6 +32,7 @@ public class ExamNoticeAction extends BaseAction {
             ExamNotice examNotice,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if (examNotice == null) return null;
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
         Integer total = examNoticeDao.selectByConditionGetCount(examNotice, baseQuery);
@@ -44,7 +45,7 @@ public class ExamNoticeAction extends BaseAction {
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertOne(ExamNotice examNotice) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        Map<String, Object> res = new HashMap<>();
         int result = examNoticeDao.insertSelective(examNotice);
         res.put("status", result);
         return res;
@@ -52,15 +53,15 @@ public class ExamNoticeAction extends BaseAction {
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> updateById(ExamNotice examNotice) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        Map<String, Object> res = new HashMap<>();
         int result = examNoticeDao.updateByPrimaryKeySelective(examNotice);
         res.put("status", result);
         return res;
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
-        Map<String, Object> res = new HashMap<String, Object>();
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
+        Map<String, Object> res = new HashMap<>();
         int result = examNoticeDao.deleteByIds(ids);
         res.put("status", result);
         return res;

@@ -35,7 +35,8 @@ public class MajorInfoAction {
             MajorInfo majorInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        Map<String, Object> res = new HashMap<String, Object>();
+        if (majorInfo == null) return null;
+        Map<String, Object> res = new HashMap<>();
         List<MajorInfo> majorInfoList = majorInfoDao.selectByCondition(majorInfo,
                 new BaseQuery(page, rows));
         Integer total = majorInfoDao.selectByConditionGetCount(majorInfo, new BaseQuery());
@@ -65,7 +66,7 @@ public class MajorInfoAction {
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         int result = majorInfoDao.deleteByIds(ids);
         res.put("status", result);

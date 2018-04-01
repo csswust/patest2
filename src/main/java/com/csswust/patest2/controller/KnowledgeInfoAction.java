@@ -42,6 +42,7 @@ public class KnowledgeInfoAction extends BaseAction {
             @RequestParam(required = false, defaultValue = "true") Boolean containSum,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
+        if(knowledgeInfo==null) return null;
         Map<String, Object> res = new HashMap<>();
         Integer total = knowledgeInfoDao.selectByConditionGetCount(knowledgeInfo,
                 new BaseQuery(1, 1));
@@ -85,7 +86,7 @@ public class KnowledgeInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         int result = knowledgeInfoDao.deleteByIds(ids);
         res.put("status", result);
