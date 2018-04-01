@@ -10,7 +10,7 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
-                name: "examnotes"
+                name: "examNotes"
             },
             success: function (result) {
                 program.examNotes = result.value;
