@@ -1,71 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="renderer" content="webkit">
-<title>LExamV3.0</title>
-<link rel="shortcut icon" href="../img/favicon.ico" >
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/contents.css">
-<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-<script src="../lib/bootstrap/js/respond.min.js"></script>
-<!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LExamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/contents.css">
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
 <div class="wrap">
-	<div id="head">
-		<!-- 头部菜单 -->
-	</div>
-	<div class="container">
-		<h1 class="examName"></h1>
-		<div class="examNews row"> 
-			<marquee id="rolling-news" >
-			</marquee>
-		</div> 
-		
-		
-	<div class="examTime row">
-	
-		<span class="glyphicon glyphicon-th-list"></span>
-	得分：<span class="time stuGetScore">0</span>/<span class="time sumScore">0</span>
-	
-	&nbsp;&nbsp;&nbsp;&nbsp;
-	
-		<span class="glyphicon glyphicon-time"></span>
-	<span class="timeTip" >倒计时：
+    <div id="head">
+        <!-- 头部菜单 -->
+    </div>
+    <div class="container">
+        <h1 class="examName"></h1>
+        <div class="examNews row">
+            <marquee id="rolling-news">
+            </marquee>
+        </div>
+
+
+        <div class="examTime row">
+
+            <span class="glyphicon glyphicon-th-list"></span>
+            得分：<span class="time stuGetScore">0</span>/<span class="time sumScore">0</span>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <span class="glyphicon glyphicon-time"></span>
+            <span class="timeTip">倒计时：
 			<span class="overTime day"></span>天
 			<span class="overTime hours"></span>时
 		 <span class="overTime minute"></span>分
 		 <span class="overTime second"></span>秒</span>
-	</div>
-	
-	<div class="examDescription row"></div>
-	
-	<div class="row" style="margin-top:40px;" id="listInfo">
-	</div>
-	</div>
-	
+        </div>
+
+        <div class="examDescription row"></div>
+
+        <div class="row" style="margin-top:40px;" id="listInfo">
+        </div>
+    </div>
 </div>
-	
 </body>
-<script type="text/javascript">
-	//seajs的简单配置
-	seajs.config({
-		base : '../lib/',
-		alias : {
-			jquery : 'jQuery/jquery.min.js',
-			bootstrap : 'bootstrap/js/bootstrap.min.js',
-			artTemplate : 'artTemplate/artTemplate.js',
-		}
-	});
-	//加载入口模块
-	seajs.use('jquery');
-	seajs.use("../js/contents.js");
-</script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>-->
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+<!--<script type="text/javascript" src="../lib/ueditor/ueditor.config.js"></script>-->
+<!--<script type="text/javascript" src="../lib/ueditor/ueditor.all.min.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/nav.js"></script>
+<script type="text/javascript" src="../js/contents.js"></script>
 </html>

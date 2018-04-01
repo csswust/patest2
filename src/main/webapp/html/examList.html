@@ -9,9 +9,7 @@
     <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
-    <!--<link rel="stylesheet" href="../lib/bootstrap/css/fakeLoader.css">-->
     <link rel="stylesheet" href="../css/common.css">
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
     <!--[if lt IE 9]>
     <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
     <script src="../lib/bootstrap/js/respond.min.js"></script>
@@ -63,19 +61,19 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            paginator: 'jQuery/jqPaginator.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js',
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/examList.js");
-</script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+<!--<script type="text/javascript" src="../lib/ueditor/ueditor.config.js"></script>-->
+<!--<script type="text/javascript" src="../lib/ueditor/ueditor.all.min.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/examList.js"></script>
 </html>

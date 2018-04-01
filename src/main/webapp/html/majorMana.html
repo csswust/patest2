@@ -9,7 +9,6 @@
     <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/common.css">
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
     <!--[if lt IE 9]>
     <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
     <script src="../lib/bootstrap/js/respond.min.js"></script>
@@ -110,22 +109,11 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            jCookie: 'jQuery/jquery.cookie.js',
-            paginator: 'jQuery/jqPaginator.js',
-            jSession: 'jQuery/jquerySession.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js',
-            datetimepicker: 'bootstrap/js/bootstrap-datetimepicker.min.js',
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/majorMana.js");
-</script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/majorMana.js"></script>
 </html>

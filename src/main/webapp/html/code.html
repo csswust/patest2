@@ -1,122 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="renderer" content="webkit">
-<title>LExamV3.0</title>
-<link rel="shortcut icon" href="../img/favicon.ico" >
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../lib/codemirror/codemirror.css">
-<link rel="stylesheet" href="../lib/codemirror/3024-night.css">
-<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
- <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LExamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../lib/codemirror/codemirror.css">
+    <link rel="stylesheet" href="../lib/codemirror/3024-night.css">
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
 <div class="wrap">
 
-<div id="head">
-		<!-- 头部菜单 -->
-</div>
-<div class="container-fuiled">
-	 <div class="tip">
-			 		<div class="alert alert-warning" style="margin-top:10px;" id="alert-info">
-  			 			 <a href="#" class="close" data-dismiss="alert">
-     			 			&times;
-   			  				</a>
-   			  			<strong>小提示：出现问题刷新试试</strong>
-					</div> 
-	</div> 
-	<div class="row">
-	<div class="col-md-5 quesDetail">
-		<div style="float:right;margin:30px 30px;cursor:pointer;">
-			<span class="glyphicon glyphicon-hand-left"></span>&nbsp;<a id="problemLeft">上一题</a>
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<a id="problemRight">下一题</a>&nbsp;<span class="glyphicon glyphicon-hand-right"></span>
-		</div>
-	<h2 class="quesName"></h2>
-	<span class="glyphicon glyphicon-time time"></span>
-	&nbsp;
-	<span class="glyphicon glyphicon-th memory"></span>
-	<div class="row quesInfo">
-	<div class="media">
-	  <div class="media-body">
-	  	<div class="titleDescription" id="titleDescription"></div>
-	    <h4 class="media-heading">输入</h4>
-	  	<div class="well inputTip"></div>
-	  	 <h4 class="media-heading">输出</h4>
-	  	<div class="well outputTip"></div>
-	  	 <h4 class="media-heading">输入样例</h4>
-	  	<pre class="well inputSample"></pre>
-	  	 <h4 class="media-heading">输出样例</h4>
-	  	<pre class="well outputSample"></pre>
-	  	</div>
-	  </div>
-	</div>
-	</div>
-	<div class="col-md-7">
-	    <div class="select row" style="background-color:#3D444C;">
-	    <div class="col-md-2">
-	    <select class="form-control selectJudId" style="background: #516169;border-color: #0b0e10;color: #fff;margin:10px 0;">
-				<!--<option value="1">GCC</option>
-				<option value="2">G++</option>
-				<option value="3">JAVA</option>-->
-			</select>
-	    </div>	
-	    <div class="col-md-2">
-	    	
-	    	 <button type="button" id="submit" class="btn btn-info" style="width:150px;margin:10px 0;" data-loading-text="运行中" autocomplete="off">
-  				<span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;提交运行
-			</button>
-	    </div>
-	    <div class="col-md-2 ">
-	         <p class="label submitResult" style="display:none;">wait...</p>
-	    </div>
-		</div>
-		<textarea id="code"></textarea>
-		<div class="col-md-3" style="margin:10px 0;padding-left:0px;">
-	  
-	    </div>
-	</div>
-	</div>
-</div>
+    <div id="head">
+        <!-- 头部菜单 -->
+    </div>
+    <div class="container-fuiled">
+        <div class="tip">
+            <div class="alert alert-warning" style="margin-top:10px;" id="alert-info">
+                <a href="#" class="close" data-dismiss="alert">
+                    &times;
+                </a>
+                <strong>小提示：出现问题刷新试试</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 quesDetail">
+                <div style="float:right;margin:30px 30px;cursor:pointer;">
+                    <span class="glyphicon glyphicon-hand-left"></span>&nbsp;<a id="problemLeft">上一题</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a id="problemRight">下一题</a>&nbsp;<span class="glyphicon glyphicon-hand-right"></span>
+                </div>
+                <h2 class="quesName"></h2>
+                <span class="glyphicon glyphicon-time time"></span>
+                &nbsp;
+                <span class="glyphicon glyphicon-th memory"></span>
+                <div class="row quesInfo">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="titleDescription" id="titleDescription"></div>
+                            <h4 class="media-heading">输入</h4>
+                            <div class="well inputTip"></div>
+                            <h4 class="media-heading">输出</h4>
+                            <div class="well outputTip"></div>
+                            <h4 class="media-heading">输入样例</h4>
+                            <pre class="well inputSample"></pre>
+                            <h4 class="media-heading">输出样例</h4>
+                            <pre class="well outputSample"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="select row" style="background-color:#3D444C;">
+                    <div class="col-md-2">
+                        <select class="form-control selectJudId"
+                                style="background: #516169;border-color: #0b0e10;color: #fff;margin:10px 0;">
+                            <!--<option value="1">GCC</option>
+                            <option value="2">G++</option>
+                            <option value="3">JAVA</option>-->
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+
+                        <button type="button" id="submit" class="btn btn-info" style="width:150px;margin:10px 0;"
+                                data-loading-text="运行中" autocomplete="off">
+                            <span class="glyphicon glyphicon-check"></span>&nbsp;&nbsp;提交运行
+                        </button>
+                    </div>
+                    <div class="col-md-2 ">
+                        <p class="label submitResult" style="display:none;">wait...</p>
+                    </div>
+                </div>
+                <textarea id="code"></textarea>
+                <div class="col-md-3" style="margin:10px 0;padding-left:0px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade " id="settingData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog " role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalDataLabel"><!--index/faqs  --></h4>
-      </div>
-      <div class="modal-body">
-	      <div id="codeData">
-	      </div>
-      </div>
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalDataLabel"><!--index/faqs  --></h4>
+            </div>
+            <div class="modal-body">
+                <div id="codeData">
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 </body>
-<script type="text/javascript">
-	//seajs的简单配置
-	seajs.config({
-		base : '../lib/',
-		alias : {
-			jquery : 'jQuery/jquery.min.js',
-			bootstrap : 'bootstrap/js/bootstrap.min.js',
-			codemirror : 'codemirror/codemirror.js',
-			clike :'codemirror/clike.js'
-		}
-	});
-	//加载入口模块
-	/*seajs.use('jquery');
-	seajs.use('codemirror');
-	seajs.use('clike');*/
-	seajs.use("../js/code.js");
-</script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>-->
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+<!--<script type="text/javascript" src="../lib/ueditor/ueditor.config.js"></script>-->
+<!--<script type="text/javascript" src="../lib/ueditor/ueditor.all.min.js"></script>-->
+<script type="text/javascript" src="../lib/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="../lib/codemirror/clike.js"></script>
+
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/nav.js"></script>
+<script type="text/javascript" src="../js/code.js"></script>
 </html>
