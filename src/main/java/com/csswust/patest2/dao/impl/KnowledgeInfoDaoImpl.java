@@ -16,14 +16,14 @@ public class KnowledgeInfoDaoImpl extends CommonMapper<KnowledgeInfo, BaseQuery>
     }
 
     @Override
-    public void insertInit(KnowledgeInfo record) {
+    public void insertInit(KnowledgeInfo record, Date date) {
         record.setKnowId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(KnowledgeInfo record) {
-        record.setModifyTime(new Date());
+    public void updatInit(KnowledgeInfo record, Date date) {
+        record.setModifyTime(date);
     }
 }

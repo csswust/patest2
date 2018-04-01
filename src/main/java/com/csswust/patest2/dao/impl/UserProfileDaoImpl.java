@@ -18,15 +18,15 @@ public class UserProfileDaoImpl extends CommonMapper<UserProfile, BaseQuery> imp
     }
 
     @Override
-    public void insertInit(UserProfile record) {
+    public void insertInit(UserProfile record, Date date) {
         record.setUseProId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(UserProfile record) {
-        record.setModifyTime(new Date());
+    public void updatInit(UserProfile record, Date date) {
+        record.setModifyTime(date);
     }
 
     @Override

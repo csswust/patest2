@@ -22,15 +22,15 @@ public class ExamPaperDaoImpl extends CommonMapper<ExamPaper, BaseQuery> impleme
     }
 
     @Override
-    public void insertInit(ExamPaper record) {
+    public void insertInit(ExamPaper record, Date date) {
         record.setExaPapId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(ExamPaper record) {
-        record.setModifyTime(new Date());
+    public void updatInit(ExamPaper record, Date date) {
+        record.setModifyTime(date);
     }
 
     @Override

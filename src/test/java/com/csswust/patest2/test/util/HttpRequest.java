@@ -1,4 +1,4 @@
-package com.csswust.patest2.test.judgeTest;
+package com.csswust.patest2.test.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

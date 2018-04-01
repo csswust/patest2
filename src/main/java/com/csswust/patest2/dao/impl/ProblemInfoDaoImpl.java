@@ -16,14 +16,14 @@ public class ProblemInfoDaoImpl extends CommonMapper<ProblemInfo, BaseQuery> imp
     }
 
     @Override
-    public void insertInit(ProblemInfo record) {
+    public void insertInit(ProblemInfo record, Date date) {
         record.setProbId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(ProblemInfo record) {
-        record.setModifyTime(new Date());
+    public void updatInit(ProblemInfo record, Date date) {
+        record.setModifyTime(date);
     }
 }

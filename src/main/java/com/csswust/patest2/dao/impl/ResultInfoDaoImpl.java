@@ -16,14 +16,14 @@ public class ResultInfoDaoImpl extends CommonMapper<ResultInfo, BaseQuery> imple
     }
 
     @Override
-    public void insertInit(ResultInfo record) {
+    public void insertInit(ResultInfo record, Date date) {
         record.setResuId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(ResultInfo record) {
-        record.setModifyTime(new Date());
+    public void updatInit(ResultInfo record, Date date) {
+        record.setModifyTime(date);
     }
 }

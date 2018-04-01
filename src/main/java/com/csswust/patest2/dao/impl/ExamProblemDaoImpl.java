@@ -20,15 +20,15 @@ public class ExamProblemDaoImpl extends CommonMapper<ExamProblem, BaseQuery> imp
     }
 
     @Override
-    public void insertInit(ExamProblem record) {
+    public void insertInit(ExamProblem record, Date date) {
         record.setExaProId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(ExamProblem record) {
-        record.setModifyTime(new Date());
+    public void updatInit(ExamProblem record, Date date) {
+        record.setModifyTime(date);
     }
 
     @Override

@@ -64,15 +64,15 @@ public class DaoImplGenerator {
                 "    }\n" +
                 "\n" +
                 "    @Override\n" +
-                "    public void insertInit(%s record) {\n" +
+                "    public void insertInit(%s record, Date date) {\n" +
                 "        record.set%s(null);\n" +
-                "        record.setCreateTime(new Date());\n" +
-                "        record.setModifyTime(new Date());\n" +
+                "        record.setCreateTime(date);\n" +
+                "        record.setModifyTime(date);\n" +
                 "    }\n" +
                 "\n" +
                 "    @Override\n" +
-                "    public void updatInit(%s record) {\n" +
-                "        record.setModifyTime(new Date());\n" +
+                "    public void updatInit(%s record, Date date) {\n" +
+                "        record.setModifyTime(date);\n" +
                 "    }\n" +
                 "}\n", calssName, calssName, calssName, calssName, calssName, daPrimaryName, calssName);
         printWriter.flush();

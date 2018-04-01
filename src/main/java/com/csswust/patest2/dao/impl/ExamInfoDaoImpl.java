@@ -16,14 +16,14 @@ public class ExamInfoDaoImpl extends CommonMapper<ExamInfo, BaseQuery> implement
     }
 
     @Override
-    public void insertInit(ExamInfo record) {
+    public void insertInit(ExamInfo record, Date date) {
         record.setExamId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(ExamInfo record) {
-        record.setModifyTime(new Date());
+    public void updatInit(ExamInfo record, Date date) {
+        record.setModifyTime(date);
     }
 }

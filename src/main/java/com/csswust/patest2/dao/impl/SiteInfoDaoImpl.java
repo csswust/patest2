@@ -18,15 +18,15 @@ public class SiteInfoDaoImpl extends CommonMapper<SiteInfo, BaseQuery> implement
     }
 
     @Override
-    public void insertInit(SiteInfo record) {
+    public void insertInit(SiteInfo record, Date date) {
         record.setSiteId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(SiteInfo record) {
-        record.setModifyTime(new Date());
+    public void updatInit(SiteInfo record, Date date) {
+        record.setModifyTime(date);
     }
 
     @Override

@@ -27,15 +27,15 @@ public class UserInfoDaoImpl extends CommonMapper<UserInfo, BaseQuery> implement
     }
 
     @Override
-    public void insertInit(UserInfo record) {
+    public void insertInit(UserInfo record, Date date) {
         record.setUserId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(UserInfo record) {
-        record.setModifyTime(new Date());
+    public void updatInit(UserInfo record, Date date) {
+        record.setModifyTime(date);
     }
 
     @Override

@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDaoSupport implements BaseDao<T, Q> {
     private static Logger log = LoggerFactory.getLogger(CommonMapper.class);
@@ -22,9 +19,9 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
 
     public abstract String getPackage();
 
-    public abstract void insertInit(T record);
+    public abstract void insertInit(T record, Date date);
 
-    public abstract void updatInit(T record);
+    public abstract void updatInit(T record, Date date);
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -70,7 +67,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        insertInit(record);
+        insertInit(record, new Date());
         try {
             return getSqlSession().insert(getPackage() + "insert", record);
         } catch (Exception e) {
@@ -84,7 +81,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        insertInit(record);
+        insertInit(record, new Date());
         try {
             return getSqlSession().insert(getPackage() + "insertSelective", record);
         } catch (Exception e) {
@@ -111,7 +108,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        updatInit(record);
+        updatInit(record, new Date());
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKeySelective", record);
         } catch (Exception e) {
@@ -125,7 +122,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        updatInit(record);
+        updatInit(record, new Date());
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKeyWithBLOBs", record);
         } catch (Exception e) {
@@ -139,7 +136,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        updatInit(record);
+        updatInit(record, new Date());
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKey", record);
         } catch (Exception e) {

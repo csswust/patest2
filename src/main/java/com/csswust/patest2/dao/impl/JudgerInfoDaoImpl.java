@@ -16,14 +16,14 @@ public class JudgerInfoDaoImpl extends CommonMapper<JudgerInfo, BaseQuery> imple
     }
 
     @Override
-    public void insertInit(JudgerInfo record) {
+    public void insertInit(JudgerInfo record, Date date) {
         record.setJudId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(JudgerInfo record) {
-        record.setModifyTime(new Date());
+    public void updatInit(JudgerInfo record, Date date) {
+        record.setModifyTime(date);
     }
 }

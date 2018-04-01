@@ -16,14 +16,14 @@ public class ExamNoticeDaoImpl extends CommonMapper<ExamNotice, BaseQuery> imple
     }
 
     @Override
-    public void insertInit(ExamNotice record) {
+    public void insertInit(ExamNotice record, Date date) {
         record.setExaNotId(null);
-        record.setCreateTime(new Date());
-        record.setModifyTime(new Date());
+        record.setCreateTime(date);
+        record.setModifyTime(date);
     }
 
     @Override
-    public void updatInit(ExamNotice record) {
-        record.setModifyTime(new Date());
+    public void updatInit(ExamNotice record, Date date) {
+        record.setModifyTime(date);
     }
 }
