@@ -369,9 +369,14 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 paperProbelmDelete += paperProblemDao.deleteByPrimaryKey(item.getPapProId());
             }
         }
-        // 添加新抽的题目
-        int sum = 0;
-        for (i = 0; i < pPList.size(); i++) {
+        // 添加新抽的题目,改为批量插入，优化效率
+        int sum = paperProblemDao.insertBatch(pPList);
+        if (sum != pPList.size()) {
+            drawProblemRe.setDesc("插入失败");
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return drawProblemRe;
+        }
+        /*for (i = 0; i < pPList.size(); i++) {
             int temp = paperProblemDao.insertSelective(pPList.get(i));
             if (temp != 1) {
                 drawProblemRe.setStatus(-5);
@@ -380,7 +385,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 return drawProblemRe;
             }
             sum = sum + temp;
-        }
+        }*/
         drawProblemRe.setStatus(sum);
         return drawProblemRe;
     }

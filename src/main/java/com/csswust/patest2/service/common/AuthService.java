@@ -2,6 +2,7 @@ package com.csswust.patest2.service.common;
 
 import com.csswust.patest2.common.UserRole;
 import com.csswust.patest2.common.cache.Cache;
+import com.csswust.patest2.common.cache.SiteCache;
 import com.csswust.patest2.common.cache.impl.VisitPathCache;
 import com.csswust.patest2.entity.VisitPath;
 import org.apache.commons.lang3.StringUtils;
@@ -12,13 +13,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AuthService {
-    private static Cache<String, VisitPath> cache = VisitPathCache.getInstance();
-
     public boolean isAuth(String urlPath, String name) {
         if (StringUtils.isBlank(urlPath) || StringUtils.isBlank(name)) {
             return false;
         }
-        VisitPath visitPath = cache.get(urlPath);
+        VisitPath visitPath = SiteCache.visitPathMap.get(name);
         UserRole userRole = UserRole.getByName(name);
         if (visitPath == null || userRole == null) {
             return false;

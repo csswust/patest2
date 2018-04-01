@@ -27,4 +27,6 @@ public interface PaperProblemDao {
     int selectByConditionGetCount(PaperProblem record, BaseQuery query);
 
     int deleteByExamId(Integer examId);
+
+    int insertBatch(List<PaperProblem> recordList);
 }

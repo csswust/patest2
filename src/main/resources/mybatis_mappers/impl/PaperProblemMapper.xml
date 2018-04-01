@@ -28,7 +28,7 @@
         </if>
         <if test="record.order != null">
             AND
-            order = #{record.order}
+            `order` = #{record.order}
         </if>
         <if test="record.lastSubmitTime != null">
             AND
@@ -94,7 +94,7 @@
         </if>
         <if test="record.order != null">
             AND
-            order = #{record.order}
+            `order` = #{record.order}
         </if>
         <if test="record.lastSubmitTime != null">
             AND
@@ -151,7 +151,7 @@
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into paper_problem
-        (exam_id, exam_paper_id, exam_param_id, problem_id, order, last_submit_time, submit_id, is_aced, used_time,
+        (exam_id, exam_paper_id, exam_param_id, problem_id, `order`, last_submit_time, submit_id, is_aced, used_time,
         submit_count, score, create_time, modify_time) values
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.examId}, #{item.examPaperId}, #{item.examParamId}, #{item.problemId}, #{item.order},
