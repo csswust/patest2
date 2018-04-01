@@ -68,7 +68,7 @@ public class AccessFilter implements Filter {
                 }
             } else {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-                httpServletResponse.sendRedirect("/patest2/system/authError");
+                httpServletResponse.sendRedirect("/patest/system/authError");
             }
         }
         long endTime = System.currentTimeMillis();

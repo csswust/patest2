@@ -264,7 +264,7 @@
         </profile>
     </profiles>
     <build>
-        <finalName>patest2</finalName>
+        <finalName>patest</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

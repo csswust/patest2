@@ -9,7 +9,7 @@ import java.io.IOException;
 public class HomePageFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.sendRedirect("/patest2/html/login.html");
+        httpServletResponse.sendRedirect("/patest/html/login.html");
     }
 
     public void destroy() {
