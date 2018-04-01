@@ -142,11 +142,21 @@
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from paper_problem
         where pap_pro_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
+        </foreach>
+    </select>
+    <select id="insertBatch" parameterType="java.util.Map">
+        insert into paper_problem
+        (exam_id, exam_paper_id, exam_param_id, problem_id, order, last_submit_time, submit_id, is_aced, used_time,
+        submit_count, score, create_time, modify_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.examId}, #{item.examPaperId}, #{item.examParamId}, #{item.problemId}, #{item.order},
+            #{item.lastSubmitTime}, #{item.submitId}, #{item.isAced}, #{item.usedTime}, #{item.submitCount},
+            #{item.score}, #{item.createTime}, #{item.modifyTime})
         </foreach>
     </select>
 </mapper>

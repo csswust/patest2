@@ -206,4 +206,19 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             return list;
         }
     }
+
+    @Override
+    public int insertBatch(List<T> recordList) {
+        if (recordList == null || recordList.size() == 0) return 0;
+        Date date = new Date();
+        for (T t : recordList) insertInit(t, date);
+        try {
+            Map<String, Object> param = new HashMap<>();
+            param.put("list", recordList);
+            return getSqlSession().insert(getPackage() + "insertBatch", param);
+        } catch (Exception e) {
+            log.error("CommonMapper.insertBatch({}) error: {}", recordList, e);
+            return 0;
+        }
+    }
 }

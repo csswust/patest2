@@ -175,7 +175,7 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
             result.setDesc("问题id不能为空");
             return result;
         }
-        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH,SiteKey.JUDGE_STANDARD_DATA_PATH_DE);
+        String datadir = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH, SiteKey.JUDGE_STANDARD_DATA_PATH_DE);
         File tempFile = new File(datadir + File.separator + probId);
         if (!tempFile.exists()) {
             result.setStatus(-2);

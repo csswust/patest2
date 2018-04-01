@@ -254,9 +254,36 @@ public class MapperImplGenerator {
                 "            #{item}\n" +
                 "        </foreach>\n" +
                 "    </select>\n", model.getTableName(), model.getIdColumn());
+        printWriter.printf("    <select id=\"insertBatch\" parameterType=\"java.util.Map\">\n" +
+                "        insert into %s\n" +
+                "        (%s) values\n" +
+                "        <foreach collection=\"list\" item=\"item\" index=\"index\" separator=\",\">\n" +
+                "            (%s)\n" +
+                "        </foreach>\n" +
+                "    </select>\n",model.getTableName(),getFileStr(model),getValueStr(model));
         printWriter.printf("</mapper>");
         printWriter.flush();
         printWriter.close();
+    }
+
+    public static String getFileStr(Model model) {
+        String str = "";
+        List<Field> fieldList = model.getFieldList();
+        for (int i = 0; i < fieldList.size(); i++) {
+            if (i != 0) str += ", ";
+            str += fieldList.get(i).getColumn();
+        }
+        return str;
+    }
+
+    public static String getValueStr(Model model) {
+        String str = "";
+        List<Field> fieldList = model.getFieldList();
+        for (int i = 0; i < fieldList.size(); i++) {
+            if (i != 0) str += ", ";
+            str += "#{item." + fieldList.get(i).getProperty() + "}";
+        }
+        return str;
     }
 
     public static void printfField(PrintWriter printWriter, String cc, String pp) {

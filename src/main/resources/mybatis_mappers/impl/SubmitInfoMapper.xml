@@ -168,13 +168,23 @@
     </delete>
     <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
         from submit_info
         where subm_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
+        </foreach>
+    </select>
+    <select id="insertBatch" parameterType="java.util.Map">
+        insert into submit_info
+        (user_id, exam_id, exam_paper_id, exam_param_id, paper_problem_id, problem_id, judger_id, ip, is_teacher_test,
+        status, used_time, used_memory, create_time, modify_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId}, #{item.examId}, #{item.examPaperId}, #{item.examParamId}, #{item.paperProblemId},
+            #{item.problemId}, #{item.judgerId}, #{item.ip}, #{item.isTeacherTest}, #{item.status}, #{item.usedTime},
+            #{item.usedMemory}, #{item.createTime}, #{item.modifyTime})
         </foreach>
     </select>
 </mapper>

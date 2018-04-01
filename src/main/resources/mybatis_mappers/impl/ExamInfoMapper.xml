@@ -104,13 +104,21 @@
     </delete>
     <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
         from exam_info
         where exam_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
+        </foreach>
+    </select>
+    <select id="insertBatch" parameterType="java.util.Map">
+        insert into exam_info
+        (title, start_time, end_time, allow_ip, allow_judger_ids, create_time, modify_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.title}, #{item.startTime}, #{item.endTime}, #{item.allowIp}, #{item.allowJudgerIds},
+            #{item.createTime}, #{item.modifyTime})
         </foreach>
     </select>
 </mapper>

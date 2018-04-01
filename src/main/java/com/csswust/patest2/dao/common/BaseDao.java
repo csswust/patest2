@@ -31,4 +31,6 @@ public interface BaseDao<T, Q> {
     List<T> selectByIds(String ids);
 
     List<T> selectByIdsList(List<Integer> idsList);
+
+    int insertBatch(List<T> recordList);
 }

@@ -102,11 +102,19 @@
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from user_profile
         where use_pro_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
+        </foreach>
+    </select>
+    <select id="insertBatch" parameterType="java.util.Map">
+        insert into user_profile
+        (real_name, is_student, class_name, student_number, entrance_year, major_id, create_time, modify_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.realName}, #{item.isStudent}, #{item.className}, #{item.studentNumber}, #{item.entranceYear},
+            #{item.majorId}, #{item.createTime}, #{item.modifyTime})
         </foreach>
     </select>
 </mapper>

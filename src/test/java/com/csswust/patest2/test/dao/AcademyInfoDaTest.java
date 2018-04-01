@@ -25,4 +25,17 @@ public class AcademyInfoDaTest extends JunitBaseServiceDaoTest {
         List<AcademyInfo> result = baseDao.selectByIdsList(list);
         System.out.println(JSON.toJSONString(result));
     }
+
+    @Test
+    public void insertBatch() {
+        List<AcademyInfo> academyInfoList = new ArrayList<>();
+        AcademyInfo academyInfo1 = new AcademyInfo();
+        academyInfo1.setAcademyName("123");
+        AcademyInfo academyInfo2 = new AcademyInfo();
+        academyInfo2.setAcademyName("456");
+        academyInfoList.add(academyInfo1);
+        academyInfoList.add(academyInfo2);
+        int result = academyInfoDao.insertBatch(academyInfoList);
+        System.out.println(result);
+    }
 }

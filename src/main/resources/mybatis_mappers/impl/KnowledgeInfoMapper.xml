@@ -70,11 +70,18 @@
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from knowledge_info
         where know_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}
+        </foreach>
+    </select>
+    <select id="insertBatch" parameterType="java.util.Map">
+        insert into knowledge_info
+        (know_name, course_id, create_time, modify_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.knowName}, #{item.courseId}, #{item.createTime}, #{item.modifyTime})
         </foreach>
     </select>
 </mapper>

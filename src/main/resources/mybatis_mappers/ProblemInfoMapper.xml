@@ -1,299 +1,301 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csswust.patest2.dao.ProblemInfoDao" >
-    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.ProblemInfo" >
-        <id column="prob_id" property="probId" jdbcType="INTEGER" />
-        <result column="title" property="title" jdbcType="VARCHAR" />
-        <result column="level_id" property="levelId" jdbcType="INTEGER" />
-        <result column="memory_limit" property="memoryLimit" jdbcType="INTEGER" />
-        <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
-        <result column="code_limit" property="codeLimit" jdbcType="INTEGER" />
-        <result column="know_id" property="knowId" jdbcType="INTEGER" />
-        <result column="testdata_num" property="testdataNum" jdbcType="INTEGER" />
-        <result column="score_ratio" property="scoreRatio" jdbcType="VARCHAR" />
-        <result column="judge_model" property="judgeModel" jdbcType="INTEGER" />
-        <result column="author" property="author" jdbcType="VARCHAR" />
-        <result column="submit_num" property="submitNum" jdbcType="INTEGER" />
-        <result column="accepted_num" property="acceptedNum" jdbcType="INTEGER" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+<mapper namespace="com.csswust.patest2.dao.ProblemInfoDao">
+    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.ProblemInfo">
+        <id column="prob_id" property="probId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="level_id" property="levelId" jdbcType="INTEGER"/>
+        <result column="memory_limit" property="memoryLimit" jdbcType="INTEGER"/>
+        <result column="time_limit" property="timeLimit" jdbcType="INTEGER"/>
+        <result column="code_limit" property="codeLimit" jdbcType="INTEGER"/>
+        <result column="know_id" property="knowId" jdbcType="INTEGER"/>
+        <result column="testdata_num" property="testdataNum" jdbcType="INTEGER"/>
+        <result column="score_ratio" property="scoreRatio" jdbcType="VARCHAR"/>
+        <result column="judge_model" property="judgeModel" jdbcType="INTEGER"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="submit_num" property="submitNum" jdbcType="INTEGER"/>
+        <result column="accepted_num" property="acceptedNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="com.csswust.patest2.entity.ProblemInfo" extends="BaseResultMap" >
-        <result column="description" property="description" jdbcType="LONGVARCHAR" />
-        <result column="input_tip" property="inputTip" jdbcType="LONGVARCHAR" />
-        <result column="output_tip" property="outputTip" jdbcType="LONGVARCHAR" />
-        <result column="input_sample" property="inputSample" jdbcType="LONGVARCHAR" />
-        <result column="output_sample" property="outputSample" jdbcType="LONGVARCHAR" />
-        <result column="standard_source" property="standardSource" jdbcType="LONGVARCHAR" />
+    <resultMap id="ResultMapWithBLOBs" type="com.csswust.patest2.entity.ProblemInfo" extends="BaseResultMap">
+        <result column="description" property="description" jdbcType="LONGVARCHAR"/>
+        <result column="input_tip" property="inputTip" jdbcType="LONGVARCHAR"/>
+        <result column="output_tip" property="outputTip" jdbcType="LONGVARCHAR"/>
+        <result column="input_sample" property="inputSample" jdbcType="LONGVARCHAR"/>
+        <result column="output_sample" property="outputSample" jdbcType="LONGVARCHAR"/>
+        <result column="standard_source" property="standardSource" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List" >
-        prob_id, title, level_id, memory_limit, time_limit, code_limit, know_id, testdata_num, 
+    <sql id="Base_Column_List">
+        prob_id, title, level_id, memory_limit, time_limit, code_limit, know_id, testdata_num,
         score_ratio, judge_model, author, submit_num, accepted_num, create_time, modify_time
     </sql>
-    <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
         description, input_tip, output_tip, input_sample, output_sample, standard_source
     </sql>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-        select 
-        <include refid="Base_Column_List" />
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         from problem_info
         where prob_id = #{probId,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from problem_info
         where prob_id = #{probId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.csswust.patest2.entity.ProblemInfo" useGeneratedKeys="true" keyProperty="probId" >
-        insert into problem_info (title, level_id, memory_limit, 
-            time_limit, code_limit, know_id, 
-            testdata_num, score_ratio, judge_model, 
-            author, submit_num, accepted_num, 
-            create_time, modify_time, description, 
-            input_tip, output_tip, input_sample, 
-            output_sample, standard_source)
-        values (#{title,jdbcType=VARCHAR}, #{levelId,jdbcType=INTEGER}, #{memoryLimit,jdbcType=INTEGER}, 
-            #{timeLimit,jdbcType=INTEGER}, #{codeLimit,jdbcType=INTEGER}, #{knowId,jdbcType=INTEGER}, 
-            #{testdataNum,jdbcType=INTEGER}, #{scoreRatio,jdbcType=VARCHAR}, #{judgeModel,jdbcType=INTEGER}, 
-            #{author,jdbcType=VARCHAR}, #{submitNum,jdbcType=INTEGER}, #{acceptedNum,jdbcType=INTEGER}, 
-            #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR}, 
-            #{inputTip,jdbcType=LONGVARCHAR}, #{outputTip,jdbcType=LONGVARCHAR}, #{inputSample,jdbcType=LONGVARCHAR}, 
-            #{outputSample,jdbcType=LONGVARCHAR}, #{standardSource,jdbcType=LONGVARCHAR})
+    <insert id="insert" parameterType="com.csswust.patest2.entity.ProblemInfo" useGeneratedKeys="true"
+            keyProperty="probId">
+        insert into problem_info (title, level_id, memory_limit,
+        time_limit, code_limit, know_id,
+        testdata_num, score_ratio, judge_model,
+        author, submit_num, accepted_num,
+        create_time, modify_time, description,
+        input_tip, output_tip, input_sample,
+        output_sample, standard_source)
+        values (#{title,jdbcType=VARCHAR}, #{levelId,jdbcType=INTEGER}, #{memoryLimit,jdbcType=INTEGER},
+        #{timeLimit,jdbcType=INTEGER}, #{codeLimit,jdbcType=INTEGER}, #{knowId,jdbcType=INTEGER},
+        #{testdataNum,jdbcType=INTEGER}, #{scoreRatio,jdbcType=VARCHAR}, #{judgeModel,jdbcType=INTEGER},
+        #{author,jdbcType=VARCHAR}, #{submitNum,jdbcType=INTEGER}, #{acceptedNum,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR},
+        #{inputTip,jdbcType=LONGVARCHAR}, #{outputTip,jdbcType=LONGVARCHAR}, #{inputSample,jdbcType=LONGVARCHAR},
+        #{outputSample,jdbcType=LONGVARCHAR}, #{standardSource,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.ProblemInfo" useGeneratedKeys="true" keyProperty="probId" >
+    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.ProblemInfo" useGeneratedKeys="true"
+            keyProperty="probId">
         insert into problem_info
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="title != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
                 title,
             </if>
-            <if test="levelId != null" >
+            <if test="levelId != null">
                 level_id,
             </if>
-            <if test="memoryLimit != null" >
+            <if test="memoryLimit != null">
                 memory_limit,
             </if>
-            <if test="timeLimit != null" >
+            <if test="timeLimit != null">
                 time_limit,
             </if>
-            <if test="codeLimit != null" >
+            <if test="codeLimit != null">
                 code_limit,
             </if>
-            <if test="knowId != null" >
+            <if test="knowId != null">
                 know_id,
             </if>
-            <if test="testdataNum != null" >
+            <if test="testdataNum != null">
                 testdata_num,
             </if>
-            <if test="scoreRatio != null" >
+            <if test="scoreRatio != null">
                 score_ratio,
             </if>
-            <if test="judgeModel != null" >
+            <if test="judgeModel != null">
                 judge_model,
             </if>
-            <if test="author != null" >
+            <if test="author != null">
                 author,
             </if>
-            <if test="submitNum != null" >
+            <if test="submitNum != null">
                 submit_num,
             </if>
-            <if test="acceptedNum != null" >
+            <if test="acceptedNum != null">
                 accepted_num,
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time,
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time,
             </if>
-            <if test="description != null" >
+            <if test="description != null">
                 description,
             </if>
-            <if test="inputTip != null" >
+            <if test="inputTip != null">
                 input_tip,
             </if>
-            <if test="outputTip != null" >
+            <if test="outputTip != null">
                 output_tip,
             </if>
-            <if test="inputSample != null" >
+            <if test="inputSample != null">
                 input_sample,
             </if>
-            <if test="outputSample != null" >
+            <if test="outputSample != null">
                 output_sample,
             </if>
-            <if test="standardSource != null" >
+            <if test="standardSource != null">
                 standard_source,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="title != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
                 #{title,jdbcType=VARCHAR},
             </if>
-            <if test="levelId != null" >
+            <if test="levelId != null">
                 #{levelId,jdbcType=INTEGER},
             </if>
-            <if test="memoryLimit != null" >
+            <if test="memoryLimit != null">
                 #{memoryLimit,jdbcType=INTEGER},
             </if>
-            <if test="timeLimit != null" >
+            <if test="timeLimit != null">
                 #{timeLimit,jdbcType=INTEGER},
             </if>
-            <if test="codeLimit != null" >
+            <if test="codeLimit != null">
                 #{codeLimit,jdbcType=INTEGER},
             </if>
-            <if test="knowId != null" >
+            <if test="knowId != null">
                 #{knowId,jdbcType=INTEGER},
             </if>
-            <if test="testdataNum != null" >
+            <if test="testdataNum != null">
                 #{testdataNum,jdbcType=INTEGER},
             </if>
-            <if test="scoreRatio != null" >
+            <if test="scoreRatio != null">
                 #{scoreRatio,jdbcType=VARCHAR},
             </if>
-            <if test="judgeModel != null" >
+            <if test="judgeModel != null">
                 #{judgeModel,jdbcType=INTEGER},
             </if>
-            <if test="author != null" >
+            <if test="author != null">
                 #{author,jdbcType=VARCHAR},
             </if>
-            <if test="submitNum != null" >
+            <if test="submitNum != null">
                 #{submitNum,jdbcType=INTEGER},
             </if>
-            <if test="acceptedNum != null" >
+            <if test="acceptedNum != null">
                 #{acceptedNum,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="description != null" >
+            <if test="description != null">
                 #{description,jdbcType=LONGVARCHAR},
             </if>
-            <if test="inputTip != null" >
+            <if test="inputTip != null">
                 #{inputTip,jdbcType=LONGVARCHAR},
             </if>
-            <if test="outputTip != null" >
+            <if test="outputTip != null">
                 #{outputTip,jdbcType=LONGVARCHAR},
             </if>
-            <if test="inputSample != null" >
+            <if test="inputSample != null">
                 #{inputSample,jdbcType=LONGVARCHAR},
             </if>
-            <if test="outputSample != null" >
+            <if test="outputSample != null">
                 #{outputSample,jdbcType=LONGVARCHAR},
             </if>
-            <if test="standardSource != null" >
+            <if test="standardSource != null">
                 #{standardSource,jdbcType=LONGVARCHAR},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.ProblemInfo" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.ProblemInfo">
         update problem_info
-        <set >
-            <if test="title != null" >
+        <set>
+            <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
             </if>
-            <if test="levelId != null" >
+            <if test="levelId != null">
                 level_id = #{levelId,jdbcType=INTEGER},
             </if>
-            <if test="memoryLimit != null" >
+            <if test="memoryLimit != null">
                 memory_limit = #{memoryLimit,jdbcType=INTEGER},
             </if>
-            <if test="timeLimit != null" >
+            <if test="timeLimit != null">
                 time_limit = #{timeLimit,jdbcType=INTEGER},
             </if>
-            <if test="codeLimit != null" >
+            <if test="codeLimit != null">
                 code_limit = #{codeLimit,jdbcType=INTEGER},
             </if>
-            <if test="knowId != null" >
+            <if test="knowId != null">
                 know_id = #{knowId,jdbcType=INTEGER},
             </if>
-            <if test="testdataNum != null" >
+            <if test="testdataNum != null">
                 testdata_num = #{testdataNum,jdbcType=INTEGER},
             </if>
-            <if test="scoreRatio != null" >
+            <if test="scoreRatio != null">
                 score_ratio = #{scoreRatio,jdbcType=VARCHAR},
             </if>
-            <if test="judgeModel != null" >
+            <if test="judgeModel != null">
                 judge_model = #{judgeModel,jdbcType=INTEGER},
             </if>
-            <if test="author != null" >
+            <if test="author != null">
                 author = #{author,jdbcType=VARCHAR},
             </if>
-            <if test="submitNum != null" >
+            <if test="submitNum != null">
                 submit_num = #{submitNum,jdbcType=INTEGER},
             </if>
-            <if test="acceptedNum != null" >
+            <if test="acceptedNum != null">
                 accepted_num = #{acceptedNum,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="description != null" >
+            <if test="description != null">
                 description = #{description,jdbcType=LONGVARCHAR},
             </if>
-            <if test="inputTip != null" >
+            <if test="inputTip != null">
                 input_tip = #{inputTip,jdbcType=LONGVARCHAR},
             </if>
-            <if test="outputTip != null" >
+            <if test="outputTip != null">
                 output_tip = #{outputTip,jdbcType=LONGVARCHAR},
             </if>
-            <if test="inputSample != null" >
+            <if test="inputSample != null">
                 input_sample = #{inputSample,jdbcType=LONGVARCHAR},
             </if>
-            <if test="outputSample != null" >
+            <if test="outputSample != null">
                 output_sample = #{outputSample,jdbcType=LONGVARCHAR},
             </if>
-            <if test="standardSource != null" >
+            <if test="standardSource != null">
                 standard_source = #{standardSource,jdbcType=LONGVARCHAR},
             </if>
         </set>
         where prob_id = #{probId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.ProblemInfo" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.ProblemInfo">
         update problem_info
         set title = #{title,jdbcType=VARCHAR},
-            level_id = #{levelId,jdbcType=INTEGER},
-            memory_limit = #{memoryLimit,jdbcType=INTEGER},
-            time_limit = #{timeLimit,jdbcType=INTEGER},
-            code_limit = #{codeLimit,jdbcType=INTEGER},
-            know_id = #{knowId,jdbcType=INTEGER},
-            testdata_num = #{testdataNum,jdbcType=INTEGER},
-            score_ratio = #{scoreRatio,jdbcType=VARCHAR},
-            judge_model = #{judgeModel,jdbcType=INTEGER},
-            author = #{author,jdbcType=VARCHAR},
-            submit_num = #{submitNum,jdbcType=INTEGER},
-            accepted_num = #{acceptedNum,jdbcType=INTEGER},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-            description = #{description,jdbcType=LONGVARCHAR},
-            input_tip = #{inputTip,jdbcType=LONGVARCHAR},
-            output_tip = #{outputTip,jdbcType=LONGVARCHAR},
-            input_sample = #{inputSample,jdbcType=LONGVARCHAR},
-            output_sample = #{outputSample,jdbcType=LONGVARCHAR},
-            standard_source = #{standardSource,jdbcType=LONGVARCHAR}
+        level_id = #{levelId,jdbcType=INTEGER},
+        memory_limit = #{memoryLimit,jdbcType=INTEGER},
+        time_limit = #{timeLimit,jdbcType=INTEGER},
+        code_limit = #{codeLimit,jdbcType=INTEGER},
+        know_id = #{knowId,jdbcType=INTEGER},
+        testdata_num = #{testdataNum,jdbcType=INTEGER},
+        score_ratio = #{scoreRatio,jdbcType=VARCHAR},
+        judge_model = #{judgeModel,jdbcType=INTEGER},
+        author = #{author,jdbcType=VARCHAR},
+        submit_num = #{submitNum,jdbcType=INTEGER},
+        accepted_num = #{acceptedNum,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        description = #{description,jdbcType=LONGVARCHAR},
+        input_tip = #{inputTip,jdbcType=LONGVARCHAR},
+        output_tip = #{outputTip,jdbcType=LONGVARCHAR},
+        input_sample = #{inputSample,jdbcType=LONGVARCHAR},
+        output_sample = #{outputSample,jdbcType=LONGVARCHAR},
+        standard_source = #{standardSource,jdbcType=LONGVARCHAR}
         where prob_id = #{probId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.ProblemInfo" >
+    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.ProblemInfo">
         update problem_info
         set title = #{title,jdbcType=VARCHAR},
-            level_id = #{levelId,jdbcType=INTEGER},
-            memory_limit = #{memoryLimit,jdbcType=INTEGER},
-            time_limit = #{timeLimit,jdbcType=INTEGER},
-            code_limit = #{codeLimit,jdbcType=INTEGER},
-            know_id = #{knowId,jdbcType=INTEGER},
-            testdata_num = #{testdataNum,jdbcType=INTEGER},
-            score_ratio = #{scoreRatio,jdbcType=VARCHAR},
-            judge_model = #{judgeModel,jdbcType=INTEGER},
-            author = #{author,jdbcType=VARCHAR},
-            submit_num = #{submitNum,jdbcType=INTEGER},
-            accepted_num = #{acceptedNum,jdbcType=INTEGER},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        level_id = #{levelId,jdbcType=INTEGER},
+        memory_limit = #{memoryLimit,jdbcType=INTEGER},
+        time_limit = #{timeLimit,jdbcType=INTEGER},
+        code_limit = #{codeLimit,jdbcType=INTEGER},
+        know_id = #{knowId,jdbcType=INTEGER},
+        testdata_num = #{testdataNum,jdbcType=INTEGER},
+        score_ratio = #{scoreRatio,jdbcType=VARCHAR},
+        judge_model = #{judgeModel,jdbcType=INTEGER},
+        author = #{author,jdbcType=VARCHAR},
+        submit_num = #{submitNum,jdbcType=INTEGER},
+        accepted_num = #{acceptedNum,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP}
         where prob_id = #{probId,jdbcType=INTEGER}
     </update>
 </mapper>
