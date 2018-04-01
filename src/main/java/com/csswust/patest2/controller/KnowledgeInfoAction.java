@@ -1,6 +1,5 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.CourseInfoDao;
 import com.csswust.patest2.dao.KnowledgeInfoDao;
@@ -43,7 +42,6 @@ public class KnowledgeInfoAction extends BaseAction {
             @RequestParam(required = false, defaultValue = "true") Boolean containSum,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        knowledgeInfo = paramVerificate(knowledgeInfo, new StringCallBack());
         Map<String, Object> res = new HashMap<>();
         Integer total = knowledgeInfoDao.selectByConditionGetCount(knowledgeInfo,
                 new BaseQuery(1, 1));

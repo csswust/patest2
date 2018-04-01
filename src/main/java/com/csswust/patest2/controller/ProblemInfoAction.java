@@ -1,7 +1,6 @@
 package com.csswust.patest2.controller;
 
 import com.csswust.patest2.common.APIResult;
-import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.CourseInfoDao;
 import com.csswust.patest2.dao.KnowledgeInfoDao;
@@ -91,7 +90,6 @@ public class ProblemInfoAction extends BaseAction {
             ProblemInfo problemInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        problemInfo = paramVerificate(problemInfo, new StringCallBack());
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(problemInfo.getTitle())) {

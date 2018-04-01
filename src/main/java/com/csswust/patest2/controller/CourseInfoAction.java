@@ -1,6 +1,5 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.CourseInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
@@ -29,7 +28,6 @@ public class CourseInfoAction extends BaseAction {
             CourseInfo courseInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        courseInfo = paramVerificate(courseInfo, new StringCallBack());
         Map<String, Object> res = new HashMap<>();
         List<CourseInfo> courseInfoList = courseInfoDao.selectByCondition(courseInfo,
                 new BaseQuery(page, rows));

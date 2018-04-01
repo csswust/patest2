@@ -1,6 +1,5 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.MajorInfoDao;
@@ -46,7 +45,6 @@ public class UserProfileAction extends BaseAction {
             UserProfile userProfile,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        userProfile = paramVerificate(userProfile, new StringCallBack());
         Map<String, Object> res = new HashMap<String, Object>();
         List<UserProfile> userProfileList = userProfileDao.selectByCondition(userProfile,
                 new BaseQuery(page, rows));

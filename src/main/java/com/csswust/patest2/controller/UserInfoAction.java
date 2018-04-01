@@ -1,7 +1,6 @@
 package com.csswust.patest2.controller;
 
 import com.csswust.patest2.common.APIResult;
-import com.csswust.patest2.common.paramJudge.StringCallBack;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserLoginLogDao;
@@ -104,7 +103,6 @@ public class UserInfoAction extends BaseAction {
             @RequestParam(required = false, defaultValue = "false") Boolean isContainIp,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        userInfo = paramVerificate(userInfo, new StringCallBack());
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(realName)) {
