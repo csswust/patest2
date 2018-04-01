@@ -67,18 +67,26 @@ public class SiteKey {
     // java文件名
     public final static String JUDGE_JAVA_FILE_NAME = "judge_java_file_Name";
     public final static String JUDGE_JAVA_FILE_NAME_DE = "Main.java";
+    public final static String JUDGE_JAVA_EXEC_FILE_NAME = "judge_java_exec_file_Name";
+    public final static String JUDGE_JAVA_EXEC_FILE_NAME_DE = "Main";
 
     // gcc文件名
     public final static String JUDGE_GCC_FILE_NAME = "judge_gcc_file_name";
     public final static String JUDGE_GCC_FILE_NAME_DE = "main.c";
+    public final static String JUDGE_GCC_EXEC_FILE_NAME = "judge_gcc_exec_file_name";
+    public final static String JUDGE_GCC_EXEC_FILE_NAME_DE = "main.exe";
 
     // g++文件名
     public final static String JUDGE_GPP_FILE_NAME = "judge_gpp_file_name";
     public final static String JUDGE_GPP_FILE_NAME_DE = "main.cpp";
+    public final static String JUDGE_GPP_EXEC_FILE_NAME = "judge_gpp_exec_file_name";
+    public final static String JUDGE_GPP_EXEC_FILE_NAME_DE = "main.exe";
 
     // 	python文件名
     public final static String JUDGE_PYTHON_FILE_NAME = "judge_python_file_name";
     public final static String JUDGE_PYTHON_FILE_NAME_DE = "main.py";
+    public final static String JUDGE_PYTHON_EXEC_FILE_NAME = "judge_python_exec_file_name";
+    public final static String JUDGE_PYTHON_EXEC_FILE_NAME_DE = "main.pyc";
 
     // 	是否开启登录锁
     public final static String IS_LOGIN_LOCK = "is_login_lock";

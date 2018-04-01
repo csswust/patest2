@@ -19,6 +19,6 @@ gpp_file_name='main.cpp'
 
 # python file name
 python_file_name='main.py'
-python_file_name_no_ext='main'
+python_file_name_no_ext='main.pyc'
 
 

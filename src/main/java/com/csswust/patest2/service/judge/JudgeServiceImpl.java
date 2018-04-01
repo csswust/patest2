@@ -283,7 +283,14 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
 
             // 获取源代码文件名
             fileName = getFileName(judgeTask.getLanguage());
+            String execFileName = getExecFileName(judgeTask.getLanguage());
             String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH, SiteKey.JUDGE_SCRIPT_PATH_DE);
+            String testdata_path = "";
+            if (judgeTask.getJudgeMode() == 0) {
+                testdata_path = Config.get(SiteKey.JUDGE_STANDARD_DATA_PATH, SiteKey.JUDGE_STANDARD_DATA_PATH_DE);
+            } else {
+                testdata_path = Config.get(SiteKey.JUDGE_SPECIAL_DATA_PATH, SiteKey.JUDGE_SPECIAL_DATA_PATH_DE);
+            }
             // 创建源文件并写入代码
             FileUtil.generateFile(judgeTask.getSource(), finalWorkPath, fileName);
             // 构建命令行命令
@@ -295,7 +302,8 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
                     .append(" ").append(judgerInfo.getName())
                     .append(" ").append(judgeTask.getLimitTime())
                     .append(" ").append(judgeTask.getLimitMemory())
-                    .append(" ").append(judgeTask.getJudgeMode());
+                    .append(" ").append(testdata_path)
+                    .append(" ").append(execFileName);
             // 执行
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(cmd.toString());
@@ -333,20 +341,37 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         return judgeResult;
     }
 
-    private final static String[] strings = new String[]{
+    private final static String[] fileName = new String[]{
             SiteKey.JUDGE_GCC_FILE_NAME,
             SiteKey.JUDGE_GPP_FILE_NAME,
             SiteKey.JUDGE_JAVA_FILE_NAME,
             SiteKey.JUDGE_PYTHON_FILE_NAME
     };
-    private final static String[] defaultValue = new String[]{
+    private final static String[] fileNameDe = new String[]{
             SiteKey.JUDGE_GCC_FILE_NAME_DE,
             SiteKey.JUDGE_GPP_FILE_NAME_DE,
             SiteKey.JUDGE_JAVA_FILE_NAME_DE,
             SiteKey.JUDGE_PYTHON_FILE_NAME_DE
     };
 
+    private final static String[] execFileName = new String[]{
+            SiteKey.JUDGE_GCC_EXEC_FILE_NAME,
+            SiteKey.JUDGE_GPP_EXEC_FILE_NAME,
+            SiteKey.JUDGE_JAVA_EXEC_FILE_NAME,
+            SiteKey.JUDGE_PYTHON_EXEC_FILE_NAME
+    };
+    private final static String[] execFileNameDE = new String[]{
+            SiteKey.JUDGE_GCC_EXEC_FILE_NAME_DE,
+            SiteKey.JUDGE_GPP_EXEC_FILE_NAME_DE,
+            SiteKey.JUDGE_JAVA_EXEC_FILE_NAME_DE,
+            SiteKey.JUDGE_PYTHON_EXEC_FILE_NAME_DE
+    };
+
     private String getFileName(Integer language) {
-        return Config.get(strings[language - 1], defaultValue[language - 1]);
+        return Config.get(fileName[language - 1], fileNameDe[language - 1]);
+    }
+
+    private String getExecFileName(Integer language){
+        return Config.get(execFileName[language - 1], execFileNameDE[language - 1]);
     }
 }
