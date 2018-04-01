@@ -27,4 +27,6 @@ public interface ExamProblemDao {
     int selectByConditionGetCount(ExamProblem record, BaseQuery query);
 
     List<ExamProblem> selectByProblem(ExamProblem record, BaseQuery query);
+
+    int insertBatch(List<ExamProblem> recordList);
 }

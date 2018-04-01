@@ -166,17 +166,11 @@ var program = {
         var length = program.problist.length;
         for (var i = 0; i < length; i++) {
             program.probIdList[i] = program.problist[i].probId;
-            //program.titleList[i] = program.problist[i].title;
-            //program.knowIdList[i] = program.knowlist[i].knowId;
         }
         program.probIdstr = program.probIdList.join(",");
-        // program.titlestr = program.titleList.join(",");
-        // program.knowIdstr = program.knowIdList.join(",");
-        // console.log(program.knowIdstr);
     },
     // 将所选的问题题库添加到数据库
     insertTempProblem: function () {
-
         $.ajax({
             type: "post",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -185,8 +179,6 @@ var program = {
             async: false,
             data: {
                 probIdList: program.probIdstr,
-                /*titleList: program.titlestr,
-                 knowIdList: program.knowIdstr,*/
                 examId: program.examId
             },
             success: function (result) {
@@ -200,7 +192,7 @@ var program = {
                     pubMeth.alertInfo("alert-success", "保存成功");
                 } else if (result.status == 0) {
                     $("#modaladdbank").modal('hide');
-                    pubMeth.alertInfo("alert-danger", "保存失败");
+                    pubMeth.alertInfo("alert-danger", "保存失败,请查看是否有相同题目");
                 } else if (result.status == -1) {
                     $("#modaladdbank").modal('hide');
                     pubMeth.alertInfo("alert-danger", "不允许添加相同的题目");

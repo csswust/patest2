@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,15 +76,21 @@ public class ExamProblemAction extends BaseAction {
             @RequestParam(required = true) Integer examId,
             @RequestParam(required = true) Integer[] probIdList) {
         Map<String, Object> res = new HashMap<>();
-        int count = 0;
+        if (examId == null) return null;
+        if (probIdList == null || probIdList.length == 0) {
+            res.put("desc", "题目不能为空");
+            return res;
+        }
+        List<ExamProblem> examProblemList = new ArrayList<>();
         for (int i = 0; i < probIdList.length; i++) {
             ExamProblem examProblem = new ExamProblem();
             examProblem.setExamId(examId);
             examProblem.setProblemId(probIdList[i]);
-            int temp = examProblemDao.insertSelective(examProblem);
-            count = count + temp;
+            examProblemList.add(examProblem);
         }
-        res.put("status", count);
+        int count = examProblemDao.insertBatch(examProblemList);
+        if (count != probIdList.length) res.put("status", 0);
+        else res.put("status", count);
         return res;
     }
 
