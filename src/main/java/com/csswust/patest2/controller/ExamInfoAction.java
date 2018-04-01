@@ -4,6 +4,7 @@ import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.dao.result.SelectProblemNumRe;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamInfoService;
 import com.csswust.patest2.service.result.ImportDataRe;
@@ -132,31 +133,16 @@ public class ExamInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/selectMyProblem", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectMyProblem(
-            @RequestParam(required = true) Integer examId) {
+    public Map<String, Object> selectMyProblem(@RequestParam Integer examId) {
+        if (examId == null) return null;
         Map<String, Object> res = new HashMap<>();
-        ExamPaper examPaper = new ExamPaper();
-        examPaper.setExamId(examId);
-        List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, new BaseQuery());
-        if (examPaperList == null) {
-            examPaperList = new ArrayList<>();
-        }
+        List<SelectProblemNumRe> selectProblemNumReList =
+                paperProblemDao.selectProblemNum(examId);
         List<Integer> probIdList = new ArrayList<>();
         List<Integer> countList = new ArrayList<>();
-        for (int i = 0; i < examPaperList.size(); i++) {
-            PaperProblem record = new PaperProblem();
-            record.setExamPaperId(examPaperList.get(i).getExaPapId());
-            List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(record, new BaseQuery());
-            for (int j = 0; j < paperProblemList.size(); j++) {
-                Integer probId = paperProblemList.get(j).getProblemId();
-                if (probIdList.contains(probId)) {
-                    int index = probIdList.indexOf(probId);
-                    countList.set(index, countList.get(index) + 1);
-                } else {
-                    probIdList.add(probId);
-                    countList.add(1);
-                }
-            }
+        for (int i = 0; i < selectProblemNumReList.size(); i++) {
+            probIdList.add(selectProblemNumReList.get(i).getProbId());
+            countList.add(selectProblemNumReList.get(i).getNum());
         }
         List<ProblemInfo> problemInfoList = selectRecordByIds(probIdList,
                 "probId", (BaseDao) problemInfoDao, ProblemInfo.class);

@@ -15,7 +15,7 @@ public class AuthService {
         if (StringUtils.isBlank(urlPath) || StringUtils.isBlank(name)) {
             return false;
         }
-        VisitPath visitPath = SiteCache.visitPathMap.get(name);
+        VisitPath visitPath = SiteCache.visitPathMap.get(urlPath);
         UserRole userRole = UserRole.getByName(name);
         if (visitPath == null || userRole == null) {
             return false;

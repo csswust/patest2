@@ -1,6 +1,7 @@
 package com.csswust.patest2.dao;
 
 import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.dao.result.SelectProblemNumRe;
 import com.csswust.patest2.entity.PaperProblem;
 
 import java.util.List;
@@ -29,4 +30,6 @@ public interface PaperProblemDao {
     int deleteByExamId(Integer examId);
 
     int insertBatch(List<PaperProblem> recordList);
+
+    List<SelectProblemNumRe> selectProblemNum(Integer examId);
 }
