@@ -1,9 +1,7 @@
 package com.csswust.patest2.service.common;
 
 import com.csswust.patest2.common.UserRole;
-import com.csswust.patest2.common.cache.Cache;
 import com.csswust.patest2.common.cache.SiteCache;
-import com.csswust.patest2.common.cache.impl.VisitPathCache;
 import com.csswust.patest2.entity.VisitPath;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
