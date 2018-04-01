@@ -58,6 +58,10 @@ public class Config {
         }
     }
 
+    public static String get(String key) {
+        return configFile.get(key);
+    }
+
     public static String get(String key, String defaultValue) {
         String result = configFile.get(key);
         return result == null ? defaultValue : result;

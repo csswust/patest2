@@ -1,5 +1,6 @@
 package com.csswust.patest2.listener;
 
+import com.csswust.patest2.common.cache.SiteCache;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.dao.SiteInfoDao;
@@ -62,5 +63,9 @@ public class ApplicationStartListener implements ServletContextListener {
             judgeThreadList.add(judgeThread);
             judgeExecutor.execute(judgeThread);
         }
+
+        // 对result和judger进行缓存
+        SiteCache siteCache = context.getBean(SiteCache.class);
+        siteCache.refresh();
     }
 }

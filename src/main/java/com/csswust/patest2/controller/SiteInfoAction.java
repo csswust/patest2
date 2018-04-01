@@ -42,7 +42,9 @@ public class SiteInfoAction {
     @RequestMapping(value = "/selectByName", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByName(@RequestParam String name) {
         if (StringUtils.isBlank(name)) return null;
-        return siteInfoDao.selectByName(name);
+        SiteInfo siteInfo = new SiteInfo();
+        siteInfo.setValue(Config.get(name));
+        return siteInfo;
     }
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
