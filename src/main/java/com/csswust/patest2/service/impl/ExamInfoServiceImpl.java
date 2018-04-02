@@ -1,10 +1,12 @@
 package com.csswust.patest2.service.impl;
 
+import com.csswust.patest2.common.cache.SiteCache;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.dao.result.SelectProblemNumRe;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamInfoService;
 import com.csswust.patest2.service.common.BaseService;
@@ -78,29 +80,39 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             result.setStatusAndDesc(-2, "该堂考试没有考生试卷");
             return result;
         }
-
         List<UserInfo> userInfoList = selectRecordByIds(
                 getFieldByList(examPaperList, "userId", ExamPaper.class),
                 "userId", (BaseDao) userInfoDao, UserInfo.class);
         List<UserProfile> userProfileList = selectRecordByIds(
                 getFieldByList(userInfoList, "userProfileId", UserInfo.class),
                 "useProId", (BaseDao) userProfileDao, UserProfile.class);
+
         Map<Integer, ProblemInfo> problemInfoCache = new HashMap<>();
         Map<Integer, ExamParam> examParamCache = new HashMap<>();
         Map<Integer, ResultInfo> resultInfoCache = new HashMap<>();
         Map<Integer, JudgerInfo> judgerInfoCache = new HashMap<>();
+        // 问题缓存
+        List<SelectProblemNumRe> selectProblemNumReList = paperProblemDao.selectProblemNum(examId);
+        List<ProblemInfo> problemInfoListTemp = selectRecordByIds(
+                getFieldByList(selectProblemNumReList, "probId", SelectProblemNumRe.class),
+                "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
+        for (ProblemInfo item : problemInfoListTemp) {
+            problemInfoCache.put(item.getProbId(), item);
+        }
+        // 试卷参数缓存
         ExamParam examParamTemp = new ExamParam();
         examParamTemp.setExamId(examId);
         List<ExamParam> examParamListTemp = examParamDao.selectByCondition(examParamTemp, new BaseQuery());
         for (ExamParam item : examParamListTemp) {
             examParamCache.put(item.getExaParId(), item);
         }
-        JudgerInfo judgerInfoTemp = new JudgerInfo();
-        List<JudgerInfo> JudgerInfoListTemp = judgerInfoDao.selectByCondition(judgerInfoTemp, new BaseQuery());
+        // judger缓存
+        List<JudgerInfo> JudgerInfoListTemp = SiteCache.judgerInfoList;
         for (JudgerInfo item : JudgerInfoListTemp) {
             judgerInfoCache.put(item.getJudId(), item);
         }
-        List<ResultInfo> resultInfoListTemp = resultInfoDao.selectByCondition(new ResultInfo(), new BaseQuery());
+        // resultInfo缓存
+        List<ResultInfo> resultInfoListTemp = SiteCache.resultInfoList;
         for (ResultInfo item : resultInfoListTemp) {
             resultInfoCache.put(item.getResuId(), item);
         }
@@ -109,17 +121,7 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         UserLoginLog userLoginLogTemp = new UserLoginLog();
         for (int i = 0; i < examPaperList.size(); i++) {
             ExamPaper examPaper = examPaperList.get(i);
-            Integer userId = examPaper.getUserId();// 获取该张考卷的用户ID
-            Integer exaPapId = examPaper.getExaPapId();// 获取试卷ID
             Map<String, Object> dataMap = new HashMap<>();// 存放该试卷的基本信息
-            // 获取用户IP地址
-            userLoginLogTemp.setUserId(userId);
-            List<UserLoginLog> userLoginList = userLoginLogDao.selectByCondition(userLoginLogTemp, new BaseQuery(1, 1));
-            if (userLoginList.size() > 0) {
-                dataMap.put("IP", userLoginList.get(0).getLoginIp());
-            } else {
-                dataMap.put("IP", null);
-            }
             // 获取用户考号
             UserInfo userInfo = userInfoList.get(i);
             dataMap.put("Number", userInfo != null ? userInfo.getUsername() : null);
@@ -131,65 +133,29 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             // 查询当前试卷下的所有题目
             PaperProblem paperProblem = new PaperProblem();
             paperProblem.setExamPaperId(examPaper.getExaPapId());
-            List<PaperProblem> paperProblemList = this.paperProblemDao.selectByCondition(
-                    paperProblem, new BaseQuery());
-            List<SubmitInfo> submitInfoList = new ArrayList<>();
-            List<ProblemInfo> problemInfoList = new ArrayList<>();
-            List<ResultInfo> resultInfoList = new ArrayList<>();
-            List<ExamParam> examParamList = new ArrayList<>();
-            List<String> codeTypeList = new ArrayList<>();
 
-            int count = 0;
+            List<PaperProblem> paperProblemList = this.paperProblemDao.selectByCondition(paperProblem, new BaseQuery());
+            List<ProblemInfo> problemInfoList = new ArrayList<>();
+            List<ExamParam> examParamList = new ArrayList<>();
+            // 获取提交信息，以最后一次AC或者最好一次提交为准
+            List<SubmitInfo> submitInfoList = selectRecordByIds(
+                    getFieldByList(paperProblemList, "submitId", PaperProblem.class),
+                    "submId", (BaseDao) submitInfoDao, SubmitInfo.class);
             for (int j = 0; j < paperProblemList.size(); j++) {
                 PaperProblem item = paperProblemList.get(j);
                 // 获取对应的题目，做个简单的缓存
-                Integer probId = item.getProblemId();
-                ProblemInfo problemInfo = problemInfoCache.computeIfAbsent(probId, new Function<Integer, ProblemInfo>() {
-                    @Override
-                    public ProblemInfo apply(Integer integer) {
-                        return problemInfoDao.selectByPrimaryKey(integer);
-                    }
-                });
+                ProblemInfo problemInfo = problemInfoCache.get(item.getProblemId());
                 if (problemInfo == null) problemInfo = new ProblemInfo();
-                // 获取对应的试卷参数，做个简单的缓存
                 problemInfoList.add(problemInfo);
-                Integer ExamParamId = item.getExamParamId();
-                ExamParam examParam = examParamCache.computeIfAbsent(ExamParamId, new Function<Integer, ExamParam>() {
-                    @Override
-                    public ExamParam apply(Integer integer) {
-                        return examParamDao.selectByPrimaryKey(integer);
-                    }
-                });
+                // 获取对应的试卷参数，做个简单的缓存
+                ExamParam examParam = examParamCache.get(item.getExamParamId());
                 if (examParam == null) examParam = new ExamParam();
                 examParamList.add(examParam);
-
-                // 获取提交信息，以最后一次AC或者最好一次提交为准
-                SubmitInfo submitInfoTemp = new SubmitInfo();
-                submitInfoTemp.setPaperProblemId(item.getPapProId());
-                if (item.getIsAced() == 1) {
-                    submitInfoTemp.setStatus(1);
-                }
-                BaseQuery baseQuery = new BaseQuery(1, 1);
-                List<SubmitInfo> temp = this.submitInfoDao.selectByCondition(submitInfoTemp, baseQuery);
-                if (temp.size() > 0) {
-                    submitInfoList.add(temp.get(0));
-                    ResultInfo resultInfo = resultInfoCache.get(temp.get(0).getStatus());
-                    JudgerInfo judgerInfo = judgerInfoCache.get(temp.get(0).getJudgerId());
-                    resultInfoList.add(resultInfo);
-                    codeTypeList.add(judgerInfo == null ? ".txt" : judgerInfo.getSuffix());
-                } else {
-                    submitInfoList.add(null);
-                    resultInfoList.add(new ResultInfo());
-                    codeTypeList.add(".txt");
-                }
-                count++;
             }
             dataMap.put("paperProblemList", paperProblemList);
             dataMap.put("submitInfoList", submitInfoList);
             dataMap.put("problemInfoList", problemInfoList);
-            dataMap.put("resultInfoList", resultInfoList);
             dataMap.put("examParamList", examParamList);
-            dataMap.put("codeTypeList", codeTypeList);
             dataMap.put("examPaper", examPaper);
             dataList.add(dataMap);
         }
@@ -211,10 +177,9 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             String Number = (String) tempMap.get("Number");
             ExamPaper examPaper = (ExamPaper) tempMap.get("examPaper");
             String exprId = examPaper.getExaPapId().toString();
-            String Ip = (String) tempMap.get("IP");
             String studentNumber = (String) tempMap.get("studentNum");
             String studentName = "\\" + (Number + "_" + username + "_" + studentNumber + "_" + exprId);
-            List<File> fileList = new ArrayList<File>();
+            List<File> fileList = new ArrayList<>();
             try {
                 File studentFile = new File(path + examTitle + studentName);
                 if (!studentFile.exists()) {
@@ -223,39 +188,36 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                 List<PaperProblem> paperProblemList = (List<PaperProblem>) tempMap.get("paperProblemList");
                 List<SubmitInfo> submitInfoList = (List<SubmitInfo>) tempMap.get("submitInfoList");
                 List<ProblemInfo> problemInfoList = (List<ProblemInfo>) tempMap.get("problemInfoList");
-                List<ResultInfo> resultInfoList = (List<ResultInfo>) tempMap.get("resultInfoList");
                 List<ExamParam> examParamList = (List<ExamParam>) tempMap.get("examParamList");
-                List<String> codeTypeList = (List<String>) tempMap.get("codeTypeList");
 
                 for (int j = 0; j < paperProblemList.size(); j++) {
-                    String suffix = codeTypeList.get(j);
+                    SubmitInfo submitInfo = submitInfoList.get(j);
+                    JudgerInfo judgerInfo = judgerInfoCache.get(submitInfo.getJudgerId());
+                    ResultInfo resultInfo = resultInfoCache.get(submitInfo.getStatus());
+                    String suffix = judgerInfo == null ? ".txt" : judgerInfo.getSuffix();
                     String probTitle = getFileName(problemInfoList.get(j).getTitle());
-                    if (suffix == null) {
-                        suffix = ".txt";
-                    }
-                    String filePath = path + examTitle
-                            + studentName + "\\" + probTitle
+                    String filePath = path + examTitle + studentName + "\\" + probTitle
                             + "_" + problemInfoList.get(j).getProbId() + suffix;
                     File tempFile = new File(filePath);
                     FileOutputStream out = new FileOutputStream(filePath);
                     BufferedOutputStream buff = null;
                     StringBuilder write = new StringBuilder();
                     String enter = "\r\n";
-                    SubmitInfo submitInfo = submitInfoList.get(j);
-                    String codeTemp = submitInfo == null ? "该考生没有提交代码" : submitInfo.getSource();
+                    String codeTemp = submitInfo.getSource() == null ? "该考生没有提交代码" : submitInfo.getSource();
                     String code = CipherUtil.encode(codeTemp);
                     try {
                         buff = new BufferedOutputStream(out);
                         String dateString = "null";
-                        if (submitInfoList.get(j) != null) {
-                            dateString = sdf.format(submitInfoList.get(j).getCreateTime());
+                        if (submitInfo.getCreateTime() != null) {
+                            dateString = sdf.format(submitInfo.getCreateTime());
                         }
+                        String ACStatu = resultInfo==null?"null":resultInfo.getName();
                         write.append("/**" + enter);
                         write.append(" * 题目：" + problemInfoList.get(j).getTitle() + enter);
                         write.append(" * 题目分数：" + examParamList.get(j).getScore() + enter);
                         write.append(" * 考试名称：" + examTitle + enter);
-                        write.append(" * 考生IP：" + Ip + enter);
-                        write.append(" * AC状态：" + resultInfoList.get(j).getName() + enter);
+                        write.append(" * 考生IP：" + submitInfo.getIp() + enter);
+                        write.append(" * AC状态：" + ACStatu + enter);
                         write.append(" * 得分：" + paperProblemList.get(j).getScore() + enter);
                         write.append(" * 提交时间：" + dateString + enter);
                         write.append(" * 考生考号：" + Number + enter);
@@ -297,7 +259,6 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         if (result.getStatus() == 0) {
             result.setStatus(1);
             result.setFileDir(dataZipfile.getPath());
-            // result.setFileName(dataZipfile.getName());
         }
         return result;
     }
