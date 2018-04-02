@@ -97,7 +97,6 @@ public class StudentAction extends BaseAction {
         //考生的试卷(考生的ac量，分数)
         res.put("examPaper", examPaper);
         res.put("sumScore", sumScore);
-        res.put("problemInfoList", problemInfoList);
         //考生的所有提交记录
         res.put("paperProblemList", paperProblemList);
         //考生的题库列表

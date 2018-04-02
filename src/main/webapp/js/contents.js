@@ -25,7 +25,7 @@ var program = {
                     $(".examName").html(program.title);
                     $(".examDescription").html('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="examTime" style="font-size:20px;">考试信息：</strong> 开始时间： ' + program.starttime + '&nbsp;&nbsp;&nbsp;&nbsp;结束时间： ' + program.endtime + '<hr></hr><div style="text-indent:2em;">' + program.description + '</div>');
                     program.listProb = result.paperProblemList;
-                    program.examID = result.examParamList[0].examId;
+                    // program.examID = result.examParamList[0].examId;
                     $(".sumScore").html(result.sumScore);
                     $(".stuGetScore").html(result.examPaper.score);
                     $("#listInfo").html("");
