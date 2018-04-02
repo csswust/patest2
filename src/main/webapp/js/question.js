@@ -30,6 +30,7 @@ var program = {
     status: [],
     flag: true,
     book: true,
+    comp:[],
     addProblem: function (id) {
         $.ajax({
             type: "post",
@@ -333,6 +334,22 @@ var program = {
             }
         });
     },
+    getCompiler: function () {
+        $.ajax({
+            type: "get",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../judgerInfo/selectByCondition",
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                program.comp[0] = "unknow";
+                for (var i = 0; i < result.data.length; i++) {
+                    program.comp[result.data[i].judId] = result.data[i].name;
+                    $(".selectJudId").append('<option value="' + result.data[i].judId + '">' + result.data[i].repr + '</option>');
+                }
+            }
+        });
+    },
     importData: function () {
         $.ajax({
             type: "get",
@@ -480,6 +497,7 @@ var program = {
 var tipContent = $(".ScoreSetTips").html();
 program.change('input[id=datafile]', '.testdata');
 program.getStatus();
+program.getCompiler();
 pubMeth.serCourse();
 var ue = UE.getEditor('description', {
     initialFrameWidth: 750,//初始化编辑器宽度,默认1000
