@@ -91,6 +91,10 @@ var program = {
             }
         });
     },
+    safeStr: function (str) {
+        if (!str) return "";
+        return str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    },
     showPaper: function () {
         program.html = "";
         var length = program.codeList.length;
@@ -111,6 +115,8 @@ var program = {
                 + program.paperProblemList[i].score + '</a></li>';
             program.probIds[i] = program.problemInfoList[i].probId;
             program.prproIds[i] = program.paperProblemList[i].papProId;
+
+            var source = program.safeStr(program.codeList[i].source);
             content += '' + divAcitve
                 + '<h2 style="text-align:center;">'
                 + program.problemInfoList[i].title
@@ -121,7 +127,7 @@ var program = {
                 + '</li>' + '<li>状态:' + program.codeList[i].status
                 + '</li><li>分数:' + program.paperProblemList[i].score
                 + '</li></ul></div>' + '<div class="allcon"><div class="changed"><pre class="prettyprint linenums pre-scrollable">'
-                + program.codeList[i].source + '</pre></div><div class="addcss"><pre class="addchanged"></pre></div></div></div>';
+                + source + '</pre></div><div class="addcss"><pre class="addchanged"></pre></div></div></div>';
             flag--;
             tmp--;
         }
@@ -180,14 +186,12 @@ var program = {
                 program.userProfileList = result.userProfileList2;
                 program.submitInfoList2 = result.submitInfoList2;
                 console.log(program.similaryTotal);
-                /*if (program.similaryTotal > 0) {*/
                 if ($("#problem_similarity").css("display") == 'none') {
                     $("#problem_similarity").css("display", "block");
                 }
                 program.showSimilaryInfo();
                 $("#problemlistInfo").empty();
                 $("#problemlistInfo").append(program.html);
-                /*}*/
             },
             error: function () {
                 alert("相似度检验失败！");
@@ -212,7 +216,6 @@ var program = {
                         backdrop: 'static'
                     });
                 } else {
-                    // alert(result.desc);
                 }
             },
             error: function () {
@@ -245,15 +248,12 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
-                /*examId: program.examId,*/
                 submId: program.submId,
                 onlySubmitInfo: true
-                /*probId: program.codeList[temp].probId,*/
             },
             success: function (result) {
                 console.log(result);
-                program.Mycode = result.submitInfoList[0].source;
-                /*if (result.status == 1) {*/
+                program.Mycode = program.safeStr(result.submitInfoList[0].source);
                 $(".allcon").css({
                     "width": "100%",
                     "margin": "0 auto",
@@ -269,7 +269,6 @@ var program = {
                 $(".addchanged").append(program.Mycode);
                 $(".addcss").addClass("rightdiv");
                 $(".addcss pre").css({"padding": "9.5px"});
-                /*}*/
             },
             error: function () {
 
