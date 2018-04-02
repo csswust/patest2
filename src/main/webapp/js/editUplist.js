@@ -25,6 +25,7 @@ var program = {
                 + '<th>学号</th>'
                 + '<th>考号</th>'
                 + '<th>班级</th>'
+                + '<th>考场</th>'
                 + '<tr>';
             $("#stuhead").html(stulist);
         }
@@ -37,6 +38,7 @@ var program = {
                 + '<td>' + program.userProfile[i].studentNumber + '</td>'
                 + '<td>' + program.userInfo[i].username + '</td>'
                 + '<td>' + program.userProfile[i].className + '</td>'
+                + '<td>' + program.examPaper[i].classroom + '</td>'
                 + '</tr>';
         }
     },
