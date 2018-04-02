@@ -20,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
 import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
@@ -44,8 +41,9 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
     @Autowired
     private UserLoginLogDao userLoginLogDao;
 
-    void getEffectiveSession(List<Integer> userIdList, List<String> sessionIdList) {
+    private void getEffectiveSession(List<Integer> userIdList, List<String> sessionIdList) {
         Map<String, HttpSession> map = OnlineListener.onlineMap;
+        Set<Integer> set = new HashSet<>();// 去重
         for (Map.Entry<String, HttpSession> entry : map.entrySet()) {
             String sessionId = entry.getKey();
             HttpSession session = entry.getValue();
@@ -53,9 +51,10 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
                 continue;
             }
             Integer userId = (Integer) session.getAttribute("userId");
-            if (userId != null) {
+            if (userId != null && !set.contains(userId)) {
                 userIdList.add(userId);
                 sessionIdList.add(sessionId);
+                set.add(userId);
             }
         }
     }

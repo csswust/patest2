@@ -1,5 +1,7 @@
 package com.csswust.patest2.test.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -63,14 +65,22 @@ public class HttpRequest {
         return result;
     }
 
+    public static String sendPost(String url, Map<String, Object> params, String cookies) {
+        return sendPost(url, params, cookies, null);
+    }
+
+    public static String sendPost(String url, Map<String, Object> params, Map<String, Object> setCookies) {
+        return sendPost(url, params, null, setCookies);
+    }
+
     /**
      * 向指定 URL 发送POST方法的请求
      *
-     * @param url   发送请求的 URL
+     * @param url    发送请求的 URL
      * @param params 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return 所代表远程资源的响应结果
      */
-    public static String sendPost(String url, Map<String,Object> params, String cookies) {
+    public static String sendPost(String url, Map<String, Object> params, String cookies, Map<String, Object> setCookies) {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
@@ -83,8 +93,8 @@ public class HttpRequest {
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            if (!"".equals(cookies)) {
-                conn.setRequestProperty("Cookie", cookies);
+            if (StringUtils.isNotBlank(cookies)) {
+                conn.setRequestProperty("Cookie", "JSESSIONID=" + cookies);
             }
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
@@ -93,7 +103,7 @@ public class HttpRequest {
             out = new PrintWriter(conn.getOutputStream());
             // 发送请求参数
             StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String,Object> param : params.entrySet()) {
+            for (Map.Entry<String, Object> param : params.entrySet()) {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
                 postData.append('=');
@@ -103,13 +113,25 @@ public class HttpRequest {
             // flush输出流的缓冲
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
+            if (setCookies != null) {
+                String cookieVal = conn.getHeaderField("Set-Cookie");
+                if (StringUtils.isNotBlank(cookieVal)) {
+                    String[] strs = cookieVal.split(";");
+                    for (int i = 0; i < strs.length; i++) {
+                        String[] temp = strs[i].split("=");
+                        if (temp.length >= 2) {
+                            setCookies.put(temp[0], temp[1]);
+                        }
+                    }
+                }
+            }
             in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             System.out.println("发送 POST 请求出现异常！" + e);
             e.printStackTrace();
         }

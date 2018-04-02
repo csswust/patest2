@@ -148,7 +148,8 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         }
         // 更新paperProblem的isAced和usedTime
         if (paperProblem.getIsAced() != 1) {
-            paperProblem.setSubmitId(submitInfo.getSubmId());
+            // 保留对应分数的代码
+            // paperProblem.setSubmitId(submitInfo.getSubmId());
             if (submitInfo.getStatus() != 1) {
                 paperProblem.setIsAced(submitInfo.getStatus());
             } else if (submitInfo.getStatus() == 1) {
@@ -181,6 +182,8 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         if (ans > allScore) ans = allScore;
         if (ans > paperProblem.getScore()) {
             paperProblem.setScore((int) ans);
+            // 得到更高的分数，那么修改对应的代码
+            paperProblem.setSubmitId(submitInfo.getSubmId());
         }
         paperProblem.setLastSubmitTime(submitInfo.getCreateTime());
         paperProblem.setSubmitCount(paperProblem.getSubmitCount() + 1);
