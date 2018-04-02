@@ -100,6 +100,7 @@ var program = {
                 console.log(result);
                 if (result.status == 1) {
                     program.submitId = result.submId;
+                    $(".submitResult").html('');
                 } else {
                     pubMeth.alertInfo("alert-info", result.desc);
                 }
@@ -116,7 +117,7 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
-                "submId": program.submitId,
+                "submId": program.submitId
             },
             success: function (result) {
                 console.log(result);
@@ -174,7 +175,6 @@ var program = {
             success: function (result) {
                 console.log(result);
                 var acNum = 0, length = 0, flag = 1, mainHtml = "", color = "";
-                /*if (result.status == 1) {*/
                 for (var i = 0, length = result.submitResultList.length; i < length; i++) {
                     if (result.submitResultList[i].status == 1) {
                         color = "acColor";
