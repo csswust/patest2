@@ -2,6 +2,7 @@ package com.csswust.patest2.controller;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
+import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserLoginLogDao;
 import com.csswust.patest2.dao.UserProfileDao;
@@ -41,6 +42,8 @@ public class UserInfoAction extends BaseAction {
     private UserInfoDao userInfoDao;
     @Autowired
     private UserLoginLogDao userLoginLogDao;
+    @Autowired
+    private ExamInfoDao examInfoDao;
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> login(
@@ -101,6 +104,7 @@ public class UserInfoAction extends BaseAction {
             @RequestParam(required = false) String studentNumber,
             @RequestParam(required = false) String realName,
             @RequestParam(required = false, defaultValue = "false") Boolean isContainIp,
+            @RequestParam(required = false, defaultValue = "false") Boolean isContainExamInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         Map<String, Object> res = new HashMap<>();
@@ -140,6 +144,12 @@ public class UserInfoAction extends BaseAction {
                 }
             }
             res.put("ipList", ipList);
+        }
+        if (isContainExamInfo) {
+            List<ExamInfo> examInfoList = selectRecordByIds(
+                    getFieldByList(userInfoList, "examId", UserInfo.class),
+                    "examId", (BaseDao) examInfoDao, ExamInfo.class);
+            res.put("examInfoList", examInfoList);
         }
         res.put("total", total);
         res.put("userInfoList", userInfoList);

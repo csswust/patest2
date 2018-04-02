@@ -38,6 +38,8 @@ var program = {
             if (program.userInfoList[i].lastLogin == null) {
                 program.userInfoList[i].lastLogin = "";
             }
+            var examTitle = program.examInfoList[i].title;
+            var exmaId = program.examInfoList[i].examId;
             program.html += '<tr>'
                 + '<td style="width:80px;"><input type="checkbox" value="' + program.userInfoList[i].userId + '" name="title"/></td>'
                 + '<td>' + program.userInfoList[i].userId + '</td>'
@@ -47,6 +49,9 @@ var program = {
                 + '<td>' + program.userProfileList[i].className + '</td>'
                 + '<td>' + role + '</td>'
                 + '<td>' + program.userInfoList[i].lastLogin + '</td>'
+                +'<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle
+                    + '"><a href="examInfo.html?id=' + exmaId + '">' + examTitle + '</a>'
+                + '</td>'
                 + '<td><a href="javascript:;"class="title" value="' + program.userInfoList[i].userId + '" >修改</a></td>'
                 + '</tr>';
         }
@@ -66,6 +71,7 @@ var program = {
                 isTeacher: program.steacher,
                 username: program.susername,
                 studentNumber: program.sstudentNumber,
+                isContainExamInfo: true,
                 page: program.page,
                 rows: pubMeth.rowsnum
             },
@@ -74,6 +80,7 @@ var program = {
                 program.count = result.total;
                 program.userInfoList = result.userInfoList;
                 program.userProfileList = result.userProfileList;
+                program.examInfoList = result.examInfoList;
                 program.showAccount();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.html);
