@@ -168,7 +168,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
                         sum = sum + ScoreRatioList.get(testId);
                     } else if (submitResultList.get(i).getStatus() == 2) {
                         // pe是否计算分数
-                        int is_score_pe = Config.getToInt(SiteKey.IS_SCORE_PRESENTATION_ERROR, 0);
+                        int is_score_pe = Config.getToInt(SiteKey.IS_SCORE_PRESENTATION_ERROR, SiteKey.IS_SCORE_PRESENTATION_ERROR_DE);
                         if (is_score_pe == 1) {
                             sum = sum + ScoreRatioList.get(testId);
                         }
@@ -372,7 +372,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         return Config.get(fileName[language - 1], fileNameDe[language - 1]);
     }
 
-    private String getExecFileName(Integer language){
+    private String getExecFileName(Integer language) {
         return Config.get(execFileName[language - 1], execFileNameDE[language - 1]);
     }
 }

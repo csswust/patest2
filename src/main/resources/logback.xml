@@ -8,7 +8,7 @@
     <!-- 动态日志级别 -->
     <jmxConfigurator/>
     <property name="APP_Name" value="patest2"/>
-    <property name="log_dir" value="/root/installtion/patest2/logs/"/>
+    <property name="log_dir" value="/home/mryang/patest/patest2/logs/"/>
     <property name="maxHistory" value="30"/>
     <property name="fileLayoutPattern"
               value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5level] [%thread] [userId:%5X{userId}] [%logger.%M:%line]  %msg%n"/>
