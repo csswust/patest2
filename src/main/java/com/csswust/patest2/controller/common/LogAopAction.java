@@ -47,6 +47,8 @@ public class LogAopAction {
         Map<String, Object> map = new HashMap<>();
         if (Objects.nonNull(parameterNames)) {
             for (int i = 0; i < parameterNames.length; i++) {
+                // 去除文件类型
+                if ("namefile".equals(parameterNames[i])) continue;
                 map.put(parameterNames[i], point.getArgs()[i]);
             }
         }
