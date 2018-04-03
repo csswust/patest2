@@ -1,6 +1,7 @@
 package com.csswust.patest2.controller.common;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -41,16 +44,18 @@ public class LogAopAction {
         String className = point.getSignature().getDeclaringType().getSimpleName();
         String methodName = point.getSignature().getName();
         String[] parameterNames = ((MethodSignature) point.getSignature()).getParameterNames();
-        StringBuilder sb = null;
+        Map<String, Object> map = new HashMap<>();
         if (Objects.nonNull(parameterNames)) {
-            sb = new StringBuilder();
             for (int i = 0; i < parameterNames.length; i++) {
-                String value = point.getArgs()[i] != null ? JSON.toJSONString(point.getArgs()[i]) : "null";
-                sb.append(parameterNames[i] + ":" + value + "; ");
+                map.put(parameterNames[i], point.getArgs()[i]);
             }
         }
-        sb = sb == null ? new StringBuilder() : sb;
-        String info = String.format("class:%s | method:%s | args:%s", className, methodName, sb.toString());
-        return info;
+        String argsJson = "";
+        try {
+            argsJson = JSON.toJSONString(map, SerializerFeature.WriteMapNullValue);
+        } catch (Exception e) {
+            log.error("JSON.toJSONString error: {}", e);
+        }
+        return String.format("class:%s | method:%s | args:%s", className, methodName, argsJson);
     }
 }
