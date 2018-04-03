@@ -60,6 +60,7 @@ public class ExamParamServiceImpl extends BaseService implements ExamParamServic
             return result;
         }
         ExamParam examParam = new ExamParam();
+        examParam.setExamId(examId);// 修复一个bug，以前修改其他考试会把当前的删掉
         List<ExamParam> examParamList = examParamDao.selectByCondition(examParam, new BaseQuery());
         List<Integer> exaParIds = getFieldByList(examParamList, "exaParId", ExamParam.class);
         int status = examParamDao.deleteByIdsList(exaParIds);

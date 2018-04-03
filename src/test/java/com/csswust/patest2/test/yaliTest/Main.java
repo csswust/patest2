@@ -19,7 +19,7 @@ public class Main extends JunitBaseServiceDaoTest {
     @Autowired
     private SubmitInfoDao submitInfoDao;
 
-    private static ExecutorService judgeExecutor = Executors.newFixedThreadPool(201);
+    private static ExecutorService judgeExecutor = Executors.newFixedThreadPool(419);
 
     @Test
     public void yalitest() throws Exception {

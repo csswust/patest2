@@ -46,7 +46,7 @@ public class People implements Runnable {
         SubmitInfo condition = new SubmitInfo();
         while (true) {
             // 休眠
-            int sleep = random.nextInt(80);
+            int sleep = random.nextInt(160);
             try {
                 Thread.sleep(sleep * 1000);
             } catch (InterruptedException e) {
@@ -71,7 +71,7 @@ public class People implements Runnable {
     public String insertSubmitInfo(String JSESSIONID, String source, Integer paperProblemId, Integer judgerId) {
         try {
             Map<String, Object> param = new HashMap<>();
-            param.put("examId", 1);
+            param.put("examId", 2);
             param.put("source", source);
             param.put("paperProblemId", paperProblemId);
             param.put("judgerId", judgerId);
@@ -85,7 +85,7 @@ public class People implements Runnable {
     public String selectMyProblem(String JSESSIONID) {
         try {
             Map<String, Object> param = new HashMap<>();
-            param.put("examId", 1);
+            param.put("examId", 2);
             return HttpRequest.sendPost(rootPath + "/student/selectMyProblem", param, JSESSIONID);
         } catch (Exception e) {
             e.printStackTrace();
