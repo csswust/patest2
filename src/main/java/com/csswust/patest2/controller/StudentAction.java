@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
 import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
@@ -167,6 +168,8 @@ public class StudentAction extends BaseAction {
         return res;
     }
 
+    private final static Map<Integer, Date> submInfoMap = new ConcurrentHashMap<>();
+
     @RequestMapping(value = "/insertSubmitInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertSubmitInfo(SubmitInfo submitInfo) {
         Map<String, Object> res = new HashMap<>();
@@ -185,6 +188,14 @@ public class StudentAction extends BaseAction {
             res.put("desc", "未登录");
             return res;
         }
+        Date oldDate = submInfoMap.get(userId);
+        Date nowDate = new Date();
+        if (oldDate != null && (nowDate.getTime() - oldDate.getTime()) < 30000) {
+            res.put("status", -501);
+            res.put("desc", "提交太频繁，请等待30s");
+            return res;
+        }
+        submInfoMap.put(userId, nowDate);
         submitInfo.setUserId(userId);
         submitInfo.setIp(getIp(request));
         submitInfo.setIsTeacherTest(0);
