@@ -53,6 +53,6 @@
 
     <!-- session有效期配置 -->
     <session-config>
-        <session-timeout>500</session-timeout>
+        <session-timeout>120</session-timeout>
     </session-config>
 </web-app>

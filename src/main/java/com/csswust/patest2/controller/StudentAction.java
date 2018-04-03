@@ -57,12 +57,14 @@ public class StudentAction extends BaseAction {
         Integer userId = getUserId();
         UserInfo userInfo = userInfoDao.selectByPrimaryKey(userId);
         if (userId == null || examId == null || userInfo == null) {
+            res.put("desc", "未登录");
             return res;
         }
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
         //判断是否开始
         Date nowTime = new Date();
         if (examInfo == null || nowTime.getTime() < examInfo.getStartTime().getTime()) {
+            res.put("desc", "考试未开始");
             return res;
         }
         //获取该考生的试卷(包括考生的ac量，分数)
@@ -71,6 +73,7 @@ public class StudentAction extends BaseAction {
         examPaperCondition.setUserId(userInfo.getUserId());
         List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaperCondition, new BaseQuery());
         if (examPaperList == null || examPaperList.size() == 0) {
+            res.put("desc", "对不起，你不在本次考试名单中");
             return res;
         }
         ExamPaper examPaper = examPaperList.get(0);
@@ -112,24 +115,29 @@ public class StudentAction extends BaseAction {
         Map<String, Object> res = new HashMap<>();
         PaperProblem paperProblem = paperProblemDao.selectByPrimaryKey(papProId);
         if (paperProblem == null) {
+            res.put("desc", "对不起，此题目不存在");
             return res;
         }
         ExamPaper examPaper = examPaperDao.selectByPrimaryKey(paperProblem.getExamPaperId());
         if (examPaper == null) {
+            res.put("desc", "对不起，你不在本次考试名单中");
             return res;
         }
         // 判断是否登录
         Integer userId = getUserId();
         UserInfo userInfo = userInfoDao.selectByPrimaryKey(userId);
         if (userInfo == null) {
+            res.put("desc", "未登录");
             return res;
         }
         //判断是否是本人的试卷
         if (userId.intValue() != examPaper.getUserId().intValue()) {
+            res.put("desc", "对不起，不能查看别人的试卷");
             return res;
         }
         ProblemInfo problemInfo = problemInfoDao.selectByPrimaryKey(paperProblem.getProblemId());
         if (problemInfo == null) {
+            res.put("desc", "问题不存在或者已被删除");
             return res;
         }
         if (userInfo.getIsActive() != 1 || (userInfo.getIsAdmin() != 1 && userInfo.getIsTeacher() != 1)) {
