@@ -73,7 +73,7 @@ public class ProblemInfoAction extends BaseAction {
 
     @RequestMapping(value = "/selectProblemData", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectProblemData(@RequestParam Integer probId) {
-        if(probId==null) return null;
+        if (probId == null) return null;
         Map<String, Object> res = new HashMap<>();
         SelectProblemDataRe re = problemInfoService.selectProblemData(probId);
         res.put("selectProblemDataRe", re);
@@ -91,7 +91,7 @@ public class ProblemInfoAction extends BaseAction {
             ProblemInfo problemInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if(problemInfo==null) return null;
+        if (problemInfo == null) return null;
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(problemInfo.getTitle())) {

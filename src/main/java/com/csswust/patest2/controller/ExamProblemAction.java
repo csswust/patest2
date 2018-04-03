@@ -49,7 +49,7 @@ public class ExamProblemAction extends BaseAction {
             @RequestParam Integer examId,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if(examId==null) return null;
+        if (examId == null) return null;
         Map<String, Object> res = new HashMap<>();
         ExamProblem examProblem = new ExamProblem();
         examProblem.setExamId(examId);

@@ -45,7 +45,7 @@ public class LogAopAction {
         if (Objects.nonNull(parameterNames)) {
             sb = new StringBuilder();
             for (int i = 0; i < parameterNames.length; i++) {
-                String value = point.getArgs()[i] != null ? JSON.toJSONString(point.getArgs()[i]): "null";
+                String value = point.getArgs()[i] != null ? JSON.toJSONString(point.getArgs()[i]) : "null";
                 sb.append(parameterNames[i] + ":" + value + "; ");
             }
         }

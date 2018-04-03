@@ -28,7 +28,7 @@ public class CourseInfoAction extends BaseAction {
             CourseInfo courseInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if(courseInfo==null) return null;
+        if (courseInfo == null) return null;
         Map<String, Object> res = new HashMap<>();
         List<CourseInfo> courseInfoList = courseInfoDao.selectByCondition(courseInfo,
                 new BaseQuery(page, rows));

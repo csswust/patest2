@@ -211,7 +211,7 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                         if (submitInfo.getCreateTime() != null) {
                             dateString = sdf.format(submitInfo.getCreateTime());
                         }
-                        String ACStatu = resultInfo==null?"null":resultInfo.getName();
+                        String ACStatu = resultInfo == null ? "null" : resultInfo.getName();
                         write.append("/**" + enter);
                         write.append(" * 题目：" + problemInfoList.get(j).getTitle() + enter);
                         write.append(" * 题目分数：" + examParamList.get(j).getScore() + enter);
