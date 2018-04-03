@@ -49,9 +49,6 @@ public class AccessFilter implements Filter {
         }
         Integer userId = (Integer) session.getAttribute("userId");
         MDC.put("userId", userId == null ? "未登录" : String.valueOf(userId));
-
-        // 计算相应时间
-        long startTime = System.currentTimeMillis();
         if (isAuthJudge != 1) {
             try {
                 chain.doFilter(request, response);
@@ -71,8 +68,6 @@ public class AccessFilter implements Filter {
                 httpServletResponse.sendRedirect("/patest/system/authError");
             }
         }
-        long endTime = System.currentTimeMillis();
-        log.info("请求地址：{}, 角色：{}, 响应时间：{}MS", url, userPermisson, endTime - startTime);
         MDC.remove("userId");
     }
 
