@@ -48,7 +48,7 @@ public class AccessFilter implements Filter {
             userPermisson = "not_login";
         }
         Integer userId = (Integer) session.getAttribute("userId");
-        MDC.put("userId", userId == null ? "未登录" : String.valueOf(userId));
+        MDC.put("userId", userId == null ? "not_login" : String.valueOf(userId));
         if (isAuthJudge != 1) {
             try {
                 chain.doFilter(request, response);
