@@ -1,5 +1,7 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -190,7 +192,9 @@ public class StudentAction extends BaseAction {
         }
         Date oldDate = submInfoMap.get(userId);
         Date nowDate = new Date();
-        if (oldDate != null && (nowDate.getTime() - oldDate.getTime()) < 30000) {
+        int maxTime = Config.getToInt(SiteKey.SUBMIT_MAX_TIME_INTERVAL,
+                SiteKey.SUBMIT_MAX_TIME_INTERVAL_DE);
+        if (oldDate != null && (nowDate.getTime() - oldDate.getTime()) < maxTime) {
             res.put("status", -501);
             res.put("desc", "提交太频繁，请等待30s");
             return res;

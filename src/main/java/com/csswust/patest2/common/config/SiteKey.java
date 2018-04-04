@@ -119,4 +119,8 @@ public class SiteKey {
     // 查看数据最大大小，1MB
     public final static String SELECT_PROBLEM_DATA_MAX = "select_problem_data_max";
     public final static int SELECT_PROBLEM_DATA_MAX_DE = 1048576;
+
+    // 两次提交最大时间间隔
+    public final static String SUBMIT_MAX_TIME_INTERVAL = "submit_max_time_interval";
+    public final static int SUBMIT_MAX_TIME_INTERVAL_DE = 30000;
 }
