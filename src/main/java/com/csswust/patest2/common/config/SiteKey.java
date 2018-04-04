@@ -114,7 +114,7 @@ public class SiteKey {
 
     // 格式错误是否计算分数
     public final static String IS_SCORE_PRESENTATION_ERROR = "is_score_presentation_error";
-    public final static int IS_SCORE_PRESENTATION_ERROR_DE = 1;
+    public final static int IS_SCORE_PRESENTATION_ERROR_DE = 0;
 
     // 查看数据最大大小，1MB
     public final static String SELECT_PROBLEM_DATA_MAX = "select_problem_data_max";
