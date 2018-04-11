@@ -240,7 +240,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         record.setExamPaperId(examPaper.getExaPapId());
         List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(record, new BaseQuery());
         int acSum = 0, usedTime = 0;
-        double  score = 0;
+        double score = 0;
         for (int i = 0; i < paperProblemList.size(); i++) {
             if (paperProblemList.get(i).getIsAced() == 1) {
                 acSum++;
@@ -286,8 +286,8 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             finalWorkPath = workPath + "/" + ownedPath;
 
             // 获取源代码文件名
-            fileName = getFileName(judgeTask.getLanguage());
-            String execFileName = getExecFileName(judgeTask.getLanguage());
+            fileName = judgerInfo.getFileName();
+            String execFileName = judgerInfo.getExecFileName();
             String scriptPath = Config.get(SiteKey.JUDGE_SCRIPT_PATH, SiteKey.JUDGE_SCRIPT_PATH_DE);
             String testdata_path = "";
             if (judgeTask.getJudgeMode() == 0) {
@@ -342,39 +342,5 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             }
         }
         return judgeResult;
-    }
-
-    private final static String[] fileName = new String[]{
-            SiteKey.JUDGE_GCC_FILE_NAME,
-            SiteKey.JUDGE_GPP_FILE_NAME,
-            SiteKey.JUDGE_JAVA_FILE_NAME,
-            SiteKey.JUDGE_PYTHON_FILE_NAME
-    };
-    private final static String[] fileNameDe = new String[]{
-            SiteKey.JUDGE_GCC_FILE_NAME_DE,
-            SiteKey.JUDGE_GPP_FILE_NAME_DE,
-            SiteKey.JUDGE_JAVA_FILE_NAME_DE,
-            SiteKey.JUDGE_PYTHON_FILE_NAME_DE
-    };
-
-    private final static String[] execFileName = new String[]{
-            SiteKey.JUDGE_GCC_EXEC_FILE_NAME,
-            SiteKey.JUDGE_GPP_EXEC_FILE_NAME,
-            SiteKey.JUDGE_JAVA_EXEC_FILE_NAME,
-            SiteKey.JUDGE_PYTHON_EXEC_FILE_NAME
-    };
-    private final static String[] execFileNameDE = new String[]{
-            SiteKey.JUDGE_GCC_EXEC_FILE_NAME_DE,
-            SiteKey.JUDGE_GPP_EXEC_FILE_NAME_DE,
-            SiteKey.JUDGE_JAVA_EXEC_FILE_NAME_DE,
-            SiteKey.JUDGE_PYTHON_EXEC_FILE_NAME_DE
-    };
-
-    private String getFileName(Integer language) {
-        return Config.get(fileName[language - 1], fileNameDe[language - 1]);
-    }
-
-    private String getExecFileName(Integer language) {
-        return Config.get(execFileName[language - 1], execFileNameDE[language - 1]);
     }
 }

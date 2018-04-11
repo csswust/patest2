@@ -135,20 +135,18 @@ public class SubmitInfoAction extends BaseAction {
         Map<String, Object> res = new HashMap<>();
         if (submId != null) {
             ApplicationStartListener.queue.add(submId);
+            res.put("status", 1);
         } else {
             SubmitInfo condition = new SubmitInfo();
+            condition.setStatus(status);
+            condition.setProblemId(problemId);
+            condition.setJudgerId(judgerId);
             if (StringUtils.isNotBlank(username)) {
                 UserInfo userInfo = userInfoDao.selectByUsername(username);
                 condition.setUserId(userInfo == null ? -1 : userInfo.getUserId());
             }
-            BaseQuery baseQuery = new BaseQuery();
-            Integer total = submitInfoDao.selectByConditionGetCount(condition, baseQuery);
             int maxNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_MAX_NUM, SiteKey.REJUDGE_SINGLE_MAX_NUM_DE);
-            if (total > maxNum) {
-                res.put("status", -1);
-                res.put("desc", "单次重判不能超过" + maxNum);
-                return res;
-            }
+            BaseQuery baseQuery = new BaseQuery(1, maxNum);
             List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(condition, baseQuery);
             SubmitInfo record = new SubmitInfo();
             for (int i = 0; i < submitInfoList.size() && i < maxNum; i++) {
@@ -160,9 +158,8 @@ public class SubmitInfoAction extends BaseAction {
                 submitInfoDao.updateByPrimaryKeySelective(record);
                 ApplicationStartListener.queue.add(item.getSubmId());
             }
-            res.put("status", total);
+            res.put("status", submitInfoList.size());
         }
-        res.put("status", 1);
         return res;
     }
 }
