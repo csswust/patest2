@@ -20,8 +20,8 @@ import java.util.Map;
  * Created by 972536780 on 2018/4/9.
  */
 public class Generator {
-    private static String basePath = "E:\\javawork\\csTest\\";
-    private static String packagePath = "com\\ysf\\csTest\\";
+    private static String basePath = "E:\\javawork\\patest2";
+    private static String packagePath = "com\\csswust\\patest2\\";
     public static String basePackage = "com.csswust.patest2";
 
     public static String modelPath = basePath + "src\\main\\resources\\mybatis_mappers";
