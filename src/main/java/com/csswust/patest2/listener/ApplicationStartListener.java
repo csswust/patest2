@@ -29,8 +29,6 @@ public class ApplicationStartListener implements ServletContextListener {
     public static ExecutorService judgeExecutor;
     // 更新试卷线程池
     public static ExecutorService refreshExecutor;
-    // 重判线程池
-    public static ExecutorService rejudgeExecutor;
     // 任务队列
     public static ArrayBlockingQueue<Integer> queue;
 
@@ -56,7 +54,6 @@ public class ApplicationStartListener implements ServletContextListener {
         refreshExecutor = Executors.newFixedThreadPool(num);
         JudgeService judgeService = context.getBean(JudgeService.class);
         queue = new ArrayBlockingQueue<>(Config.getToInt(SiteKey.JUDGE_TASK_QUEUE_TOTAL, SiteKey.JUDGE_TASK_QUEUE_TOTAL_DE), true);
-        rejudgeExecutor = Executors.newFixedThreadPool(Config.getToInt(SiteKey.REJUDGE_TASK_QUEUE_TOTAL, SiteKey.REJUDGE_TASK_QUEUE_TOTAL_DE));
         // 启动判题线程
         for (int i = 0; i < num; i++) {
             JudgeThread judgeThread = new JudgeThread(judgeService);

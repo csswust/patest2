@@ -129,85 +129,40 @@ public class SubmitInfoAction extends BaseAction {
     public Map<String, Object> rejudgeBySubmId(
             @RequestParam(required = false) Integer submId,
             @RequestParam(required = false) Integer status,
-            @RequestParam(required = false) Integer probId) {
+            @RequestParam(required = false) Integer problemId,
+            @RequestParam(required = false) Integer judgerId,
+            @RequestParam(required = false) String username) {
         Map<String, Object> res = new HashMap<>();
         if (submId != null) {
             ApplicationStartListener.queue.add(submId);
-        } else if (status != null || probId != null) {
-            asynRejudge(status, probId);
+        } else {
+            SubmitInfo condition = new SubmitInfo();
+            if (StringUtils.isNotBlank(username)) {
+                UserInfo userInfo = userInfoDao.selectByUsername(username);
+                condition.setUserId(userInfo == null ? -1 : userInfo.getUserId());
+            }
+            BaseQuery baseQuery = new BaseQuery();
+            Integer total = submitInfoDao.selectByConditionGetCount(condition, baseQuery);
+            int maxNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_MAX_NUM, SiteKey.REJUDGE_SINGLE_MAX_NUM_DE);
+            if (total > maxNum) {
+                res.put("status", -1);
+                res.put("desc", "单次重判不能超过" + maxNum);
+                return res;
+            }
+            List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(condition, baseQuery);
+            SubmitInfo record = new SubmitInfo();
+            for (int i = 0; i < submitInfoList.size() && i < maxNum; i++) {
+                SubmitInfo item = submitInfoList.get(i);
+                if (item == null || item.getSubmId() == null) continue;
+                if (ApplicationStartListener.queue.contains(item.getSubmId())) continue;
+                record.setSubmId(item.getSubmId());
+                record.setStatus(13);// 更新为Rejudge.Waiting
+                submitInfoDao.updateByPrimaryKeySelective(record);
+                ApplicationStartListener.queue.add(item.getSubmId());
+            }
+            res.put("status", total);
         }
         res.put("status", 1);
         return res;
-    }
-
-    private void asynRejudge(Integer status, Integer probId) {
-        RejudgeThread rejudgeThread = new RejudgeThread();
-        if (status == 10 || status == 11 || status == 12) rejudgeThread.setStatus(status);
-        rejudgeThread.setProbId(probId);
-        ApplicationStartListener.rejudgeExecutor.execute(rejudgeThread);
-    }
-
-    private final class RejudgeThread implements Runnable {
-        private Integer status;
-        private Integer probId;
-
-        public RejudgeThread() {
-        }
-
-        public RejudgeThread(Integer status, Integer probId) {
-            this.status = status;
-            this.probId = probId;
-        }
-
-        @Override
-        public void run() {
-            SubmitInfo condition = new SubmitInfo();
-            condition.setStatus(status);
-            condition.setProblemId(probId);
-            int total = submitInfoDao.selectByConditionGetCount(condition, new BaseQuery());
-            if (total == 0) return;
-            // 开始重判
-            Integer rejudgeSingleNum = Config.getToInt(SiteKey.REJUDGE_SINGLE_NUM, SiteKey.REJUDGE_SINGLE_NUM_DE);
-            int len = total % rejudgeSingleNum != 0 ?
-                    total / rejudgeSingleNum + 1 : total / rejudgeSingleNum;
-            BaseQuery baseQuery = new BaseQuery();
-            baseQuery.setRows(rejudgeSingleNum);
-            SubmitInfo record = new SubmitInfo();
-            for (int i = 0; i < len; i++) {
-                baseQuery.setPage(i + 1);
-                List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(condition, baseQuery);
-                if (submitInfoList == null || submitInfoList.size() == 0) return;
-                for (SubmitInfo item : submitInfoList) {
-                    if (item == null || item.getSubmId() == null) continue;
-                    if (ApplicationStartListener.queue.contains(item.getSubmId())) continue;
-                    record.setSubmId(item.getSubmId());
-                    record.setStatus(13);// 更新为Rejudge.Waiting
-                    submitInfoDao.updateByPrimaryKeySelective(record);
-                    ApplicationStartListener.queue.add(item.getSubmId());
-                }
-                try {
-                    Integer rejudgeWaitTime = Config.getToInt(SiteKey.REJUDGE_WAIT_TIME, SiteKey.REJUDGE_WAIT_TIME_DE);
-                    Thread.sleep(rejudgeWaitTime);
-                } catch (InterruptedException e) {
-                    log.error("Thread.sleep error: {}", e);
-                }
-            }
-        }
-
-        public Integer getStatus() {
-            return status;
-        }
-
-        public void setStatus(Integer status) {
-            this.status = status;
-        }
-
-        public Integer getProbId() {
-            return probId;
-        }
-
-        public void setProbId(Integer probId) {
-            this.probId = probId;
-        }
     }
 }

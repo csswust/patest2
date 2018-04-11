@@ -201,6 +201,31 @@ var program = {
                 pubMeth.alertInfo("alert-info", "请求错误");
             }
         });
+
+    },
+    rejudge: function () {
+        $.ajax({
+            type: "get",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../submitInfo/rejudgeBySubmId",
+            dataType: 'json',
+            async: false,
+            data: {
+                "status": program.statu,
+                "judgerId": program.compiler,
+                "problemId": program.probId,
+                submId: program.ssubmId,
+                username: program.susername
+            },
+            success: function (result) {
+                if (result.status > 0) {
+                    pubMeth.alertInfo("alert-success", "已提交" + result.status + "个任务");
+                    program.getSubmitInfo();
+                } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
+                }
+            }
+        });
     }
 };
 pubMeth.getRowsnum("rowsnum");
@@ -228,6 +253,20 @@ $(".search").click(function () {
     $('#pagination').jqPaginator('option', {
         totalCounts: program.count
     });
+});
+$(".rejudge").click(function () {
+    program.susername = $(".susername").val();
+    program.probId = $(".probId").val();
+    program.statu = $(".result_select option:selected").val();
+    program.compiler = $(".result_comp option:selected").val();
+    program.ssubmId = $(".ssubmId").val();
+    if (program.statu == 0) {
+        program.statu = "";
+    }
+    if (program.compiler == 0) {
+        program.compiler = "";
+    }
+    program.rejudge();
 });
 $(".reset").click(function () {
     $(".probId").val("");

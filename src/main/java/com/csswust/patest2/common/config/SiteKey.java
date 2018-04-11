@@ -101,16 +101,8 @@ public class SiteKey {
     public final static int IS_AUTH_JUDGE_DE = 1;
 
     // 重判每次提交任务数
-    public final static String REJUDGE_SINGLE_NUM = "rejudge_single_num";
-    public final static int REJUDGE_SINGLE_NUM_DE = 10;
-
-    // 重判提交任务间隔时间
-    public final static String REJUDGE_WAIT_TIME = "rejudge_wait_time";
-    public final static int REJUDGE_WAIT_TIME_DE = 100;
-
-    // 重判线程池大小
-    public final static String REJUDGE_TASK_QUEUE_TOTAL = "rejudge_task_queue_total";
-    public final static int REJUDGE_TASK_QUEUE_TOTAL_DE = 3;
+    public final static String REJUDGE_SINGLE_MAX_NUM = "rejudge_single_max_num";
+    public final static int REJUDGE_SINGLE_MAX_NUM_DE = 100;
 
     // 格式错误是否计算分数
     public final static String IS_SCORE_PRESENTATION_ERROR = "is_score_presentation_error";
