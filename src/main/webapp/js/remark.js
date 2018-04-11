@@ -207,7 +207,8 @@ var program = {
             async: false,
             data: {
                 examId: program.examId,
-                probId: program.codeList[temp].problemId
+                // probId: program.codeList[temp].problemId,
+                submId: program.codeList[temp].submId
             },
             success: function (result) {
                 console.log(result);

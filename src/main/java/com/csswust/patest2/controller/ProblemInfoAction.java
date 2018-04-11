@@ -2,14 +2,10 @@ package com.csswust.patest2.controller;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.CourseInfoDao;
-import com.csswust.patest2.dao.KnowledgeInfoDao;
-import com.csswust.patest2.dao.ProblemInfoDao;
+import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.CourseInfo;
-import com.csswust.patest2.entity.KnowledgeInfo;
-import com.csswust.patest2.entity.ProblemInfo;
+import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ProblemInfoService;
 import com.csswust.patest2.service.result.SelectProblemDataRe;
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +42,10 @@ public class ProblemInfoAction extends BaseAction {
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private ProblemInfoService problemInfoService;
+    @Autowired
+    private UserInfoDao userInfoDao;
+    @Autowired
+    private UserProfileDao userProfileDao;
 
     @RequestMapping(value = "/uploadDataByFile", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> uploadDataByFile(
@@ -60,9 +60,9 @@ public class ProblemInfoAction extends BaseAction {
 
     @RequestMapping(value = "/uploadDataByForm", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> uploadDataByForm(
-            @RequestParam(required = true) String[] input,
-            @RequestParam(required = true) String[] output,
-            @RequestParam(required = true) Integer probId) {
+            @RequestParam String[] input,
+            @RequestParam String[] output,
+            @RequestParam Integer probId) {
         Map<String, Object> res = new HashMap<>();
         List<String> inputList = Arrays.asList(input);
         List<String> outputList = Arrays.asList(output);
@@ -89,6 +89,7 @@ public class ProblemInfoAction extends BaseAction {
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
             ProblemInfo problemInfo,
+            @RequestParam(required = false, defaultValue = "false") Boolean containUModify,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         if (problemInfo == null) return null;
@@ -107,6 +108,16 @@ public class ProblemInfoAction extends BaseAction {
         List<CourseInfo> courseInfoList = selectRecordByIds(
                 getFieldByList(knowledgeInfoList, "courseId", KnowledgeInfo.class),
                 "couId", (BaseDao) courseInfoDao, CourseInfo.class);
+        if (containUModify) {
+            List<UserInfo> userInfoList = selectRecordByIds(
+                    getFieldByList(problemInfoList, "modifyUserId", ProblemInfo.class),
+                    "userId", (BaseDao) userInfoDao, UserInfo.class);
+            List<UserProfile> userProfileList = selectRecordByIds(
+                    getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                    "useProId", (BaseDao) userProfileDao, UserProfile.class);
+            res.put("userInfoList", userInfoList);
+            res.put("userProfileList", userProfileList);
+        }
         res.put("total", total);
         res.put("data", problemInfoList);
         res.put("knowledge", knowledgeInfoList);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="${model.namespace}">
-    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="selectByCondition" resultMap="${resultMap}" parameterType="java.util.Map">
         SELECT
         <include refid="Base_Column_List"/>
     <#if isBlob == 1>
@@ -34,7 +34,7 @@
         <#noparse>#{item}</#noparse>
         </foreach>
     </delete>
-    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="selectByIdsList" resultMap="${resultMap}" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
     <#if isBlob == 1>

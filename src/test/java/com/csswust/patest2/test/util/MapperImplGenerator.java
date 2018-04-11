@@ -9,7 +9,7 @@ public class MapperImplGenerator {
         map.put("conditionStr", getConditionStr(model));
         map.put("FieldStr", getFieldStr(model));
         map.put("valueStr", getValueStr(model));
-
+        map.put("resultMap", model.isBlob() ? "ResultMapWithBLOBs" : "BaseResultMap");
         String typeName = (String) map.get("typeName");
         Generator.writeTemplate(Generator.xmlImplPath + "/" + typeName + "Mapper.xml",
                 "mapper-template/XMLImplMapper.ftl", map);

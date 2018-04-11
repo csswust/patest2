@@ -25,13 +25,15 @@ var program = {
             async: false,
             data: {
                 knowId: program.know,
+                containUModify: true,
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
                 console.log(result);
                 program.count = result.total;
                 program.data = result;
+                program.userProfileList = result.userProfileList;
                 program.showProblem();
             }, error: function () {
                 pubMeth.alertInfo("alert-info", "请求错误");
@@ -73,6 +75,7 @@ var program = {
                 '<td>' + courseName + '</td>' +
                 '<td>' + knowName + '</td>' +
                 '<td>' + testNum + '</td>' +
+                '<td>' + program.userProfileList[i].realName + '</td>' +
                 '</tr>');
             flag++;
         }
@@ -133,6 +136,7 @@ var program = {
                 "title": program.title,
                 "levelId": program.level,
                 "probId": program.probId,
+                containUModify: true,
                 knowId: program.know,
                 page: program.page,
                 rows: pubMeth.rowsnum

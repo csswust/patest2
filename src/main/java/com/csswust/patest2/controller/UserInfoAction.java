@@ -47,8 +47,8 @@ public class UserInfoAction extends BaseAction {
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> login(
-            @RequestParam(required = true) String username,
-            @RequestParam(required = true) String password) {
+            @RequestParam String username,
+            @RequestParam String password) {
         Map<String, Object> res = new HashMap<String, Object>();
         LoginRe result = userInfoService.login(username, password, getIp(request));
         // 进行实际登录
@@ -159,11 +159,11 @@ public class UserInfoAction extends BaseAction {
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertOne(
-            @RequestParam(required = true) String username,
-            @RequestParam(required = true) String password,
-            @RequestParam(required = true) String studentNumber,
-            @RequestParam(required = true) Integer teacher,
-            @RequestParam(required = true) Integer admin) {
+            @RequestParam String username,
+            @RequestParam String password,
+            @RequestParam String studentNumber,
+            @RequestParam Integer teacher,
+            @RequestParam Integer admin) {
         Map<String, Object> res = new HashMap<>();
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(username);
@@ -178,7 +178,7 @@ public class UserInfoAction extends BaseAction {
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> updateById(
             UserInfo userInfo,
-            @RequestParam(required = true) String studentNumber) {
+            @RequestParam String studentNumber) {
         Map<String, Object> res = new HashMap<>();
         APIResult result = userInfoService.update(userInfo, studentNumber);
         res.put("APIResult", result);
@@ -186,7 +186,7 @@ public class UserInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> deleteByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         int result = userInfoDao.deleteByIds(ids);
         res.put("status", result);
@@ -194,7 +194,7 @@ public class UserInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/releaseLockByIds", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> releaseLockByIds(@RequestParam(required = true) String ids) {
+    public Map<String, Object> releaseLockByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
         List<Integer> idList = null;
         try {

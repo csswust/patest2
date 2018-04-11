@@ -110,44 +110,45 @@ public class SubmitSimilarityAction extends BaseAction {
 
     @RequestMapping(value = "/getSimByProbId", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> getSimByProbId(
-            @RequestParam(required = true) Integer examId,
-            @RequestParam(required = true) Integer probId) {
+            @RequestParam Integer examId,
+            @RequestParam Integer submId) {
         Map<String, Object> res = new HashMap<>();
-        if (examId == null || probId == null) {
-            return res;
-        }
-        SubmitInfo submitInfo = new SubmitInfo();
-        submitInfo.setExamId(examId);
-        submitInfo.setProblemId(probId);
-        List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(submitInfo, new BaseQuery());
-        if (submitInfoList == null || submitInfoList.size() == 0) {
-            res.put("status", -1);
-            res.put("desc", "本题无提交数据");
-        }
+        if (examId == null || submId == null) return res;
+        SubmitInfo currSubmitInfo = submitInfoDao.selectByPrimaryKey(submId);
+        if (currSubmitInfo == null) return res;
+        if (currSubmitInfo.getProblemId() == null) return res;
+
+        // 判断该提交是否已经计算过相似度
         SubmitSimilarity temp = new SubmitSimilarity();
-        temp.setSubmitId1(submitInfoList.get(0).getSubmId());
-        List<SubmitSimilarity> templist = submitSimilarityDao.selectByCondition(temp, new BaseQuery(1, 1));
-        if (templist.size() > 0) {
+        temp.setSubmitId1(submId);
+        int total = submitSimilarityDao.selectByConditionGetCount(temp, new BaseQuery());
+        if (total > 0) {
             res.put("status", -2);
             res.put("desc", "不能重复计算相似度");
             return res;
         }
-        int count = 0;
-        int lenth = submitInfoList.size();
-        for (int i = 0; i < lenth; i++) {
-            for (int j = 0; j < lenth; j++) {
-                if (i == j) continue;
-                SubmitInfo subInfo1, subInfo2;
-                subInfo1 = submitInfoList.get(i);
-                subInfo2 = submitInfoList.get(j);
-                if (subInfo1.getUserId().intValue() == subInfo2.getUserId().intValue()) continue;
-                SubmitSimilarity submitSimilarity = new SubmitSimilarity();
-                submitSimilarity.setSubmitId1(subInfo1.getSubmId());
-                submitSimilarity.setExamId(examId);
-                submitSimilarity.setSubmitId2(subInfo2.getSubmId());
-                submitSimilarity.setSimilarity(getSimilarity(subInfo1.getSource(), subInfo2.getSource()));
-                count += submitSimilarityDao.insertSelective(submitSimilarity);
-            }
+        // 查询属于同一个题目下的所有提交
+        SubmitInfo submitInfo = new SubmitInfo();
+        submitInfo.setExamId(examId);
+        submitInfo.setProblemId(currSubmitInfo.getProblemId());
+        List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(submitInfo, new BaseQuery());
+        if (submitInfoList == null || submitInfoList.size() == 0) {
+            res.put("status", -1);
+            res.put("desc", "本题无提交数据");
+            return res;
+        }
+        // 计算相似度
+        int count = 0, length = submitInfoList.size();
+        for (int i = 0; i < length; i++) {
+            SubmitInfo subInfo2;
+            subInfo2 = submitInfoList.get(i);
+            if (submId.intValue() == subInfo2.getSubmId().intValue()) continue;
+            SubmitSimilarity submitSimilarity = new SubmitSimilarity();
+            submitSimilarity.setSubmitId1(submId);
+            submitSimilarity.setExamId(examId);
+            submitSimilarity.setSubmitId2(subInfo2.getSubmId());
+            submitSimilarity.setSimilarity(getSimilarity(currSubmitInfo.getSource(), subInfo2.getSource()));
+            count += submitSimilarityDao.insertSelective(submitSimilarity);
         }
         res.put("status", count);
         return res;
