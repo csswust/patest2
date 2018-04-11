@@ -1,6 +1,6 @@
 package com.csswust.patest2.test.service;
 
-import com.csswust.patest2.test.JunitBaseServiceDaoTest;
+import com.csswust.patest2.test.base.JunitBaseServiceDaoTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

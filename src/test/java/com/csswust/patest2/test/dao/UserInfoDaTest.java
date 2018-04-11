@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.UserInfo;
-import com.csswust.patest2.test.JunitBaseServiceDaoTest;
+import com.csswust.patest2.test.base.JunitBaseServiceDaoTest;
 import com.csswust.patest2.utils.CipherUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

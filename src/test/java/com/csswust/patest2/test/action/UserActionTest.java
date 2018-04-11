@@ -1,6 +1,6 @@
 package com.csswust.patest2.test.action;
 
-import com.csswust.patest2.test.JunitBaseActionTest;
+import com.csswust.patest2.test.base.JunitBaseActionTest;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 

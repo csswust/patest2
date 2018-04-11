@@ -1,4 +1,4 @@
-package com.csswust.patest2.test;
+package com.csswust.patest2.test.base;
 
 import org.junit.After;
 import org.junit.Before;

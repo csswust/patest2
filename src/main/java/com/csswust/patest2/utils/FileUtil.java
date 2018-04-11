@@ -1,5 +1,7 @@
 package com.csswust.patest2.utils;
 
+import org.springframework.core.io.ClassPathResource;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -174,5 +176,28 @@ public class FileUtil {
                 }
             }
         }
+    }
+
+    public static String readResource(String filePath) {
+        ClassPathResource resource = new ClassPathResource(filePath);
+        InputStream is = null;
+        try {
+            is = resource.getInputStream();
+            return inputStream2String(is);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String inputStream2String(InputStream is) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        StringBuffer buffer = new StringBuffer();
+        String line = "";
+        while ((line = in.readLine()) != null) {
+            buffer.append(line).append("\n");
+        }
+        return buffer.toString();
     }
 }

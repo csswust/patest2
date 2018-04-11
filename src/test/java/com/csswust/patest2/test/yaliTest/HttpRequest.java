@@ -1,4 +1,4 @@
-package com.csswust.patest2.test.util;
+package com.csswust.patest2.test.yaliTest;
 
 import org.apache.commons.lang3.StringUtils;
 

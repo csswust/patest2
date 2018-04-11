@@ -4,7 +4,6 @@ import com.csswust.patest2.dao.SubmitInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.PaperProblem;
 import com.csswust.patest2.entity.SubmitInfo;
-import com.csswust.patest2.test.util.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

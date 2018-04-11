@@ -1,20 +1,14 @@
 package com.csswust.patest2.test.dao;
 
-import com.alibaba.fastjson.JSON;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
-import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.ProblemInfoDao;
-import com.csswust.patest2.dao.common.BaseDao;
-import com.csswust.patest2.entity.AcademyInfo;
 import com.csswust.patest2.entity.ProblemInfo;
-import com.csswust.patest2.test.JunitBaseServiceDaoTest;
+import com.csswust.patest2.test.base.JunitBaseServiceDaoTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class ProblemInfoDaTest extends JunitBaseServiceDaoTest {

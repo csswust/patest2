@@ -1,7 +1,7 @@
 package com.csswust.patest2.test.yaliTest;
 
 import com.csswust.patest2.dao.SubmitInfoDao;
-import com.csswust.patest2.test.JunitBaseServiceDaoTest;
+import com.csswust.patest2.test.base.JunitBaseServiceDaoTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
