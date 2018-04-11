@@ -20,15 +20,19 @@ import java.util.Map;
  * Created by 972536780 on 2018/4/9.
  */
 public class Generator {
-    public static String modelPath = "E:\\javawork\\csTest\\src\\main\\resources\\mybatis_mappers";
-    public static String daoPath = "E:\\javawork\\csTest\\src\\main\\java\\com\\ysf\\csTest\\dao";
-    public static String actionPath = "E:\\javawork\\csTest\\src\\main\\java\\com\\ysf\\csTest\\controller";
-    public static String htmlPath = "E:\\javawork\\csTest\\src\\main\\webapp\\index.html";
+    private static String basePath = "E:\\javawork\\csTest\\";
+    private static String packagePath = "com\\ysf\\csTest\\";
+    public static String basePackage = "com.csswust.patest2";
 
-    public static String daoImplPath = daoPath + "/impl";
-    public static String xmlImplPath = modelPath + "/impl";
-    public static String xmlCustomPath = modelPath + "/custom";
-    public static String basePackage = "com.ysf.csTest";
+    public static String modelPath = basePath + "src\\main\\resources\\mybatis_mappers";
+    public static String daoPath = basePath + "src\\main\\java\\" + packagePath + "dao";
+    public static String actionPath = basePath + "src\\main\\java\\"+packagePath+"controller";
+    public static String htmlPath = basePath + "src\\main\\webapp\\index.html";
+
+    public static String daoImplPath = daoPath + "\\impl";
+    public static String xmlImplPath = modelPath + "\\impl";
+    public static String xmlCustomPath = modelPath + "\\custom";
+
     private static boolean isOver = false;
 
 
@@ -41,9 +45,9 @@ public class Generator {
             }
             Model model = Generator.getModel(file);
             System.out.println(JSON.toJSONString(model));
-            DaoImplGenerator.generator(model);
-            MapperImplGenerator.generator(model);
-            ActionGenerator.generator(model);
+            //DaoImplGenerator.generator(model);
+            //MapperImplGenerator.generator(model);
+            //ActionGenerator.generator(model);
         }
     }
 
