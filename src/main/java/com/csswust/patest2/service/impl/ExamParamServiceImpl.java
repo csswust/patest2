@@ -80,6 +80,9 @@ public class ExamParamServiceImpl extends BaseService implements ExamParamServic
             }
             count = count + x;
         }
+        ExamInfo record = new ExamInfo();
+        examInfo.setExamId(examId);
+        examInfoDao.updateByPrimaryKeySelective(record);
         result.setStatus(count);
         return result;
     }

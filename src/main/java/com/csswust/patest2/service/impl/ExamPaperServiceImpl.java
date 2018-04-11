@@ -263,6 +263,9 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return result;
         }
+        ExamInfo record = new ExamInfo();
+        examInfo.setExamId(examId);
+        examInfoDao.updateByPrimaryKeySelective(record);
         result.setDirPath(downFile.getPath());
         result.setStatus(count);
         return result;

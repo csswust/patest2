@@ -25,15 +25,16 @@ var program = {
             data: {
                 startTime: program.startTime,
                 endTime: program.endTime,
+                containUModify: true,
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
                 console.log(result);
                 program.count = result.total;
                 program.data = result.examInfoList;
                 program.peototal = result.peopleTotal;
-                //program.KnowledgeData = result.KnowledgeData;
+                program.userProfileList = result.userProfileList;
                 program.showInfo();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.html);
@@ -55,18 +56,13 @@ var program = {
         var order = 1;
         program.html = "";
         for (var i = 0; i < length; i++) {
-            //var knowledgeData = program.KnowledgeData[i];
-            /*var courseName = "null";
-             if (knowledgeData) {
-             courseName = program.findCourseName(knowledgeData.parentId);
-             }*/
             program.html += '<tr><td><input type="checkbox" value="' + program.data[i].examId + '" name="title"/></td>'
                 + '<td>' + program.data[i].examId + '</td>'
                 + '<td><a class="title" href="editExam.html?Id=' + program.data[i].examId + '">' + program.data[i].title + '</a></td>'
-                /*+ '<td>' + courseName + '</td>'*/
                 + '<td>' + program.peototal[i] + '</td>'
                 + '<td>' + program.data[i].startTime + '</td>'
                 + '<td>' + program.data[i].endTime + '</td>'
+                + '<td>' + program.userProfileList[i].realName + '</td>'
                 + '</tr>';
             order++;
         }
@@ -145,7 +141,6 @@ pubMeth.getRowsnum("rowsnum");
 pubMeth.serCourse();
 program.getExamInfo();
 program.deleteIt();
-
 
 $(".search").click(function () {
     program.page = 1;

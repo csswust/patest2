@@ -1,16 +1,10 @@
 package com.csswust.patest2.controller;
 
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.CourseInfoDao;
-import com.csswust.patest2.dao.ExamProblemDao;
-import com.csswust.patest2.dao.KnowledgeInfoDao;
-import com.csswust.patest2.dao.ProblemInfoDao;
+import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.CourseInfo;
-import com.csswust.patest2.entity.ExamProblem;
-import com.csswust.patest2.entity.KnowledgeInfo;
-import com.csswust.patest2.entity.ProblemInfo;
+import com.csswust.patest2.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +37,8 @@ public class ExamProblemAction extends BaseAction {
     private KnowledgeInfoDao knowledgeInfoDao;
     @Autowired
     private CourseInfoDao courseInfoDao;
+    @Autowired
+    private ExamInfoDao examInfoDao;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
@@ -91,7 +87,12 @@ public class ExamProblemAction extends BaseAction {
         }
         int count = examProblemDao.insertBatch(examProblemList);
         if (count != probIdList.length) res.put("status", 0);
-        else res.put("status", count);
+        else {
+            res.put("status", count);
+            ExamInfo examInfo = new ExamInfo();
+            examInfo.setExamId(examId);
+            examInfoDao.updateByPrimaryKeySelective(examInfo);
+        }
         return res;
     }
 

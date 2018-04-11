@@ -211,6 +211,8 @@
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
         from problem_info
         where prob_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">

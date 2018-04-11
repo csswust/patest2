@@ -37,6 +37,10 @@
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
+    <#if isBlob == 1>
+        ,
+        <include refid="Blob_Column_List"/>
+    </#if>
         from ${model.tableName}
         where ${model.idColumn} in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">

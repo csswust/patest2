@@ -53,6 +53,7 @@ public class ExamInfoAction extends BaseAction {
             ExamInfo examInfo,
             @RequestParam(required = false, defaultValue = "false") Boolean isRecent,
             @RequestParam(required = false, defaultValue = "false") Boolean onlyExamInfo,
+            @RequestParam(required = false, defaultValue = "false") Boolean containUModify,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         if (examInfo == null) return null;
@@ -101,7 +102,16 @@ public class ExamInfoAction extends BaseAction {
             int size = paperProblemDao.selectByConditionGetCount(paperProblem, new BaseQuery());
             proState.add(size == 0 ? 0 : 1);
         }
-
+        if (containUModify) {
+            List<UserInfo> userInfoList = selectRecordByIds(
+                    getFieldByList(examInfoList, "modifyUserId", ExamInfo.class),
+                    "userId", (BaseDao) userInfoDao, UserInfo.class);
+            List<UserProfile> userProfileList = selectRecordByIds(
+                    getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                    "useProId", (BaseDao) userProfileDao, UserProfile.class);
+            res.put("userInfoList", userInfoList);
+            res.put("userProfileList", userProfileList);
+        }
         res.put("peopleTotal", peopleTotal);
         res.put("statusList", statusList);
         res.put("proState", proState);
