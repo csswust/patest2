@@ -196,7 +196,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 examPaper.setAcedCount(0);
                 examPaper.setUsedTime(0);
                 examPaper.setIsMarked(0);
-                examPaper.setScore(0);
+                examPaper.setScore(0.0);
                 temp = examPaperDao.insertSelective(examPaper);
                 if (temp != 1) {
                     result.setStatus(-12);
@@ -342,7 +342,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                         paperProblem.setExamParamId(examParamList.get(j).getExaParId());
                         paperProblem.setProblemId(probId);
                         paperProblem.setIsAced(0);
-                        paperProblem.setScore(0);
+                        paperProblem.setScore(0.0);
                         paperProblem.setSubmitCount(0);
                         paperProblem.setUsedTime(0);
                         pPList.add(paperProblem);

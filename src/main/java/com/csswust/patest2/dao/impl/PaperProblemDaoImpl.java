@@ -25,11 +25,13 @@ public class PaperProblemDaoImpl extends CommonMapper<PaperProblem, BaseQuery> i
         record.setPapProId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(PaperProblem record, Date date) {
+    public void updateInit(PaperProblem record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override

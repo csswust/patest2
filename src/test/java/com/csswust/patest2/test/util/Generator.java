@@ -20,7 +20,7 @@ import java.util.Map;
  * Created by 972536780 on 2018/4/9.
  */
 public class Generator {
-    private static String basePath = "E:\\javawork\\patest2";
+    private static String basePath = "E:\\javawork\\patest2\\";
     private static String packagePath = "com\\csswust\\patest2\\";
     public static String basePackage = "com.csswust.patest2";
 
@@ -46,7 +46,7 @@ public class Generator {
             Model model = Generator.getModel(file);
             System.out.println(JSON.toJSONString(model));
             //DaoImplGenerator.generator(model);
-            //MapperImplGenerator.generator(model);
+            MapperImplGenerator.generator(model);
             //ActionGenerator.generator(model);
         }
     }

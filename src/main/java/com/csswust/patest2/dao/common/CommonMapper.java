@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -17,11 +18,22 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         super.setSqlSessionFactory(sqlSessionFactory);
     }
 
+    protected Integer getUserId() {
+        String userId = MDC.get("userId");
+        if (userId == null) return -1;
+        try {
+            return Integer.parseInt(userId);
+        } catch (Exception e) {
+            // log.error("Integer.parseInt({}) error: {}", userId, e);
+            return -1;
+        }
+    }
+
     public abstract String getPackage();
 
     public abstract void insertInit(T record, Date date);
 
-    public abstract void updatInit(T record, Date date);
+    public abstract void updateInit(T record, Date date);
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -108,7 +120,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        updatInit(record, new Date());
+        updateInit(record, new Date());
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKeySelective", record);
         } catch (Exception e) {
@@ -122,7 +134,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        updatInit(record, new Date());
+        updateInit(record, new Date());
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKeyWithBLOBs", record);
         } catch (Exception e) {
@@ -136,7 +148,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         if (record == null) {
             return 0;
         }
-        updatInit(record, new Date());
+        updateInit(record, new Date());
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKey", record);
         } catch (Exception e) {

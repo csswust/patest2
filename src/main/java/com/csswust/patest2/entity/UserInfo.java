@@ -27,6 +27,8 @@ public class UserInfo {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getUserId() {
         return userId;
     }
@@ -121,5 +123,13 @@ public class UserInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

@@ -19,6 +19,8 @@ public class ExamInfo {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     private String description;
 
     public Integer getExamId() {
@@ -83,6 +85,14 @@ public class ExamInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 
     public String getDescription() {

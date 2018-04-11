@@ -31,11 +31,13 @@ public class UserInfoDaoImpl extends CommonMapper<UserInfo, BaseQuery> implement
         record.setUserId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(UserInfo record, Date date) {
+    public void updateInit(UserInfo record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override

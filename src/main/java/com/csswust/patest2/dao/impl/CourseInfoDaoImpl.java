@@ -20,10 +20,12 @@ public class CourseInfoDaoImpl extends CommonMapper<CourseInfo, BaseQuery> imple
         record.setCouId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(CourseInfo record, Date date) {
+    public void updateInit(CourseInfo record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

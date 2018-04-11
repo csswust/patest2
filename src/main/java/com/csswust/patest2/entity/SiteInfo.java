@@ -17,6 +17,8 @@ public class SiteInfo {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     private String value;
 
     public Integer getSiteId() {
@@ -73,6 +75,14 @@ public class SiteInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 
     public String getValue() {

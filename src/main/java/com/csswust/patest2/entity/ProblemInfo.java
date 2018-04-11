@@ -33,6 +33,8 @@ public class ProblemInfo {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     private String description;
 
     private String inputTip;
@@ -163,6 +165,14 @@ public class ProblemInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 
     public String getDescription() {

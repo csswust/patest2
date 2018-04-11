@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM judger_info
         WHERE 1 = 1
-        <if test="record.judId != null">
+            <if test="record.judId != null">
             AND
             jud_id = #{record.judId}
         </if>
@@ -18,9 +18,13 @@
             AND
             repr = #{record.repr}
         </if>
-        <if test="record.commentPrefix != null">
+        <if test="record.fileName != null">
             AND
-            comment_prefix = #{record.commentPrefix}
+            file_name = #{record.fileName}
+        </if>
+        <if test="record.execFileName != null">
+            AND
+            exec_file_name = #{record.execFileName}
         </if>
         <if test="record.suffix != null">
             AND
@@ -38,6 +42,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -48,7 +57,7 @@
         count(*)
         FROM judger_info
         WHERE 1 = 1
-        <if test="record.judId != null">
+            <if test="record.judId != null">
             AND
             jud_id = #{record.judId}
         </if>
@@ -60,9 +69,13 @@
             AND
             repr = #{record.repr}
         </if>
-        <if test="record.commentPrefix != null">
+        <if test="record.fileName != null">
             AND
-            comment_prefix = #{record.commentPrefix}
+            file_name = #{record.fileName}
+        </if>
+        <if test="record.execFileName != null">
+            AND
+            exec_file_name = #{record.execFileName}
         </if>
         <if test="record.suffix != null">
             AND
@@ -80,6 +93,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -89,7 +107,7 @@
         delete from judger_info
         where jud_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -98,15 +116,14 @@
         from judger_info
         where jud_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into judger_info
-        (name, repr, comment_prefix, suffix, enabled, create_time, modify_time) values
+        (name, repr, file_name, exec_file_name, suffix, enabled, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.name}, #{item.repr}, #{item.commentPrefix}, #{item.suffix}, #{item.enabled}, #{item.createTime},
-            #{item.modifyTime})
+            (#{item.name}, #{item.repr}, #{item.fileName}, #{item.execFileName}, #{item.suffix}, #{item.enabled}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

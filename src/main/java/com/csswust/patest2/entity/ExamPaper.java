@@ -11,7 +11,7 @@ public class ExamPaper {
 
     private String classroom;
 
-    private Integer score;
+    private Double score;
 
     private Integer acedCount;
 
@@ -22,6 +22,8 @@ public class ExamPaper {
     private Date createTime;
 
     private Date modifyTime;
+
+    private Integer modifyUserId;
 
     public Integer getExaPapId() {
         return exaPapId;
@@ -55,11 +57,11 @@ public class ExamPaper {
         this.classroom = classroom == null ? null : classroom.trim();
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
@@ -101,5 +103,13 @@ public class ExamPaper {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

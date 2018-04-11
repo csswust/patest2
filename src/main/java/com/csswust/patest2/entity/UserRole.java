@@ -11,6 +11,8 @@ public class UserRole {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getUseRolId() {
         return useRolId;
     }
@@ -41,5 +43,13 @@ public class UserRole {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

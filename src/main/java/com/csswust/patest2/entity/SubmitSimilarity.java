@@ -17,6 +17,8 @@ public class SubmitSimilarity {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getSubSimId() {
         return subSimId;
     }
@@ -71,5 +73,13 @@ public class SubmitSimilarity {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

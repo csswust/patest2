@@ -20,10 +20,12 @@ public class UserLoginLogDaoImpl extends CommonMapper<UserLoginLog, BaseQuery> i
         record.setUseLogId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(UserLoginLog record, Date date) {
+    public void updateInit(UserLoginLog record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

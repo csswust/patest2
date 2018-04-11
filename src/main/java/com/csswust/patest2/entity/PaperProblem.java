@@ -25,11 +25,13 @@ public class PaperProblem {
 
     private Integer submitCount;
 
-    private Integer score;
+    private Double score;
 
     private Date createTime;
 
     private Date modifyTime;
+
+    private Integer modifyUserId;
 
     public Integer getPapProId() {
         return papProId;
@@ -119,11 +121,11 @@ public class PaperProblem {
         this.submitCount = submitCount;
     }
 
-    public Integer getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
@@ -141,5 +143,13 @@ public class PaperProblem {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

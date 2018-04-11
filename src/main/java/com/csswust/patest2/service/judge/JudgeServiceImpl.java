@@ -181,7 +181,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         if (ans < 0) ans = 0;
         if (ans > allScore) ans = allScore;
         if (ans > paperProblem.getScore()) {
-            paperProblem.setScore((int) ans);
+            paperProblem.setScore(ans);
             // 得到更高的分数，那么修改对应的代码
             paperProblem.setSubmitId(submitInfo.getSubmId());
         }
@@ -239,7 +239,8 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         PaperProblem record = new PaperProblem();
         record.setExamPaperId(examPaper.getExaPapId());
         List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(record, new BaseQuery());
-        int acSum = 0, score = 0, usedTime = 0;
+        int acSum = 0, usedTime = 0;
+        double  score = 0;
         for (int i = 0; i < paperProblemList.size(); i++) {
             if (paperProblemList.get(i).getIsAced() == 1) {
                 acSum++;
@@ -313,8 +314,6 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             Process proc = rt.exec(cmd.toString());
             // 设置超时时间
             int timeOut = Config.getToInt(SiteKey.JUDGE_MAX_RUN_TIME, SiteKey.JUDGE_MAX_RUN_TIME_DE);
-            // int maxJudgeTime = judgeTask.getTestdataNum() * judgeTask.getLimitTime();
-            // timeOut = Math.min(timeOut, maxJudgeTime);
             // 这里有个坑，当cpu负载太高的时候，可能很多代码没办法正确判断
             boolean status = proc.waitFor(timeOut, TimeUnit.SECONDS);
             if (!status) {

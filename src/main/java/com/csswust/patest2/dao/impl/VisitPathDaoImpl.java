@@ -20,10 +20,12 @@ public class VisitPathDaoImpl extends CommonMapper<VisitPath, BaseQuery> impleme
         record.setVisPatId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(VisitPath record, Date date) {
+    public void updateInit(VisitPath record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

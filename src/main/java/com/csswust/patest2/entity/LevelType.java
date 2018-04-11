@@ -11,6 +11,8 @@ public class LevelType {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getLevTypId() {
         return levTypId;
     }
@@ -41,5 +43,13 @@ public class LevelType {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

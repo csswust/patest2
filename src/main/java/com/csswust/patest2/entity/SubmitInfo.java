@@ -33,6 +33,8 @@ public class SubmitInfo {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     private String source;
 
     private String errMsg;
@@ -155,6 +157,14 @@ public class SubmitInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 
     public String getSource() {

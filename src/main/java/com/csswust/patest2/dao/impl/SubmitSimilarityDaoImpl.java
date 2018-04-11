@@ -20,10 +20,12 @@ public class SubmitSimilarityDaoImpl extends CommonMapper<SubmitSimilarity, Base
         record.setSubSimId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(SubmitSimilarity record, Date date) {
+    public void updateInit(SubmitSimilarity record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

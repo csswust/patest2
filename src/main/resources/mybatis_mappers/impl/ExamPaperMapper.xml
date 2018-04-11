@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM exam_paper
         WHERE 1 = 1
-        <if test="record.exaPapId != null">
+            <if test="record.exaPapId != null">
             AND
             exa_pap_id = #{record.exaPapId}
         </if>
@@ -46,6 +46,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -56,7 +61,7 @@
         count(*)
         FROM exam_paper
         WHERE 1 = 1
-        <if test="record.exaPapId != null">
+            <if test="record.exaPapId != null">
             AND
             exa_pap_id = #{record.exaPapId}
         </if>
@@ -96,6 +101,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -105,7 +115,7 @@
         delete from exam_paper
         where exa_pap_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -114,15 +124,14 @@
         from exam_paper
         where exa_pap_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into exam_paper
-        (exam_id, user_id, classroom, score, aced_count, used_time, is_marked, create_time, modify_time) values
+        (exam_id, user_id, classroom, score, aced_count, used_time, is_marked, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.examId}, #{item.userId}, #{item.classroom}, #{item.score}, #{item.acedCount}, #{item.usedTime},
-            #{item.isMarked}, #{item.createTime}, #{item.modifyTime})
+            (#{item.examId}, #{item.userId}, #{item.classroom}, #{item.score}, #{item.acedCount}, #{item.usedTime}, #{item.isMarked}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

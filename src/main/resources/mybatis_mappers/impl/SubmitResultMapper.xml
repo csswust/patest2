@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.SubmitResultDao">
-    <select id="selectByCondition" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
         SELECT
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
         FROM submit_result
         WHERE 1 = 1
-        <if test="record.subResId != null">
+            <if test="record.subResId != null">
             AND
             sub_res_id = #{record.subResId}
         </if>
@@ -40,10 +40,15 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
         <if test="record.errMsg != null">
             AND
             err_msg = #{record.errMsg}
         </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -54,7 +59,7 @@
         count(*)
         FROM submit_result
         WHERE 1 = 1
-        <if test="record.subResId != null">
+            <if test="record.subResId != null">
             AND
             sub_res_id = #{record.subResId}
         </if>
@@ -86,10 +91,15 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
         <if test="record.errMsg != null">
             AND
             err_msg = #{record.errMsg}
         </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -99,26 +109,23 @@
         delete from submit_result
         where sub_res_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
-    <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
         from submit_result
         where sub_res_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into submit_result
-        (submit_id, test_id, status, used_time, used_memory, create_time, modify_time) values
+        (submit_id, test_id, status, used_time, used_memory, create_time, modify_time, modify_user_id, err_msg) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.submitId}, #{item.testId}, #{item.status}, #{item.usedTime}, #{item.usedMemory}, #{item.createTime},
-            #{item.modifyTime})
+            (#{item.submitId}, #{item.testId}, #{item.status}, #{item.usedTime}, #{item.usedMemory}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.errMsg})
         </foreach>
     </select>
 </mapper>

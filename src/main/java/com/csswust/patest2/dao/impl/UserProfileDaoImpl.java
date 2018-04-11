@@ -22,11 +22,13 @@ public class UserProfileDaoImpl extends CommonMapper<UserProfile, BaseQuery> imp
         record.setUseProId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(UserProfile record, Date date) {
+    public void updateInit(UserProfile record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override

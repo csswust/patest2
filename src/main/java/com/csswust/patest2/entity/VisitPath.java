@@ -15,6 +15,8 @@ public class VisitPath {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getVisPatId() {
         return visPatId;
     }
@@ -61,5 +63,13 @@ public class VisitPath {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

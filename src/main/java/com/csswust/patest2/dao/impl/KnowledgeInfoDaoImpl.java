@@ -20,10 +20,12 @@ public class KnowledgeInfoDaoImpl extends CommonMapper<KnowledgeInfo, BaseQuery>
         record.setKnowId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(KnowledgeInfo record, Date date) {
+    public void updateInit(KnowledgeInfo record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

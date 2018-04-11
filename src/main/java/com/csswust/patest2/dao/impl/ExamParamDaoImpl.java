@@ -26,11 +26,13 @@ public class ExamParamDaoImpl extends CommonMapper<ExamParam, BaseQuery> impleme
         record.setExaParId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(ExamParam record, Date date) {
+    public void updateInit(ExamParam record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override

@@ -11,6 +11,8 @@ public class CourseInfo {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getCouId() {
         return couId;
     }
@@ -41,5 +43,13 @@ public class CourseInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

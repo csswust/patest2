@@ -20,10 +20,12 @@ public class ${typeName}DaoImpl extends CommonMapper<${typeName}, BaseQuery> imp
         record.set${dIdProperty}(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
     public void updateInit(${typeName} record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

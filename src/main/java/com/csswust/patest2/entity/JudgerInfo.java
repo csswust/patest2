@@ -9,7 +9,9 @@ public class JudgerInfo {
 
     private String repr;
 
-    private String commentPrefix;
+    private String fileName;
+
+    private String execFileName;
 
     private String suffix;
 
@@ -18,6 +20,8 @@ public class JudgerInfo {
     private Date createTime;
 
     private Date modifyTime;
+
+    private Integer modifyUserId;
 
     public Integer getJudId() {
         return judId;
@@ -43,12 +47,20 @@ public class JudgerInfo {
         this.repr = repr == null ? null : repr.trim();
     }
 
-    public String getCommentPrefix() {
-        return commentPrefix;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setCommentPrefix(String commentPrefix) {
-        this.commentPrefix = commentPrefix == null ? null : commentPrefix.trim();
+    public void setFileName(String fileName) {
+        this.fileName = fileName == null ? null : fileName.trim();
+    }
+
+    public String getExecFileName() {
+        return execFileName;
+    }
+
+    public void setExecFileName(String execFileName) {
+        this.execFileName = execFileName == null ? null : execFileName.trim();
     }
 
     public String getSuffix() {
@@ -81,5 +93,13 @@ public class JudgerInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

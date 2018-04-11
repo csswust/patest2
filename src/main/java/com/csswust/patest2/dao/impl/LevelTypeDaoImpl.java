@@ -20,10 +20,12 @@ public class LevelTypeDaoImpl extends CommonMapper<LevelType, BaseQuery> impleme
         record.setLevTypId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(LevelType record, Date date) {
+    public void updateInit(LevelType record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

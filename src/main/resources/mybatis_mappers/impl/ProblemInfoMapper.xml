@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.ProblemInfoDao">
-    <select id="selectByCondition" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
         SELECT
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
         FROM problem_info
         WHERE 1 = 1
-        <if test="record.probId != null">
+            <if test="record.probId != null">
             AND
             prob_id = #{record.probId}
         </if>
@@ -68,6 +68,10 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
         <if test="record.description != null">
             AND
             description = #{record.description}
@@ -92,6 +96,7 @@
             AND
             standard_source = #{record.standardSource}
         </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -102,7 +107,7 @@
         count(*)
         FROM problem_info
         WHERE 1 = 1
-        <if test="record.probId != null">
+            <if test="record.probId != null">
             AND
             prob_id = #{record.probId}
         </if>
@@ -162,6 +167,10 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
         <if test="record.description != null">
             AND
             description = #{record.description}
@@ -186,6 +195,7 @@
             AND
             standard_source = #{record.standardSource}
         </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -195,28 +205,23 @@
         delete from problem_info
         where prob_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
-    <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
         from problem_info
         where prob_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into problem_info
-        (title, level_id, memory_limit, time_limit, code_limit, know_id, testdata_num, score_ratio, judge_model, author,
-        submit_num, accepted_num, create_time, modify_time) values
+        (title, level_id, memory_limit, time_limit, code_limit, know_id, testdata_num, score_ratio, judge_model, author, submit_num, accepted_num, create_time, modify_time, modify_user_id, description, input_tip, output_tip, input_sample, output_sample, standard_source) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.title}, #{item.levelId}, #{item.memoryLimit}, #{item.timeLimit}, #{item.codeLimit}, #{item.knowId},
-            #{item.testdataNum}, #{item.scoreRatio}, #{item.judgeModel}, #{item.author}, #{item.submitNum},
-            #{item.acceptedNum}, #{item.createTime}, #{item.modifyTime})
+            (#{item.title}, #{item.levelId}, #{item.memoryLimit}, #{item.timeLimit}, #{item.codeLimit}, #{item.knowId}, #{item.testdataNum}, #{item.scoreRatio}, #{item.judgeModel}, #{item.author}, #{item.submitNum}, #{item.acceptedNum}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.description}, #{item.inputTip}, #{item.outputTip}, #{item.inputSample}, #{item.outputSample}, #{item.standardSource})
         </foreach>
     </select>
 </mapper>

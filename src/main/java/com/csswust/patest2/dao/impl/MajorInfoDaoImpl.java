@@ -22,11 +22,13 @@ public class MajorInfoDaoImpl extends CommonMapper<MajorInfo, BaseQuery> impleme
         record.setMajId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(MajorInfo record, Date date) {
+    public void updateInit(MajorInfo record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override

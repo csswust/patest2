@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM user_profile
         WHERE 1 = 1
-        <if test="record.useProId != null">
+            <if test="record.useProId != null">
             AND
             use_pro_id = #{record.useProId}
         </if>
@@ -42,6 +42,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -52,7 +57,7 @@
         count(*)
         FROM user_profile
         WHERE 1 = 1
-        <if test="record.useProId != null">
+            <if test="record.useProId != null">
             AND
             use_pro_id = #{record.useProId}
         </if>
@@ -88,6 +93,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -97,7 +107,7 @@
         delete from user_profile
         where use_pro_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -106,15 +116,14 @@
         from user_profile
         where use_pro_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into user_profile
-        (real_name, is_student, class_name, student_number, entrance_year, major_id, create_time, modify_time) values
+        (real_name, is_student, class_name, student_number, entrance_year, major_id, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.realName}, #{item.isStudent}, #{item.className}, #{item.studentNumber}, #{item.entranceYear},
-            #{item.majorId}, #{item.createTime}, #{item.modifyTime})
+            (#{item.realName}, #{item.isStudent}, #{item.className}, #{item.studentNumber}, #{item.entranceYear}, #{item.majorId}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

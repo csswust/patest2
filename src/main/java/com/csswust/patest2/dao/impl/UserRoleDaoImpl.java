@@ -20,10 +20,12 @@ public class UserRoleDaoImpl extends CommonMapper<UserRole, BaseQuery> implement
         record.setUseRolId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(UserRole record, Date date) {
+    public void updateInit(UserRole record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

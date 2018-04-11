@@ -163,7 +163,7 @@ public class ExamPaperAction extends BaseAction {
             examPaper.setExamId(examId);
             examPaper.setUserId(userInfo.getUserId());
             examPaper.setAcedCount(0);
-            examPaper.setScore(0);
+            examPaper.setScore(0.0);
             examPaper.setIsMarked(0);
             int status = examPaperDao.insertSelective(examPaper);
             if (status == 1) {

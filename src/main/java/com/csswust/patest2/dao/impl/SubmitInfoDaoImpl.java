@@ -20,10 +20,12 @@ public class SubmitInfoDaoImpl extends CommonMapper<SubmitInfo, BaseQuery> imple
         record.setSubmId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(SubmitInfo record, Date date) {
+    public void updateInit(SubmitInfo record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 }

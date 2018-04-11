@@ -26,11 +26,13 @@ public class SubmitResultDaoImpl extends CommonMapper<SubmitResult, BaseQuery> i
         record.setSubResId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(SubmitResult record, Date date) {
+    public void updateInit(SubmitResult record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override

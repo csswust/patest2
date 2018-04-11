@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM knowledge_info
         WHERE 1 = 1
-        <if test="record.knowId != null">
+            <if test="record.knowId != null">
             AND
             know_id = #{record.knowId}
         </if>
@@ -26,6 +26,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -36,7 +41,7 @@
         count(*)
         FROM knowledge_info
         WHERE 1 = 1
-        <if test="record.knowId != null">
+            <if test="record.knowId != null">
             AND
             know_id = #{record.knowId}
         </if>
@@ -56,6 +61,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -65,7 +75,7 @@
         delete from knowledge_info
         where know_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -74,14 +84,14 @@
         from knowledge_info
         where know_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into knowledge_info
-        (know_name, course_id, create_time, modify_time) values
+        (know_name, course_id, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.knowName}, #{item.courseId}, #{item.createTime}, #{item.modifyTime})
+            (#{item.knowName}, #{item.courseId}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

@@ -21,6 +21,8 @@ public class UserProfile {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getUseProId() {
         return useProId;
     }
@@ -91,5 +93,13 @@ public class UserProfile {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }

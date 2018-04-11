@@ -22,11 +22,13 @@ public class AcademyInfoDaoImpl extends CommonMapper<AcademyInfo, BaseQuery> imp
         record.setAcaId(null);
         record.setCreateTime(date);
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override
-    public void updatInit(AcademyInfo record, Date date) {
+    public void updateInit(AcademyInfo record, Date date) {
         record.setModifyTime(date);
+        record.setModifyUserId(getUserId());
     }
 
     @Override

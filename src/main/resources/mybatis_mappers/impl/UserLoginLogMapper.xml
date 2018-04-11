@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM user_login_log
         WHERE 1 = 1
-        <if test="record.useLogId != null">
+            <if test="record.useLogId != null">
             AND
             use_log_id = #{record.useLogId}
         </if>
@@ -26,6 +26,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -36,7 +41,7 @@
         count(*)
         FROM user_login_log
         WHERE 1 = 1
-        <if test="record.useLogId != null">
+            <if test="record.useLogId != null">
             AND
             use_log_id = #{record.useLogId}
         </if>
@@ -56,6 +61,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -65,7 +75,7 @@
         delete from user_login_log
         where use_log_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -74,14 +84,14 @@
         from user_login_log
         where use_log_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into user_login_log
-        (user_id, login_ip, create_time, modify_time) values
+        (user_id, login_ip, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.userId}, #{item.loginIp}, #{item.createTime}, #{item.modifyTime})
+            (#{item.userId}, #{item.loginIp}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

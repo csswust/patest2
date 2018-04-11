@@ -19,11 +19,11 @@ public class SubmitResult {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     private String errMsg;
 
-    public SubmitResult() {
-
-    }
+    public SubmitResult(){}
 
     public SubmitResult(Integer submitId, Integer testId, Integer status, Integer usedTime, Integer usedMemory, String errMsg) {
         this.submitId = submitId;
@@ -96,6 +96,14 @@ public class SubmitResult {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 
     public String getErrMsg() {

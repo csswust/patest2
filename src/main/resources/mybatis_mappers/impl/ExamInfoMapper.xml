@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.ExamInfoDao">
-    <select id="selectByCondition" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
         SELECT
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
         FROM exam_info
         WHERE 1 = 1
-        <if test="record.examId != null">
+            <if test="record.examId != null">
             AND
             exam_id = #{record.examId}
         </if>
@@ -40,10 +40,15 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
         <if test="record.description != null">
             AND
             description = #{record.description}
         </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -54,7 +59,7 @@
         count(*)
         FROM exam_info
         WHERE 1 = 1
-        <if test="record.examId != null">
+            <if test="record.examId != null">
             AND
             exam_id = #{record.examId}
         </if>
@@ -86,10 +91,15 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
         <if test="record.description != null">
             AND
             description = #{record.description}
         </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -99,26 +109,23 @@
         delete from exam_info
         where exam_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
-    <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
         from exam_info
         where exam_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into exam_info
-        (title, start_time, end_time, allow_ip, allow_judger_ids, create_time, modify_time) values
+        (title, start_time, end_time, allow_ip, allow_judger_ids, create_time, modify_time, modify_user_id, description) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.title}, #{item.startTime}, #{item.endTime}, #{item.allowIp}, #{item.allowJudgerIds},
-            #{item.createTime}, #{item.modifyTime})
+            (#{item.title}, #{item.startTime}, #{item.endTime}, #{item.allowIp}, #{item.allowJudgerIds}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.description})
         </foreach>
     </select>
 </mapper>

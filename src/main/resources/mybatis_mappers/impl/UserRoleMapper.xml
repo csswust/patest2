@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM user_role
         WHERE 1 = 1
-        <if test="record.useRolId != null">
+            <if test="record.useRolId != null">
             AND
             use_rol_id = #{record.useRolId}
         </if>
@@ -22,6 +22,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -32,7 +37,7 @@
         count(*)
         FROM user_role
         WHERE 1 = 1
-        <if test="record.useRolId != null">
+            <if test="record.useRolId != null">
             AND
             use_rol_id = #{record.useRolId}
         </if>
@@ -48,6 +53,11 @@
             AND
             modify_time = #{record.modifyTime}
         </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
         <include refid="custom_condition"/>
         <if test="start != null and rows != null">
             LIMIT #{start}, #{rows}
@@ -57,7 +67,7 @@
         delete from user_role
         where use_rol_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -66,14 +76,14 @@
         from user_role
         where use_rol_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into user_role
-        (name, create_time, modify_time) values
+        (name, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.name}, #{item.createTime}, #{item.modifyTime})
+            (#{item.name}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

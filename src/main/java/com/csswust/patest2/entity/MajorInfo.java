@@ -13,6 +13,8 @@ public class MajorInfo {
 
     private Date modifyTime;
 
+    private Integer modifyUserId;
+
     public Integer getMajId() {
         return majId;
     }
@@ -51,5 +53,13 @@ public class MajorInfo {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
     }
 }
