@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="row opration">
-                <div class="col-md-2">
+                <div class="col-md-2 col-md-offset-1">
                     <select class=" result_select form-control">
                         <option value="0">----Result----</option>
                     </select>
@@ -60,21 +60,24 @@
                 <div class="col-md-2">
                     <input class="form-control susername" type="text" placeholder="Username">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1" style="width: 12%;padding: 0">
                     <input class="form-control ssubmId" type="text" placeholder="submId">
                 </div>
-                <div class="col-md-4" style="padding-left:0px;margin-left:0px;">
+                <div class="col-md-1" style="width: 12%;padding: 0">
+                    <input type="text" class="form-control probId" placeholder="ProbId"/>
+                </div>
+                <div class="col-md-2" style="padding-left:0px;margin-left:0px;">
                     <div class="input-group">
-                        <input type="text" class="form-control probId" placeholder="Problem ID"/> <span
+                         <span
                             class="input-group-btn">
 								<button class="btn btn-primary search" type="button">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询
 								</button>
-                                <button class="btn btn-info rejudge" type="button">
-									<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;重判
-								</button>
 								<button class="btn btn-info reset" type="button">
 									<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;重置
+								</button>
+                                <button class="btn btn-danger rejudge" type="button">
+									<span class="glyphicon glyphicon-expand" aria-hidden="true"></span>&nbsp;重判
 								</button>
 							</span>
                     </div>
