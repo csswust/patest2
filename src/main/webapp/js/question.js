@@ -212,11 +212,11 @@ var program = {
                     $(".codeLimit").val("");
                 }
                 else {
-                    pubMeth.alertInfo("alert-warning", "修改失败！");
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {
-                pubMeth.alertInfo("alert-warning", "请求失败！");
+                pubMeth.alertInfo("alert-danger", "请求失败！");
             }
         });
     },

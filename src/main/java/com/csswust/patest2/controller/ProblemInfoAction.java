@@ -136,7 +136,7 @@ public class ProblemInfoAction extends BaseAction {
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Object insertOne(ProblemInfo problemInfo) {
         APIResult apiResult = new APIResult();
-        if (judgeTitle(problemInfo.getTitle())) {
+        if (judgeTitle(null, problemInfo.getTitle())) {
             apiResult.setStatusAndDesc(-1, "标题不能重复");
             return apiResult;
         }
@@ -149,7 +149,15 @@ public class ProblemInfoAction extends BaseAction {
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object updateById(ProblemInfo problemInfo) {
         APIResult apiResult = new APIResult();
-        if (judgeTitle(problemInfo.getTitle())) {
+        if (problemInfo == null) {
+            apiResult.setStatusAndDesc(-1, "problemInfo不能为空");
+            return apiResult;
+        }
+        if (problemInfo.getProbId() == null) {
+            apiResult.setStatusAndDesc(-1, "probId不能为空");
+            return apiResult;
+        }
+        if (judgeTitle(problemInfo.getProbId(), problemInfo.getTitle())) {
             apiResult.setStatusAndDesc(-1, "标题不能重复");
             return apiResult;
         }
@@ -158,11 +166,21 @@ public class ProblemInfoAction extends BaseAction {
         return apiResult;
     }
 
-    private boolean judgeTitle(String title) {
+    private boolean judgeTitle(Integer probId, String title) {
         ProblemInfo problemInfo = new ProblemInfo();
         problemInfo.setTitle(title);
-        int total = problemInfoDao.selectByConditionGetCount(problemInfo, new BaseQuery(1, 1));
-        return total > 0;
+        List<ProblemInfo> problemInfoList = problemInfoDao.selectByCondition(
+                problemInfo, new BaseQuery(1, 2));
+        // 未查到
+        if (problemInfoList == null || problemInfoList.size() == 0) return false;
+        // 插入时查到
+        if (probId == null) return true;
+        else if (problemInfoList.size() > 1) return true;
+        else {
+            // 更新时查到
+            Integer currId = problemInfoList.get(0).getProbId();
+            return currId != null && probId.intValue() != currId.intValue();
+        }
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
