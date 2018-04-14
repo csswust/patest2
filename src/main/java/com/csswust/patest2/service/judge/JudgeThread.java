@@ -47,8 +47,9 @@ public class JudgeThread implements Runnable {
             } catch (Exception e) {
                 if (e instanceof InterruptedException) {
                     Thread.currentThread().interrupt();
+                } else {
+                    log.error("JudgeThread 判题任务队列异常：{}", e);
                 }
-                log.error("JudgeThread 判题任务队列异常：{}", e);
             }
         }
     }
