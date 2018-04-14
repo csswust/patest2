@@ -23,6 +23,10 @@ public class JudgeThread implements Runnable {
     @Override
     public void run() {
         while (true) {
+            if (Thread.currentThread().isInterrupted()) {
+                log.info("判题线程正常结束：{}", Thread.currentThread().hashCode());
+                break;
+            }
             try {
                 // 阻塞方法，如果队列为空则阻塞
                 Integer submId = queue.take();
@@ -41,6 +45,9 @@ public class JudgeThread implements Runnable {
                 log.info("submId: {}, time: {}ms", submId, endTime - startTime);
                 setCurrSubmId(null);
             } catch (Exception e) {
+                if (e instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
+                }
                 log.error("JudgeThread 判题任务队列异常：{}", e);
             }
         }
