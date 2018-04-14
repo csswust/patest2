@@ -30,7 +30,7 @@ var program = {
     status: [],
     flag: true,
     book: true,
-    comp:[],
+    comp: [],
     addProblem: function (id) {
         $.ajax({
             type: "post",
@@ -59,7 +59,7 @@ var program = {
             success: function (result) {
                 console.log(result);
                 if (result.status == '1') {
-                    program.probId = result.proId;
+                    program.probId = result.data.proId;
                     $('#upload').modal({
                         backdrop: 'static'
                     });
@@ -89,12 +89,12 @@ var program = {
                         }
                     });
                 } else {
-                    pubMeth.alertInfo("alert-warning", "问题添加失败！");
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {
                 alert("1");
-                pubMeth.alertInfo("alert-warning", "请求失败！");
+                pubMeth.alertInfo("alert-danger", "请求失败！");
             }
         });
     },

@@ -134,20 +134,35 @@ public class ProblemInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> insertOne(ProblemInfo problemInfo) {
-        Map<String, Object> res = new HashMap<>();
+    public Object insertOne(ProblemInfo problemInfo) {
+        APIResult apiResult = new APIResult();
+        if (judgeTitle(problemInfo.getTitle())) {
+            apiResult.setStatusAndDesc(-1, "标题不能重复");
+            return apiResult;
+        }
         int result = problemInfoDao.insertSelective(problemInfo);
-        res.put("status", result);
-        res.put("proId", problemInfo.getProbId());
-        return res;
+        apiResult.setStatus(result);
+        apiResult.setDataKey("proId", problemInfo.getProbId());
+        return apiResult;
     }
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> updateById(ProblemInfo problemInfo) {
-        Map<String, Object> res = new HashMap<>();
+    public Object updateById(ProblemInfo problemInfo) {
+        APIResult apiResult = new APIResult();
+        if (judgeTitle(problemInfo.getTitle())) {
+            apiResult.setStatusAndDesc(-1, "标题不能重复");
+            return apiResult;
+        }
         int result = problemInfoDao.updateByPrimaryKeySelective(problemInfo);
-        res.put("status", result);
-        return res;
+        apiResult.setStatus(result);
+        return apiResult;
+    }
+
+    private boolean judgeTitle(String title) {
+        ProblemInfo problemInfo = new ProblemInfo();
+        problemInfo.setTitle(title);
+        int total = problemInfoDao.selectByConditionGetCount(problemInfo, new BaseQuery(1, 1));
+        return total > 0;
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
