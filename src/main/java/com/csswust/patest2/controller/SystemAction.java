@@ -113,6 +113,7 @@ public class SystemAction extends BaseAction {
     }
 
 
+    @ResponseBody
     @RequestMapping(value = "/ueditor", method = {RequestMethod.GET, RequestMethod.POST})
     public String ueditor() {
         String rootPath = Config.get(SiteKey.UPLOAD_UEDITOR_DIR, SiteKey.UPLOAD_UEDITOR_DIR_DE);
