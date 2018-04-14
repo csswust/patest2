@@ -36,7 +36,8 @@ public class ApplicationStartListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContext) {
-
+        judgeExecutor.shutdownNow();
+        refreshExecutor.shutdownNow();
     }
 
     @Override
