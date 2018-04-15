@@ -1,4 +1,4 @@
-package com.csswust.patest2.controller;
+package com.csswust.patest2.controller.lexam;
 
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.AcademyInfoDao;

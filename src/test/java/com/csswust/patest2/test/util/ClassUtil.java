@@ -1,9 +1,8 @@
 package com.csswust.patest2.test.util;
 
-import com.csswust.patest2.controller.*;
+import com.csswust.patest2.controller.lexam.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
