@@ -169,7 +169,6 @@ var program = {
             success: function (result) {
                 console.log(result);
                 var acNum = 0, length = 0, flag = 1, mainHtml = "", color = "";
-                /*if (result.status == 1) {*/
                 for (var i = 0, length = result.submitResultList.length; i < length; i++) {
                     if (result.submitResultList[i].status == 1) {
                         color = "acColor";
@@ -195,7 +194,6 @@ var program = {
                     '<div class="col-md-3">Time[Ms]</div>' +
                     '<div class="col-md-3">Memory[KB]</div></div>'
                     + mainHtml + '</div></div>';
-                /*}*/
             },
             error: function () {
                 pubMeth.alertInfo("alert-info", "请求错误");
