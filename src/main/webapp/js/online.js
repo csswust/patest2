@@ -10,8 +10,10 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
+                userName: program.susername,
+                studentNumber: program.sstudentNumber,
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
                 console.log(result);
@@ -83,6 +85,19 @@ var program = {
 pubMeth.getRowsnum("rowsnum");
 program.selectOnline();
 console.log(program.count);
+$(".search").click(function () {
+    program.page = 1;
+    $('#pagination').jqPaginator('option', {
+        currentPage: program.page
+    });
+    program.susername = $(".susername").val();
+    program.sstudentNumber = $(".sstudentNumber").val();
+    program.selectOnline();
+    $(".countnum").html(program.count);
+    $('#pagination').jqPaginator('option', {
+        totalCounts: program.count
+    });
+});
 if (program.count > 0) {
     $(".countnum").html(program.count);
     $.jqPaginator('#pagination', {

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by 972536780 on 2018/3/22.
  */
 public interface OnlineUserService {
-    OnlineListRe getOnlineList(Integer page, Integer rows);
+    OnlineListRe getOnlineList(String userName, String studentNumber, Integer page, Integer rows);
 
     List<String> judgeOnline(List<Integer> userIds);
 }

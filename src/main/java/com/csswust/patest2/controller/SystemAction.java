@@ -61,10 +61,13 @@ public class SystemAction extends BaseAction {
     @ResponseBody
     @RequestMapping(value = "/selectOnline", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectOnline(
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String studentNumber,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         Map<String, Object> res = new HashMap<>();
-        OnlineListRe result = onlineUserService.getOnlineList(page, rows);
+        OnlineListRe result = onlineUserService.getOnlineList(userName,
+                studentNumber, page, rows);
         res.put("onlineListRe", result);
         return res;
     }

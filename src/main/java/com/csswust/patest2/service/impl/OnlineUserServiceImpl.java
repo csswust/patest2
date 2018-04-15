@@ -14,6 +14,7 @@ import com.csswust.patest2.listener.OnlineListener;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.result.OnlineListRe;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
     private UserLoginLogDao userLoginLogDao;
 
     private void getEffectiveSession(List<Integer> userIdList, List<String> sessionIdList) {
+        getEffectiveSession(null, null, userIdList, sessionIdList);
+    }
+
+    private void getEffectiveSession(String userName, String studentNumber,
+                                     List<Integer> userIdList, List<String> sessionIdList) {
         Map<String, HttpSession> map = OnlineListener.onlineMap;
         Set<Integer> set = new HashSet<>();// 去重
         for (Map.Entry<String, HttpSession> entry : map.entrySet()) {
@@ -52,6 +58,19 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
             }
             Integer userId = (Integer) session.getAttribute("userId");
             if (userId != null && !set.contains(userId)) {
+                if (StringUtils.isNotBlank(userName) || StringUtils.isNotBlank(studentNumber)) {
+                    UserInfo userInfo = userInfoDao.selectByPrimaryKey(userId);
+                    if (userInfo == null) continue;
+                    if (StringUtils.isNotBlank(userName)) {
+                        if (!userName.equals(userInfo.getUsername())) continue;
+                    }
+                    if (StringUtils.isNotBlank(studentNumber)) {
+                        UserProfile userProfile = userProfileDao.selectByPrimaryKey(
+                                userInfo.getUserProfileId());
+                        if (userProfile == null) continue;
+                        if (!studentNumber.equals(userProfile.getStudentNumber())) continue;
+                    }
+                }
                 userIdList.add(userId);
                 sessionIdList.add(sessionId);
                 set.add(userId);
@@ -60,10 +79,11 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
     }
 
     @Override
-    public OnlineListRe getOnlineList(Integer page, Integer rows) {
+    public OnlineListRe getOnlineList(String userName, String studentNumber,
+                                      Integer page, Integer rows) {
         List<Integer> userIdList = new ArrayList<>();
         List<String> sessionIdList = new ArrayList<>();
-        getEffectiveSession(userIdList, sessionIdList);
+        getEffectiveSession(userName, studentNumber, userIdList, sessionIdList);
         int start = 0, end = userIdList.size();
         if (page != null && rows != null) {
             start = (page - 1) * rows;
