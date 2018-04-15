@@ -20,6 +20,8 @@ var program = {
                 page: program.page,
                 rows: pubMeth.rowsnum,
                 isContainIp: true,
+                username: program.susername,
+                studentNumber: program.sstudentNumber,
                 isLock: 1
             },
             success: function (result) {
@@ -70,7 +72,19 @@ $(".lock").click(function () {
     } else {
         pubMeth.alertInfo("alert-info", "请先勾选删除项！");
     }
-
+});
+$(".search").click(function () {
+    program.page = 1;
+    $('#pagination').jqPaginator('option', {
+        currentPage: program.page
+    });
+    program.susername = $(".susername").val();
+    program.sstudentNumber = $(".sstudentNumber").val();
+    program.selectLock();
+    $(".countnum").html(program.count);
+    $('#pagination').jqPaginator('option', {
+        totalCounts: program.count
+    });
 });
 if (program.count > 0) {
     $(".countnum").html(program.count);
