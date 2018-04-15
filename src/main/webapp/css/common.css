@@ -1,246 +1,308 @@
-body{
-	font-family:"微软雅黑";
-	overflow-x: hidden;
-}
-ul {
-	list-style:none;
-	/* -webkit-padding-start: 0px; */
-}
-.wrap{
-	min-height:550px;
-}
-.treeview-menu{
-	display:none;
-}
-.treeview-menu li{
-	padding-top:5px;
-	padding-bottom:5px;
-}
-.treeview-menu>li>a:hover, .treeview-menu>li>a:focus{
-	color:#fff;
-	/* text-decoration:none; */
-}
-.navbar{
-	margin-bottom:0px;
-}
-#head{
-	min-width:1200px;
-}
-.side-bar{
-	background-color:#222d32;
-}
-.navbar-default{
-	background-color:#3c8dbc;
-	border-color:#3c8dbc;
-	border-radius:0;
-}
-.navbar-default .navbar-nav>li>a{
-	color:#fff;
-}
-.col-md-2{
-	padding-right:0px;
-}
-.sidebar-menu>li>a{
-	color:#b8c7ce;
-}
-.treeview-menu > li.active > a,
-.treeview-menu > li > a:hover {
-  color: #ffffff;
-}
-.treeview-menu>li>a{
-	color:#8aa4af;
-}
-.sidebar-menu>li:hover>a, .sidebar-menu>li.active>a, .sidebar-menu>li>a:focus{
-	color:#fff;
-	background:#1e282c;
-	border-left:3px solid #3c8dbc;
-}
-.nav>li>a:focus, .nav>li>a:hover{
-	
-}
-.checkbox >label>a{
-	color:#363636;
-}
-.checkbox >label>a:hover{
-	color:#1E90FF;
-}
-.navbar-right{
-	margin-right:5px;
-}
-.navbar>.nav>li>a:focus, .navbar>.nav>li>a:hover{
-	background-color:#069;
-	color:#fff;
-	/* border-left:3px solid #3c8dbc; */
-}
-.leftActive{
-	border-left:3px solid #3c8dbc;
-}
-.navbar-default .navbar-brand{
-	color:#fff;
-	padding:15px 75px;
-	font-weight:bold;
-	font-size:25px;
-}
-.treeview{
-	font-size:14px;
-}
-.side-bar{
-	overflow:hidden;
-	padding-left:0px;
-}
-.sidebar-menu{
-	padding-top:10px;
-	padding-bottom:30px;
-}
-.row{
-	padding-bottom:0px;
-	margin-left:0px;
-	margin-right:0px;
-}
-.title{
-	color:#08c;
-}
-.opration{
-	margin-top:20px;
-	margin-bottom:10px;	
-}
-.all{
-	width:750px;
-	margin-right:-20px;
-}
-.modal-title{
-	color:black;
-}
-.form-group{
-	color:black;
-}
-#inputDescribr3{
-	height:100px;
-}
-#col-sm-2 control-label{
-padding:50px;
-}
-#inputData3{
-	width:200px;
-}
-#starttime{
-	height:50px;
-}
-#form-control{
-	width:100px;
-}
-.require{
-	color:red;
-}
-.page-header{
-	border-bottom:0px;
-}
- .beginName{
-  	text-align:center;
-  	font-size:42px;
-  	margin-top:30px;
- }
-.countdown{
-	text-align:center;
-	margin-top:100px;
-	font-size:20px;
-	margin-bottom:30px;
-}
-.overTime{
- 	color:#d43f3a;
- 	font-weight:bold;
- 	font-size:30px;
- 	padding:0 5px;
- }
- .start{
- 	text-align:center;
- }
- .startAns{
- 	width : 150px;
- 	font-size:16px;
- 	line-height : 1.628571;
- }
-.submitResult{
-	color:white;
-	font-size:17px;
-	margin-top:15px;
-	margin-left:90px;
-}
-.compiler{
-	cursor:pointer;
-	color:#08c;
-}
-.label{
-	font-weight:500;
-}
-.ceStatus , .noCeStatus{
-	cursor:pointer;
-}
-.page-header{
-	margin:0;
-}
-.acColor{
-	color:#5cb85c;
-}
-.waColor{
-	color:#d9534f;
-}
-.otherColor{
-	color:#f0ad4e;
-}
-.side-bar{
-	width:13%;
-}
-.proinfo{
-	border:solid 1px #999;
-	width:100%;
-	background-color:#fff;
-	border-radius:3px;
-}
-.col-md-10{
-	width:85.333333%;
+body {
+    font-family: "微软雅黑";
+    overflow-x: hidden;
 }
 
-.courseName{
-	width:118px!important;
+ul {
+    list-style: none;
+    /* -webkit-padding-start: 0px; */
 }
+
+.wrap {
+    min-height: 550px;
+}
+
+.treeview-menu {
+    display: none;
+}
+
+.treeview-menu li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.treeview-menu > li > a:hover, .treeview-menu > li > a:focus {
+    color: #fff;
+    /* text-decoration:none; */
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+#head {
+    min-width: 1200px;
+}
+
+.side-bar {
+    background-color: #222d32;
+}
+
+.navbar-default {
+    background-color: #3c8dbc;
+    border-color: #3c8dbc;
+    border-radius: 0;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+}
+
+.col-md-2 {
+    padding-right: 0px;
+}
+
+.sidebar-menu > li > a {
+    color: #b8c7ce;
+}
+
+.treeview-menu > li.active > a,
+.treeview-menu > li > a:hover {
+    color: #ffffff;
+}
+
+.treeview-menu > li > a {
+    color: #8aa4af;
+}
+
+.sidebar-menu > li:hover > a, .sidebar-menu > li.active > a, .sidebar-menu > li > a:focus {
+    color: #fff;
+    background: #1e282c;
+    border-left: 3px solid #3c8dbc;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+
+}
+
+.checkbox > label > a {
+    color: #363636;
+}
+
+.checkbox > label > a:hover {
+    color: #1E90FF;
+}
+
+.navbar-right {
+    margin-right: 5px;
+}
+
+.navbar > .nav > li > a:focus, .navbar > .nav > li > a:hover {
+    background-color: #069;
+    color: #fff;
+    /* border-left:3px solid #3c8dbc; */
+}
+
+.leftActive {
+    border-left: 3px solid #3c8dbc;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+    padding: 15px 75px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.treeview {
+    font-size: 14px;
+}
+
+.side-bar {
+    overflow: hidden;
+    padding-left: 0px;
+}
+
+.sidebar-menu {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.row {
+    padding-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.title {
+    color: #08c;
+}
+
+.opration {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.all {
+    width: 750px;
+    margin-right: -20px;
+}
+
+.modal-title {
+    color: black;
+}
+
+.form-group {
+    color: black;
+}
+
+#inputDescribr3 {
+    height: 100px;
+}
+
+#col-sm-2 control-label {
+    padding: 50px;
+}
+
+#inputData3 {
+    width: 200px;
+}
+
+#starttime {
+    height: 50px;
+}
+
+#form-control {
+    width: 100px;
+}
+
+.require {
+    color: red;
+}
+
+.page-header {
+    border-bottom: 0px;
+}
+
+.beginName {
+    text-align: center;
+    font-size: 42px;
+    margin-top: 30px;
+}
+
+.countdown {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.overTime {
+    color: #d43f3a;
+    font-weight: bold;
+    font-size: 30px;
+    padding: 0 5px;
+}
+
+.start {
+    text-align: center;
+}
+
+.startAns {
+    width: 150px;
+    font-size: 16px;
+    line-height: 1.628571;
+}
+
+.submitResult {
+    color: white;
+    font-size: 17px;
+    margin-top: 15px;
+    margin-left: 90px;
+}
+
+.compiler {
+    cursor: pointer;
+    color: #08c;
+}
+
+.label {
+    font-weight: 500;
+}
+
+.ceStatus, .noCeStatus {
+    cursor: pointer;
+}
+
+.page-header {
+    margin: 0;
+}
+
+.acColor {
+    color: #5cb85c;
+}
+
+.waColor {
+    color: #d9534f;
+}
+
+.otherColor {
+    color: #f0ad4e;
+}
+
+.side-bar {
+    width: 13%;
+}
+
+.proinfo {
+    border: solid 1px #999;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+.col-md-10 {
+    width: 85.333333%;
+}
+
+.courseName {
+    width: 118px !important;
+}
+
 /* .knowName{
 	width:118px!important;
 } */
-.level{
-	width:117px!important;
+.level {
+    width: 117px !important;
 }
-.step{
-	 border-bottom: 1px solid #ccc;
-	 height:45px;
+
+.step {
+    border-bottom: 1px solid #ccc;
+    height: 45px;
 }
-.step .col-md-3{
-	 border-right: 1px solid #ccc;
-	 padding-top: 5px;
-	 height:45px;
-	 line-height:45px;
-	 text-align:center;
-	 cursor:pointer;
+
+.step .col-md-3 {
+    border-right: 1px solid #ccc;
+    padding-top: 5px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
 }
-.on{
-	color:#337ab7;
-	text-decoration:underline;
+
+.on {
+    color: #337ab7;
+    text-decoration: underline;
 }
-.footer{
-	position: relative;
-    margin:auto;
-	text-align:center;
-    clear:both;
-    
+
+.footer {
+    position: relative;
+    margin: auto;
+    text-align: center;
+    clear: both;
+
 }
-.pagenum{
-	height:70px;
-	line-height:70px;
-	font-size:16px;
+
+.pagenum {
+    height: 70px;
+    line-height: 70px;
+    font-size: 16px;
 }
-.paging .col-md-3{
-	width:10.666667%;
+
+.paging .col-md-3 {
+    width: 10.666667%;
 }
-.paging .col-md-4{
-	width:27.333333%;
+
+.paging .col-md-4 {
+    width: 27.333333%;
 }

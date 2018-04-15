@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM major_info
         WHERE 1 = 1
-            <if test="record.majId != null">
+        <if test="record.majId != null">
             AND
             maj_id = #{record.majId}
         </if>
@@ -41,7 +41,7 @@
         count(*)
         FROM major_info
         WHERE 1 = 1
-            <if test="record.majId != null">
+        <if test="record.majId != null">
             AND
             maj_id = #{record.majId}
         </if>
@@ -75,7 +75,7 @@
         delete from major_info
         where maj_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -84,7 +84,7 @@
         from major_info
         where maj_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">

@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM exam_paper
         WHERE 1 = 1
-            <if test="record.exaPapId != null">
+        <if test="record.exaPapId != null">
             AND
             exa_pap_id = #{record.exaPapId}
         </if>
@@ -61,7 +61,7 @@
         count(*)
         FROM exam_paper
         WHERE 1 = 1
-            <if test="record.exaPapId != null">
+        <if test="record.exaPapId != null">
             AND
             exa_pap_id = #{record.exaPapId}
         </if>
@@ -115,7 +115,7 @@
         delete from exam_paper
         where exa_pap_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -124,14 +124,16 @@
         from exam_paper
         where exa_pap_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into exam_paper
-        (exam_id, user_id, classroom, score, aced_count, used_time, is_marked, create_time, modify_time, modify_user_id) values
+        (exam_id, user_id, classroom, score, aced_count, used_time, is_marked, create_time, modify_time, modify_user_id)
+        values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.examId}, #{item.userId}, #{item.classroom}, #{item.score}, #{item.acedCount}, #{item.usedTime}, #{item.isMarked}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.examId}, #{item.userId}, #{item.classroom}, #{item.score}, #{item.acedCount}, #{item.usedTime},
+            #{item.isMarked}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

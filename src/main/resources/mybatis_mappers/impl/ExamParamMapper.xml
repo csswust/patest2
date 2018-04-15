@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM exam_param
         WHERE 1 = 1
-            <if test="record.exaParId != null">
+        <if test="record.exaParId != null">
             AND
             exa_par_id = #{record.exaParId}
         </if>
@@ -57,7 +57,7 @@
         count(*)
         FROM exam_param
         WHERE 1 = 1
-            <if test="record.exaParId != null">
+        <if test="record.exaParId != null">
             AND
             exa_par_id = #{record.exaParId}
         </if>
@@ -107,7 +107,7 @@
         delete from exam_param
         where exa_par_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -116,14 +116,15 @@
         from exam_param
         where exa_par_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into exam_param
         (exam__id, name, know_id, problem_id, level_id, score, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.examId}, #{item.name}, #{item.knowId}, #{item.problemId}, #{item.levelId}, #{item.score}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.examId}, #{item.name}, #{item.knowId}, #{item.problemId}, #{item.levelId}, #{item.score},
+            #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

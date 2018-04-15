@@ -23,8 +23,8 @@
         <property name="defaultEncoding" value="${upload_file_encoding}"/>
     </bean>
     <!--Aop切面编程的配置-->
-    <aop:aspectj-autoproxy expose-proxy="true" />
-    <bean id="logAopAction" class="com.csswust.patest2.controller.common.LogAopAction" />
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+    <bean id="logAopAction" class="com.csswust.patest2.controller.common.LogAopAction"/>
     <!-- 获取数据连接配置文件 -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">

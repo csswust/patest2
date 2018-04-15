@@ -1,139 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="renderer" content="webkit">
-<title>EP公告</title>
-<link rel="shortcut icon" href="../img/favicon.ico" >
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/exam.css">
-<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-   <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>EP公告</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/exam.css">
+    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<div id="head">
-		<!-- 头部菜单 -->
-	</div>
-	<div class="container-fuild">
-		<div class="row">
-			<div class="side-bar col-md-2">
-				<!-- 左侧导航 -->
-			</div>
-			<div class="col-md-10 nav-tabs-custom" style="background:white;">	
-			 <div class="tip">
-				 <div class="alert alert-warning" style="margin-top:10px;" id="tip">
-	  			  <a href="#" class="close" data-dismiss="alert">
-	     			 &times;
-	   			  </a>
-	   			  <strong>小提示：出现问题刷新试试</strong>
-				</div>
-			 </div>	
-	         <div class="row opration">
-				<div class="btn-group col-md-4" role="group">
-				  <div class="btn-group" role="group" >
-				  <button type="button" class="btn  btn-success addnotice">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
-				  </button>
-				  </div>
-				  <div class="btn-group" role="group" >
-				  <button type="button" class="btn  btn-info delnotice">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-				  </button>
-				  </div>
-				</div>
-			</div>
-            <table class="table table-bordered table-hover table-condensed table-striped submit" >
-			<thead>
-	           <tr>
-					<th><input type="checkbox" class="check_list" />全选</th>
-					<th>ID</th>
-					<th>题目</th>					
-					<th>添加时间</th>
-					<th>操作</th>
-				</tr>           
-			</thead>
-			<tbody id="listInfo">
-			
-			</tbody>
-		</table>
-		  <div class="row paging">
-	   		    <div class="col-md-3 col-md-offset-4 pagenum" >共 <span class="countnum" style="color:#337ab7;"></span> 个</div>
-		        <div class="col-md-5 ">
-		            	<ul class="pagination " id="pagination"></ul>
-		        </div>
-	        </div>
+<div id="head">
+    <!-- 头部菜单 -->
+</div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2">
+            <!-- 左侧导航 -->
+        </div>
+        <div class="col-md-10 nav-tabs-custom" style="background:white;">
+            <div class="tip">
+                <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+                    <a href="#" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>小提示：出现问题刷新试试</strong>
+                </div>
             </div>
-	</div>
+            <div class="row opration">
+                <div class="btn-group col-md-4" role="group">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn  btn-success addnotice">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn  btn-info delnotice">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover table-condensed table-striped submit">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="check_list"/>全选</th>
+                    <th>ID</th>
+                    <th>题目</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="listInfo">
+
+                </tbody>
+            </table>
+            <div class="row paging">
+                <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7;"></span> 个
+                </div>
+                <div class="col-md-5 ">
+                    <ul class="pagination " id="pagination"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="addnotice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="width:700px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">公告信息(带*必填)</h4>
-      </div> 
-      <div class="modal-body">
-					<form class="form-horizontal">				
-						<div class="form-group">
-							<label class="col-md-2 control-label"><span class="require">*</span>题目：</label>
-							<div class="col-md-6">
-								<input type="text" class="form-control nottitle"  />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-2 control-label"><span class="require">*</span>公告描述：</label>
-							<div class="col-md-9">
-								 <script id="notdes"  class="notdes" name="content"  type="text/plain"></script>
-							</div>
-						</div>	
-					</form>
-				</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default closenot" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary savenot">保存</button>
-      </div>
+    <div class="modal-dialog" role="document" style="width:700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">公告信息(带*必填)</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>题目：</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control nottitle"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>公告描述：</label>
+                        <div class="col-md-9">
+                            <script id="notdes" class="notdes" name="content" type="text/plain"></script>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closenot" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary savenot">保存</button>
+            </div>
+        </div>
+
     </div>
-    
-  </div>
 </div>
 <div class="modal fade" id="modalexamdelete">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	        <h4 class="modal-title" style="font-size:15px;">你确定要删除<span class="examquess"></span>题目吗？</h4>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-	        <button type="button" class="btn btn-primary examdelete">删除</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
- </div><!-- /.modal -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" style="font-size:15px;">你确定要删除<span class="examquess"></span>题目吗？</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary examdelete">删除</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 <script type="text/javascript">
-	//seajs的简单配置
-	seajs.config({
-		base : '../lib/',
-		alias : {
-			  jquery : 'jQuery/jquery.min.js',
-              jCookie : 'jQuery/jquery.cookie.js',
-              paginator : 'jQuery/jqPaginator.js',
-              artTemplate : 'artTemplate/artTemplate.js',
-              bootstrap : 'bootstrap/js/bootstrap.min.js',
-              ueditor_config : 'ueditor/ueditor.config.js',
-  			  ueditor : 'ueditor/ueditor.all.min.js',
-		}
-	});
-	//加载入口模块
-	seajs.use('jquery');
-	seajs.use("../js/epnotice.js");
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            jCookie: 'jQuery/jquery.cookie.js',
+            paginator: 'jQuery/jqPaginator.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js',
+            ueditor_config: 'ueditor/ueditor.config.js',
+            ueditor: 'ueditor/ueditor.all.min.js',
+        }
+    });
+    //加载入口模块
+    seajs.use('jquery');
+    seajs.use("../js/epnotice.js");
 </script>
 </html>

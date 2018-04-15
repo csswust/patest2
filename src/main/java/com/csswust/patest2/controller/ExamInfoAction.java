@@ -1,6 +1,6 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.common.ConditionBuild;
+import com.csswust.patest2.service.common.ConditionBuild;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -9,7 +9,6 @@ import com.csswust.patest2.dao.result.SelectProblemNumRe;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamInfoService;
 import com.csswust.patest2.service.result.ImportDataRe;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

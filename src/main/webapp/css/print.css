@@ -1,23 +1,27 @@
-.print{
-	text-align:right;
-	margin-top:20px;
+.print {
+    text-align: right;
+    margin-top: 20px;
 }
-#infosysuser{
-	position:relative;
-	margin-top:50px;
+
+#infosysuser {
+    position: relative;
+    margin-top: 50px;
 }
-#infosysuser .pname{
-	position:absolute;
-	top:-10px;
-	left:50px;
+
+#infosysuser .pname {
+    position: absolute;
+    top: -10px;
+    left: 50px;
 }
-#infosysuser .pcon{
-	position:absolute;
-	top:15px;
-	left:80px;
+
+#infosysuser .pcon {
+    position: absolute;
+    top: 15px;
+    left: 80px;
 }
-.table td,th{
-	margin-top:20px;
-	margin-left:20px;
-	border:1px solid #000;
+
+.table td, th {
+    margin-top: 20px;
+    margin-left: 20px;
+    border: 1px solid #000;
 }

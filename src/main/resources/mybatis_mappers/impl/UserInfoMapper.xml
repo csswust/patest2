@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM user_info
         WHERE 1 = 1
-            <if test="record.userId != null">
+        <if test="record.userId != null">
             AND
             user_id = #{record.userId}
         </if>
@@ -69,7 +69,7 @@
         count(*)
         FROM user_info
         WHERE 1 = 1
-            <if test="record.userId != null">
+        <if test="record.userId != null">
             AND
             user_id = #{record.userId}
         </if>
@@ -131,7 +131,7 @@
         delete from user_info
         where user_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -140,14 +140,17 @@
         from user_info
         where user_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into user_info
-        (user_profile_id, username, password, is_teacher, is_admin, is_lock, is_active, last_login, exam_id, create_time, modify_time, modify_user_id) values
+        (user_profile_id, username, password, is_teacher, is_admin, is_lock, is_active, last_login, exam_id,
+        create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.userProfileId}, #{item.username}, #{item.password}, #{item.isTeacher}, #{item.isAdmin}, #{item.isLock}, #{item.isActive}, #{item.lastLogin}, #{item.examId}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.userProfileId}, #{item.username}, #{item.password}, #{item.isTeacher}, #{item.isAdmin},
+            #{item.isLock}, #{item.isActive}, #{item.lastLogin}, #{item.examId}, #{item.createTime}, #{item.modifyTime},
+            #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

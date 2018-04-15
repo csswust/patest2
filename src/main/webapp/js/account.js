@@ -49,8 +49,8 @@ var program = {
                 + '<td>' + program.userProfileList[i].className + '</td>'
                 + '<td>' + role + '</td>'
                 + '<td>' + program.userInfoList[i].lastLogin + '</td>'
-                +'<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle
-                    + '"><a href="examInfo.html?id=' + exmaId + '">' + examTitle + '</a>'
+                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle
+                + '"><a href="examInfo.html?id=' + exmaId + '">' + examTitle + '</a>'
                 + '</td>'
                 + '<td><a href="javascript:;"class="title" value="' + program.userInfoList[i].userId + '" >修改</a></td>'
                 + '</tr>';

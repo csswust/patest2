@@ -1,102 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="renderer" content="webkit">
-	<title>LexamV3.0</title>
-	<link rel="shortcut icon" href="../img/favicon.ico" >
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
-	<link rel="stylesheet" href="../css/commonet.css">
-	<link rel="stylesheet" href="../css/aexam.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LexamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../css/commonet.css">
+    <link rel="stylesheet" href="../css/aexam.css">
     <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
     <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
     <script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
     <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<div id="headet"><!-- 头部菜单 --></div>
-	<div class="container-fluid ">
-		<!--nav-->
-		<div class="topmenu">
-			<!-- 顶部导航 -->
-		</div>
-        <!-- content -->
-        <div class="col-md-10 col-md-offset-1 allcontent">
-           <div class="tip">
-			<div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
-				<a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
-			</div>
-		   </div>
-		   <ol class="breadcrumb">
-			  <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
-			  <li><a href="applyexam.html">考试申请</a></li>
-			  <li class="active pageName">添加申请</li>
-			</ol>
-           <div class="info">
-              <div class="row content">
-                 <div class="examinfo">              
-				   <ul class="nav nav-tabs status" role="tablist">
-					  <li role="presentation" class="active"><a href="#">申请信息</a></li>
-					</ul>
-			       <table class="table table-bordered table-hover table-condensed table-striped" >
-			            <thead id="applyhead">
-			                <tr>
-			                   <td>申请编号</td>
-			                   <td>申请名称</td>
-			                   <td>考试人数</td>
-			                   <td>开始时间</td>
-			                   <td>结束时间</td>
-			                   <td>申请人</td>			                   
-			                   <td>申请状态</td>
-			                   <td>申请操作</td>
-			                   <td>是否付款</td>
-			                   <td>付款操作</td>
-			                   <td>申请完成</td>
-			                </tr>
-			            </thead>
-			            <tbody id="applyInfo">			              
-			               
-			            </tbody>
-			        </table>
-			       </div>
-			       <div class="row">
-					<div class="col-md-offset-9">
-						<ul class="pagination " id="pagination"></ul>
-					</div>
-				</div>
-              </div>		       
-		       <div class="row contapply">    
-		           <button type="button" class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span> 继续申请 </button>     
-		       </div>
-           </div>
+<div id="headet"><!-- 头部菜单 --></div>
+<div class="container-fluid ">
+    <!--nav-->
+    <div class="topmenu">
+        <!-- 顶部导航 -->
+    </div>
+    <!-- content -->
+    <div class="col-md-10 col-md-offset-1 allcontent">
+        <div class="tip">
+            <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
+                <a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+            </div>
+        </div>
+        <ol class="breadcrumb">
+            <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a>
+            </li>
+            <li><a href="applyexam.html">考试申请</a></li>
+            <li class="active pageName">添加申请</li>
+        </ol>
+        <div class="info">
+            <div class="row content">
+                <div class="examinfo">
+                    <ul class="nav nav-tabs status" role="tablist">
+                        <li role="presentation" class="active"><a href="#">申请信息</a></li>
+                    </ul>
+                    <table class="table table-bordered table-hover table-condensed table-striped">
+                        <thead id="applyhead">
+                        <tr>
+                            <td>申请编号</td>
+                            <td>申请名称</td>
+                            <td>考试人数</td>
+                            <td>开始时间</td>
+                            <td>结束时间</td>
+                            <td>申请人</td>
+                            <td>申请状态</td>
+                            <td>申请操作</td>
+                            <td>是否付款</td>
+                            <td>付款操作</td>
+                            <td>申请完成</td>
+                        </tr>
+                        </thead>
+                        <tbody id="applyInfo">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-9">
+                        <ul class="pagination " id="pagination"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row contapply">
+                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> 继续申请
+                </button>
+            </div>
         </div>
     </div>
-     <div id="footer">
-            <!-- 页脚 -->
-    </div>	
+</div>
+<div id="footer">
+    <!-- 页脚 -->
+</div>
 </body>
-    <script type="text/javascript">
-		//seajs的简单配置
-		seajs.config({
-			base : '../lib/',
-			alias : {
-				jquery : 'jQuery/jquery.min.js',
-				jCookie : 'jQuery/jquery.cookie.js',
-				paginator : 'jQuery/jqPaginator.js',
-				artTemplate : 'artTemplate/artTemplate.js',
-				bootstrap : 'bootstrap/js/bootstrap.min.js',
-				datetimepicker : 'bootstrap/js/bootstrap-datetimepicker.min.js',
-				fileupload : 'jQuery/ajaxfileupload.js'
-			}
-		});
-		//加载入口模块
-		seajs.use('jquery');
-		seajs.use("../js/applywait.js");
-	</script>
+<script type="text/javascript">
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            jCookie: 'jQuery/jquery.cookie.js',
+            paginator: 'jQuery/jqPaginator.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js',
+            datetimepicker: 'bootstrap/js/bootstrap-datetimepicker.min.js',
+            fileupload: 'jQuery/ajaxfileupload.js'
+        }
+    });
+    //加载入口模块
+    seajs.use('jquery');
+    seajs.use("../js/applywait.js");
+</script>
 </html>

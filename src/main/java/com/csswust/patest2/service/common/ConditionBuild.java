@@ -1,4 +1,4 @@
-package com.csswust.patest2.common;
+package com.csswust.patest2.service.common;
 
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserProfileDao;
@@ -19,7 +19,7 @@ import static com.csswust.patest2.service.common.BatchQueryService.getFieldByLis
  * Created by 972536780 on 2018/4/15.
  */
 @Component
-public class ConditionBuild {
+public class ConditionBuild extends BaseService{
     @Autowired
     private UserInfoDao userInfoDao;
     @Autowired

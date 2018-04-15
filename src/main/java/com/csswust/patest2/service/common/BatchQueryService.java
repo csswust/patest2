@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by 972536780 on 2018/3/14.
  */
-public class BatchQueryService {
+public class BatchQueryService extends BaseService{
     private static Logger log = LoggerFactory.getLogger(BatchQueryService.class);
 
     /**

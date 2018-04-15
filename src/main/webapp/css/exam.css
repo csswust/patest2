@@ -1,119 +1,151 @@
-.require{
-	color:red;
+.require {
+    color: red;
 }
-.content{
-	border:1px solid #CCC;
-	margin:5px auto !important;
+
+.content {
+    border: 1px solid #CCC;
+    margin: 5px auto !important;
 }
-.form-horizontal{
-	margin-top:20px;
+
+.form-horizontal {
+    margin-top: 20px;
 }
-.tip{
-	margin-top:10px;
+
+.tip {
+    margin-top: 10px;
 }
-.savebutton{
-	margin-top:50px;
-	padding-bottom:20px;
-	float:right;
-	margin-right:5%;
+
+.savebutton {
+    margin-top: 50px;
+    padding-bottom: 20px;
+    float: right;
+    margin-right: 5%;
 }
-.row,.form-horizontal .form-group{
-	margin-left:0px;
-	margin-right:0px;	
+
+.row, .form-horizontal .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
 }
-.glyphicon-plus{
-	cursor:pointer;
+
+.glyphicon-plus {
+    cursor: pointer;
 }
-.glyphicon-remove:hover{
-	cursor:pointer;
+
+.glyphicon-remove:hover {
+    cursor: pointer;
 }
-.breadcrumb{
-	margin-top:20px;
+
+.breadcrumb {
+    margin-top: 20px;
 }
-.ExamPaper{
-	padding-top:7px;
+
+.ExamPaper {
+    padding-top: 7px;
 }
-.breadcrumb >li>a{
-	color:#337ab7;
+
+.breadcrumb > li > a {
+    color: #337ab7;
 }
-.queTempla > tr>td>a{
-	color:#337ab7;
+
+.queTempla > tr > td > a {
+    color: #337ab7;
 }
-.nav-tabs-custom>.nav-tabs>li.active{
-	border-top:3px solid #3c8dbc;
+
+.nav-tabs-custom > .nav-tabs > li.active {
+    border-top: 3px solid #3c8dbc;
 }
-.examInfoNav{
-	margin-top:10px;
-	margin-bottom:10px;
+
+.examInfoNav {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-.nav-tabs-custom>.nav-tabs>li{
-	border-top:3px solid transparent;
+
+.nav-tabs-custom > .nav-tabs > li {
+    border-top: 3px solid transparent;
 }
-.nav-tabs-custom>.nav-tabs>li>a{
-	margin-right:0px;
-	border-radius :0px;
+
+.nav-tabs-custom > .nav-tabs > li > a {
+    margin-right: 0px;
+    border-radius: 0px;
 }
-.nav-tabs-custom{
-	margin-top: 20px;
+
+.nav-tabs-custom {
+    margin-top: 20px;
     box-shadow: 0 1px 1px #eee;
     border-radius: 3px;
 }
-.pull-left{
-	line-height: 35px;
+
+.pull-left {
+    line-height: 35px;
     padding: 0 10px;
     font-size: 20px;
     color: #444;
-    float:left;
+    float: left;
 }
-.nav-tabs-custom>.nav-tabs.pull-right>li{
-	float:right;
+
+.nav-tabs-custom > .nav-tabs.pull-right > li {
+    float: right;
 }
-.nav-tabs-custom>.nav-tabs.pull-right{
-	float : none!important;
+
+.nav-tabs-custom > .nav-tabs.pull-right {
+    float: none !important;
 }
-.tab-content{
-	min-height:300px;
+
+.tab-content {
+    min-height: 300px;
 }
-.localBank{
-	margin-top:5px;
+
+.localBank {
+    margin-top: 5px;
 }
-.importList,.download{
-	margin-top:5px;
+
+.importList, .download {
+    margin-top: 5px;
 }
-.download{
-	margin-top:10px;
+
+.download {
+    margin-top: 10px;
 }
-.download a{
-	color:#3c8dbc;
+
+.download a {
+    color: #3c8dbc;
 }
-.bank .col-md-2{
-	width:8%;
+
+.bank .col-md-2 {
+    width: 8%;
 }
-table{
-	table-layout:fixed;
+
+table {
+    table-layout: fixed;
 }
-.tdhidden{
-	white-space:nowrap;
-	overflow:hidden;
-	text-overflow:ellipsis;
+
+.tdhidden {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.examid{
-	width:160px;
+
+.examid {
+    width: 160px;
 }
-.noid{
-	width:100px;
+
+.noid {
+    width: 100px;
 }
-.addcss pre{
-	padding:0px;
+
+.addcss pre {
+    padding: 0px;
 }
-.leftdiv{
-	width:49%;
-	float:left;
-	margin-left:10px;	
-	margin-right:0px;
+
+.leftdiv {
+    width: 49%;
+    float: left;
+    margin-left: 10px;
+    margin-right: 0px;
 }
-.rightdiv{
-	width:49%;
-	float:right;
-	margin-right:10px;
+
+.rightdiv {
+    width: 49%;
+    float: right;
+    margin-right: 10px;
 }

@@ -1,38 +1,48 @@
-.input{
-	border-radius: 0px;
+.input {
+    border-radius: 0px;
 }
-.margin{
-	margin-top:30px ;
+
+.margin {
+    margin-top: 30px;
 }
-.emargin{
-	margin-top:30px;
-	margin-left:15px;
+
+.emargin {
+    margin-top: 30px;
+    margin-left: 15px;
 }
-.width{
-	width: 400px;
-	height: 35px;
+
+.width {
+    width: 400px;
+    height: 35px;
 }
-form{
-	margin-left:40px;
-	margin-top:40px
+
+form {
+    margin-left: 40px;
+    margin-top: 40px
 }
-.a_color{
-	color:#00A2D4;
+
+.a_color {
+    color: #00A2D4;
 }
-p{
-	display: inline-block;
+
+p {
+    display: inline-block;
 }
-p:hover{
-	color:#357EBD;
-	cursor:pointer;
+
+p:hover {
+    color: #357EBD;
+    cursor: pointer;
 }
-.tent{
-	margin-bottom:30px;
+
+.tent {
+    margin-bottom: 30px;
 }
-#settingdata .modal-dialog{
+
+#settingdata .modal-dialog {
     width: 1200px;
-    height:600px;
+    height: 600px;
 }
-.main table{
-	margin-top: 30px;
+
+.main table {
+    margin-top: 30px;
 }

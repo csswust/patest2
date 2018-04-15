@@ -8,7 +8,7 @@
         <include refid="Blob_Column_List"/>
         FROM site_info
         WHERE 1 = 1
-            <if test="record.siteId != null">
+        <if test="record.siteId != null">
             AND
             site_id = #{record.siteId}
         </if>
@@ -55,7 +55,7 @@
         count(*)
         FROM site_info
         WHERE 1 = 1
-            <if test="record.siteId != null">
+        <if test="record.siteId != null">
             AND
             site_id = #{record.siteId}
         </if>
@@ -101,7 +101,7 @@
         delete from site_info
         where site_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
@@ -112,14 +112,15 @@
         from site_info
         where site_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into site_info
         (name, type, display, extra, create_time, modify_time, modify_user_id, value) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.name}, #{item.type}, #{item.display}, #{item.extra}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.value})
+            (#{item.name}, #{item.type}, #{item.display}, #{item.extra}, #{item.createTime}, #{item.modifyTime},
+            #{item.modifyUserId}, #{item.value})
         </foreach>
     </select>
 </mapper>

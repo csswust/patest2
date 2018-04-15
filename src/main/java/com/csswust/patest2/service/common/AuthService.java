@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Created by 972536780 on 2017/11/20.
  */
 @Component
-public class AuthService {
+public class AuthService extends BaseService{
     public boolean isAuth(String urlPath, String name) {
         if (StringUtils.isBlank(urlPath) || StringUtils.isBlank(name)) {
             return false;

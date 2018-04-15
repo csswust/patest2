@@ -1,77 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="renderer" content="webkit">
-<title>LexamV3.0</title>
-<link rel="shortcut icon" href="../img/favicon.ico" >
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="../css/commonet.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LexamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../css/commonet.css">
 
-<script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-   <!--[if lt IE 9]>
-      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
-      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-	<div id="headet">
-		<!-- 头部菜单 -->
-	</div>
-	<div class="container-fluid">
-		<!--nav-->
-		<div class="topmenu">
-			<!-- 顶部导航 -->
-		</div>
-		 <div class="col-md-10 col-md-offset-1 allcontent">
-			  <div class="tip">
-				<div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
-					<a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
-				</div>
-			   </div>
-		     <ol class="breadcrumb">
-			  <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
-			   <li class="active pageName">上传题目</li>
-			</ol>
-		 </div>
-		<div class="row ">
-			<div class="col-md-offset-8">
-				<ul class="pagination " id="pagination"></ul>
-			</div>
-		</div>
-	</div>
-	 <!-- <div id="footer">
-         页脚   
-    </div> -->
+<div id="headet">
+    <!-- 头部菜单 -->
+</div>
+<div class="container-fluid">
+    <!--nav-->
+    <div class="topmenu">
+        <!-- 顶部导航 -->
+    </div>
+    <div class="col-md-10 col-md-offset-1 allcontent">
+        <div class="tip">
+            <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
+                <a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+            </div>
+        </div>
+        <ol class="breadcrumb">
+            <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a>
+            </li>
+            <li class="active pageName">上传题目</li>
+        </ol>
+    </div>
+    <div class="row ">
+        <div class="col-md-offset-8">
+            <ul class="pagination " id="pagination"></ul>
+        </div>
+    </div>
+</div>
+<!-- <div id="footer">
+    页脚
+</div> -->
 </body>
 <script id="getcontent" type="text/html">
-		 {{each data as value i}} 
-                   <tr>
-					<td><input type="checkbox" value="{{value.examId}}" name="title"/></td>
-					<td>{{++i}}</td>
-					<td><a href="editExam.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
-					<td>{{value.startTime}}</td>
-					<td>{{value.endTime}}</td>
-                   </tr>
-         {{/each}}
-	 </script>
+    {{each data as value i}}
+    <tr>
+        <td><input type="checkbox" value="{{value.examId}}" name="title"/></td>
+        <td>{{++i}}</td>
+        <td><a href="editExam.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
+        <td>{{value.startTime}}</td>
+        <td>{{value.endTime}}</td>
+    </tr>
+    {{/each}}
+</script>
 <script type="text/javascript">
-	//seajs的简单配置
-	seajs.config({
-		base : '../lib/',
-		alias : {
-			jquery : 'jQuery/jquery.min.js',
-			paginator : 'jQuery/jqPaginator.js',
-			artTemplate : 'artTemplate/artTemplate.js',
-			bootstrap : 'bootstrap/js/bootstrap.min.js',
-			datetimepicker : 'bootstrap/js/bootstrap-datetimepicker.min.js'
-		}
-	});
-	//加载入口模块
-	seajs.use('jquery');
-	seajs.use("../js/uploadsub.js");
+    //seajs的简单配置
+    seajs.config({
+        base: '../lib/',
+        alias: {
+            jquery: 'jQuery/jquery.min.js',
+            paginator: 'jQuery/jqPaginator.js',
+            artTemplate: 'artTemplate/artTemplate.js',
+            bootstrap: 'bootstrap/js/bootstrap.min.js',
+            datetimepicker: 'bootstrap/js/bootstrap-datetimepicker.min.js'
+        }
+    });
+    //加载入口模块
+    seajs.use('jquery');
+    seajs.use("../js/uploadsub.js");
 </script>
 </html>

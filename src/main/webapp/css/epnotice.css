@@ -1,11 +1,12 @@
- .title{
-	margin:10px 0;
-	text-align:center;
-	font-size:25px;
-	line-height:25px;
+.title {
+    margin: 10px 0;
+    text-align: center;
+    font-size: 25px;
+    line-height: 25px;
 }
-.content{ 
-	border:1px solid #CCC;
-	margin:5px 100px !important;
-	padding:5px;
+
+.content {
+    border: 1px solid #CCC;
+    margin: 5px 100px !important;
+    padding: 5px;
 } 
