@@ -1,6 +1,5 @@
 package com.csswust.patest2.controller;
 
-import com.csswust.patest2.service.common.ConditionBuild;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -8,6 +7,7 @@ import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamPaperService;
 import com.csswust.patest2.service.OnlineUserService;
+import com.csswust.patest2.service.common.ConditionBuild;
 import com.csswust.patest2.service.result.DrawProblemRe;
 import com.csswust.patest2.service.result.ExamPaperLoadRe;
 import org.apache.commons.lang3.StringUtils;
