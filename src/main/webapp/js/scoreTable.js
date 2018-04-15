@@ -107,14 +107,14 @@ program.examId = parm["id"];
 program.getRank();
 $(".search").click(function () {
     program.page = 1;
-    $('#pagination').jqPaginator('option', {
+    $('#paginationGet').jqPaginator('option', {
         currentPage: program.page
     });
     program.susername = $(".susername").val();
     program.sstudentNumber = $(".sstudentNumber").val();
     program.getRank();
     $(".countnum").html(program.count);
-    $('#pagination').jqPaginator('option', {
+    $('#paginationGet').jqPaginator('option', {
         totalCounts: program.count
     });
 });
