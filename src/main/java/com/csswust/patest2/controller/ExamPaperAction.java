@@ -1,5 +1,6 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.ConditionBuild;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -53,6 +54,8 @@ public class ExamPaperAction extends BaseAction {
     private SubmitInfoDao submitInfoDao;
     @Autowired
     private OnlineUserService onlineUserService;
+    @Autowired
+    private ConditionBuild conditionBuild;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
@@ -66,26 +69,7 @@ public class ExamPaperAction extends BaseAction {
         if (examPaper == null) return null;
         Map<String, Object> res = new HashMap<>();
         BaseQuery baseQuery = new BaseQuery();
-        if (StringUtils.isNotBlank(userName)) {
-            UserInfo userInfo = userInfoDao.selectByUsername(userName);
-            if (userInfo != null) {
-                examPaper.setUserId(userInfo.getUserId());
-            } else {
-                examPaper.setUserId(-1);
-            }
-        }
-        if (StringUtils.isNotBlank(studentNumber)) {
-            UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
-            if (userProfile == null) {
-                baseQuery.setCustom("userIds", new ArrayList<Integer>());
-            } else {
-                UserInfo userInfo = new UserInfo();
-                userInfo.setUserProfileId(userProfile.getUseProId());
-                List<UserInfo> userInfoList = userInfoDao.selectByCondition(userInfo, new BaseQuery());
-                List<Integer> userIds = getFieldByList(userInfoList, "userId", UserInfo.class);
-                baseQuery.setCustom("userIds", userIds);
-            }
-        }
+        conditionBuild.buildExamPaper(baseQuery, examPaper, userName, studentNumber);
         Integer total = examPaperDao.selectByConditionGetCount(examPaper, baseQuery);
         baseQuery.setPageRows(page, rows);
         List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, baseQuery);

@@ -39,6 +39,8 @@ var program = {
                 examId: program.examId,
                 page: program.page,
                 rows: pubMeth.rowsnum,
+                userName: program.susername,
+                studentNumber: program.sstudentNumber
             },
             success: function (result) {
                 console.log(result);
@@ -103,7 +105,19 @@ pubMeth.getRowsnum("rowsnum");
 var parm = pubMeth.getQueryObject();
 program.examId = parm["id"];
 program.getRank();
-
+$(".search").click(function () {
+    program.page = 1;
+    $('#pagination').jqPaginator('option', {
+        currentPage: program.page
+    });
+    program.susername = $(".susername").val();
+    program.sstudentNumber = $(".sstudentNumber").val();
+    program.getRank();
+    $(".countnum").html(program.count);
+    $('#pagination').jqPaginator('option', {
+        totalCounts: program.count
+    });
+});
 if (program.count > 0) {
     $(".countnum").html(program.count);
     $.jqPaginator('#paginationGet', {

@@ -26,6 +26,8 @@ var program = {
                 page: program.page,
                 rows: pubMeth.rowsnum,
                 examId: program.examId,
+                userName: program.susername,
+                studentNumber: program.sstudentNumber,
                 containOnline: true
             },
             success: function (result) {
@@ -88,6 +90,19 @@ var parm = pubMeth.getQueryObject();
 program.examId = parm["id"];
 program.selectOnline();
 
+$(".search").click(function () {
+    program.page = 1;
+    $('#pagination').jqPaginator('option', {
+        currentPage: program.page
+    });
+    program.susername = $(".susername").val();
+    program.sstudentNumber = $(".sstudentNumber").val();
+    program.selectOnline();
+    $(".countnum").html(program.count);
+    $('#pagination').jqPaginator('option', {
+        totalCounts: program.count
+    });
+});
 if (program.count > 0) {
     $(".countnum").html(program.count);
     $.jqPaginator('#pagination', {

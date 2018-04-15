@@ -1,5 +1,6 @@
 package com.csswust.patest2.controller;
 
+import com.csswust.patest2.common.ConditionBuild;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -8,6 +9,7 @@ import com.csswust.patest2.dao.result.SelectProblemNumRe;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamInfoService;
 import com.csswust.patest2.service.result.ImportDataRe;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class ExamInfoAction extends BaseAction {
     private UserProfileDao userProfileDao;
     @Autowired
     private ExamInfoService examInfoService;
+    @Autowired
+    private ConditionBuild conditionBuild;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectTempProblem(
@@ -174,6 +178,8 @@ public class ExamInfoAction extends BaseAction {
     @RequestMapping(value = "/rankingByGrade", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> rankingByGrade(
             @RequestParam Integer examId,
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String studentNumber,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         if (examId == null) return null;
@@ -181,6 +187,7 @@ public class ExamInfoAction extends BaseAction {
         ExamPaper examPaper = new ExamPaper();
         examPaper.setExamId(examId);
         BaseQuery baseQuery = new BaseQuery();
+        conditionBuild.buildExamPaper(baseQuery, examPaper, userName, studentNumber);
         Integer total = examPaperDao.selectByConditionGetCount(examPaper, baseQuery);
         baseQuery.setPageRows(page, rows);
         baseQuery.setCustom("sort", "sort");
