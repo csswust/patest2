@@ -26,7 +26,7 @@ public class Generator {
 
     public static String modelPath = basePath + "src\\main\\resources\\mybatis_mappers";
     public static String daoPath = basePath + "src\\main\\java\\" + packagePath + "dao";
-    public static String actionPath = basePath + "src\\main\\java\\"+packagePath+"controller";
+    public static String actionPath = basePath + "src\\main\\java\\" + packagePath + "controller";
     public static String htmlPath = basePath + "src\\main\\webapp\\index.html";
 
     public static String daoImplPath = daoPath + "\\impl";
@@ -37,7 +37,7 @@ public class Generator {
 
 
     public static void main(String[] args) throws IOException {
-        File oldPathFile = new File(modelPath);
+        File oldPathFile = new File(modelPath + "\\auto");
         File[] files = oldPathFile.listFiles();
         for (File file : files) {
             if (file.isDirectory()) {
@@ -45,7 +45,7 @@ public class Generator {
             }
             Model model = Generator.getModel(file);
             System.out.println(JSON.toJSONString(model));
-            //DaoImplGenerator.generator(model);
+            DaoImplGenerator.generator(model);
             MapperImplGenerator.generator(model);
             //ActionGenerator.generator(model);
         }

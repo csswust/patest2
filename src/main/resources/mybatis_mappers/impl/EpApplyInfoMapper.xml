@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.EpApplyInfoDao">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ep_apply_info
+        WHERE 1 = 1
+            <if test="record.applyId != null">
+            AND
+            apply_id = #{record.applyId}
+        </if>
+        <if test="record.examName != null">
+            AND
+            exam_name = #{record.examName}
+        </if>
+        <if test="record.peopleNumber != null">
+            AND
+            people_number = #{record.peopleNumber}
+        </if>
+        <if test="record.isProblem != null">
+            AND
+            is_problem = #{record.isProblem}
+        </if>
+        <if test="record.startTime != null">
+            AND
+            start_time = #{record.startTime}
+        </if>
+        <if test="record.endTime != null">
+            AND
+            end_time = #{record.endTime}
+        </if>
+        <if test="record.epUserId != null">
+            AND
+            ep_user_id = #{record.epUserId}
+        </if>
+        <if test="record.status != null">
+            AND
+            status = #{record.status}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.reason != null">
+            AND
+            reason = #{record.reason}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
+        <include refid="custom_condition"/>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM ep_apply_info
+        WHERE 1 = 1
+            <if test="record.applyId != null">
+            AND
+            apply_id = #{record.applyId}
+        </if>
+        <if test="record.examName != null">
+            AND
+            exam_name = #{record.examName}
+        </if>
+        <if test="record.peopleNumber != null">
+            AND
+            people_number = #{record.peopleNumber}
+        </if>
+        <if test="record.isProblem != null">
+            AND
+            is_problem = #{record.isProblem}
+        </if>
+        <if test="record.startTime != null">
+            AND
+            start_time = #{record.startTime}
+        </if>
+        <if test="record.endTime != null">
+            AND
+            end_time = #{record.endTime}
+        </if>
+        <if test="record.epUserId != null">
+            AND
+            ep_user_id = #{record.epUserId}
+        </if>
+        <if test="record.status != null">
+            AND
+            status = #{record.status}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.reason != null">
+            AND
+            reason = #{record.reason}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
+        <include refid="custom_condition"/>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from ep_apply_info
+        where apply_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+        </foreach>
+    </delete>
+    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ep_apply_info
+        where apply_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+        </foreach>
+    </select>
+    <select id="insertBatch" parameterType="java.util.Map">
+        insert into ep_apply_info
+        (exam_name, people_number, is_problem, start_time, end_time, ep_user_id, status, exam_id, reason, create_time, modify_time, modify_user_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.examName}, #{item.peopleNumber}, #{item.isProblem}, #{item.startTime}, #{item.endTime}, #{item.epUserId}, #{item.status}, #{item.examId}, #{item.reason}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+        </foreach>
+    </select>
+</mapper>

@@ -20,7 +20,7 @@
 
         <!-- 数据连接相关配置 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://222.196.35.228:3306/patest2" userId="loco"
+                        connectionURL="jdbc:mysql://localhost:3306/patest2" userId="root"
                         password="cs.swust">
         </jdbcConnection>
 
@@ -70,12 +70,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="exa_not_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="exam_paper" domainObjectName="ExamPaper"
+        <!--<table schema="patest2" tableName="exam_paper" domainObjectName="ExamPaper"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exa_pap_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="exam_param" domainObjectName="ExamParam"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -112,12 +112,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="maj_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="paper_problem" domainObjectName="PaperProblem"
+        <!--<table schema="patest2" tableName="paper_problem" domainObjectName="PaperProblem"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="pap_pro_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="problem_info" domainObjectName="ProblemInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -184,6 +184,30 @@
                selectByExampleQueryId="false">
             <generatedKey column="vis_pat_id" sqlStatement="JDBC"/>
         </table>-->
+        <table schema="patest2" tableName="ep_apply_info" domainObjectName="EpApplyInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="apply_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="ep_order_info" domainObjectName="EpOrderInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="order_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="ep_user_info" domainObjectName="EpUserInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+        <table schema="patest2" tableName="ep_notice" domainObjectName="EpNotice"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="epno_id" sqlStatement="JDBC"/>
+        </table>
     </context>
 </generatorConfiguration>
 

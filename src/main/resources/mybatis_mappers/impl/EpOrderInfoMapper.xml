@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csswust.patest2.dao.EpOrderInfoDao">
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ep_order_info
+        WHERE 1 = 1
+            <if test="record.orderId != null">
+            AND
+            order_id = #{record.orderId}
+        </if>
+        <if test="record.applyId != null">
+            AND
+            apply_id = #{record.applyId}
+        </if>
+        <if test="record.orderNum != null">
+            AND
+            order_num = #{record.orderNum}
+        </if>
+        <if test="record.description != null">
+            AND
+            description = #{record.description}
+        </if>
+        <if test="record.money != null">
+            AND
+            money = #{record.money}
+        </if>
+        <if test="record.epUserId != null">
+            AND
+            ep_user_id = #{record.epUserId}
+        </if>
+        <if test="record.isPay != null">
+            AND
+            is_pay = #{record.isPay}
+        </if>
+        <if test="record.payMoney != null">
+            AND
+            pay_money = #{record.payMoney}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
+        <include refid="custom_condition"/>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        count(*)
+        FROM ep_order_info
+        WHERE 1 = 1
+            <if test="record.orderId != null">
+            AND
+            order_id = #{record.orderId}
+        </if>
+        <if test="record.applyId != null">
+            AND
+            apply_id = #{record.applyId}
+        </if>
+        <if test="record.orderNum != null">
+            AND
+            order_num = #{record.orderNum}
+        </if>
+        <if test="record.description != null">
+            AND
+            description = #{record.description}
+        </if>
+        <if test="record.money != null">
+            AND
+            money = #{record.money}
+        </if>
+        <if test="record.epUserId != null">
+            AND
+            ep_user_id = #{record.epUserId}
+        </if>
+        <if test="record.isPay != null">
+            AND
+            is_pay = #{record.isPay}
+        </if>
+        <if test="record.payMoney != null">
+            AND
+            pay_money = #{record.payMoney}
+        </if>
+        <if test="record.createTime != null">
+            AND
+            create_time = #{record.createTime}
+        </if>
+        <if test="record.modifyTime != null">
+            AND
+            modify_time = #{record.modifyTime}
+        </if>
+        <if test="record.modifyUserId != null">
+            AND
+            modify_user_id = #{record.modifyUserId}
+        </if>
+
+        <include refid="custom_condition"/>
+        <if test="start != null and rows != null">
+            LIMIT #{start}, #{rows}
+        </if>
+    </select>
+    <delete id="deleteByIdsList" parameterType="java.util.Map">
+        delete from ep_order_info
+        where order_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+        </foreach>
+    </delete>
+    <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ep_order_info
+        where order_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+        </foreach>
+    </select>
+    <select id="insertBatch" parameterType="java.util.Map">
+        insert into ep_order_info
+        (apply_id, order_num, description, money, ep_user_id, is_pay, pay_money, create_time, modify_time, modify_user_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.applyId}, #{item.orderNum}, #{item.description}, #{item.money}, #{item.epUserId}, #{item.isPay}, #{item.payMoney}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+        </foreach>
+    </select>
+</mapper>
