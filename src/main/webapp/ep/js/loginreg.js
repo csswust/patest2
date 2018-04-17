@@ -8,7 +8,6 @@ var loginreg = {
     realName: '',
     telephone: '',
     init: function () {
-        loginreg.selectEpinfo();
         $("#userlogin").click(function () {
             $('#myModal').modal();
         });
@@ -97,37 +96,5 @@ var loginreg = {
         else {
             alert("请完善信息");
         }
-    },
-    getQueryObject: function () {
-        var url = window.location.href;
-        var search = url.substring(url.lastIndexOf("?") + 1);
-        var obj = {};
-        var reg = /([^?&=]+)=([^?&=]*)/g;
-        search.replace(reg, function (rs, $1, $2) {
-            var name = decodeURIComponent($1);
-            var val = decodeURIComponent($2);
-            val = String(val);
-            obj[name] = val;
-            return rs;
-        });
-        return obj;
-    },
-    selectEpinfo: function () {
-        patest.request({
-            url: "../ep/selectEpSite"
-        }, {
-            extra: "ep"
-        }, function (result) {
-            if (result.status === 1) {
-                $(".contpeo").html(result.data.ep_serv_people);
-                $(".contway").html(result.data.ep_serv_concern);
-                $(".teaminfo").html(result.data.ep_team_info);
-                $(".principal").html(result.data.ep_principal);
-                $(".phone").html("(" + result.data.ep_telephone + ")");
-                $(".email").html(result.data.ep_email);
-                $(".taddress").html(result.data.ep_address);
-                $(".address").html(result.data.ep_address);
-            }
-        });
     }
 };

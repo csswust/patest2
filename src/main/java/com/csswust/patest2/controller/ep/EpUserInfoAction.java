@@ -78,4 +78,12 @@ public class EpUserInfoAction extends BaseAction {
         apiResult.setStatus(1);
         return apiResult;
     }
+
+    @RequestMapping(value = "/epUserInfo/logout", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object logout() {
+        APIResult apiResult = new APIResult();
+        clearSession(request);
+        apiResult.setStatus(1);
+        return apiResult;
+    }
 }
