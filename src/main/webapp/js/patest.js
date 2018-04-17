@@ -46,5 +46,14 @@ var patest = {
             return rs;
         });
         return obj;
+    },
+    getRowsnum: function () {
+        patest.request({
+            url: "../siteInfo/selectByName"
+        }, {
+            name: "rows"
+        }, function (result) {
+            patest.rowsnum = result.value;
+        });
     }
 };

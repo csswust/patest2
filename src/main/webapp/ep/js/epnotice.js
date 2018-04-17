@@ -1,7 +1,7 @@
 define(function (require, exports, module) {
     require('jquery');
     require('jCookie');
-    require('../js/common.js');
+    require('../../js/common.js');
     require('paginator');
     require('bootstrap');
     require('ueditor_config');
@@ -13,7 +13,7 @@ define(function (require, exports, module) {
     $(".notice").addClass("active");
 
     var template = require('artTemplate');
-    var pubMeth = require('../js/public.js');
+    var pubMeth = require('../../js/public.js');
 
     var program = {
         page: "1",
