@@ -29,7 +29,7 @@ var program = {
                 + '<td><input type="checkbox" value="' + orderId + '" name="title"/></td>'
                 + '<td>' + order + '</td>'
                 + '<td>' + billlist[i].orderNum + '</td>'
-                + '<td><a class="title"  href="applyexam.html?applyid=' + epApplys[i].applyId + '">' + epApplys[i].examName + '</a></td>'
+                + '<td><a class="title"  href="../ep/applyexam.html?applyid=' + epApplys[i].applyId + '">' + epApplys[i].examName + '</a></td>'
                 + '<td>' + epUsers[i].realName + '</td>'
                 + '<td>' + epUsers[i].phone + '</td>'
                 + '<td>' + billlist[i].createTime + '</td>'

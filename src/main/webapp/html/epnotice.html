@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/exam.css">
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
     <!--[if lt IE 9]>
     <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
     <script src="../lib/bootstrap/js/respond.min.js"></script>
@@ -74,7 +73,7 @@
     </div>
 </div>
 <div class="modal fade" id="addnotice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document" style="width:700px;">
+    <div class="modal-dialog" role="document" style="width:900px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
@@ -111,7 +110,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">Close</span></button>
-                <h4 class="modal-title" style="font-size:15px;">你确定要删除<span class="examquess"></span>题目吗？</h4>
+                <h4 class="modal-title" style="font-size:15px;">你确定要删除<span class="examquess"></span>吗？</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -121,22 +120,19 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 </body>
-<script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            jCookie: 'jQuery/jquery.cookie.js',
-            paginator: 'jQuery/jqPaginator.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js',
-            ueditor_config: 'ueditor/ueditor.config.js',
-            ueditor: 'ueditor/ueditor.all.min.js',
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/epnotice.js");
-</script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+<script type="text/javascript" src="../lib/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="../lib/ueditor/ueditor.all.min.js"></script>
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/epnotice.js"></script>
 </html>
