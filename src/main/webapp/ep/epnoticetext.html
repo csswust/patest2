@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="../css/mainpage.css"/>
     <link rel="stylesheet" type="text/css" href="../css/epnotice.css"/>
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: #000000;">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation"
+     style="background: #000000;">
     <!--缩小自适应-->
     <div class="navbar-header">
         <button class="navbar-toggle" type="button" data-toggle="collapse">
@@ -186,20 +186,22 @@
     </div>
 </div>
 </body>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+
+<script type="text/javascript" src="../js/patest.js"></script>
+<script type="text/javascript" src="./js/loginreg.js"></script>
+<script type="text/javascript" src="./js/commonet.js"></script>
+<script type="text/javascript" src="./js/epnoticetext.js"></script>
 <script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            jCookie: 'jQuery/jquery.cookie.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            paginator: 'jQuery/jqPaginator.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js'
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/epnoticetext.js");
+    // 执行入口
+    epnoticetext.init();
 </script>
 </html>
