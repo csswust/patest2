@@ -23,6 +23,6 @@ public class EpNoticeAction extends BaseAction {
             EpNotice epNotice,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        return epNoticeService.selectByCondition(epNotice,page,rows);
+        return epNoticeService.selectByCondition(epNotice, page, rows);
     }
 }

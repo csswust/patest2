@@ -55,5 +55,32 @@ var patest = {
         }, function (result) {
             patest.rowsnum = result.value;
         });
+    },
+    legTimeRange: function (startTime, endTime) {
+        var stadate = startTime.split(" ");
+        var enddate = endTime.split(" ");
+        var stayear = stadate[0].split('-');
+        var endyear = enddate[0].split('-');
+        var stadate = stadate[1].split(':');
+        var enddate = enddate[1].split(':');
+        if (stayear[0] > endyear[0] || stayear[0] === endyear[0] && stayear[1] > endyear[1] ||
+            stayear[0] === endyear[0] && stayear[1] === endyear[1] && stayear[2] > endyear[2] ||
+            stayear[0] === endyear[0] && stayear[1] === endyear[1] && stayear[2] === endyear[2] && stadate[0] > enddate[0] ||
+            stayear[0] === endyear[0] && stayear[1] === endyear[1] && stayear[2] === endyear[2] && stadate[0] === enddate[0] && stadate[1] > enddate[1] ||
+            stayear[0] === endyear[0] && stayear[1] === endyear[1] && stayear[2] === endyear[2] && stadate[0] === enddate[0] && stadate[1] === enddate[1] && stadate[2] > enddate[2]) {
+            return false;
+        }
+        return true;
+    },
+    alertInfo: function (className, info) {
+        if ($(".tip").text().trim() === "") {
+            $(".tip").html(' <div class="alert  ' + className + '"  style="margin-top: 10px;" id="tip">' +
+                '<a href="#" class="close" data-dismiss="alert">&times;</a>' +
+                '<strong>' + info + '</strong></div>');
+        } else {
+            $("#tip").removeClass();
+            $("#tip").addClass("alert " + className);
+            $("strong").text(info);
+        }
     }
 };

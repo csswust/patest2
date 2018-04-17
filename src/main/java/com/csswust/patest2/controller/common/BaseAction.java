@@ -50,4 +50,9 @@ public class BaseAction extends Base {
         HttpSession session = request.getSession();
         return (Integer) session.getAttribute("userId");
     }
+
+    public Integer getEpUserId() {
+        HttpSession session = request.getSession();
+        return (Integer) session.getAttribute("epUserId");
+    }
 }
