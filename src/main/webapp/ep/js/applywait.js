@@ -17,7 +17,6 @@ var applywait = {
             }
         });
         $("#applyInfo").on('click', '.payment', function () {
-            applywait.flag--;
             var length = applywait.count;
             var index = this.id.split("-")[0];
             if (parseInt(index) + 1 > length) {
@@ -34,7 +33,6 @@ var applywait = {
             }
         });
         $("#applyInfo").on('click', '.addexam', function () {
-            applywait.flag--;
             var length = applywait.count;
             var index = this.id.split("-")[0];
             if (parseInt(index) + 1 > length) {
@@ -117,7 +115,6 @@ var applywait = {
         applywait.applyhtml = "";
         for (var i = 0; i < infolist.length; i++) {
             var ispassinfo = statusDesc[infolist[i].status];
-            var flag = applywait.flag;
             var id = infolist[i].applyId;
             applywait.applyhtml += '<tr  class="' + id + '"><td>' + infolist[i].applyId + '</td>'
                 + '<td><a   href="applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'

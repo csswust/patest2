@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="../css/common.css">
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
     <!--[if lt IE 9]>
     <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
     <script src="../lib/bootstrap/js/respond.min.js"></script>
@@ -74,10 +73,10 @@
                 </tbody>
             </table>
             <div class="row paging">
-                <div class="col-md-2 col-md-offset-2 pagenum">当页合计：<span class="perbill" style="color:#337ab7;"></span>RMB
+                <!--<div class="col-md-2 col-md-offset-2 pagenum">当页合计：<span class="perbill" style="color:#337ab7;"></span>RMB
                 </div>
-                <div class="col-md-2 pagenum">总计：<span class="allbill" style="color:#337ab7;"></span>RMB</div>
-                <div class="col-md-3 pagenum">共 <span class="countnum" style="color:#337ab7;"></span> 个</div>
+                <div class="col-md-2 pagenum">总计：<span class="allbill" style="color:#337ab7;"></span>RMB</div>-->
+                <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7;"></span> 个</div>
                 <div class="col-md-4 ">
                     <ul class="pagination " id="pagination"></ul>
                 </div>
@@ -112,22 +111,17 @@
     </tr>
     {{/each}}
 </script>
-<script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            jCookie: 'jQuery/jquery.cookie.js',
-            paginator: 'jQuery/jqPaginator.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js',
-            datetimepicker: 'bootstrap/js/bootstrap-datetimepicker.min.js',
-            fileupload: 'jQuery/ajaxfileupload.js'
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/adminbill.js");
-</script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/adminbill.js"></script>
 </html>
