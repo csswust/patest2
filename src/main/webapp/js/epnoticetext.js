@@ -2,11 +2,11 @@ define(function (require, exports, module) {
     require('jquery');
     require('jCookie');
     require('bootstrap');
-    require('../js/loginreg.js');
+    require('../ep/js/loginreg.js');
     require('paginator');
     $(".homepage").addClass("onet");
 
-    var urlMeth = require('../js/loginreg.js');
+    var urlMeth = require('../ep/js/loginreg.js');
     var program = {
         epnoId: '',
         /**

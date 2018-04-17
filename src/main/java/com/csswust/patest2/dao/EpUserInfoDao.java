@@ -33,4 +33,8 @@ public interface EpUserInfoDao {
     List<EpUserInfo> selectByIdsList(List<Integer> idsList);
 
     int insertBatch(List<EpUserInfo> recordList);
+
+    EpUserInfo selectByUsername(String username);
+
+    EpUserInfo selectByEmail(String email);
 }
