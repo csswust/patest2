@@ -68,6 +68,8 @@ public class EpUserInfoAction extends BaseAction {
             apiResult.setStatusAndDesc(-3, "邮箱已存在");
             return apiResult;
         }
+        String newPass = CipherUtil.encode(epUserInfo.getPassword());
+        epUserInfo.setPassword(newPass);
         int result = epUserInfoDao.insertSelective(epUserInfo);
         if (result != 1) {
             apiResult.setStatusAndDesc(-4, "注册失败");

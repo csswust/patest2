@@ -18,7 +18,7 @@ import java.util.List;
  * Created by 972536780 on 2018/4/17.
  */
 @RestController
-public class EpNoticeAction extends BaseAction {
+public class EplNoticeAction extends BaseAction {
     @Autowired
     private EpNoticeDao epNoticeDao;
     @Autowired
