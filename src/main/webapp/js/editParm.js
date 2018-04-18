@@ -55,7 +55,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.APIResult.status > 0) {
+                if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "添加成功！");
                     if (par.examId) {
                         window.location.href = 'editUplist.html?examId=' + program.examId;
@@ -63,7 +63,7 @@ var program = {
                         $(".saveTemp").css("display", "none");
                     }
                 } else {
-                    pubMeth.alertInfo("alert-danger", result.APIResult.desc);
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {
@@ -85,12 +85,12 @@ var program = {
                 scores: program.scoreArr,
             },
             success: function (result) {
-                if (result.APIResult.status > 0) {
+                if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "修改成功");
                     window.location.href = 'editUplist.html?Id=' + program.examId;
                 }
                 else {
-                    pubMeth.alertInfo("alert-danger", result.APIResult.desc);
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {
@@ -111,7 +111,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.status == 1) {
+                if (result.status === 1) {
                     pubMeth.alertInfo("alert-success", "删除成功");
                 }
             },
@@ -142,7 +142,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                program.count = result.total;
+                program.count = result.data.total;
             }, error: function () {
                 pubMeth.alertInfo("alert-danger", "请求错误");
             }
@@ -162,26 +162,26 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                var length = result.examParamList.length;
+                var length = result.data.examParamList.length;
                 for (var i = 0; i < length; i++) {
                     var id = "courseName-" + i;
-                    program.addTemplate(result.examParamList[i].exaParId);
+                    program.addTemplate(result.data.examParamList[i].exaParId);
                     $("#" + id).html("<option>课程</option>");
                     for (var k = 0; k < program.courseName.length; k++) {
                         $("#" + id).append("<option value=" + program.courseName[k].couId + ">" + program.courseName[k].courseName + "</option>");
                     }
                     flag++;
-                    var parentId = result.courseInfoList[i].couId;
+                    var parentId = result.data.courseInfoList[i].couId;
                     $("#" + id + " option[value='" + parentId + "']").attr("selected", true);
                     for (var j = 0; j < program.course.length; j++) {//知识点
                         if (program.course[j].courseId == parentId) {
                             $("#knowName-" + i).append("<option value=" + program.course[j].knowId + ">" + program.course[j].knowName + "</option>");
                         }
                     }
-                    $("#knowName-" + i + "  option[value='" + result.knowledgeInfoList[i].knowId + "']").attr("selected", true);
-                    $(".level-" + i + " option[value='" + result.examParamList[i].levelId + "']").attr("selected", true);
-                    $(".score-" + i).val(result.examParamList[i].score);
-                    $(".total-" + i).text(result.problemSumList[i]);
+                    $("#knowName-" + i + "  option[value='" + result.data.knowledgeInfoList[i].knowId + "']").attr("selected", true);
+                    $(".level-" + i + " option[value='" + result.data.examParamList[i].levelId + "']").attr("selected", true);
+                    $(".score-" + i).val(result.data.examParamList[i].score);
+                    $(".total-" + i).text(result.data.problemSumList[i]);
                 }
             }
         });

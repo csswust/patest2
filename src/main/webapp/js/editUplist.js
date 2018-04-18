@@ -55,15 +55,13 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.loadResult.status > 0) {
+                if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "上传成功");
-                    console.log(result.loadResult.path);
-                    program.path = result.loadResult.dirPath;
-                    program.fileName = result.loadResult.fileName;
+                    program.path = result.dirPath;
                     window.location.href = '../system/download?path=' + program.path;
                     program.selectUserBaseInfo();
                 } else {
-                    pubMeth.alertInfo("alert-danger", result.loadResult.desc);
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {
@@ -85,10 +83,10 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                program.count = result.total;
-                program.examPaper = result.examPaperList;
-                program.userInfo = result.userInfoList;
-                program.userProfile = result.userProfileList;
+                program.count = result.data.total;
+                program.examPaper = result.data.examPaperList;
+                program.userInfo = result.data.userInfoList;
+                program.userProfile = result.data.userProfileList;
                 program.showInfo();
                 $("#stuInfo").empty();
                 $("#stuInfo").append(program.html);
