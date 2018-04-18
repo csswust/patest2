@@ -100,9 +100,14 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
                 apiResult.setStatusAndDesc(-4, "插入订单失败" +
                         JSON.toJSONString(epOrderInfo));
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            } else {
+                apiResult.setStatusAndDesc(temp, "审核成功");
             }
+        } else {
+            apiResult.setStatusAndDesc(-5, "更新申请失败" +
+                    JSON.toJSONString(record));
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        apiResult.setStatus(result);
         return apiResult;
     }
 }
