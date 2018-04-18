@@ -9,86 +9,88 @@
     <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/exam.css">
+    <link rel="stylesheet" href="../css/commonet.css">
+    <link rel="stylesheet" href="../css/aexam.css">
+    <link rel="stylesheet" href="../css/test.css">
     <!--[if lt IE 9]>
     <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
     <script src="../lib/bootstrap/js/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
-<div id="head"><!-- 头部菜单 --></div>
-<div class="container-fuild">
-    <div class="row">
-        <div class="side-bar col-md-2"><!-- 左侧导航 --></div>
-        <div class="col-md-10">
-            <div class="tip">
-                <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
-                    <a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+<div id="headet"><!-- 头部菜单 --></div>
+<div class="container-fluid">
+    <!--nav-->
+    <div class="topmenu">
+        <!-- 顶部导航 -->
+    </div>
+    <div class="col-md-10  col-md-offset-1 allcontent">
+        <div class="tip">
+            <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
+                <a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+            </div>
+        </div>
+        <ol class="breadcrumb">
+            <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a>
+            </li>
+            <li><a href="test.html">我的考试</a></li>
+            <li class="active pageName">添加题库</li>
+        </ol>
+        <div class="uplist">
+            <div class="row content">
+                <div class="etstep ">
+                    <div class="form-group">
+                        <div class="row">
+
+                        </div>
+                    </div>
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="row bank">
+                            <div class="col-md-2">
+                                <div class="banktitle"><h4>参考人员</h4></div>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-primary btn-sm importList "><span
+                                        class="glyphicon glyphicon-cloud-upload"></span> 上传学生名单
+                                </button>
+                            </div>
+                            <div class="col-md-1 col-md-offset-8  excelInfo">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-hover table-condensed table-striped">
+                        <thead id="stuhead">
+
+                        </thead>
+                        <tbody id="stuInfo">
+
+                        </tbody>
+                    </table>
+                </form>
+                <div class="row">
+                    <div class="col-md-offset-8">
+                        <ul class="pagination " id="pagination"></ul>
+                    </div>
                 </div>
             </div>
-            <ol class="breadcrumb">
-                <li><a href="index.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a>
-                </li>
-                <li><a href="exam.html">考试列表</a></li>
-                <li class="active pageName">添加考试</li>
-            </ol>
-            <div class="uplist">
-                <div class="row content">
-                    <div class="step ">
-                        <div class="form-group">
-                            <div class="row">
-
-                            </div>
-                        </div>
-                    </div>
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <div class="row bank">
-                                <div class="col-md-2">
-                                    <div class="banktitle"><label class="control-label">参考人员</label></div>
-                                </div>
-                                <div class="col-md-1">
-                                    <button type="button" class="btn btn-primary btn-sm importList "><span
-                                            class="glyphicon glyphicon-cloud-upload"></span> 上传学生名单
-                                    </button>
-                                </div>
-                                <div class="col-md-1 col-md-offset-8  excelInfo">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <table class="table table-bordered table-hover table-condensed table-striped">
-                            <thead id="stuhead">
-
-                            </thead>
-                            <tbody id="stuInfo">
-
-                            </tbody>
-                        </table>
-                    </form>
-                    <div class="row paging">
-                        <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum"
-                                                                              style="color:#337ab7;"></span> 个
-                        </div>
-                        <div class="col-md-4 ">
-                            <ul class="pagination " id="pagination"></ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row savebutton saveshow">
-                    <button type="button" class="btn btn-primary  upList " id="justUp"><span
-                            class="glyphicon glyphicon-chevron-left"></span>上一步
-                    </button>
-                    <!--  <button type="button" class="btn btn-primary importList"  style="display:none;">上传学生名单</button> -->
-                    <button type="button" class="btn btn-primary  save" id="justSave"><span
-                            class="glyphicon glyphicon-floppy-save"></span> 保存
-                    </button>
-                </div>
+            <div class="row savebutton saveshow">
+                <button type="button" class="btn btn-primary  upList " id="justUp"><span
+                        class="glyphicon glyphicon-chevron-left"></span>上一步
+                </button>
+                <!--  <button type="button" class="btn btn-primary importList"  style="display:none;">上传学生名单</button> -->
+                <button type="button" class="btn btn-primary  save" id="justSave"><span
+                        class="glyphicon glyphicon-floppy-save"></span> 保存
+                </button>
             </div>
         </div>
     </div>
+</div>
+<div id="footer">
+    <!-- 页脚  -->
 </div>
 <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -102,9 +104,9 @@
                 <div class="input-group col-md-8">
                     <input type="text" class="form-control namefile" placeholder="仅支持.xls" disabled>
                     <span class="input-group-btn">
-            <input type="file" id="namefile" name="namefile" style="display: none">
+            <input type="file" id="namefile" name="file" style="display: none">
                 <a class="btn btn-info file"
-                   onclick="$('input[type=file]').click();">名单</a>
+                   onclick="$('input[id=namefile]').click();">名单</a>
           </span>
                 </div>
                 <div class="download">
@@ -120,9 +122,9 @@
 </div>
 </body>
 <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
-<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
-<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>
-<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>
 <script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
 <!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
 

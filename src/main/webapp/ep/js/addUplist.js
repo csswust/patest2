@@ -17,7 +17,7 @@ var addUplist = {
         $(".examMana").next(".treeview-menu").toggle("slow");
         $(".examMana").addClass("leftActive");
         $(".examList").css("color", "white");
-        $(".stlist").addClass("on");
+        $(".etlist").addClass("on");
         $(".mytest").addClass("onet");
 
         patest.getRowsnum("rowsnum");
@@ -62,11 +62,7 @@ var addUplist = {
         $(".downloada").attr("href", "../system/download?path=/static/考生信息导入模板.xls&isUeditorPath=true");
         //点击上一步返回题库
         $(".upList").click(function () {
-            if (par.examId) {
-                window.location.href = 'editParm.html?examId=' + addUplist.examId;
-            } else if (par.Id) {
-                window.location.href = 'editParm.html?Id=' + addUplist.examId;
-            }
+            window.location.href = 'addParm.html?Id=' + addUplist.examId;
         });
 
     },
@@ -98,9 +94,8 @@ var addUplist = {
     },
     //上传学生名单
     importList: function () {
-        console.log(123);
         $.ajaxFileUpload({
-            url: "../examPaper/uploadUserByExamId",
+            url: "../ep/examPaper/uploadUserByExamId",
             secureuri: false,
             fileElementId: "namefile",// 文件选择框的id属性
             dataType: "json",
@@ -109,15 +104,13 @@ var addUplist = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.loadResult.status > 0) {
+                if (result.status > 0) {
                     patest.alertInfo("alert-success", "上传成功");
-                    console.log(result.loadResult.path);
-                    addUplist.path = result.loadResult.dirPath;
-                    addUplist.fileName = result.loadResult.fileName;
+                    addUplist.path = result.dirPath;
                     window.location.href = '../system/download?path=' + addUplist.path;
                     addUplist.selectUserBaseInfo();
                 } else {
-                    patest.alertInfo("alert-danger", result.loadResult.desc);
+                    patest.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {
@@ -126,31 +119,21 @@ var addUplist = {
         });
     },
     selectUserBaseInfo: function () {
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examPaper/selectByCondition",
-            dataType: 'json',
-            async: false,
-            data: {
-                examId: addUplist.examId,
-                page: addUplist.page,
-                rows: patest.rowsnum,
-            },
-            success: function (result) {
-                console.log(result);
-                addUplist.count = result.total;
-                addUplist.examPaper = result.examPaperList;
-                addUplist.userInfo = result.userInfoList;
-                addUplist.userProfile = result.userProfileList;
-                addUplist.showInfo();
-                $("#stuInfo").empty();
-                $("#stuInfo").append(addUplist.html);
-                addUplist.pagingFun();
-            },
-            error: function () {
-                patest.alertInfo("alert-danger", "请求失败");
-            }
+        patest.request({
+            url: "../ep/examPaper/selectByCondition"
+        }, {
+            examId: addUplist.examId,
+            page: addUplist.page,
+            rows: patest.rowsnum
+        }, function (result) {
+            addUplist.count = result.data.total;
+            addUplist.examPaper = result.data.examPaperList;
+            addUplist.userInfo = result.data.userInfoList;
+            addUplist.userProfile = result.data.userProfileList;
+            addUplist.showInfo();
+            $("#stuInfo").empty();
+            $("#stuInfo").append(addUplist.html);
+            addUplist.pagingFun();
         });
     },
     pagingFun: function () {
