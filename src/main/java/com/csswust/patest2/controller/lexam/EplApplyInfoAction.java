@@ -3,18 +3,13 @@ package com.csswust.patest2.controller.lexam;
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.EpApplyInfoDao;
-import com.csswust.patest2.dao.EpOrderInfoDao;
 import com.csswust.patest2.entity.EpApplyInfo;
-import com.csswust.patest2.entity.EpOrderInfo;
 import com.csswust.patest2.service.EpApplyInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by 972536780 on 2018/4/17.

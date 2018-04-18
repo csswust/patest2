@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by 972536780 on 2018/4/18.
  */
 @RestController
-@RequestMapping("/ep")
+@RequestMapping("/ep/examInfo")
 public class EpExamInfoAction extends BaseAction {
     @Autowired
     private ExamInfoService examInfoService;
     @Autowired
     private AuthService authService;
 
-    @RequestMapping(value = "/examInfo/selectById", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/selectById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectById(@RequestParam Integer examId) {
         if (!authService.judgeEpAuth(getEpUserId(), examId)) {
             return new APIResult(-501, "权限不足");
@@ -30,7 +30,7 @@ public class EpExamInfoAction extends BaseAction {
         return examInfoService.selectById(examId);
     }
 
-    @RequestMapping(value = "/examInfo/updateById", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object updateById(ExamInfo examInfo) {
         if (examInfo == null) return null;
         if (!authService.judgeEpAuth(getEpUserId(), examInfo.getExamId())) {

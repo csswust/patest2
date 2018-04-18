@@ -19,7 +19,7 @@ import static com.csswust.patest2.service.common.BatchQueryService.getFieldByLis
  * Created by 972536780 on 2018/4/15.
  */
 @Component
-public class ConditionBuild extends BaseService{
+public class ConditionBuild extends BaseService {
     @Autowired
     private UserInfoDao userInfoDao;
     @Autowired

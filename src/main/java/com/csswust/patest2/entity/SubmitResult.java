@@ -23,7 +23,8 @@ public class SubmitResult {
 
     private String errMsg;
 
-    public SubmitResult(){}
+    public SubmitResult() {
+    }
 
     public SubmitResult(Integer submitId, Integer testId, Integer status, Integer usedTime, Integer usedMemory, String errMsg) {
         this.submitId = submitId;

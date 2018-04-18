@@ -1,7 +1,6 @@
 package com.csswust.patest2.service.impl;
 
 import com.csswust.patest2.common.APIResult;
-import com.csswust.patest2.controller.lexam.ExamProblemAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;

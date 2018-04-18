@@ -1,7 +1,6 @@
 package com.csswust.patest2.service;
 
 import com.csswust.patest2.common.APIResult;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by 972536780 on 2018/4/18.

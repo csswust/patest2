@@ -3,7 +3,6 @@ package com.csswust.patest2.controller.lexam;
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.EpNoticeDao;
-import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.EpNotice;
 import com.csswust.patest2.service.EpNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Created by 972536780 on 2018/4/17.

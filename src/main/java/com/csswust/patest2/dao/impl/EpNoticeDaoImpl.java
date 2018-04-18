@@ -1,8 +1,8 @@
 package com.csswust.patest2.dao.impl;
 
+import com.csswust.patest2.dao.EpNoticeDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.common.CommonMapper;
-import com.csswust.patest2.dao.EpNoticeDao;
 import com.csswust.patest2.entity.EpNotice;
 import org.springframework.stereotype.Repository;
 
