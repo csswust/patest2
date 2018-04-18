@@ -2,6 +2,7 @@
  * Created by 972536780 on 2018/3/27.
  */
 var patest = {
+    courseName: [],
     request: function (requst, data, call, errCall) {
         if (!requst.type) requst.type = "post";
         if (!requst.content) requst.content = "application/x-www-form-urlencoded;charset=UTF-8";
@@ -81,6 +82,46 @@ var patest = {
             $("#tip").removeClass();
             $("#tip").addClass("alert " + className);
             $("strong").text(info);
+        }
+    },
+    serCourse: function () {
+        patest.request({
+            url: "../courseInfo/selectByCondition"
+        }, null, function (result) {
+            var length = result.total;
+            $(".courseName").empty();
+            $(".courseName").append("<option>课程</option>");
+            for (var i = 0; i < length; i++) {
+                patest.courseName.push(result.list[i]);
+                $(".courseName").append("<option value=" + result.list[i].couId + ">" + result.list[i].courseName + "</option>");
+            }
+            $(".courseName").change(function () {
+                patest.onchange();
+            });
+        });
+    },
+    getKnowledgeInfo: function (courseId) {
+        patest.request({
+            url: "../knowledgeInfo/selectByCondition"
+        }, {
+            containSum: false,
+            courseId: courseId
+        }, function (result) {
+            patest.course = result.knowledgeInfoList;
+        });
+    },
+    onchange: function () {
+        $(".knowName").html("");
+        var parentId = $(".courseName option:selected").val();
+        if (parentId == "课程") {
+            $(".knowName").html("<option>知识点</option>");
+            return;
+        }
+        if (parentId) {
+            patest.getKnowledgeInfo(parentId);
+            for (var i = 0; i < patest.course.length; i++) {
+                $(".knowName").append("<option value=" + patest.course[i].knowId + ">" + patest.course[i].knowName + "</option>");
+            }
         }
     }
 };

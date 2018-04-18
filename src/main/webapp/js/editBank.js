@@ -157,14 +157,6 @@ $("#listInfo").on('click', '.deletepro', function () {
     if (parseInt(index) + 1 > banklength) {
         $("." + this.id).remove();
     } else {
-        /*$("#modaldeletebank").modal({
-         backdrop : 'static'
-         });
-         $(".bankdelete").click(function(){
-         var index = this.id.split("-")[0];
-         program.tempProbId = program.tempProbIds[index];
-         program.deleteTempProblemById();
-         });*/
         if (confirm("确定要删除该题吗？")) {
             var index = this.id.split("-")[0];
             program.tempProbId = program.tempProbIds[index];

@@ -7,7 +7,6 @@ var commonet = {
         commonet.testMenu();
         commonet.footcon();
         commonet.selectEpinfo();
-        // pubMeth.serCourse();
         var par = patest.getQueryObject();
         $(".treeview").on('click', function () {
             $(this).next(".treeview-menu").toggle("slow");
