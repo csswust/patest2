@@ -1,15 +1,12 @@
 package com.csswust.patest2.controller.lexam;
 
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamPaperService;
-import com.csswust.patest2.service.OnlineUserService;
-import com.csswust.patest2.service.common.ConditionBuild;
-import com.csswust.patest2.service.result.DrawProblemRe;
-import com.csswust.patest2.service.result.ExamPaperLoadRe;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,13 +48,9 @@ public class ExamPaperAction extends BaseAction {
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private SubmitInfoDao submitInfoDao;
-    @Autowired
-    private OnlineUserService onlineUserService;
-    @Autowired
-    private ConditionBuild conditionBuild;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectByCondition(
+    public Object selectByCondition(
             ExamPaper examPaper,
             @RequestParam(required = false, defaultValue = "false") Boolean onlyPaper,
             @RequestParam(required = false, defaultValue = "false") Boolean containOnline,
@@ -65,35 +58,8 @@ public class ExamPaperAction extends BaseAction {
             @RequestParam(required = false) String studentNumber,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if (examPaper == null) return null;
-        Map<String, Object> res = new HashMap<>();
-        BaseQuery baseQuery = new BaseQuery();
-        conditionBuild.buildExamPaper(baseQuery, examPaper, userName, studentNumber);
-        Integer total = examPaperDao.selectByConditionGetCount(examPaper, baseQuery);
-        baseQuery.setPageRows(page, rows);
-        List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, baseQuery);
-        res.put("total", total);
-        res.put("examPaperList", examPaperList);
-        if (onlyPaper) {
-            return res;
-        }
-        List<Integer> userIds = getFieldByList(examPaperList, "userId", ExamPaper.class);
-        List<UserInfo> userInfoList = selectRecordByIds(userIds,
-                "userId", (BaseDao) userInfoDao, UserInfo.class);
-        List<UserProfile> userProfileList = selectRecordByIds(
-                getFieldByList(userInfoList, "userProfileId", UserInfo.class),
-                "useProId", (BaseDao) userProfileDao, UserProfile.class);
-        List<ExamInfo> examInfoList = selectRecordByIds(
-                getFieldByList(examPaperList, "examId", ExamPaper.class),
-                "examId", (BaseDao) examInfoDao, ExamInfo.class);
-        if (containOnline) {
-            List<String> sessinoList = onlineUserService.judgeOnline(userIds);
-            res.put("sessinoList", sessinoList);
-        }
-        res.put("userInfoList", userInfoList);
-        res.put("userProfileList", userProfileList);
-        res.put("examInfoList", examInfoList);
-        return res;
+        return examPaperService.selectByCondition(examPaper, onlyPaper, containOnline,
+                userName, studentNumber, page, rows);
     }
 
     @RequestMapping(value = "/selectPaperById", method = {RequestMethod.GET, RequestMethod.POST})
@@ -177,25 +143,18 @@ public class ExamPaperAction extends BaseAction {
     }
 
     @RequestMapping(value = "/uploadUserByExamId", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> uploadUserByExamId(
+    public Object uploadUserByExamId(
             @RequestParam Integer examId,
             @RequestParam MultipartFile namefile,
             @RequestParam(required = false, defaultValue = "false") Boolean isIgnoreError) {
-        if (examId == null) return null;
-        if (namefile == null) return null;
-        Map<String, Object> res = new HashMap<>();
-        ExamPaperLoadRe re = examPaperService.insertByExcel(namefile, examId, isIgnoreError);
-        res.put("loadResult", re);
-        return res;
+        if (examId == null) return new APIResult(-501, "examId不能为空");
+        if (namefile == null) return new APIResult(-501, "namefile不能为空");
+        return examPaperService.insertByExcel(namefile, examId, isIgnoreError);
     }
 
     @RequestMapping(value = "/drawProblem", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> drawProblem(
-            @RequestParam Integer examId) {
-        if (examId == null) return null;
-        Map<String, Object> res = new HashMap<>();
-        DrawProblemRe re = examPaperService.drawProblemByExamId(examId, null);
-        res.put("drawProblemRe", re);
-        return res;
+    public Object drawProblem(@RequestParam Integer examId) {
+        if (examId == null) return new APIResult(-501, "examId不能为空");
+        return examPaperService.drawProblemByExamId(examId, null);
     }
 }

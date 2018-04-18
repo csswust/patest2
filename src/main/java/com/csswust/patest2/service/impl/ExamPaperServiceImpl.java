@@ -1,6 +1,7 @@
 package com.csswust.patest2.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.dao.*;
@@ -8,7 +9,9 @@ import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamPaperService;
+import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.common.BaseService;
+import com.csswust.patest2.service.common.ConditionBuild;
 import com.csswust.patest2.service.result.DrawProblemParam;
 import com.csswust.patest2.service.result.DrawProblemRe;
 import com.csswust.patest2.service.result.ExamPaperLoadRe;
@@ -59,37 +62,71 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
     private PaperProblemDao paperProblemDao;
     @Autowired
     private ExamInfoDao examInfoDao;
+    @Autowired
+    private ConditionBuild conditionBuild;
+    @Autowired
+    private OnlineUserService onlineUserService;
+
+    @Override
+    public APIResult selectByCondition(ExamPaper examPaper, Boolean onlyPaper, Boolean containOnline, String userName, String studentNumber, Integer page, Integer rows) {
+        APIResult apiResult = new APIResult();
+        if (examPaper == null) {
+            apiResult.setStatusAndDesc(-501, "examPaper不能为空");
+        }
+        BaseQuery baseQuery = new BaseQuery();
+        conditionBuild.buildExamPaper(baseQuery, examPaper, userName, studentNumber);
+        Integer total = examPaperDao.selectByConditionGetCount(examPaper, baseQuery);
+        baseQuery.setPageRows(page, rows);
+        List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, baseQuery);
+        apiResult.setDataKey("total", total);
+        apiResult.setDataKey("examPaperList", examPaperList);
+        if (onlyPaper) {
+            return apiResult;
+        }
+        List<Integer> userIds = getFieldByList(examPaperList, "userId", ExamPaper.class);
+        List<UserInfo> userInfoList = selectRecordByIds(userIds,
+                "userId", (BaseDao) userInfoDao, UserInfo.class);
+        List<UserProfile> userProfileList = selectRecordByIds(
+                getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                "useProId", (BaseDao) userProfileDao, UserProfile.class);
+        List<ExamInfo> examInfoList = selectRecordByIds(
+                getFieldByList(examPaperList, "examId", ExamPaper.class),
+                "examId", (BaseDao) examInfoDao, ExamInfo.class);
+        if (containOnline) {
+            List<String> sessinoList = onlineUserService.judgeOnline(userIds);
+            apiResult.setDataKey("sessinoList", sessinoList);
+        }
+        apiResult.setDataKey("userInfoList", userInfoList);
+        apiResult.setDataKey("userProfileList", userProfileList);
+        apiResult.setDataKey("examInfoList", examInfoList);
+        return apiResult;
+    }
 
     @Transactional
     @Override
-    public ExamPaperLoadRe insertByExcel(MultipartFile multipartFile, Integer examId, boolean isIgnoreError) {
-        ExamPaperLoadRe result = new ExamPaperLoadRe();
+    public APIResult insertByExcel(MultipartFile multipartFile, Integer examId, boolean isIgnoreError) {
+        APIResult apiResult = new APIResult();
         if (examId == null) {
-            result.setStatus(-1);
-            result.setDesc("考试Id不能为空");
-            return result;
+            apiResult.setStatusAndDesc(-1, "考试Id不能为空");
+            return apiResult;
         }
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
         if (examInfo == null) {
-            result.setStatus(-2);
-            result.setDesc("当前考试不存在，可能已被删除");
-            return result;
+            apiResult.setStatusAndDesc(-2, "当前考试不存在，可能已被删除");
+            return apiResult;
         }
         Date date = new Date();
         if (date.getTime() > examInfo.getEndTime().getTime()) {
-            result.setStatus(-3);
-            result.setDesc("考试已结束，不能修改考试名单");
-            return result;
+            apiResult.setStatusAndDesc(-3, "考试已结束，不能修改考试名单");
+            return apiResult;
         }
         if (date.getTime() > examInfo.getStartTime().getTime()) {
-            result.setStatus(-4);
-            result.setDesc("考试进行中，不能修改考试名单");
-            return result;
+            apiResult.setStatusAndDesc(-4, "考试进行中，不能修改考试名单");
+            return apiResult;
         }
         if (multipartFile.isEmpty()) {
-            result.setStatus(-5);
-            result.setDesc("上传文件为空");
-            return result;
+            apiResult.setStatusAndDesc(-5, "上传文件为空");
+            return apiResult;
         }
         String path = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE);
         String filename = multipartFile.getOriginalFilename() + (new Date().getTime());
@@ -104,27 +141,24 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         } catch (Exception e) {
             log.error("multipartFile.transferTo file: {} error: {}",
                     tempFile.getAbsoluteFile(), e);
-            result.setStatus(-6);
-            result.setDesc("复制文件失败");
-            return result;
+            apiResult.setStatusAndDesc(-6, "复制文件失败");
+            return apiResult;
         }
         InputStream in;
         try {
             in = new FileInputStream(tempFile);
         } catch (Exception e) {
             log.error("new FileInputStream file: {} error: {}", tempFile.getPath(), e);
-            result.setStatus(-7);
-            result.setDesc("创建文件流失败");
-            return result;
+            apiResult.setStatusAndDesc(-7, "创建文件流失败");
+            return apiResult;
         }
         Workbook workbook;
         try {
             workbook = Workbook.getWorkbook(in);
         } catch (Exception e) {
             log.error("Workbook.getWorkbook file: {} error: {}", tempFile.getPath(), e);
-            result.setStatus(-8);
-            result.setDesc("解析excel失败");
-            return result;
+            apiResult.setStatusAndDesc(-8, "解析excel失败");
+            return apiResult;
         }
         // 删除原本的数据
         // int userInfoDelete = userInfoDao.deleteByExamId(examId);
@@ -150,17 +184,15 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             for (int j = 1; j < rowNum; j++) {
                 String studentNumber = sheet.getCell(0, j).getContents();
                 if (studentNumber == null || studentNumber.length() < 4) {
-                    result.setStatus(-9);
-                    result.setUserNameError(studentNumber);
-                    result.setDesc("学号长度必须大于4");
+                    apiResult.setStatusAndDesc(-9, "学号长度必须大于4");
+                    apiResult.setDataKey("userNameError", studentNumber);
                     break here;
                 }
                 String classRoom = sheet.getCell(1, j).getContents();
                 UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
                 if (userProfile == null) {
-                    result.setStatus(-10);
-                    result.setUserNameError(studentNumber);
-                    result.setDesc(studentNumber + "学号不存在信息");
+                    apiResult.setStatusAndDesc(-10, studentNumber + "学号不存在信息");
+                    apiResult.setDataKey("userNameError", studentNumber);
                     break here;
                 }
                 UserInfo userInfo = new UserInfo();
@@ -183,9 +215,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 userInfo.setIsActive(1);
                 int temp = userInfoDao.insertSelective(userInfo);
                 if (temp != 1) {
-                    result.setStatus(-11);
-                    result.setUserNameError(studentNumber);
-                    result.setDesc(JSON.toJSONString(userInfo) + "插入失败");
+                    apiResult.setStatusAndDesc(-11, JSON.toJSONString(userInfo) + "插入失败");
+                    apiResult.setDataKey("userNameError", studentNumber);
                     break here;
                 }
                 ExamPaper examPaper = new ExamPaper();
@@ -199,9 +230,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 examPaper.setScore(0.0);
                 temp = examPaperDao.insertSelective(examPaper);
                 if (temp != 1) {
-                    result.setStatus(-12);
-                    result.setUserNameError(studentNumber);
-                    result.setDesc(JSON.toJSONString(examPaper) + "插入失败");
+                    apiResult.setStatusAndDesc(-12, JSON.toJSONString(examPaper) + "插入失败");
+                    apiResult.setDataKey("userNameError", studentNumber);
                     break here;
                 }
                 userProfileList.add(userProfile);
@@ -212,9 +242,9 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 flag = flag + 1;
             }
         }
-        if (result.getStatus() != 0) {
+        if (apiResult.getStatus() != 0) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return result;
+            return apiResult;
         }
         String fname = "loginsheet" + new Date().getTime() + ".xls";
         File downFile = new File(path, fname);
@@ -222,11 +252,10 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         try {
             work = Workbook.createWorkbook(downFile);
         } catch (IOException e) {
-            result.setStatus(-13);
-            result.setDesc("创建WritableWorkbook失败");
+            apiResult.setStatusAndDesc(-13, "创建WritableWorkbook失败");
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return result;
+            return apiResult;
         }
         try {
             // 创建新的一页
@@ -246,35 +275,33 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 sheet.addCell(new Label(5, i + 1, examPaperList.get(i).getClassroom()));
             }
         } catch (WriteException e) {
-            result.setStatus(-14);
-            result.setDesc("构建sheet出现异常：" + e.getMessage());
+            apiResult.setStatusAndDesc(-14, "构建sheet出现异常：" + e.getMessage());
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return result;
+            return apiResult;
         }
         // 把创建的内容写入到输出流中，并关闭输出流
         try {
             work.write();
             work.close();
         } catch (Exception e) {
-            result.setStatus(-15);
-            result.setDesc("写入excel出现异常：" + e.getMessage());
+            apiResult.setStatusAndDesc(-15, "写入excel出现异常：" + e.getMessage());
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return result;
+            return apiResult;
         }
         ExamInfo record = new ExamInfo();
         examInfo.setExamId(examId);
         examInfoDao.updateByPrimaryKeySelective(record);
-        result.setDirPath(downFile.getPath());
-        result.setStatus(count);
-        return result;
+        apiResult.setDataKey("dirPath", downFile.getPath());
+        apiResult.setStatusAndDesc(count, "导入成功");
+        return apiResult;
     }
 
     @Transactional
     @Override
-    public DrawProblemRe drawProblemByExamId(Integer examId, Integer userId) {
-        DrawProblemRe drawProblemRe = new DrawProblemRe();
+    public APIResult drawProblemByExamId(Integer examId, Integer userId) {
+        APIResult apiResult = new APIResult();
         Random random = new Random();
         int i, j;
         // 获取试卷列表
@@ -283,24 +310,21 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         if (userId != null) examPaper.setUserId(userId);// 对单个用户抽题
         List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, new BaseQuery());
         if (examPaperList == null || examPaperList.size() == 0) {
-            drawProblemRe.setStatus(-1);
-            drawProblemRe.setDesc("未添加考生");
-            return drawProblemRe;
+            apiResult.setStatusAndDesc(-1, "未添加考生");
+            return apiResult;
         }
         if (userId != null && (examPaperList.size() != 1
                 || examPaperList.get(0).getUserId().intValue() != userId.intValue())) {
-            drawProblemRe.setStatus(-500);
-            drawProblemRe.setDesc("发生了未知异常");
-            return drawProblemRe;
+            apiResult.setStatusAndDesc(-500, "发生了未知异常");
+            return apiResult;
         }
         // 获取试卷参数
         ExamParam examParam = new ExamParam();
         examParam.setExamId(examId);
         List<ExamParam> examParamList = examParamDao.selectByCondition(examParam, new BaseQuery());
         if (examParamList == null || examParamList.size() == 0) {
-            drawProblemRe.setStatus(-2);
-            drawProblemRe.setDesc("未添加试卷参数");
-            return drawProblemRe;
+            apiResult.setStatusAndDesc(-2, "未添加试卷参数");
+            return apiResult;
         }
         // 包装模板和对应的问题，目的在于优化效率
         List<DrawProblemParam> dPPList = new ArrayList<>();
@@ -313,10 +337,9 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             List<ExamProblem> examProblemList = examProblemDao.selectByProblem(
                     new ExamProblem(), baseQuery);
             if (examProblemList == null || examProblemList.size() == 0) {
-                drawProblemRe.setStatus(-3);
-                drawProblemRe.setDesc(JSON.toJSONString(examParamList.get(i)) +
+                apiResult.setStatusAndDesc(-3, JSON.toJSONString(examParamList.get(i)) +
                         "试卷参数对应的题目数目为0");
-                return drawProblemRe;
+                return apiResult;
             }
             dpp.setExamProblemList(examProblemList);
             List<ProblemInfo> problemInfoList = selectRecordByIds(
@@ -354,9 +377,9 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                     }
                 }
                 if (!flag) {
-                    drawProblemRe.setStatus(-4);
-                    drawProblemRe.setDesc("试卷参数与题目数目异常，请检查重复参数是否小于或者等于对应的题目数目");
-                    return drawProblemRe;
+                    apiResult.setStatusAndDesc(-4,
+                            "试卷参数与题目数目异常，请检查重复参数是否小于或者等于对应的题目数目");
+                    return apiResult;
                 }
             }
         }
@@ -375,22 +398,12 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         // 添加新抽的题目,改为批量插入，优化效率
         int sum = paperProblemDao.insertBatch(pPList);
         if (sum != pPList.size()) {
-            drawProblemRe.setDesc("插入失败");
+            apiResult.setStatusAndDesc(-100, "插入失败");
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return drawProblemRe;
+            return apiResult;
         }
-        /*for (i = 0; i < pPList.size(); i++) {
-            int temp = paperProblemDao.insertSelective(pPList.get(i));
-            if (temp != 1) {
-                drawProblemRe.setStatus(-5);
-                drawProblemRe.setDesc(JSON.toJSONString(pPList.get(i)) + "插入失败");
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                return drawProblemRe;
-            }
-            sum = sum + temp;
-        }*/
-        drawProblemRe.setStatus(sum);
-        return drawProblemRe;
+        apiResult.setStatusAndDesc(sum, "抽题成功");
+        return apiResult;
     }
 
     private String getPassword(String pass) {
