@@ -5,6 +5,7 @@ var addBank = {
     expmId: "",
     tempProbIds: [],
     tempProbId: '',
+    page: 1,
     init: function () {
         commonet.init(); // 公共模块初始化
 
