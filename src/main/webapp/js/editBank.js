@@ -67,16 +67,15 @@ var program = {
             data: {
                 examId: program.examId,
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
                 console.log(result);
-                program.tempProArr = result.examProblemList;
-                program.probArr = result.problemInfoList;
-                program.knowNameArr = result.knowledgeInfoList;
-                program.couseNamesArr = result.courseInfoList;
-                // program.levelArr = result.levelList;
-                program.count = result.total;
+                program.tempProArr = result.data.examProblemList;
+                program.probArr = result.data.problemInfoList;
+                program.knowNameArr = result.data.knowledgeInfoList;
+                program.couseNamesArr = result.data.courseInfoList;
+                program.count = result.data.total;
                 program.showproinfo();
                 $("#listInfo").html("");
                 $("#listInfo").append(program.html);
