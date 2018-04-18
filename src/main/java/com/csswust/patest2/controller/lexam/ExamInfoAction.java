@@ -52,7 +52,7 @@ public class ExamInfoAction extends BaseAction {
     private ConditionBuild conditionBuild;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectTempProblem(
+    public Map<String, Object> selectByCondition(
             ExamInfo examInfo,
             @RequestParam(required = false, defaultValue = "false") Boolean isRecent,
             @RequestParam(required = false, defaultValue = "false") Boolean onlyExamInfo,
@@ -131,11 +131,8 @@ public class ExamInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> updateById(ExamInfo examInfo) {
-        Map<String, Object> res = new HashMap<>();
-        int result = examInfoDao.updateByPrimaryKeySelective(examInfo);
-        res.put("status", result);
-        return res;
+    public Object updateById(ExamInfo examInfo) {
+        return examInfoService.updateById(examInfo);
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})

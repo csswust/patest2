@@ -1,5 +1,6 @@
 package com.csswust.patest2.service.impl;
 
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.cache.SiteCache;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
@@ -426,4 +427,35 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         }
         return result;
     }
+
+    @Override
+    public APIResult selectById(Integer examId) {
+        APIResult apiResult = new APIResult();
+        ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
+        if (examInfo == null) {
+            apiResult.setStatusAndDesc(-1, "查询失败");
+        } else {
+            apiResult.setStatusAndDesc(1, "查询成功");
+            apiResult.setDataKey("examInfo", examInfo);
+        }
+        return apiResult;
+    }
+
+    @Override
+    public APIResult updateById(ExamInfo examInfo) {
+        APIResult apiResult = new APIResult();
+        if (examInfo == null) {
+            apiResult.setStatusAndDesc(-2, "examInfo不能为空");
+            return apiResult;
+        }
+        int result = examInfoDao.updateByPrimaryKeySelective(examInfo);
+        if (result != 1) {
+            apiResult.setStatusAndDesc(-1, "更新失败");
+        } else {
+            apiResult.setStatusAndDesc(1, "更新成功");
+        }
+        return apiResult;
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package com.csswust.patest2.service;
 
+import com.csswust.patest2.common.APIResult;
+import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.service.result.ImportDataRe;
 
 /**
@@ -9,4 +11,8 @@ public interface ExamInfoService {
     ImportDataRe importCodeByExamId(Integer examId);
 
     ImportDataRe importGradeByExamId(Integer examId);
+
+    APIResult selectById(Integer examId);
+
+    APIResult updateById(ExamInfo examInfo);
 }

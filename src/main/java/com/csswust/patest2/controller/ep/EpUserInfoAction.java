@@ -82,7 +82,8 @@ public class EpUserInfoAction extends BaseAction {
     @RequestMapping(value = "/epUserInfo/logout", method = {RequestMethod.GET, RequestMethod.POST})
     public Object logout() {
         APIResult apiResult = new APIResult();
-        clearSession(request);
+        this.removeSession(request, "epUserId");
+        this.removeSession(request, "epUserName");
         apiResult.setStatus(1);
         return apiResult;
     }

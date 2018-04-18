@@ -27,11 +27,10 @@ var applywait = {
         $("#applyInfo").on('click', '.addexam', function () {
             var index = this.id;
             if (index !== "null") {
-                window.location.href = "addExam.html?orderid=" + index;
+                window.location.href = "addExam.html?Id=" + index;
             } else {
                 patest.alertInfo("alert-danger", "未付款");
             }
-
         });
         $(".contapply").click(function () {
             window.location.href = "applyexam.html";

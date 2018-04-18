@@ -37,21 +37,27 @@ public class BaseAction extends Base {
         return session.getAttribute(paramName);
     }
 
-    public void clearSession(HttpServletRequest request) {
+    protected void removeSession(HttpServletRequest request, String paramName) {
+        HttpSession session = request.getSession();
+        session.removeAttribute(paramName);
+    }
+
+    protected void clearSession(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
     }
 
-    public String getIp(HttpServletRequest request) {
+
+    protected String getIp(HttpServletRequest request) {
         return request.getRemoteAddr();
     }
 
-    public Integer getUserId() {
+    protected Integer getUserId() {
         HttpSession session = request.getSession();
         return (Integer) session.getAttribute("userId");
     }
 
-    public Integer getEpUserId() {
+    protected Integer getEpUserId() {
         HttpSession session = request.getSession();
         return (Integer) session.getAttribute("epUserId");
     }

@@ -12,7 +12,7 @@ var program = {
             "0": "申请中...",
             "-1": "申请失败",
             "1": "申请成功,待付款",
-            "-2": "已付款"
+            "2": "已付款"
         };
         for (var i = 0; i < infolist.length; i++) {
             var passstate = statusDesc[infolist[i].status];

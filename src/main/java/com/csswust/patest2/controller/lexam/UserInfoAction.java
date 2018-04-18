@@ -82,7 +82,7 @@ public class UserInfoAction extends BaseAction {
             sessionMap.put("userPermisson", "student");
         }
         if (result.getStatus() == 1) {
-            this.clearSession(request);
+            // this.clearSession(request);
             this.saveSession(request, sessionMap);
         }
         res.put("loginRe", result);
@@ -93,7 +93,8 @@ public class UserInfoAction extends BaseAction {
     @RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> logout() {
         Map<String, Object> res = new HashMap<String, Object>();
-        this.clearSession(request);
+        this.removeSession(request, "userPermisson");
+        this.removeSession(request, "userId");
         res.put("status", 1);
         return res;
     }
