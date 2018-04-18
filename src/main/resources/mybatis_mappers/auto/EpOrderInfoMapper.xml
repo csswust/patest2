@@ -9,7 +9,7 @@
         <result column="money" property="money" jdbcType="DOUBLE" />
         <result column="ep_user_id" property="epUserId" jdbcType="INTEGER" />
         <result column="is_pay" property="isPay" jdbcType="INTEGER" />
-        <result column="pay_money" property="payMoney" jdbcType="INTEGER" />
+        <result column="pay_money" property="payMoney" jdbcType="DOUBLE" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
         <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
@@ -35,7 +35,7 @@
             modify_user_id)
         values (#{applyId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
             #{money,jdbcType=DOUBLE}, #{epUserId,jdbcType=INTEGER}, #{isPay,jdbcType=INTEGER}, 
-            #{payMoney,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
+            #{payMoney,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
             #{modifyUserId,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.csswust.patest2.entity.EpOrderInfo" useGeneratedKeys="true" keyProperty="orderId" >
@@ -92,7 +92,7 @@
                 #{isPay,jdbcType=INTEGER},
             </if>
             <if test="payMoney != null" >
-                #{payMoney,jdbcType=INTEGER},
+                #{payMoney,jdbcType=DOUBLE},
             </if>
             <if test="createTime != null" >
                 #{createTime,jdbcType=TIMESTAMP},
@@ -127,7 +127,7 @@
                 is_pay = #{isPay,jdbcType=INTEGER},
             </if>
             <if test="payMoney != null" >
-                pay_money = #{payMoney,jdbcType=INTEGER},
+                pay_money = #{payMoney,jdbcType=DOUBLE},
             </if>
             <if test="createTime != null" >
                 create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -149,7 +149,7 @@
             money = #{money,jdbcType=DOUBLE},
             ep_user_id = #{epUserId,jdbcType=INTEGER},
             is_pay = #{isPay,jdbcType=INTEGER},
-            pay_money = #{payMoney,jdbcType=INTEGER},
+            pay_money = #{payMoney,jdbcType=DOUBLE},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             modify_user_id = #{modifyUserId,jdbcType=INTEGER}

@@ -23,7 +23,7 @@ var applyexam = {
             applyexam.peopleNum = $(".peoplenum").val();
             applyexam.startTime = $(".startTime").val();
             applyexam.endTime = $(".endTime").val();
-            if (applyexam.testName && applyexam.peopleNum && applyexam.isbank !== ""
+            if (applyexam.testName && applyexam.peopleNum && applyexam.isProblem !== ""
                 && applyexam.startTime && applyexam.endTime) {
                 if (patest.legTimeRange(applyexam.startTime, applyexam.endTime)) {
                     applyexam.insertApplyExam();
@@ -42,7 +42,7 @@ var applyexam = {
         }, {
             examName: applyexam.testName,
             peopleNumber: applyexam.peopleNum,
-            isProv: applyexam.isbank,
+            isProv: applyexam.isProblem,
             startTime: applyexam.startTime,
             endTime: applyexam.endTime
         }, function (result) {

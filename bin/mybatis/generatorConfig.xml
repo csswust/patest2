@@ -184,30 +184,30 @@
                selectByExampleQueryId="false">
             <generatedKey column="vis_pat_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="ep_apply_info" domainObjectName="EpApplyInfo"
+        <!--<table schema="patest2" tableName="ep_apply_info" domainObjectName="EpApplyInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="apply_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="ep_order_info" domainObjectName="EpOrderInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="order_id" sqlStatement="JDBC"/>
         </table>
-        <table schema="patest2" tableName="ep_user_info" domainObjectName="EpUserInfo"
+        <!--<table schema="patest2" tableName="ep_user_info" domainObjectName="EpUserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="user_id" sqlStatement="JDBC"/>
-        </table>
-        <table schema="patest2" tableName="ep_notice" domainObjectName="EpNotice"
+        </table>-->
+        <!--<table schema="patest2" tableName="ep_notice" domainObjectName="EpNotice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="epno_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
     </context>
 </generatorConfiguration>
 

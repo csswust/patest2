@@ -17,7 +17,7 @@ public class EpOrderInfo {
 
     private Integer isPay;
 
-    private Integer payMoney;
+    private Double payMoney;
 
     private Date createTime;
 
@@ -81,11 +81,11 @@ public class EpOrderInfo {
         this.isPay = isPay;
     }
 
-    public Integer getPayMoney() {
+    public Double getPayMoney() {
         return payMoney;
     }
 
-    public void setPayMoney(Integer payMoney) {
+    public void setPayMoney(Double payMoney) {
         this.payMoney = payMoney;
     }
 

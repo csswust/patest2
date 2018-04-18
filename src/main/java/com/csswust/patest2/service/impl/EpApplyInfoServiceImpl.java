@@ -45,9 +45,13 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
         List<EpUserInfo> epUserInfoList = selectRecordByIds(
                 getFieldByList(epApplyInfoList, "epUserId", EpApplyInfo.class),
                 "userId", (BaseDao) epUserInfoDao, EpUserInfo.class);
+        List<EpOrderInfo> epOrderInfoList = selectRecordByIds(
+                getFieldByList(epApplyInfoList, "applyId", EpApplyInfo.class),
+                "applyId", (BaseDao) epOrderInfoDao, EpOrderInfo.class);
         apiResult.setDataKey("total", total);
         apiResult.setDataKey("list", epApplyInfoList);
         apiResult.setDataKey("epUserInfoList", epUserInfoList);
+        apiResult.setDataKey("epOrderInfoList", epOrderInfoList);
         apiResult.setStatus(1);
         return apiResult;
     }
@@ -92,8 +96,8 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
             String newSysId = String.format("%1$06d", epApplyInfo.getEpUserId());
             epOrderInfo.setOrderNum(examYear + examMoth + examDay + newSysId + newexamId);
             int temp = epOrderInfoDao.insertSelective(epOrderInfo);
-            if(temp==0){
-                apiResult.setStatusAndDesc(-4,"插入订单失败"+
+            if (temp == 0) {
+                apiResult.setStatusAndDesc(-4, "插入订单失败" +
                         JSON.toJSONString(epOrderInfo));
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             }

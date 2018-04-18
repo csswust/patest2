@@ -8,4 +8,6 @@ import com.csswust.patest2.entity.EpOrderInfo;
  */
 public interface EpOrderInfoService {
     APIResult selectByCondition(EpOrderInfo epOrderInfo, Integer page, Integer rows);
+
+    APIResult payment(Integer orderId);
 }
