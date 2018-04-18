@@ -84,30 +84,25 @@ public class ExamParamServiceImpl extends BaseService implements ExamParamServic
     public APIResult insertByArray(Integer examId, Integer[] knowIds, Integer[] levels, Integer[] scores) {
         APIResult result = new APIResult();
         if (examId == null) {
-            result.setStatus(-1);
-            result.setDesc("考试id不能为空");
+            result.setStatusAndDesc(-1, "考试id不能为空");
             return result;
         }
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
         if (examInfo == null) {
-            result.setStatus(-2);
-            result.setDesc("当前考试不存在，可能已被删除");
+            result.setStatusAndDesc(-2, "当前考试不存在，可能已被删除");
             return result;
         }
         Date date = new Date();
         if (date.getTime() > examInfo.getEndTime().getTime()) {
-            result.setStatus(-3);
-            result.setDesc("考试已结束，不能修改参数信息");
+            result.setStatusAndDesc(-3, "考试已结束，不能修改参数信息");
             return result;
         }
         if (date.getTime() > examInfo.getStartTime().getTime()) {
-            result.setStatus(-4);
-            result.setDesc("考试进行中，不能修改参数信息");
+            result.setStatusAndDesc(-4, "考试进行中，不能修改参数信息");
             return result;
         }
         if (knowIds.length != levels.length || levels.length != scores.length) {
-            result.setStatus(-5);
-            result.setDesc("参数信息个数不匹配");
+            result.setStatusAndDesc(-5, "参数信息个数不匹配");
             return result;
         }
         ExamParam examParam = new ExamParam();
@@ -125,8 +120,7 @@ public class ExamParamServiceImpl extends BaseService implements ExamParamServic
             int x = examParamDao.insertSelective(temp);
             if (x == 0) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                result.setStatus(-6);
-                result.setDesc("插入失败");
+                result.setStatusAndDesc(-6, "插入失败");
                 return result;
             }
             count = count + x;
@@ -134,7 +128,7 @@ public class ExamParamServiceImpl extends BaseService implements ExamParamServic
         ExamInfo record = new ExamInfo();
         examInfo.setExamId(examId);
         examInfoDao.updateByPrimaryKeySelective(record);
-        result.setStatus(count);
+        result.setStatusAndDesc(count, "插入成功");
         return result;
     }
 

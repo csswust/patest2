@@ -23,7 +23,7 @@ var addParm = {
         $(".mytest").addClass("onet");
 
         addParm.flag = 0;
-        //获取url
+        addParm.opreation = "";
         var par = patest.getQueryObject();
         if (par.Id) {
             $(".pageName").text("修改考试");
@@ -34,6 +34,7 @@ var addParm = {
             patest.alertInfo("alert-danger", "考试id不存在");
             return;
         }
+
         // 添加问题模板
         $(".addTemplate").click(function () {
             if (par.Id) {
@@ -104,7 +105,7 @@ var addParm = {
             var index = this.className.split("-")[0];
             addParm.selectNum(index);
         });
-//删除问题模板
+        //删除问题模板
         $("#queTempla").on('click', '.deleteTemp', function () {
             var index = this.id.split("-")[0];
             var expmId = this.id.split("-")[1];
@@ -118,7 +119,7 @@ var addParm = {
                 }
             }
         });
-//改变
+        //改变
         $("#queTempla").delegate('.courseName', 'change', function () {
             var id = this.id.split("-")[1];
             if (id != "") {
@@ -137,22 +138,17 @@ var addParm = {
             }
         });
 
-//点击上一步返回题库
+        //点击上一步返回题库
         $(".upParm").click(function () {
-            if (par.examId) {
-                window.location.href = 'editBank.html?examId=' + addParm.examId;
-            } else if (par.Id) {
-                window.location.href = 'editBank.html?Id=' + addParm.examId;
-            }
+            window.location.href = 'addBank.html?Id=' + addParm.examId;
+
         });
-//点击下一步到上传学生名单
+        //点击下一步到上传学生名单
         $(".downParm").click(function () {
             var kownArr = [],
                 levelArr = [],
-                scoreArr = [],
-                quesArr = [];
+                scoreArr = [];
             var allscore = 0;
-            var allquestion = 0;
             $(".iknowName").each(function (i) {
                 if ($(this).val() == "知识点") {
                     kownArr[i] = "";
@@ -245,95 +241,50 @@ var addParm = {
     //插入考试参数
     insertExamParam: function () {
         patest.request({
-            url: "../ep/examProblem/selectByCondition"
+            url: "../ep/examParam/insertByArray"
         }, {
-            examId: addBank.examId,
-            page: addBank.page,
-            rows: 10
+            examId: addParm.examId,
+            knowIds: addParm.kownArr,
+            levels: addParm.levelArr,
+            scores: addParm.scoreArr
         }, function (result) {
-            addBank.tempProArr = result.data.examProblemList;
-            addBank.probArr = result.data.problemInfoList;
-            addBank.knowNameArr = result.data.knowledgeInfoList;
-            addBank.couseNamesArr = result.data.courseInfoList;
-            addBank.count = result.data.total;
-            addBank.showproinfo();
-            $("#listInfo").html("");
-            $("#listInfo").append(addBank.html);
-        });
-
-
-        $.ajax({
-            type: "post",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examParam/insertByArray",
-            dataType: "json",
-            async: false,
-            data: {
-                examId: addParm.examId,
-                knowIds: addParm.kownArr,
-                levels: addParm.levelArr,
-                scores: addParm.scoreArr
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.APIResult.status > 0) {
-                    patest.alertInfo("alert-success", "添加成功！");
-                    window.location.href = 'addUplist.html?examId=' + addParm.examId;
-                } else {
-                    patest.alertInfo("alert-danger", result.desc);
-                }
-            },
-            error: function () {
-                patest.alertInfo("alert-danger", "请求错误");
+            if (result.status > 0) {
+                patest.alertInfo("alert-success", "添加成功！");
+                window.location.href = 'addUplist.html?examId=' + addParm.examId;
+            } else {
+                patest.alertInfo("alert-danger", result.desc);
             }
         });
     },
     updateExamParam: function () {
-        $.ajax({
-            type: "POST",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examParam/insertByArray",
-            dataType: "json",
-            async: false,
-            data: {
-                examId: addParm.examId,
-                knowIds: addParm.kownArr,
-                levels: addParm.levelArr,
-                scores: addParm.scoreArr,
-            },
-            success: function (result) {
-                if (result.APIResult.status > 0) {
-                    patest.alertInfo("alert-success", "修改成功");
-                    window.location.href = 'editUplist.html?Id=' + addParm.examId;
-                }
-                else {
-                    patest.alertInfo("alert-danger", result.APIResult.desc);
-                }
-            },
-            error: function () {
-                patest.alertInfo("alert-danger", "请求错误");
+        patest.request({
+            url: "../ep/examParam/insertByArray"
+        }, {
+            examId: addParm.examId,
+            knowIds: addParm.kownArr,
+            levels: addParm.levelArr,
+            scores: addParm.scoreArr
+        }, function (result) {
+            if (result.status > 0) {
+                patest.alertInfo("alert-success", "修改成功");
+                window.location.href = 'addUplist.html?Id=' + addParm.examId;
+            }
+            else {
+                patest.alertInfo("alert-danger", result.desc);
             }
         });
     },
     //删除试卷参数
     delQuesTemp: function () {
-        $.ajax({
-            type: "POST",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examParam/deleteByIds",
-            dataType: "json",
-            async: false,
-            data: {
-                ids: addParm.expmId
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status == 1) {
-                    patest.alertInfo("alert-success", "删除成功");
-                }
-            },
-            error: function () {
-                patest.alertInfo("alert-danger", "请求错误");
+        patest.request({
+            url: "../ep/examParam/deleteById"
+        }, {
+            id: addParm.expmId
+        }, function (result) {
+            if (result.status === 1) {
+                patest.alertInfo("alert-success", "删除成功");
+            } else {
+                patest.alertInfo("alert-danger", result.desc);
             }
         });
     },
@@ -346,60 +297,44 @@ var addParm = {
         if (addParm.know == "知识点") {
             addParm.know = "";
         }
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examParam/selectProblemTotal",
-            dataType: 'json',
-            async: false,
-            data: {
-                knowId: addParm.know,
-                levelId: addParm.level,
-                examId: addParm.examId
-            },
-            success: function (result) {
-                console.log(result);
-                addParm.count = result.total;
-            }, error: function () {
-                patest.alertInfo("alert-danger", "请求错误");
-            }
+        patest.request({
+            url: "../ep/examParam/selectProblemTotal"
+        }, {
+            knowId: addParm.know,
+            levelId: addParm.level,
+            examId: addParm.examId
+        }, function (result) {
+            addParm.count = result.data.total;
         });
         $(".total-" + index).text(addParm.count);
     },
     //获得考试信息
     getExamInfoById: function () {
-        $.ajax({
-            type: "post",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examParam/selectByCondition",
-            dataType: 'json',
-            async: false,
-            data: {
-                examId: addParm.examId
-            },
-            success: function (result) {
-                console.log(result);
-                var length = result.examParamList.length;
-                for (var i = 0; i < length; i++) {
-                    var id = "courseName-" + i;
-                    addParm.addTemplate(result.examParamList[i].exaParId);
-                    $("#" + id).html("<option>课程</option>");
-                    for (var k = 0; k < addParm.courseName.length; k++) {
-                        $("#" + id).append("<option value=" + addParm.courseName[k].couId + ">" + addParm.courseName[k].courseName + "</option>");
-                    }
-                    addParm.flag++;
-                    var parentId = result.courseInfoList[i].couId;
-                    $("#" + id + " option[value='" + parentId + "']").attr("selected", true);
-                    for (var j = 0; j < addParm.course.length; j++) {//知识点
-                        if (addParm.course[j].courseId == parentId) {
-                            $("#knowName-" + i).append("<option value=" + addParm.course[j].knowId + ">" + addParm.course[j].knowName + "</option>");
-                        }
-                    }
-                    $("#knowName-" + i + "  option[value='" + result.knowledgeInfoList[i].knowId + "']").attr("selected", true);
-                    $(".level-" + i + " option[value='" + result.examParamList[i].levelId + "']").attr("selected", true);
-                    $(".score-" + i).val(result.examParamList[i].score);
-                    $(".total-" + i).text(result.problemSumList[i]);
+        patest.request({
+            url: "../ep/examParam/selectByCondition"
+        }, {
+            examId: addParm.examId
+        }, function (result) {
+            var length = result.data.examParamList.length;
+            for (var i = 0; i < length; i++) {
+                var id = "courseName-" + i;
+                addParm.addTemplate(result.data.examParamList[i].exaParId);
+                $("#" + id).html("<option>课程</option>");
+                for (var k = 0; k < addParm.courseName.length; k++) {
+                    $("#" + id).append("<option value=" + addParm.courseName[k].couId + ">" + addParm.courseName[k].courseName + "</option>");
                 }
+                addParm.flag++;
+                var parentId = result.data.courseInfoList[i].couId;
+                $("#" + id + " option[value='" + parentId + "']").attr("selected", true);
+                for (var j = 0; j < addParm.course.length; j++) {//知识点
+                    if (addParm.course[j].courseId == parentId) {
+                        $("#knowName-" + i).append("<option value=" + addParm.course[j].knowId + ">" + addParm.course[j].knowName + "</option>");
+                    }
+                }
+                $("#knowName-" + i + "  option[value='" + result.data.knowledgeInfoList[i].knowId + "']").attr("selected", true);
+                $(".level-" + i + " option[value='" + result.data.examParamList[i].levelId + "']").attr("selected", true);
+                $(".score-" + i).val(result.data.examParamList[i].score);
+                $(".total-" + i).text(result.data.problemSumList[i]);
             }
         });
     },
