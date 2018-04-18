@@ -52,51 +52,34 @@ var addExam = {
     },
     //更新展示考试
     updateExam: function () {
-        $.ajax({
-            type: "POST",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../ep//examInfo/updateById",
-            dataType: "json",
-            async: false,
-            data: {
-                examId: addExam.examId,
-                title: addExam.title,
-                startTime: addExam.startTime,
-                endTime: addExam.endTime,
-                description: addExam.description
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status === 1) {
-                    patest.alertInfo("alert-success", "修改成功");
-                    window.location.href = "addBank.html?Id=" + addExam.examId;
-                } else {
-                    patest.alertInfo("alert-danger", result.desc);
-                }
-            },
-            error: function () {
-                patest.alertInfo("alert-danger", "请求错误");
+        patest.request({
+            url: "../ep/examInfo/updateById"
+        }, {
+            examId: addExam.examId,
+            title: addExam.title,
+            startTime: addExam.startTime,
+            endTime: addExam.endTime,
+            description: addExam.description
+        }, function (result) {
+            if (result.status === 1) {
+                patest.alertInfo("alert-success", "修改成功");
+                window.location.href = "addBank.html?Id=" + addExam.examId;
+            } else {
+                patest.alertInfo("alert-danger", result.desc);
             }
         });
     },
     //获得考试信息展示
     getExamInfoById: function () {
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../ep/examInfo/selectById",
-            dataType: 'json',
-            async: false,
-            data: {
-                examId: addExam.examId
-            },
-            success: function (result) {
-                console.log(result);
-                addExam.title = result.data.examInfo.title;
-                addExam.startTime = result.data.examInfo.startTime;
-                addExam.endTime = result.data.examInfo.endTime;
-                addExam.description = result.data.examInfo.description;
-            }
+        patest.request({
+            url: "../ep/examInfo/selectById"
+        }, {
+            examId: addExam.examId
+        }, function (result) {
+            addExam.title = result.data.examInfo.title;
+            addExam.startTime = result.data.examInfo.startTime;
+            addExam.endTime = result.data.examInfo.endTime;
+            addExam.description = result.data.examInfo.description;
         });
     },
     setValue: function () {

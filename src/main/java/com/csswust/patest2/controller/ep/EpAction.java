@@ -3,19 +3,18 @@ package com.csswust.patest2.controller.ep;
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.*;
+import com.csswust.patest2.dao.ExamInfoDao;
+import com.csswust.patest2.dao.KnowledgeInfoDao;
+import com.csswust.patest2.dao.ProblemInfoDao;
+import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.KnowledgeInfo;
 import com.csswust.patest2.entity.ProblemInfo;
 import com.csswust.patest2.entity.UserInfo;
-import com.csswust.patest2.service.ExamInfoService;
-import com.csswust.patest2.service.ExamPaperService;
-import com.csswust.patest2.service.common.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,8 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ep")
 public class EpAction extends BaseAction {
     @Autowired
-    private AuthService authService;
-    @Autowired
     private ExamInfoDao examInfoDao;
     @Autowired
     private UserInfoDao userInfoDao;
@@ -34,8 +31,6 @@ public class EpAction extends BaseAction {
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private KnowledgeInfoDao knowledgeInfoDao;
-    @Autowired
-    private ExamInfoService examInfoService;
 
     @RequestMapping(value = "/selectEpSite", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectEpSite() {
@@ -85,22 +80,5 @@ public class EpAction extends BaseAction {
         apiResult.setDataKey("total", total);
         apiResult.setStatus(1);
         return apiResult;
-    }
-
-    @RequestMapping(value = "/examInfo/selectById", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object selectById(@RequestParam Integer examId) {
-        if (!authService.judgeEpAuth(getEpUserId(), examId)) {
-            return new APIResult(-501, "权限不足");
-        }
-        return examInfoService.selectById(examId);
-    }
-
-    @RequestMapping(value = "/examInfo/updateById", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object updateById(ExamInfo examInfo) {
-        if (examInfo == null) return null;
-        if (!authService.judgeEpAuth(getEpUserId(), examInfo.getExamId())) {
-            return new APIResult(-501, "权限不足");
-        }
-        return examInfoService.updateById(examInfo);
     }
 }
