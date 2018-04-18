@@ -19,8 +19,8 @@ var program = {
             var id = infolist[i].applyId;
             var userId = uesrs[i].userId;
             var username = uesrs[i].username;
-            program.applyhtml += '<tr  class="' + id + '" value="' + id + ',' + userId + '">'
-                + '<td><input type="checkbox" value="' + id + '" name="title"/></td>'
+            program.applyhtml += '<tr>'
+                + '<td><input type="checkbox" value="' + id + '" name="title" /></td>'
                 + '<td>' + id + '</td>'
                 + '<td><a class="title"  href="../ep/applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'
                 + '<td>' + uesrs[i].phone + '</td>'
@@ -50,8 +50,8 @@ var program = {
                 program.data = result.data.list;
                 program.uesrs = result.data.epUserInfoList;
                 program.showapplyInfo();
-                $("#applyInfo").empty();
-                $("#applyInfo").append(program.applyhtml);
+                $("#listInfo").empty();
+                $("#listInfo").append(program.applyhtml);
             }
         });
     },
@@ -129,7 +129,7 @@ var par = pubMeth.getQueryObject();
 program.selectallInfo();
 program.deleteIt();
 
-$("#applyInfo").on('click', '.examine', function () {
+$("#listInfo").on('click', '.examine', function () {
     $('#mexamine').modal({
         backdrop: 'static'
     });
