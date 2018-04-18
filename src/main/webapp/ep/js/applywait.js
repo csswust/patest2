@@ -21,20 +21,17 @@ var applywait = {
             if (index !== "null") {
                 applywait.payment(index);
             } else {
-                patest.alertInfo("alert-info", " 未申请通过");
+                patest.alertInfo("alert-danger", " 未申请通过");
             }
         });
         $("#applyInfo").on('click', '.addexam', function () {
-            var length = applywait.count;
-            var index = this.id.split("-")[0];
-            if (parseInt(index) + 1 > length) {
-                $("." + this.id).remove();
+            var index = this.id;
+            if (index !== "null") {
+                window.location.href = "addExam.html?orderid=" + index;
             } else {
-                var index = this.id.split("-")[0];
-                applywait.orderid = applywait.orderids[index];
-                applywait.pay = applywait.paydatas[index];
-                window.location.href = "addExam.html?orderid=" + applywait.orderid;
+                patest.alertInfo("alert-danger", "未付款");
             }
+
         });
         $(".contapply").click(function () {
             window.location.href = "applyexam.html";
@@ -114,7 +111,7 @@ var applywait = {
             "0": "申请中...",
             "-1": "申请失败",
             "1": "申请成功,待付款",
-            "-2": "已付款"
+            "2": "已付款"
         };
         applywait.applyhtml = "";
         for (var i = 0; i < infolist.length; i++) {
@@ -130,7 +127,7 @@ var applywait = {
                 + '<td class="ispass" id="' + id + '">' + ispassinfo + '</td>'
                 + '<td class="deleteap" id="' + id + '"><button type="button" class="btn btn-primary btn-xs  ">取消申请</button></td>'
                 + '<td class="payment" id="' + orderId + '"><button type="button" class="btn btn-info btn-xs" style="margin-left:17px;" id="pay">付款</button></td>'
-                + '<td class="addexam" id="' + id + '"><button type="button" class="btn btn-success btn-xs">编辑考试</button></td>'
+                + '<td class="addexam" id="' + infolist[i].examId + '"><button type="button" class="btn btn-success btn-xs">编辑考试</button></td>'
                 + '</tr>';
         }
     }

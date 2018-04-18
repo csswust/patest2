@@ -33,4 +33,6 @@ public interface EpOrderInfoDao {
     List<EpOrderInfo> selectByIdsList(List<Integer> idsList);
 
     int insertBatch(List<EpOrderInfo> recordList);
+
+    EpOrderInfo selectByApplyId(Integer applyId);
 }

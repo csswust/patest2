@@ -43,13 +43,18 @@ public class EpApplyInfoAction extends BaseAction {
             @RequestParam Date startTime,
             @RequestParam Date endTime) {
         APIResult apiResult = new APIResult();
+        Integer epUserId = getEpUserId();
+        if (epUserId == null) {
+            apiResult.setStatusAndDesc(-1, "未登录");
+            return apiResult;
+        }
         EpApplyInfo epApplyInfo = new EpApplyInfo();
         epApplyInfo.setExamName(examName);
         epApplyInfo.setPeopleNumber(peopleNumber);
         epApplyInfo.setIsProblem(isProv);
         epApplyInfo.setStartTime(startTime);
         epApplyInfo.setEndTime(endTime);
-        epApplyInfo.setEpUserId(getEpUserId());
+        epApplyInfo.setEpUserId(epUserId);
         epApplyInfo.setStatus(0);
         int result = epApplyInfoDao.insertSelective(epApplyInfo);
         apiResult.setStatus(result);

@@ -50,9 +50,10 @@ var applyexam = {
             if (result.status === 1) {
                 patest.alertInfo("alert-success", "保存成功");
                 window.location.href = "applywait.html";
-            }
-            else {
-                patest.alertInfo("alert-warning", "保存失败！");
+            } else if (result.status === 0) {
+                patest.alertInfo("alert-danger", "保存失败！");
+            } else {
+                patest.alertInfo("alert-danger", result.desc);
             }
         });
     },

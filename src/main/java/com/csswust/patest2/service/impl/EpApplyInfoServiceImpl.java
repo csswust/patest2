@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -45,9 +46,13 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
         List<EpUserInfo> epUserInfoList = selectRecordByIds(
                 getFieldByList(epApplyInfoList, "epUserId", EpApplyInfo.class),
                 "userId", (BaseDao) epUserInfoDao, EpUserInfo.class);
-        List<EpOrderInfo> epOrderInfoList = selectRecordByIds(
-                getFieldByList(epApplyInfoList, "applyId", EpApplyInfo.class),
-                "applyId", (BaseDao) epOrderInfoDao, EpOrderInfo.class);
+        List<EpOrderInfo> epOrderInfoList = new ArrayList<>();
+        for (int i = 0; i < epApplyInfoList.size(); i++) {
+            EpApplyInfo item = epApplyInfoList.get(i);
+            EpOrderInfo temp = epOrderInfoDao.selectByApplyId(item.getApplyId());
+            if (temp == null) temp = new EpOrderInfo();
+            epOrderInfoList.add(temp);
+        }
         apiResult.setDataKey("total", total);
         apiResult.setDataKey("list", epApplyInfoList);
         apiResult.setDataKey("epUserInfoList", epUserInfoList);
