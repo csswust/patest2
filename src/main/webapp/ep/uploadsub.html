@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="../css/commonet.css">
-
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
     <!--[if lt IE 9]>
     <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
     <script src="../lib/bootstrap/js/respond.min.js"></script>
@@ -44,9 +42,9 @@
         </div>
     </div>
 </div>
-<!-- <div id="footer">
-    页脚
-</div> -->
+<div id="footer">
+    <!-- 页脚  -->
+</div>
 </body>
 <script id="getcontent" type="text/html">
     {{each data as value i}}
@@ -59,20 +57,22 @@
     </tr>
     {{/each}}
 </script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="../js/patest.js"></script>
+<script type="text/javascript" src="./js/loginreg.js"></script>
+<script type="text/javascript" src="./js/commonet.js"></script>
+<script type="text/javascript" src="./js/uploadsub.js"></script>
 <script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            paginator: 'jQuery/jqPaginator.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js',
-            datetimepicker: 'bootstrap/js/bootstrap-datetimepicker.min.js'
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/uploadsub.js");
+    // 执行入口
+    uploadsub.init();
 </script>
 </html>
