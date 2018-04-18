@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="renderer" content="webkit">
+	<title>考试</title>
+	<link rel="shortcut icon" href="../img/favicon.ico" >
+	 <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+	 <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+	 <link rel="stylesheet" href="../css/commonet.css">
+   	 <link rel="stylesheet" href="../css/aexam.css">
+     <link rel="stylesheet" href="../css/test.css">
+    <!--[if lt IE 9]>
+      <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+      <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="headet"><!-- 头部菜单 --></div>
+	<div class="container-fluid">
+    <!--nav-->
+		<div class="topmenu">
+			<!-- 顶部导航 -->
+		</div>
+    <div class="col-md-10  col-md-offset-1 allcontent">
+		<div class="tip">
+			<div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
+				<a href="#" class="close" data-dismiss="alert"> &times; </a> <strong>小提示：带*号的为必填，请仔细检查</strong>
+			</div>
+		</div>
+	<ol class="breadcrumb">
+	  <li><a href="homepaged.html"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>首页</a></li>
+	  <li><a href="test.html">我的考试</a></li>
+	  <li class="active pageName">修改考试</li>
+	</ol>
+   <div class="template">
+      <div class="row content" >
+         <div class="etstep ">
+              <div class="form-group">
+                  <div class="row">
+                    
+                 </div>
+              </div>
+           </div>
+       <form class="form-horizontal" >
+        <div class="form-group">
+            <div class="col-md-2" style="text-align:right;"><h4>试卷参数</h4></div>
+       </div>
+       <div class="col-md-offset-1 col-md-10">
+       <table class="table ">
+           <thead>
+           <th>课程</th>
+           <th>知识点</th>
+           <th>难度</th>
+            <th>分数</th>
+           <th>问题总量</th>
+           <th>操作</th>
+           </thead>
+           <tbody id="queTempla">
+           <tr>
+            <td colspan="5">
+             <a href="javascript:void(0);"  class="addTemplate"><span class="glyphicon glyphicon-plus " aria-hidden="true"></span>添加</a>
+           </td>
+           </tr>
+           </tbody>
+        </table>
+       </div>
+       </form>
+       </div>
+        <div class="row savebutton saveshow">       
+            <button type="button" class="btn btn-primary  upParm " id="justUp"><span class="glyphicon glyphicon-chevron-left"></span>上一步</button>
+           <!--  <button type="button" class="btn btn-primary importList"  style="display:none;">上传学生名单</button> -->
+            <button type="button" class="btn btn-primary  downParm" id="justSave">下一步 <span class="glyphicon glyphicon-chevron-right"></span></button>
+       </div>
+   </div>
+	</div>
+  </div>
+    <div id="footer">
+         <!-- 页脚  -->  
+    </div>
+<div class="modal fade" id="modaladdpram" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">试卷总分及题数</h4>
+      </div>
+      <div class="modal-body">
+        <div>本场考试总分为：<span class="allscore"></span>,题数为：<span class="allques"></span></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary parmadd" data-dismiss="modal">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="../js/patest.js"></script>
+<script type="text/javascript" src="./js/loginreg.js"></script>
+<script type="text/javascript" src="./js/commonet.js"></script>
+<script type="text/javascript" src="./js/addParm.js"></script>
+<script type="text/javascript">
+    // 执行入口
+    addParm.init();
+</script>
+</html>
