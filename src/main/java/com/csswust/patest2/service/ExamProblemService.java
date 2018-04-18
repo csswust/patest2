@@ -11,4 +11,6 @@ public interface ExamProblemService {
     APIResult insertByArray(Integer examId, Integer[] probIdList);
 
     APIResult deleteByIds(String ids);
+
+    APIResult deleteById(Integer id);
 }

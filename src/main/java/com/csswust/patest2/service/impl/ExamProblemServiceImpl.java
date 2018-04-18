@@ -99,4 +99,16 @@ public class ExamProblemServiceImpl extends BaseService implements ExamProblemSe
         }
         return apiResult;
     }
+
+    @Override
+    public APIResult deleteById(Integer id) {
+        APIResult apiResult = new APIResult();
+        int result = examProblemDao.deleteByPrimaryKey(id);
+        if (result == 0) {
+            apiResult.setStatusAndDesc(-1, "删除失败");
+        } else {
+            apiResult.setStatusAndDesc(result, "删除成功");
+        }
+        return apiResult;
+    }
 }

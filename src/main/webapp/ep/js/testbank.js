@@ -2,6 +2,7 @@ var testbank = {
     page: '1',
     bankIds: "",
     proinfoArr: [],
+    probIdList: [],
     init: function () {
         commonet.init(); // 公共模块初始化
 
@@ -14,8 +15,8 @@ var testbank = {
         patest.getRowsnum("rowsnum");
 
         var parm = patest.getQueryObject();
-        if (parm["id"] !== null) {
-            testbank.examId = parm["id"];
+        if (parm["Id"] !== null) {
+            testbank.examId = parm["Id"];
         } else {
             patest.alertInfo("alert-danger", "考试id不存在");
             return;
@@ -30,7 +31,6 @@ var testbank = {
                 });
                 $(".confirmadd").click(function () {
                     testbank.getproblemInfoById();
-                    testbank.examId = parm["Id"];
                     testbank.insertTempProblem();
                 });
             } else {
@@ -38,13 +38,7 @@ var testbank = {
             }
         });
         $(".backexam").click(function () {
-            if (parm.examId) {
-                window.location.href = "addBank.html?examId="
-                    + parm.examId;
-            } else if (parm.Id) {
-                window.location.href = "addBank.html?Id="
-                    + parm.Id;
-            }
+            window.location.href = "addBank.html?Id=" + testbank.examId;
         });
         $(".search").click(function () {
             testbank.page = 1;
@@ -154,19 +148,6 @@ var testbank = {
         }
         testbank.checkbank();
     },
-    alertInfo: function (className, info) {
-        if ($(".tip").text().trim() == "") {
-            $(".tip").html(' <div class="alert'
-                + className
-                + '"style="margin-top:10px;" id="tip">'
-                + '<a href="#" class="close" data-dismiss="alert">&times;</a>'
-                + '<strong>' + info + '</strong></div>');
-        } else {
-            $("#tip").removeClass();
-            $("#tip").addClass("alert " + className);
-            $("strong").text(info);
-        }
-    },
     searchProblem: function () {
         $.ajax({
             type: "post",
@@ -230,35 +211,21 @@ var testbank = {
     },
     // 将所选的问题题库添加到数据库
     insertTempProblem: function () {
-        $.ajax({
-            type: "post",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examProblem/insertByArray",
-            dataType: 'json',
-            async: false,
-            data: {
-                probIdList: testbank.probIdstr,
-                examId: testbank.examId
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status >= 1) {
-                    if (parm.examId) {
-                        window.location.href = "editBank.html?examId=" + parm.examId;
-                    } else if (parm.Id) {
-                        window.location.href = "editBank.html?Id=" + parm.Id;
-                    }
-                    patest.alertInfo("alert-success", "保存成功");
-                } else if (result.status == 0) {
-                    $("#modaladdbank").modal('hide');
-                    patest.alertInfo("alert-danger", "保存失败,请查看是否有相同题目");
-                } else if (result.status == -1) {
-                    $("#modaladdbank").modal('hide');
-                    patest.alertInfo("alert-danger", "不允许添加相同的题目");
-                }
-            },
-            error: function () {
-                patest.alertInfo("alert-danger", "请求失败");
+        patest.request({
+            url: "../ep/examProblem/insertByArray"
+        }, {
+            probIdList: testbank.probIdstr,
+            examId: testbank.examId
+        }, function (result) {
+            if (result.status >= 1) {
+                window.location.href = "addBank.html?Id=" + testbank.examId;
+                patest.alertInfo("alert-success", "保存成功");
+            } else if (result.status === 0) {
+                $("#modaladdbank").modal('hide');
+                patest.alertInfo("alert-danger", "保存失败,请查看是否有相同题目");
+            } else if (result.status === -1) {
+                $("#modaladdbank").modal('hide');
+                patest.alertInfo("alert-danger", "不允许添加相同的题目");
             }
         });
     },

@@ -34,17 +34,10 @@ var addBank = {
             window.location.href = "addParm.html?Id=" + par.Id;
         });
         $("#listInfo").on('click', '.deletepro', function () {
-            flag--;
-            var banklength = addBank.tempProbIds.length;
-            var index = this.id.split("-")[0];
-            if (parseInt(index) + 1 > banklength) {
-                $("." + this.id).remove();
-            } else {
-                if (confirm("确定要删除该题吗？")) {
-                    var index = this.id.split("-")[0];
-                    addBank.tempProbId = addBank.tempProbIds[index];
-                    addBank.deleteTempProblemById();
-                }
+            if (confirm("确定要删除该题吗？")) {
+                var index = this.id;
+                addBank.tempProbId = index;
+                addBank.deleteTempProblemById();
             }
         });
         if (addBank.count > 0) {
@@ -53,7 +46,7 @@ var addBank = {
                 totalCounts: addBank.count,
                 visiblePages: 5,
                 currentPage: 1,
-                pageSize: parseInt(patest.rowsnum),
+                pageSize: 10,
                 first: '<li class="first"><a href="javascript:;">首页</a></li>',
                 last: '<li class="last"><a href="javascript:;">尾页</a></li>',
                 page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
@@ -94,18 +87,18 @@ var addBank = {
             } else if (addBank.probArr[i].levelId == 3) {
                 level = '困难';
             }
-            addBank.html += '<tr class="' + flag + '-' + flag + '">'
+            var id = addBank.tempProArr[i].exaProId;
+            addBank.html += '<tr class="' + id + '">'
                 + '<td>' + order + '</td>'
                 + '<td>' + addBank.probArr[i].probId + '</td>'
                 + '<td><a href="question.html?id=' + addBank.probArr[i].probId + '"  class="title">' + addBank.probArr[i].title + '</a></td>'
                 + '<td>' + level + '</td>'
                 + '<td>' + addBank.couseNamesArr[i].courseName + '</td>'
                 + '<td>' + addBank.knowNameArr[i].knowName + '</td>'
-                + '<td class="deletepro" id="' + flag + '-' + flag + '"><a><span class="glyphicon glyphicon-remove-circle"  ></span></a></td>'
+                + '<td class="deletepro" id="' + id + '"><a><span class="glyphicon glyphicon-remove-circle"  ></span></a></td>'
                 + '</tr>';
             addBank.tempProbIds[i] = addBank.tempProArr[i].exaProId;
             order++;
-            flag++;
         }
     },
     //通过考试Id来展示本场考试
@@ -115,14 +108,13 @@ var addBank = {
         }, {
             examId: addBank.examId,
             page: addBank.page,
-            rows: patest.rowsnum
+            rows: 10
         }, function (result) {
             addBank.tempProArr = result.data.examProblemList;
             addBank.probArr = result.data.problemInfoList;
             addBank.knowNameArr = result.data.knowledgeInfoList;
             addBank.couseNamesArr = result.data.courseInfoList;
             addBank.count = result.data.total;
-            addBank.probArr = result.data;
             addBank.showproinfo();
             $("#listInfo").html("");
             $("#listInfo").append(addBank.html);
@@ -130,27 +122,16 @@ var addBank = {
     },
     //通过问题Id来删除题目
     deleteTempProblemById: function () {
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../exam/deleteTempProblemById",
-            dataType: 'json',
-            async: false,
-            data: {
-                tempProbId: addBank.tempProbId,
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status == 1) {
-                    patest.alertInfo("alert-success", "删除成功");
-                    flag = 0;
-                    addBank.selectByExamId();
-                } else {
-                    patest.alertInfo("alert-danger", "删除失败")
-                }
-            },
-            error: function () {
-                patest.alertInfo("alert-danger", "请求失败");
+        patest.request({
+            url: "../ep/examProblem/deleteById"
+        }, {
+            id: addBank.tempProbId
+        }, function (result) {
+            if (result.status === 1) {
+                patest.alertInfo("alert-success", "删除成功");
+                addBank.selectByExamId();
+            } else {
+                patest.alertInfo("alert-danger", result.desc)
             }
         });
     }

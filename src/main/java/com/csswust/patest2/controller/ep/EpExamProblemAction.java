@@ -2,6 +2,8 @@ package com.csswust.patest2.controller.ep;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
+import com.csswust.patest2.dao.ExamProblemDao;
+import com.csswust.patest2.entity.ExamProblem;
 import com.csswust.patest2.service.ExamProblemService;
 import com.csswust.patest2.service.common.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class EpExamProblemAction extends BaseAction {
     private ExamProblemService examProblemService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private ExamProblemDao examProblemDao;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
@@ -45,5 +49,15 @@ public class EpExamProblemAction extends BaseAction {
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteByIds(@RequestParam String ids) {
         return examProblemService.deleteByIds(ids);
+    }
+
+    @RequestMapping(value = "/deleteById", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object deleteById(@RequestParam Integer id) {
+        ExamProblem examProblem = examProblemDao.selectByPrimaryKey(id);
+        if (examProblem == null) return null;
+        if (!authService.judgeEpAuth(getEpUserId(), examProblem.getExamId())) {
+            return new APIResult(-501, "权限不足");
+        }
+        return examProblemService.deleteById(id);
     }
 }

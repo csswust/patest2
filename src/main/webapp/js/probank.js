@@ -157,7 +157,6 @@ var program = {
             success: function (result) {
                 console.log(result);
                 program.problist = result.problemInfoList;
-                //program.knowlist = result.knowledge;
                 program.getproinfo();
             },
         });
