@@ -549,6 +549,11 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         Date time = new Date();
         for (int i = 0; i < examInfoList.size(); i++) {
             ExamInfo item = examInfoList.get(i);
+            if (item.getExamId() == null) {
+                statusList.add(0);
+                proState.add(0);
+                continue;
+            }
             examPaper.setExamId(item.getExamId());
             int temp = examPaperDao.selectByConditionGetCount(examPaper, new BaseQuery());
             peopleTotal.add(temp);

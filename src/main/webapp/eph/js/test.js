@@ -29,23 +29,24 @@ var test = {
             test.examId = this.id;
             test.drawQuestion();
         });
-
-        $.jqPaginator('#pagination', {
-            totalCounts: test.count,
-            visiblePages: 5,
-            currentPage: 1,
-            pageSize: 10,
-            first: '<li class="first"><a href="javascript:;">首页</a></li>',
-            last: '<li class="last"><a href="javascript:;">尾页</a></li>',
-            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
-            onPageChange: function (num, type) {
-                if (type == 'init') {
-                    return;
+        if (test.count > 0) {
+            $.jqPaginator('#pagination', {
+                totalCounts: test.count,
+                visiblePages: 5,
+                currentPage: 1,
+                pageSize: 10,
+                first: '<li class="first"><a href="javascript:;">首页</a></li>',
+                last: '<li class="last"><a href="javascript:;">尾页</a></li>',
+                page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+                onPageChange: function (num, type) {
+                    if (type == 'init') {
+                        return;
+                    }
+                    test.page = num;
+                    test.getExamInfo();
                 }
-                test.page = num;
-                test.getExamInfo();
-            }
-        });
+            });
+        }
     },
     getExamInfo: function () {
         patest.request({
