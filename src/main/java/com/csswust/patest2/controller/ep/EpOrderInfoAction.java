@@ -2,8 +2,10 @@ package com.csswust.patest2.controller.ep;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
+import com.csswust.patest2.dao.EpOrderInfoDao;
 import com.csswust.patest2.entity.EpOrderInfo;
 import com.csswust.patest2.service.EpOrderInfoService;
+import com.csswust.patest2.service.common.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class EpOrderInfoAction extends BaseAction {
     @Autowired
     private EpOrderInfoService epOrderInfoService;
+    @Autowired
+    private EpOrderInfoDao epOrderInfoDao;
+    @Autowired
+    private AuthService authService;
 
     @RequestMapping(value = "/epOrderInfo/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
@@ -31,6 +37,14 @@ public class EpOrderInfoAction extends BaseAction {
 
     @RequestMapping(value = "/epOrderInfo/payment", method = {RequestMethod.GET, RequestMethod.POST})
     public Object payment(@RequestParam Integer orderId) {
+        EpOrderInfo epOrderInfo = epOrderInfoDao.selectByPrimaryKey(orderId);
+        if (epOrderInfo == null) {
+            return new APIResult(-501, "orderId无效");
+        } else {
+            if (getEpUserId().intValue() != epOrderInfo.getEpUserId().intValue()) {
+                return new APIResult(-501, "权限不足");
+            }
+        }
         return epOrderInfoService.payment(orderId);
     }
 }
