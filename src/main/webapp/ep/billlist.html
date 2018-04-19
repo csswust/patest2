@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="../css/commonet.css">
     <link rel="stylesheet" href="../css/aexam.css">
     <link rel="stylesheet" href="../css/test.css">
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
-    <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
-    <script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
     <!--[if lt IE 9]>
     <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
     <script src="../lib/bootstrap/js/respond.min.js"></script>
@@ -109,28 +106,28 @@
     <tr>
         <td><input type="checkbox" value="{{value.examId}}" name="title"/></td>
         <td>{{++i}}</td>
-        <td><a href="editExam.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
+        <td><a href="../html/editExam.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
         <td>{{value.startTime}}</td>
         <td>{{value.endTime}}</td>
     </tr>
     {{/each}}
 </script>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="../js/patest.js"></script>
+<script type="text/javascript" src="./js/loginreg.js"></script>
+<script type="text/javascript" src="./js/commonet.js"></script>
+<script type="text/javascript" src="./js/billlist.js"></script>
 <script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            jCookie: 'jQuery/jquery.cookie.js',
-            paginator: 'jQuery/jqPaginator.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js',
-            datetimepicker: 'bootstrap/js/bootstrap-datetimepicker.min.js',
-            fileupload: 'jQuery/ajaxfileupload.js'
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/billlist.js");
+    // 执行入口
+    billlist.init();
 </script>
 </html>

@@ -1,5 +1,6 @@
 package com.csswust.patest2.controller.ep;
 
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.entity.EpOrderInfo;
 import com.csswust.patest2.service.EpOrderInfoService;
@@ -23,7 +24,7 @@ public class EpOrderInfoAction extends BaseAction {
             EpOrderInfo epOrderInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if (epOrderInfo == null) return null;
+        if (epOrderInfo == null) return new APIResult(-501, "epOrderInfo不能为空");
         epOrderInfo.setEpUserId(getEpUserId());
         return epOrderInfoService.selectByCondition(epOrderInfo, page, rows);
     }
