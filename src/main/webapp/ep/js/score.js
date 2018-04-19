@@ -6,7 +6,7 @@ define(function (require, exports, module) {
     require('jQprint');
     require('bootstrap');
     require('paginator');
-    require('../ep/js/loginreg.js');
+    require('./loginreg.js');
     var program = {
         usernumber: '',
         infohtml: '',
