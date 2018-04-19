@@ -153,9 +153,7 @@ var common = {
             success: function (result) {
                 console.log(result);
                 if (result.status === 1) {
-                    // pubMeth.alertInfo("alert-success", "上传成功");
-                    common.path = result.fileDir;
-                    common.fileName = result.fileName;
+                    common.path = result.data.fileDir;
                     window.location.href = '../system/download?path=' + common.path;
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
@@ -176,9 +174,7 @@ var common = {
             success: function (result) {
                 console.log(result);
                 if (result.status === 1) {
-                    // pubMeth.alertInfo("alert-success", "上传成功");
-                    common.path = result.fileDir;
-                    common.fileName = result.fileName;
+                    common.path = result.data.fileDir;
                     window.location.href = '../system/download?path=' + common.path;
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
