@@ -5,6 +5,7 @@ import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.EpApplyInfoDao;
 import com.csswust.patest2.entity.EpApplyInfo;
 import com.csswust.patest2.service.EpApplyInfoService;
+import com.csswust.patest2.service.common.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,16 +22,17 @@ import java.util.Date;
 public class EpApplyInfoAction extends BaseAction {
     @Autowired
     private EpApplyInfoDao epApplyInfoDao;
-
     @Autowired
     private EpApplyInfoService epApplyInfoService;
+    @Autowired
+    private AuthService authService;
 
     @RequestMapping(value = "/epApplyInfo/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
             EpApplyInfo epApplyInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if (epApplyInfo == null) return null;
+        if (epApplyInfo == null) return new APIResult(-501, "epApplyInfo not null");
         epApplyInfo.setEpUserId(getEpUserId());// 设置userId
         return epApplyInfoService.selectByCondition(epApplyInfo, page, rows);
     }
@@ -63,8 +65,14 @@ public class EpApplyInfoAction extends BaseAction {
 
     @RequestMapping(value = "/epApplyInfo/deleteById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteById(@RequestParam Integer applyId) {
-        APIResult apiResult = new APIResult();
-        apiResult.setStatus(epApplyInfoDao.deleteByPrimaryKey(applyId));
-        return apiResult;
+        EpApplyInfo epApplyInfo = epApplyInfoDao.selectByPrimaryKey(applyId);
+        if (epApplyInfo == null) {
+            return new APIResult(-501, "applyId无效");
+        } else {
+            if (!authService.judgeEpAuth(getEpUserId(), epApplyInfo.getExamId())) {
+                return new APIResult(-501, "权限不足");
+            }
+        }
+        return epApplyInfoService.deleteById(applyId);
     }
 }

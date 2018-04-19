@@ -10,4 +10,6 @@ public interface EpApplyInfoService {
     APIResult selectByCondition(EpApplyInfo epApplyInfo, Integer page, Integer rows);
 
     APIResult accept(Integer applyId, Integer status, Double money, String reason);
+
+    APIResult deleteById(Integer applyId);
 }

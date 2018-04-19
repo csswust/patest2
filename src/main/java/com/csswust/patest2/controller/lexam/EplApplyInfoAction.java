@@ -28,7 +28,8 @@ public class EplApplyInfoAction extends BaseAction {
             EpApplyInfo epApplyInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if (epApplyInfo == null) return null;
+        if (epApplyInfo == null)
+            return new APIResult(-501, "epApplyInfo not null");
         return epApplyInfoService.selectByCondition(epApplyInfo, page, rows);
     }
 
@@ -43,9 +44,7 @@ public class EplApplyInfoAction extends BaseAction {
 
     @RequestMapping(value = "/deleteById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteById(@RequestParam Integer applyId) {
-        APIResult apiResult = new APIResult();
-        apiResult.setStatus(epApplyInfoDao.deleteByPrimaryKey(applyId));
-        return apiResult;
+        return epApplyInfoService.deleteById(applyId);
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})

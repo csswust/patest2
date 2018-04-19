@@ -100,6 +100,7 @@ public class EpAction extends BaseAction {
             apiResult.setStatusAndDesc(-1, "此用户不存在");
             return apiResult;
         }
+        userInfo.setPassword(null);
         apiResult.setDataKey("userInfo", userInfo);
         UserProfile userProfile = userProfileDao.selectByPrimaryKey(userInfo.getUserProfileId());
         if (userProfile == null) userProfile = new UserProfile();

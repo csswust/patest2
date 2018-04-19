@@ -115,4 +115,13 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
         }
         return apiResult;
     }
+
+    @Override
+    public APIResult deleteById(Integer applyId) {
+        APIResult apiResult = new APIResult();
+        int result = epApplyInfoDao.deleteByPrimaryKey(applyId);
+        if (result == 1) apiResult.setStatusAndDesc(1, "删除成功");
+        else apiResult.setStatusAndDesc(-1, "删除失败");
+        return apiResult;
+    }
 }
