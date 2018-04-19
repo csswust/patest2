@@ -457,5 +457,45 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         return apiResult;
     }
 
-
+    @Override
+    public APIResult buildExamState(APIResult apiResult, List<ExamInfo> examInfoList, boolean containUModify) {
+        List<Integer> peopleTotal = new ArrayList<>();
+        List<Integer> statusList = new ArrayList<>();
+        List<Integer> proState = new ArrayList<>();
+        ExamPaper examPaper = new ExamPaper();
+        Date time = new Date();
+        for (int i = 0; i < examInfoList.size(); i++) {
+            ExamInfo item = examInfoList.get(i);
+            examPaper.setExamId(item.getExamId());
+            int temp = examPaperDao.selectByConditionGetCount(examPaper, new BaseQuery());
+            peopleTotal.add(temp);
+            Integer status;
+            if (time.getTime() > item.getEndTime().getTime()) {
+                status = 2;
+            } else if (time.getTime() > item.getStartTime().getTime()) {
+                status = 1;
+            } else {
+                status = 0;
+            }
+            statusList.add(status);
+            PaperProblem paperProblem = new PaperProblem();
+            paperProblem.setExamId(item.getExamId());
+            int size = paperProblemDao.selectByConditionGetCount(paperProblem, new BaseQuery());
+            proState.add(size == 0 ? 0 : 1);
+        }
+        if (containUModify) {
+            List<UserInfo> userInfoList = selectRecordByIds(
+                    getFieldByList(examInfoList, "modifyUserId", ExamInfo.class),
+                    "userId", (BaseDao) userInfoDao, UserInfo.class);
+            List<UserProfile> userProfileList = selectRecordByIds(
+                    getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                    "useProId", (BaseDao) userProfileDao, UserProfile.class);
+            apiResult.setDataKey("userInfoList", userInfoList);
+            apiResult.setDataKey("userProfileList", userProfileList);
+        }
+        apiResult.setDataKey("peopleTotal", peopleTotal);
+        apiResult.setDataKey("statusList", statusList);
+        apiResult.setDataKey("proState", proState);
+        return apiResult;
+    }
 }

@@ -1,5 +1,6 @@
 package com.csswust.patest2.controller.lexam;
 
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -52,7 +53,7 @@ public class ExamInfoAction extends BaseAction {
     private ConditionBuild conditionBuild;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectByCondition(
+    public Object selectByCondition(
             ExamInfo examInfo,
             @RequestParam(required = false, defaultValue = "false") Boolean isRecent,
             @RequestParam(required = false, defaultValue = "false") Boolean onlyExamInfo,
@@ -60,7 +61,7 @@ public class ExamInfoAction extends BaseAction {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         if (examInfo == null) return null;
-        Map<String, Object> res = new HashMap<>();
+        APIResult apiResult = new APIResult();
         BaseQuery baseQuery = new BaseQuery();
         if (examInfo.getStartTime() != null) {
             baseQuery.setCustom("startTime", examInfo.getStartTime());
@@ -76,49 +77,13 @@ public class ExamInfoAction extends BaseAction {
         Integer total = examInfoDao.selectByConditionGetCount(examInfo, baseQuery);
         baseQuery.setPageRows(page, rows);
         List<ExamInfo> examInfoList = examInfoDao.selectByCondition(examInfo, baseQuery);
-        res.put("total", total);
-        res.put("examInfoList", examInfoList);
+        apiResult.setDataKey("total", total);
+        apiResult.setDataKey("examInfoList", examInfoList);
         if (onlyExamInfo) {
-            return res;
+            return apiResult;
         }
-        List<Integer> peopleTotal = new ArrayList<>();
-        List<Integer> statusList = new ArrayList<>();
-        List<Integer> proState = new ArrayList<>();
-        ExamPaper examPaper = new ExamPaper();
-        Date time = new Date();
-        for (int i = 0; i < examInfoList.size(); i++) {
-            ExamInfo item = examInfoList.get(i);
-            examPaper.setExamId(item.getExamId());
-            int temp = examPaperDao.selectByConditionGetCount(examPaper, new BaseQuery());
-            peopleTotal.add(temp);
-            Integer status;
-            if (time.getTime() > item.getEndTime().getTime()) {
-                status = 2;
-            } else if (time.getTime() > item.getStartTime().getTime()) {
-                status = 1;
-            } else {
-                status = 0;
-            }
-            statusList.add(status);
-            PaperProblem paperProblem = new PaperProblem();
-            paperProblem.setExamId(item.getExamId());
-            int size = paperProblemDao.selectByConditionGetCount(paperProblem, new BaseQuery());
-            proState.add(size == 0 ? 0 : 1);
-        }
-        if (containUModify) {
-            List<UserInfo> userInfoList = selectRecordByIds(
-                    getFieldByList(examInfoList, "modifyUserId", ExamInfo.class),
-                    "userId", (BaseDao) userInfoDao, UserInfo.class);
-            List<UserProfile> userProfileList = selectRecordByIds(
-                    getFieldByList(userInfoList, "userProfileId", UserInfo.class),
-                    "useProId", (BaseDao) userProfileDao, UserProfile.class);
-            res.put("userInfoList", userInfoList);
-            res.put("userProfileList", userProfileList);
-        }
-        res.put("peopleTotal", peopleTotal);
-        res.put("statusList", statusList);
-        res.put("proState", proState);
-        return res;
+        examInfoService.buildExamState(apiResult, examInfoList, containUModify);
+        return apiResult;
     }
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
