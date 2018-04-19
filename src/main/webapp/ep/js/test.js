@@ -72,9 +72,9 @@ var test = {
         }, function (result) {
             $(".loading").html("<img />");
             if (result.status > 0) {
-                pubMeth.alertInfo("alert-success", "抽题成功！");
+                patest.alertInfo("alert-success", "抽题成功！");
             } else {
-                pubMeth.alertInfo("alert-danger", result.desc);
+                patest.alertInfo("alert-danger", result.desc);
             }
             test.getExamInfo();
         });
