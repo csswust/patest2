@@ -26,15 +26,15 @@ var program = {
             async: false,
             data: {
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
                 console.log(result);
-                program.count = result.total;
-                program.data = result.examInfoList;
-                program.state = result.statusList;
-                program.prostate = result.proState;
-                program.studentTotalList = result.peopleTotal;
+                program.count = result.data.total;
+                program.data = result.data.examInfoList;
+                program.state = result.data.statusList;
+                program.prostate = result.data.proState;
+                program.studentTotalList = result.data.peopleTotal;
                 program.showInfo();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.html);

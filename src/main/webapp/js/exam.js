@@ -31,10 +31,10 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                program.count = result.total;
-                program.data = result.examInfoList;
-                program.peototal = result.peopleTotal;
-                program.userProfileList = result.userProfileList;
+                program.count = result.data.total;
+                program.data = result.data.examInfoList;
+                program.peototal = result.data.peopleTotal;
+                program.userProfileList = result.data.userProfileList;
                 program.showInfo();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.html);

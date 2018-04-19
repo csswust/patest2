@@ -32,11 +32,11 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                program.userProfileArr = result.userProfileList;
-                program.userArr = result.userInfoList;
-                program.examPaperList = result.examPaperList;
-                program.sessinoList = result.sessinoList;
-                program.count = result.total;
+                program.userProfileArr = result.data.userProfileList;
+                program.userArr = result.data.userInfoList;
+                program.examPaperList = result.data.examPaperList;
+                program.sessinoList = result.data.sessinoList;
+                program.count = result.data.total;
                 program.showOnline();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.ohtml);

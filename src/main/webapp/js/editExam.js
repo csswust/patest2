@@ -32,7 +32,7 @@ var program = {
             success: function (result) {
                 console.log(result);
                 program.examId = result.examId;
-                if (result.status == '1') {
+                if (result.status === 1) {
                     pubMeth.alertInfo("alert-success", "保存成功");
                     window.location.href = "editBank.html?examId=" + program.examId;
                 } else {
@@ -62,7 +62,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.status == '1') {
+                if (result.status === 1) {
                     pubMeth.alertInfo("alert-success", "修改成功");
                 }
                 else {
@@ -87,11 +87,11 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                program.title = result.examInfoList[0].title;
-                program.startTime = result.examInfoList[0].startTime;
-                program.endTime = result.examInfoList[0].endTime;
-                program.description = result.examInfoList[0].description;
-                program.examip = result.examInfoList[0].allowIp;
+                program.title = result.data.examInfoList[0].title;
+                program.startTime = result.data.examInfoList[0].startTime;
+                program.endTime = result.data.examInfoList[0].endTime;
+                program.description = result.data.examInfoList[0].description;
+                program.examip = result.data.examInfoList[0].allowIp;
             }
         });
     },

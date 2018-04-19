@@ -20,7 +20,7 @@ var program = {
                 onlyExamInfo: true
             },
             success: function (result) {
-                var examNameList = result.examInfoList;
+                var examNameList = result.data.examInfoList;
                 for (var i = 0; i < examNameList.length; i++) {
                     (function (num) {
                         $(".examId").append('<option value="' + examNameList[i].examId + '">' + examNameList[i].title + '</option>');
@@ -44,9 +44,9 @@ var program = {
                 rows: pubMeth.rowsnum,
             },
             success: function (result) {
-                program.count = result.total;
+                program.count = result.data.total;
                 console.log(result);
-                var rander = template("getcontent", result);
+                var rander = template("getcontent", result.data);
                 $("#listInfo").html(rander);
             }
         });
@@ -86,7 +86,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.status == 1) {
+                if (result.status === 1) {
                     pubMeth.alertInfo("alert-success", "添加成功！");
                     program.getPaper();
                 } else {
