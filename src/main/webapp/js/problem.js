@@ -143,6 +143,7 @@ var program = {
                 rows: pubMeth.rowsnum
             },
             success: function (result) {
+                result = result.data;
                 program.count = result.total;
                 program.data = result;
                 program.showProblem();
