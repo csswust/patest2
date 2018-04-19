@@ -72,4 +72,38 @@ public class EpExamInfoAction extends BaseAction {
         }
         return examInfoService.updateById(examInfo);
     }
+
+    @RequestMapping(value = "/selectMyProblem", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object selectMyProblem(@RequestParam Integer examId) {
+        if (!authService.judgeEpAuth(getEpUserId(), examId)) {
+            return new APIResult(-501, "权限不足");
+        }
+        return examInfoService.selectMyProblem(examId);
+    }
+
+    @RequestMapping(value = "/rankingByGrade", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object rankingByGrade(@RequestParam Integer examId,
+                                 @RequestParam(required = false) String userName, @RequestParam(required = false) String studentNumber,
+                                 @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
+        if (!authService.judgeEpAuth(getEpUserId(), examId)) {
+            return new APIResult(-501, "权限不足");
+        }
+        return examInfoService.rankingByGrade(examId, userName, studentNumber, page, rows);
+    }
+
+    @RequestMapping(value = "/importCodeByExamId", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object importCodeByExamId(@RequestParam Integer examId) {
+        if (!authService.judgeEpAuth(getEpUserId(), examId)) {
+            return new APIResult(-501, "权限不足");
+        }
+        return examInfoService.importCodeByExamId(examId);
+    }
+
+    @RequestMapping(value = "/importGradeByExamId", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object importGradeByExamId(@RequestParam Integer examId) {
+        if (!authService.judgeEpAuth(getEpUserId(), examId)) {
+            return new APIResult(-501, "权限不足");
+        }
+        return examInfoService.importGradeByExamId(examId);
+    }
 }

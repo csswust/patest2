@@ -44,6 +44,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
+                result = result.data;
                 program.count = result.total;
                 program.problemTotal = result.problemTotal;
                 if (program.count <= 0) {

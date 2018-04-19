@@ -25,6 +25,7 @@ var program = {
                 examId: program.examId
             },
             success: function (result) {
+                result = result.data;
                 console.log(result);
                 var html = "";
                 $('#listInfo').empty();
