@@ -28,8 +28,9 @@ import java.io.IOException;
                 "/paperProblem/*", "/problemInfo/*", "/resultInfo/*",
                 "/siteInfo/*", "/student/*", "/submitInfo/*", "/submitResult/*",
                 "/submitSimilarity/*", "/system/*", "/userInfo/*", "/userProfile/*",
+                "/epApplyInfo/*", "/epNotice/*", "/epOrderInfo/*", "/ep/*"
         })
-public class AccessFilter implements Filter {
+public class AccessFilter extends BaseFilter implements Filter {
     private static Logger log = LoggerFactory.getLogger(AccessFilter.class);
 
     @Override
@@ -38,17 +39,12 @@ public class AccessFilter implements Filter {
         Integer isAuthJudge = Config.getToInt(SiteKey.IS_AUTH_JUDGE, SiteKey.IS_AUTH_JUDGE_DE);
         // 获取请求地址url
         HttpServletRequest req = (HttpServletRequest) request;
-        String contextPath = req.getContextPath();
-        String URI = req.getRequestURI();
-        String url = URI.replace(contextPath, "");
+        String url = geturl(req);
         // 获取用户角色和userId
         HttpSession session = req.getSession();
-        String userPermisson = (String) session.getAttribute("userPermisson");
-        if (userPermisson == null) {
-            userPermisson = "not_login";
-        }
-        Integer userId = (Integer) session.getAttribute("userId");
-        MDC.put("userId", userId == null ? "not_login" : String.valueOf(userId));
+        String userPermisson = getPermisson(session);
+        // 开始
+        Integer userId = getUserId(session);
         if (isAuthJudge != 1) {
             try {
                 chain.doFilter(request, response);

@@ -1,6 +1,7 @@
 package com.csswust.patest2.controller.ep;
 
 import com.csswust.patest2.common.APIResult;
+import com.csswust.patest2.common.UserRole;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.EpUserInfoDao;
 import com.csswust.patest2.entity.EpUserInfo;
@@ -47,6 +48,7 @@ public class EpUserInfoAction extends BaseAction {
         apiResult.setStatusAndDesc(1, "登录成功");
         apiResult.setDataKey("epUserId", epUserInfo.getUserId());
         apiResult.setDataKey("epUserName", epUserInfo.getUsername());
+        apiResult.setDataKey("userPermisson", UserRole.EP_USER.getPermisson());
         saveSession(request, apiResult.getData());
         return apiResult;
     }
@@ -84,6 +86,7 @@ public class EpUserInfoAction extends BaseAction {
         APIResult apiResult = new APIResult();
         this.removeSession(request, "epUserId");
         this.removeSession(request, "epUserName");
+        this.removeSession(request, "userPermisson");
         apiResult.setStatus(1);
         return apiResult;
     }

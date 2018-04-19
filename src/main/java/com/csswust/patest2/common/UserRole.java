@@ -7,7 +7,8 @@ public enum UserRole {
     ADMIN(1, "admin"),
     TEACHER(2, "teacher"),
     STUDENT(3, "student"),
-    NOT_LOGIN(4, "not_login");
+    NOT_LOGIN(4, "not_login"),
+    EP_USER(5, "ep_user");
 
     private int id;
     private String permisson;

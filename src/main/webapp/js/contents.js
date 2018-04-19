@@ -25,7 +25,6 @@ var program = {
                     $(".examName").html(program.title);
                     $(".examDescription").html('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;&nbsp;&nbsp;<strong class="examTime" style="font-size:20px;">考试信息：</strong> 开始时间： ' + program.starttime + '&nbsp;&nbsp;&nbsp;&nbsp;结束时间： ' + program.endtime + '<hr></hr><div style="text-indent:2em;">' + program.description + '</div>');
                     program.listProb = result.paperProblemList;
-                    // program.examID = result.examParamList[0].examId;
                     $(".sumScore").html(result.sumScore);
                     $(".stuGetScore").html(result.examPaper.score);
                     $("#listInfo").html("");
@@ -79,7 +78,7 @@ var program = {
                 onlyExamInfo: null
             },
             success: function (result) {
-
+                result = result.data;
                 console.log(result);
                 program.title = result.examInfoList[0].title;
                 program.description = result.examInfoList[0].description;
@@ -90,36 +89,14 @@ var program = {
                 program.endtime = nav.transTime(result.examInfoList[0].endTime);
                 program.startTime = new Date(program.starttime);
                 program.endTime = new Date(program.endtime);
-//						console.log(program.startTime + "     &&     " + program.endTime)
                 var intDiff = 0;
                 if (program.startTime > nowTime)
                     intDiff = parseInt((program.startTime - nowTime) / 1000);
                 else intDiff = parseInt((program.endTime - nowTime) / 1000);//倒计时总秒数量
-
-
                 nav.countDown(intDiff);
             }
         });
     },
-
-    /*getSubmit: function () {
-     $.ajax({
-     type: "get",
-     content: "application/x-www-form-urlencoded;charset=UTF-8",
-     url: "../submit/selectSubmitInfo",
-     dataType: 'json',
-     async: false,
-     data: {
-     "submitInfo.examId": parm["eId"],
-     "submitInfo.userId": 2,
-     page: program.page,
-     rows: '20'
-     },
-     success: function (result) {
-     console.log(result);
-     }
-     });
-     },*/
     getExamNotice: function () {
         $.ajax({
             type: "get",
@@ -138,7 +115,7 @@ var program = {
                     $("#rolling-news").html("暂无通知~");
             }
         });
-    },
+    }
 };
 program.showTime();
 program.getuserId();
