@@ -31,7 +31,7 @@ public class EpApplyInfoAction extends BaseAction {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         if (epApplyInfo == null) return null;
-        epApplyInfo.setEpUserId(getEpUserId());
+        epApplyInfo.setEpUserId(getEpUserId());// 设置userId
         return epApplyInfoService.selectByCondition(epApplyInfo, page, rows);
     }
 

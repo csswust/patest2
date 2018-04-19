@@ -87,4 +87,32 @@ public class EpUserInfoAction extends BaseAction {
         apiResult.setStatus(1);
         return apiResult;
     }
+
+    @RequestMapping(value = "/epUserInfo/selectMe", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object selectMe() {
+        APIResult apiResult = new APIResult();
+        EpUserInfo epUserInfo = epUserInfoDao.selectByPrimaryKey(getEpUserId());
+        if (epUserInfo == null) apiResult.setStatusAndDesc(-1, "查询失败");
+        else {
+            epUserInfo.setPassword(null);
+            apiResult.setStatusAndDesc(1, "查询成功");
+            apiResult.setDataKey("epUserInfo", epUserInfo);
+        }
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/epUserInfo/updateMe", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object updateMe(EpUserInfo epUserInfo) {
+        if (epUserInfo == null) return new APIResult(-501, "epUserInfo不能为空");
+        APIResult apiResult = new APIResult();
+        epUserInfo.setPassword(null);
+        epUserInfo.setCreateTime(null);
+        epUserInfo.setUserId(getEpUserId());
+        int result = epUserInfoDao.updateByPrimaryKeySelective(epUserInfo);
+        if (result == 0) apiResult.setStatusAndDesc(-1, "更新失败");
+        else {
+            apiResult.setStatusAndDesc(1, "更新成功");
+        }
+        return apiResult;
+    }
 }
