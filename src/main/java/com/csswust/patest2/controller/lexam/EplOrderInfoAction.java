@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by 972536780 on 2018/4/17.
  */
 @RestController
+@RequestMapping("/epOrderInfo")
 public class EplOrderInfoAction extends BaseAction {
     @Autowired
     private EpOrderInfoDao epOrderInfoDao;
     @Autowired
     private EpOrderInfoService epOrderInfoService;
 
-    @RequestMapping(value = "/epOrderInfo/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
             EpOrderInfo epOrderInfo,
             @RequestParam(required = false) Integer page,
@@ -29,7 +30,7 @@ public class EplOrderInfoAction extends BaseAction {
         return epOrderInfoService.selectByCondition(epOrderInfo, page, rows);
     }
 
-    @RequestMapping(value = "/epOrderInfo/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Object insertOne(EpOrderInfo epOrderInfo) {
         APIResult apiResult = new APIResult();
         int result = epOrderInfoDao.insertSelective(epOrderInfo);
@@ -37,7 +38,7 @@ public class EplOrderInfoAction extends BaseAction {
         return apiResult;
     }
 
-    @RequestMapping(value = "/epOrderInfo/updateById", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object updateById(EpOrderInfo epOrderInfo) {
         APIResult apiResult = new APIResult();
         int result = epOrderInfoDao.updateByPrimaryKeySelective(epOrderInfo);
@@ -45,7 +46,7 @@ public class EplOrderInfoAction extends BaseAction {
         return apiResult;
     }
 
-    @RequestMapping(value = "/epOrderInfo/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteByIds(@RequestParam String ids) {
         APIResult apiResult = new APIResult();
         int result = epOrderInfoDao.deleteByIds(ids);

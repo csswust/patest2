@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by 972536780 on 2018/4/17.
  */
 @RestController
+@RequestMapping("/epApplyInfo")
 public class EplApplyInfoAction extends BaseAction {
     @Autowired
     private EpApplyInfoDao epApplyInfoDao;
@@ -22,17 +23,16 @@ public class EplApplyInfoAction extends BaseAction {
     private EpApplyInfoService epApplyInfoService;
 
 
-    @RequestMapping(value = "/epApplyInfo/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
             EpApplyInfo epApplyInfo,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         if (epApplyInfo == null) return null;
-        epApplyInfo.setEpUserId(getEpUserId());
         return epApplyInfoService.selectByCondition(epApplyInfo, page, rows);
     }
 
-    @RequestMapping(value = "/epApplyInfo/accept", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/accept", method = {RequestMethod.GET, RequestMethod.POST})
     public Object accept(
             @RequestParam Integer applyId,
             @RequestParam Integer status,
@@ -41,14 +41,14 @@ public class EplApplyInfoAction extends BaseAction {
         return epApplyInfoService.accept(applyId, status, money, reason);
     }
 
-    @RequestMapping(value = "/epApplyInfo/deleteById", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/deleteById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteById(@RequestParam Integer applyId) {
         APIResult apiResult = new APIResult();
         apiResult.setStatus(epApplyInfoDao.deleteByPrimaryKey(applyId));
         return apiResult;
     }
 
-    @RequestMapping(value = "/epApplyInfo/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteByIds(@RequestParam String ids) {
         APIResult apiResult = new APIResult();
         apiResult.setStatus(epApplyInfoDao.deleteByIds(ids));

@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by 972536780 on 2018/4/17.
  */
 @RestController
+@RequestMapping("/epNotice")
 public class EplNoticeAction extends BaseAction {
     @Autowired
     private EpNoticeDao epNoticeDao;
     @Autowired
     private EpNoticeService epNoticeService;
 
-    @RequestMapping(value = "/epNotice/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
             EpNotice epNotice,
             @RequestParam(required = false) Integer page,
@@ -29,7 +30,7 @@ public class EplNoticeAction extends BaseAction {
         return epNoticeService.selectByCondition(epNotice, page, rows);
     }
 
-    @RequestMapping(value = "/epNotice/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Object insertOne(EpNotice epNotice) {
         APIResult apiResult = new APIResult();
         int result = epNoticeDao.insertSelective(epNotice);
@@ -37,7 +38,7 @@ public class EplNoticeAction extends BaseAction {
         return apiResult;
     }
 
-    @RequestMapping(value = "/epNotice/updateById", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object updateById(EpNotice epNotice) {
         APIResult apiResult = new APIResult();
         int result = epNoticeDao.updateByPrimaryKeySelective(epNotice);
@@ -45,7 +46,7 @@ public class EplNoticeAction extends BaseAction {
         return apiResult;
     }
 
-    @RequestMapping(value = "/epNotice/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteByIds(@RequestParam String ids) {
         APIResult apiResult = new APIResult();
         int result = epNoticeDao.deleteByIds(ids);
