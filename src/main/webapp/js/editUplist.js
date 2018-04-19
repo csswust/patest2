@@ -57,7 +57,7 @@ var program = {
                 console.log(result);
                 if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "上传成功");
-                    program.path = result.dirPath;
+                    program.path = result.data.dirPath;
                     window.location.href = '../system/download?path=' + program.path;
                     program.selectUserBaseInfo();
                 } else {

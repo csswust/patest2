@@ -22,7 +22,7 @@ var program = {
             program.applyhtml += '<tr>'
                 + '<td><input type="checkbox" value="' + id + '" name="title" /></td>'
                 + '<td>' + id + '</td>'
-                + '<td><a class="title"  href="../ep/applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'
+                + '<td><a class="title"  href="../eph/applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'
                 + '<td>' + uesrs[i].phone + '</td>'
                 + '<td>' + username + '</td>'
                 + '<td>' + infolist[i].peopleNumber + '</td>'

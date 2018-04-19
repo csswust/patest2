@@ -35,17 +35,9 @@ public class ProblemInfoAction extends BaseAction {
     private static Logger log = LoggerFactory.getLogger(ProblemInfoAction.class);
 
     @Autowired
-    private KnowledgeInfoDao knowledgeInfoDao;
-    @Autowired
-    private CourseInfoDao courseInfoDao;
-    @Autowired
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private ProblemInfoService problemInfoService;
-    @Autowired
-    private UserInfoDao userInfoDao;
-    @Autowired
-    private UserProfileDao userProfileDao;
 
     @RequestMapping(value = "/uploadDataByFile", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> uploadDataByFile(
@@ -87,42 +79,13 @@ public class ProblemInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectByCondition(
+    public Object selectByCondition(
             ProblemInfo problemInfo,
             @RequestParam(required = false, defaultValue = "false") Boolean containUModify,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
-        if (problemInfo == null) return null;
-        Map<String, Object> res = new HashMap<>();
-        BaseQuery baseQuery = new BaseQuery();
-        if (StringUtils.isNotBlank(problemInfo.getTitle())) {
-            baseQuery.setCustom("title", problemInfo.getTitle());
-            problemInfo.setTitle(null);
-        }
-        Integer total = problemInfoDao.selectByConditionGetCount(problemInfo, baseQuery);
-        baseQuery.setPageRows(page, rows);
-        List<ProblemInfo> problemInfoList = problemInfoDao.selectByCondition(problemInfo, baseQuery);
-        List<KnowledgeInfo> knowledgeInfoList = selectRecordByIds(
-                getFieldByList(problemInfoList, "knowId", ProblemInfo.class),
-                "knowId", (BaseDao) knowledgeInfoDao, KnowledgeInfo.class);
-        List<CourseInfo> courseInfoList = selectRecordByIds(
-                getFieldByList(knowledgeInfoList, "courseId", KnowledgeInfo.class),
-                "couId", (BaseDao) courseInfoDao, CourseInfo.class);
-        if (containUModify) {
-            List<UserInfo> userInfoList = selectRecordByIds(
-                    getFieldByList(problemInfoList, "modifyUserId", ProblemInfo.class),
-                    "userId", (BaseDao) userInfoDao, UserInfo.class);
-            List<UserProfile> userProfileList = selectRecordByIds(
-                    getFieldByList(userInfoList, "userProfileId", UserInfo.class),
-                    "useProId", (BaseDao) userProfileDao, UserProfile.class);
-            res.put("userInfoList", userInfoList);
-            res.put("userProfileList", userProfileList);
-        }
-        res.put("total", total);
-        res.put("data", problemInfoList);
-        res.put("knowledge", knowledgeInfoList);
-        res.put("course", courseInfoList);
-        return res;
+        return problemInfoService.selectByCondition(problemInfo, containUModify,
+                true, page, rows);
     }
 
     @RequestMapping(value = "/selectByIds", method = {RequestMethod.GET, RequestMethod.POST})

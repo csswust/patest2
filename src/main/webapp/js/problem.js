@@ -30,6 +30,7 @@ var program = {
                 rows: pubMeth.rowsnum
             },
             success: function (result) {
+                result = result.data;
                 console.log(result);
                 program.count = result.total;
                 program.data = result;

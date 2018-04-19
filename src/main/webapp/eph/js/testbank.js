@@ -85,15 +85,17 @@ var testbank = {
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../problemInfo/selectByCondition",
+            url: "../ep/problemInfo/selectByCondition",
             dataType: 'json',
             async: false,
             data: {
                 knowId: testbank.know,
                 page: testbank.page,
-                rows: patest.rowsnum
+                rows: patest.rowsnum,
+                examId: testbank.examId
             },
             success: function (result) {
+                result = result.data;
                 console.log(result);
                 testbank.count = result.total;
                 testbank.data = result;
@@ -152,7 +154,7 @@ var testbank = {
         $.ajax({
             type: "post",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../problemInfo/selectByCondition",
+            url: "../ep/problemInfo/selectByCondition",
             dataType: 'json',
             async: false,
             data: {
@@ -160,9 +162,11 @@ var testbank = {
                 "levelId": testbank.level,
                 knowId: testbank.know,
                 page: testbank.page,
+                examId: testbank.examId,
                 rows: "10"
             },
             success: function (result) {
+                result = result.data;
                 testbank.count = result.total;
                 testbank.data = result;
                 testbank.showProblem();
@@ -186,26 +190,9 @@ var testbank = {
         return true;
     },
     getproblemInfoById: function () {
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../problemInfo/selectByIds",
-            dataType: 'json',
-            async: false,
-            data: {
-                ids: testbank.bankIds,
-            },
-            success: function (result) {
-                console.log(result);
-                testbank.problist = result.problemInfoList;
-                testbank.getproinfo();
-            },
-        });
-    },
-    getproinfo: function () {
-        var length = testbank.problist.length;
-        for (var i = 0; i < length; i++) {
-            testbank.probIdList[i] = testbank.problist[i].probId;
+        var problist = testbank.bankIds.split(",");
+        for (var i = 0; i < problist.length; i++) {
+            testbank.probIdList[i] = parseInt(problist[i]);
         }
         testbank.probIdstr = testbank.probIdList.join(",");
     },

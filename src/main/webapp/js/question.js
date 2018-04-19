@@ -117,6 +117,7 @@ var program = {
                 "probId": program.probId
             },
             success: function (result) {
+                result = result.data;
                 console.log(result);
                 program.content = result.data[0];
                 console.log(program.content);
@@ -126,9 +127,7 @@ var program = {
                 if (parentId) {
                     pubMeth.getKnowledgeInfo(parentId);
                     for (var i = 0; i < pubMeth.course.length; i++) {
-                        /*if (pubMeth.course[i].parentId == parentId) {*/
                         $(".knowName").append("<option value=" + pubMeth.course[i].knowId + ">" + pubMeth.course[i].knowName + "</option>");
-                        /*}*/
                     }
                 }
             }, error: function () {

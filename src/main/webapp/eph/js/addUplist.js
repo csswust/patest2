@@ -106,7 +106,7 @@ var addUplist = {
                 console.log(result);
                 if (result.status > 0) {
                     patest.alertInfo("alert-success", "上传成功");
-                    addUplist.path = result.dirPath;
+                    addUplist.path = result.data.dirPath;
                     window.location.href = '../system/download?path=' + addUplist.path;
                     addUplist.selectUserBaseInfo();
                 } else {

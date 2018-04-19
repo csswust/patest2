@@ -250,7 +250,7 @@ var addParm = {
         }, function (result) {
             if (result.status > 0) {
                 patest.alertInfo("alert-success", "添加成功！");
-                window.location.href = 'addUplist.html?examId=' + addParm.examId;
+                window.location.href = 'addUplist.html?Id=' + addParm.examId;
             } else {
                 patest.alertInfo("alert-danger", result.desc);
             }

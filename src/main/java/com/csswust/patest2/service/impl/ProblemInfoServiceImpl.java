@@ -3,14 +3,17 @@ package com.csswust.patest2.service.impl;
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
-import com.csswust.patest2.dao.ProblemInfoDao;
-import com.csswust.patest2.entity.ProblemInfo;
+import com.csswust.patest2.dao.*;
+import com.csswust.patest2.dao.common.BaseDao;
+import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ProblemInfoService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.result.ImportDataRe;
 import com.csswust.patest2.service.result.SelectProblemDataRe;
 import com.csswust.patest2.utils.FileUtil;
 import com.csswust.patest2.utils.ZipUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
+import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
 
 /**
  * Created by 972536780 on 2018/3/19.
@@ -32,6 +36,54 @@ public class ProblemInfoServiceImpl extends BaseService implements ProblemInfoSe
 
     @Autowired
     private ProblemInfoDao problemInfoDao;
+    @Autowired
+    private KnowledgeInfoDao knowledgeInfoDao;
+    @Autowired
+    private CourseInfoDao courseInfoDao;
+    @Autowired
+    private UserInfoDao userInfoDao;
+    @Autowired
+    private UserProfileDao userProfileDao;
+
+    @Override
+    public APIResult selectByCondition(ProblemInfo problemInfo, Boolean containUModify, Boolean containCode, Integer page, Integer rows) {
+        APIResult apiResult = new APIResult();
+        if (problemInfo == null) return null;
+        BaseQuery baseQuery = new BaseQuery();
+        if (StringUtils.isNotBlank(problemInfo.getTitle())) {
+            baseQuery.setCustom("title", problemInfo.getTitle());
+            problemInfo.setTitle(null);
+        }
+        Integer total = problemInfoDao.selectByConditionGetCount(problemInfo, baseQuery);
+        baseQuery.setPageRows(page, rows);
+        List<ProblemInfo> problemInfoList = problemInfoDao.selectByCondition(problemInfo, baseQuery);
+        List<KnowledgeInfo> knowledgeInfoList = selectRecordByIds(
+                getFieldByList(problemInfoList, "knowId", ProblemInfo.class),
+                "knowId", (BaseDao) knowledgeInfoDao, KnowledgeInfo.class);
+        List<CourseInfo> courseInfoList = selectRecordByIds(
+                getFieldByList(knowledgeInfoList, "courseId", KnowledgeInfo.class),
+                "couId", (BaseDao) courseInfoDao, CourseInfo.class);
+        if (containUModify) {
+            List<UserInfo> userInfoList = selectRecordByIds(
+                    getFieldByList(problemInfoList, "modifyUserId", ProblemInfo.class),
+                    "userId", (BaseDao) userInfoDao, UserInfo.class);
+            List<UserProfile> userProfileList = selectRecordByIds(
+                    getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                    "useProId", (BaseDao) userProfileDao, UserProfile.class);
+            apiResult.setDataKey("userInfoList", userInfoList);
+            apiResult.setDataKey("userProfileList", userProfileList);
+        }
+        if (!containCode) {
+            for (ProblemInfo item : problemInfoList) {
+                item.setStandardSource(null);
+            }
+        }
+        apiResult.setDataKey("total", total);
+        apiResult.setDataKey("data", problemInfoList);
+        apiResult.setDataKey("knowledge", knowledgeInfoList);
+        apiResult.setDataKey("course", courseInfoList);
+        return apiResult;
+    }
 
     @Override
     public APIResult insertProblemData(Integer probId, List<String> input, List<String> output) {
