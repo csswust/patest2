@@ -24,7 +24,7 @@ public class LogAopAction {
     private static Logger log = LoggerFactory.getLogger(LogAopAction.class);
 
 
-    @Pointcut("execution(* com.csswust.patest2.controller.*.*(..))")
+    @Pointcut("execution(* com.csswust.patest2.controller.*.*.*(..))")
     private void controllerAspect() {
     }
 
