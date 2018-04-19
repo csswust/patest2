@@ -54,24 +54,11 @@ var program = {
             success: function (result) {
                 console.log(result);
                 $(".loading").html("<img />");
-                if (result.drawProblemRe.status > 0) {
+                if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "抽题成功！");
                 } else {
-                    pubMeth.alertInfo("alert-danger", result.drawProblemRe.desc);
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
-                /*else if (result.status == "-1") {
-                 pubMeth.alertInfo("alert-danger", "未添加考生！");
-                 } else if (result.status == "-2") {
-                 pubMeth.alertInfo("alert-danger", "未添加试卷参数！");
-                 }
-                 else if (result.status == "-4") {
-                 pubMeth.alertInfo("alert-danger", "试卷参数对应的题目数目为0！");
-                 }
-                 else if (result.status == "-5") {
-                 pubMeth.alertInfo("alert-danger", "试卷参数与题目数目异常，请检查重复参数是否小于或者等于对应的题目数目！");
-                 } else if (result.status == "-6") {
-                 pubMeth.alertInfo("alert-danger", "正在抽题，请等待！");
-                 }*/
                 program.showInfo();
             },
             error: function () {

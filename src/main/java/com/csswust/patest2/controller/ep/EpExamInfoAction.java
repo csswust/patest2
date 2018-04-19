@@ -56,7 +56,6 @@ public class EpExamInfoAction extends BaseAction {
         return apiResult;
     }
 
-
     @RequestMapping(value = "/selectById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectById(@RequestParam Integer examId) {
         if (!authService.judgeEpAuth(getEpUserId(), examId)) {
