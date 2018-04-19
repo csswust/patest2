@@ -11,7 +11,7 @@ import com.csswust.patest2.dao.result.SelectProblemNumRe;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamInfoService;
 import com.csswust.patest2.service.common.BaseService;
-import com.csswust.patest2.service.result.ImportDataRe;
+import com.csswust.patest2.service.common.ConditionBuild;
 import com.csswust.patest2.utils.CipherUtil;
 import com.csswust.patest2.utils.ZipUtil;
 import jxl.Workbook;
@@ -65,21 +65,105 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
     private SubmitInfoDao submitInfoDao;
     @Autowired
     private JudgerInfoDao judgerInfoDao;
+    @Autowired
+    private KnowledgeInfoDao knowledgeInfoDao;
+    @Autowired
+    private CourseInfoDao courseInfoDao;
+    @Autowired
+    private ConditionBuild conditionBuild;
 
     @Override
-    public ImportDataRe importCodeByExamId(Integer examId) {
-        ImportDataRe result = new ImportDataRe();
+    public APIResult selectMyProblem(Integer examId) {
+        APIResult apiResult = new APIResult();
+        if (examId == null) {
+            apiResult.setStatusAndDesc(-501, "examId不能为空");
+            return apiResult;
+        }
+        List<SelectProblemNumRe> selectProblemNumReList =
+                paperProblemDao.selectProblemNum(examId);
+        List<Integer> probIdList = new ArrayList<>();
+        List<Integer> countList = new ArrayList<>();
+        for (int i = 0; i < selectProblemNumReList.size(); i++) {
+            probIdList.add(selectProblemNumReList.get(i).getProbId());
+            countList.add(selectProblemNumReList.get(i).getNum());
+        }
+        List<ProblemInfo> problemInfoList = selectRecordByIds(probIdList,
+                "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
+        List<KnowledgeInfo> knowledgeInfoList = selectRecordByIds(
+                getFieldByList(problemInfoList, "knowId", ProblemInfo.class),
+                "knowId", (BaseDao) knowledgeInfoDao, KnowledgeInfo.class);
+        List<CourseInfo> courseInfoList = selectRecordByIds(
+                getFieldByList(knowledgeInfoList, "courseId", KnowledgeInfo.class),
+                "couId", (BaseDao) courseInfoDao, CourseInfo.class);
+        apiResult.setDataKey("probIdList", probIdList);
+        apiResult.setDataKey("countList", countList);
+        apiResult.setDataKey("problemInfoList", problemInfoList);
+        apiResult.setDataKey("knowledgeInfoList", knowledgeInfoList);
+        apiResult.setDataKey("courseInfoList", courseInfoList);
+        return apiResult;
+    }
+
+    @Override
+    public APIResult rankingByGrade(Integer examId, String userName, String studentNumber, Integer page, Integer rows) {
+        APIResult apiResult = new APIResult();
+        if (examId == null) {
+            apiResult.setStatusAndDesc(-501, "examId不能为空");
+            return apiResult;
+        }
+        ExamPaper examPaper = new ExamPaper();
+        examPaper.setExamId(examId);
+        BaseQuery baseQuery = new BaseQuery();
+        conditionBuild.buildExamPaper(baseQuery, examPaper, userName, studentNumber);
+        Integer total = examPaperDao.selectByConditionGetCount(examPaper, baseQuery);
+        baseQuery.setPageRows(page, rows);
+        baseQuery.setCustom("sort", "sort");
+        List<ExamPaper> allExamPaperList = examPaperDao.selectByCondition(examPaper, baseQuery);
+        List<UserInfo> userInfoList = selectRecordByIds(
+                getFieldByList(allExamPaperList, "userId", ExamPaper.class),
+                "userId", (BaseDao) userInfoDao, UserInfo.class);
+        List<UserProfile> userProfileList = selectRecordByIds(
+                getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                "useProId", (BaseDao) userProfileDao, UserProfile.class);
+        List<List<PaperProblem>> PaperProblemList = new ArrayList<>();
+        List<List<ProblemInfo>> ProblemInfoList = new ArrayList<>();
+        PaperProblem paperProblem = new PaperProblem();
+        int problemTotal = 0;
+        for (ExamPaper item : allExamPaperList) {
+            paperProblem.setExamPaperId(item.getExaPapId());
+            List<PaperProblem> paperProblems = paperProblemDao.selectByCondition(paperProblem, new BaseQuery());
+            List<ProblemInfo> problemInfos = selectRecordByIds(
+                    getFieldByList(paperProblems, "problemId", PaperProblem.class),
+                    "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
+            if (paperProblems.size() > problemTotal) {
+                problemTotal = paperProblems.size();
+            }
+            PaperProblemList.add(paperProblems);
+            ProblemInfoList.add(problemInfos);
+        }
+        apiResult.setDataKey("total", total);
+        apiResult.setDataKey("examPaperList", allExamPaperList);
+        apiResult.setDataKey("PaperProblemList", PaperProblemList);
+        apiResult.setDataKey("ProblemInfoList", ProblemInfoList);
+        apiResult.setDataKey("userInfoList", userInfoList);
+        apiResult.setDataKey("userProfileList", userProfileList);
+        apiResult.setDataKey("problemTotal", problemTotal);
+        return apiResult;
+    }
+
+    @Override
+    public APIResult importCodeByExamId(Integer examId) {
+        APIResult apiResult = new APIResult();
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
         if (examId == null || examInfo == null) {
-            result.setStatusAndDesc(-1, "没有该堂考试");
-            return result;
+            apiResult.setStatusAndDesc(-1, "没有该堂考试");
+            return apiResult;
         }
         ExamPaper record = new ExamPaper();
         record.setExamId(examId);
         List<ExamPaper> examPaperList = this.examPaperDao.selectByCondition(record, new BaseQuery());
         if (examPaperList == null || examPaperList.size() == 0) {
-            result.setStatusAndDesc(-2, "该堂考试没有考生试卷");
-            return result;
+            apiResult.setStatusAndDesc(-2, "该堂考试没有考生试卷");
+            return apiResult;
         }
         List<UserInfo> userInfoList = selectRecordByIds(
                 getFieldByList(examPaperList, "userId", ExamPaper.class),
@@ -233,23 +317,23 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                         buff.close();
                     } catch (Exception e) {
                         log.error("生成文本失败 error: {}", e);
-                        result.setStatusAndDesc(-3, "生成文本失败" + e.getMessage());
-                        return result;
+                        apiResult.setStatusAndDesc(-3, "生成文本失败" + e.getMessage());
+                        return apiResult;
                     } finally {
                         try {
                             buff.close();
                             out.close();
                         } catch (Exception e) {
                             log.error("生成文本失败 error: {}", e);
-                            result.setStatusAndDesc(-4, "生成文本失败" + e.getMessage());
+                            apiResult.setStatusAndDesc(-4, "生成文本失败" + e.getMessage());
                         }
                     }
                     fileList.add(tempFile);
                 }
             } catch (Exception e) {
                 log.error("生成文本失败 error: {}", e);
-                result.setStatusAndDesc(-3, "生成文本失败" + e.getMessage());
-                return result;
+                apiResult.setStatusAndDesc(-3, "生成文本失败" + e.getMessage());
+                return apiResult;
             }
             File zipfile = new File(path + examTitle + studentName + ".zip");
             ZipUtil.zipFiles(fileList, zipfile);
@@ -257,20 +341,20 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         }
         File dataZipfile = new File(path + examTitle + ".zip");
         ZipUtil.zipFiles(srcfile, dataZipfile);
-        if (result.getStatus() == 0) {
-            result.setStatus(1);
-            result.setFileDir(dataZipfile.getPath());
+        if (apiResult.getStatus() == 0) {
+            apiResult.setStatusAndDesc(1, "构建成功");
+            apiResult.setDataKey("fileDir", dataZipfile.getPath());
         }
-        return result;
+        return apiResult;
     }
 
     @Override
-    public ImportDataRe importGradeByExamId(Integer examId) {
-        ImportDataRe result = new ImportDataRe();
+    public APIResult importGradeByExamId(Integer examId) {
+        APIResult apiResult = new APIResult();
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
         if (examId == null || examInfo == null) {
-            result.setStatusAndDesc(-1, "没有该堂考试");
-            return result;
+            apiResult.setStatusAndDesc(-1, "没有该堂考试");
+            return apiResult;
         }
         // 获取需要填 入的数据
         ExamPaper record = new ExamPaper();
@@ -279,8 +363,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         sortQuery.setCustom("sort", "sort");
         List<ExamPaper> examPaperList = this.examPaperDao.selectByCondition(record, sortQuery);
         if (examPaperList == null || examPaperList.size() == 0) {
-            result.setStatusAndDesc(-2, "该堂考试没有考生试卷");
-            return result;
+            apiResult.setStatusAndDesc(-2, "该堂考试没有考生试卷");
+            return apiResult;
         }
         List<UserInfo> userInfoList = selectRecordByIds(
                 getFieldByList(examPaperList, "userId", ExamPaper.class),
@@ -292,8 +376,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         examParam.setExamId(examId);
         int paramTotal = examParamDao.selectByConditionGetCount(examParam, new BaseQuery());
         if (paramTotal == 0) {
-            result.setStatusAndDesc(-3, "改堂考试没有试卷参数");
-            return result;
+            apiResult.setStatusAndDesc(-3, "改堂考试没有试卷参数");
+            return apiResult;
         }
 
         String path = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE) + File.separator + new Date().getTime();
@@ -309,8 +393,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             wk = Workbook.createWorkbook(downFile); // 创建可写入的Excel工作薄，且内容将写入到输出流，
         } catch (Exception e) {
             log.error("Workbook.createWorkbook file: {} error: {}", downFile.getPath(), e);
-            result.setStatusAndDesc(-4, "createWorkbook失败");
-            return result;
+            apiResult.setStatusAndDesc(-4, "createWorkbook失败");
+            return apiResult;
         }
         try {
             WritableSheet sheet = wk.createSheet("成绩表", 0); // 创建可写入的Excel工作表
@@ -404,14 +488,14 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             }
         } catch (WriteException e) {
             log.error("构建sheet失败 file: {} error: {}", downFile.getPath(), e);
-            result.setStatusAndDesc(-5, "构建sheet失败: " + e.getMessage());
+            apiResult.setStatusAndDesc(-5, "构建sheet失败: " + e.getMessage());
         }
         try {
             // 将定义的工作表输出到之前指定的介质中（这里是客户端浏览器）
             wk.write();
         } catch (IOException e) {
             log.error("wk.write失败 file: {} error: {}", downFile.getPath(), e);
-            result.setStatusAndDesc(-6, "wk.write失败: " + e.getMessage());
+            apiResult.setStatusAndDesc(-6, "wk.write失败: " + e.getMessage());
         } finally {
             // 操作完成时，关闭对象，释放占用的内存空间
             try {
@@ -420,12 +504,11 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                 log.error("wk.close file: {} error: {}", downFile.getPath(), e);
             }
         }
-        if (result.getStatus() == 0) {
-            result.setStatus(1);
-            result.setFileDir(downFile.getPath());
-            //result.setFileName(fileName);
+        if (apiResult.getStatus() == 0) {
+            apiResult.setStatusAndDesc(1, "构建成功");
+            apiResult.setDataKey("fileDir", downFile.getPath());
         }
-        return result;
+        return apiResult;
     }
 
     @Override

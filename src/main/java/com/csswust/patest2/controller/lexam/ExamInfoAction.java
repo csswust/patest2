@@ -2,14 +2,10 @@ package com.csswust.patest2.controller.lexam;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.*;
-import com.csswust.patest2.dao.common.BaseDao;
+import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.dao.result.SelectProblemNumRe;
-import com.csswust.patest2.entity.*;
+import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.service.ExamInfoService;
-import com.csswust.patest2.service.common.ConditionBuild;
-import com.csswust.patest2.service.result.ImportDataRe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
-
-import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
-import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 972536780 on 2018/3/19.
@@ -34,23 +29,7 @@ public class ExamInfoAction extends BaseAction {
     @Autowired
     private ExamInfoDao examInfoDao;
     @Autowired
-    private ExamPaperDao examPaperDao;
-    @Autowired
-    private PaperProblemDao paperProblemDao;
-    @Autowired
-    private ProblemInfoDao problemInfoDao;
-    @Autowired
-    private KnowledgeInfoDao knowledgeInfoDao;
-    @Autowired
-    private CourseInfoDao courseInfoDao;
-    @Autowired
-    private UserInfoDao userInfoDao;
-    @Autowired
-    private UserProfileDao userProfileDao;
-    @Autowired
     private ExamInfoService examInfoService;
-    @Autowired
-    private ConditionBuild conditionBuild;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
@@ -109,91 +88,24 @@ public class ExamInfoAction extends BaseAction {
     }
 
     @RequestMapping(value = "/selectMyProblem", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> selectMyProblem(@RequestParam Integer examId) {
-        if (examId == null) return null;
-        Map<String, Object> res = new HashMap<>();
-        List<SelectProblemNumRe> selectProblemNumReList =
-                paperProblemDao.selectProblemNum(examId);
-        List<Integer> probIdList = new ArrayList<>();
-        List<Integer> countList = new ArrayList<>();
-        for (int i = 0; i < selectProblemNumReList.size(); i++) {
-            probIdList.add(selectProblemNumReList.get(i).getProbId());
-            countList.add(selectProblemNumReList.get(i).getNum());
-        }
-        List<ProblemInfo> problemInfoList = selectRecordByIds(probIdList,
-                "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
-        List<KnowledgeInfo> knowledgeInfoList = selectRecordByIds(
-                getFieldByList(problemInfoList, "knowId", ProblemInfo.class),
-                "knowId", (BaseDao) knowledgeInfoDao, KnowledgeInfo.class);
-        List<CourseInfo> courseInfoList = selectRecordByIds(
-                getFieldByList(knowledgeInfoList, "courseId", KnowledgeInfo.class),
-                "couId", (BaseDao) courseInfoDao, CourseInfo.class);
-        res.put("probIdList", probIdList);
-        res.put("countList", countList);
-        res.put("problemInfoList", problemInfoList);
-        res.put("knowledgeInfoList", knowledgeInfoList);
-        res.put("courseInfoList", courseInfoList);
-        return res;
+    public Object selectMyProblem(@RequestParam Integer examId) {
+        return examInfoService.selectMyProblem(examId);
     }
 
     @RequestMapping(value = "/rankingByGrade", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> rankingByGrade(
-            @RequestParam Integer examId,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String studentNumber,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer rows) {
-        if (examId == null) return null;
-        Map<String, Object> res = new HashMap<>();
-        ExamPaper examPaper = new ExamPaper();
-        examPaper.setExamId(examId);
-        BaseQuery baseQuery = new BaseQuery();
-        conditionBuild.buildExamPaper(baseQuery, examPaper, userName, studentNumber);
-        Integer total = examPaperDao.selectByConditionGetCount(examPaper, baseQuery);
-        baseQuery.setPageRows(page, rows);
-        baseQuery.setCustom("sort", "sort");
-        List<ExamPaper> allExamPaperList = examPaperDao.selectByCondition(examPaper, baseQuery);
-        List<UserInfo> userInfoList = selectRecordByIds(
-                getFieldByList(allExamPaperList, "userId", ExamPaper.class),
-                "userId", (BaseDao) userInfoDao, UserInfo.class);
-        List<UserProfile> userProfileList = selectRecordByIds(
-                getFieldByList(userInfoList, "userProfileId", UserInfo.class),
-                "useProId", (BaseDao) userProfileDao, UserProfile.class);
-        List<List<PaperProblem>> PaperProblemList = new ArrayList<>();
-        List<List<ProblemInfo>> ProblemInfoList = new ArrayList<>();
-        PaperProblem paperProblem = new PaperProblem();
-        int problemTotal = 0;
-        for (ExamPaper item : allExamPaperList) {
-            paperProblem.setExamPaperId(item.getExaPapId());
-            List<PaperProblem> paperProblems = paperProblemDao.selectByCondition(paperProblem, new BaseQuery());
-            List<ProblemInfo> problemInfos = selectRecordByIds(
-                    getFieldByList(paperProblems, "problemId", PaperProblem.class),
-                    "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
-            if (paperProblems.size() > problemTotal) {
-                problemTotal = paperProblems.size();
-            }
-            PaperProblemList.add(paperProblems);
-            ProblemInfoList.add(problemInfos);
-        }
-        res.put("total", total);
-        res.put("examPaperList", allExamPaperList);
-        res.put("PaperProblemList", PaperProblemList);
-        res.put("ProblemInfoList", ProblemInfoList);
-        res.put("userInfoList", userInfoList);
-        res.put("userProfileList", userProfileList);
-        res.put("problemTotal", problemTotal);
-        return res;
+    public Object rankingByGrade(@RequestParam Integer examId,
+                                 @RequestParam(required = false) String userName, @RequestParam(required = false) String studentNumber,
+                                 @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer rows) {
+        return examInfoService.rankingByGrade(examId, userName, studentNumber, page, rows);
     }
 
     @RequestMapping(value = "/importCodeByExamId", method = {RequestMethod.GET, RequestMethod.POST})
-    public ImportDataRe importCodeByExamId(@RequestParam Integer examId) {
-        if (examId == null) return null;
+    public Object importCodeByExamId(@RequestParam Integer examId) {
         return examInfoService.importCodeByExamId(examId);
     }
 
     @RequestMapping(value = "/importGradeByExamId", method = {RequestMethod.GET, RequestMethod.POST})
-    public ImportDataRe importGradeByExamId(@RequestParam Integer examId) {
-        if (examId == null) return null;
+    public Object importGradeByExamId(@RequestParam Integer examId) {
         return examInfoService.importGradeByExamId(examId);
     }
 }
