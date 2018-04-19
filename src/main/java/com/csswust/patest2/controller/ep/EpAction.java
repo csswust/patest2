@@ -3,19 +3,21 @@ package com.csswust.patest2.controller.ep;
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.ExamInfoDao;
-import com.csswust.patest2.dao.KnowledgeInfoDao;
-import com.csswust.patest2.dao.ProblemInfoDao;
-import com.csswust.patest2.dao.UserInfoDao;
+import com.csswust.patest2.dao.*;
+import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.ExamInfo;
-import com.csswust.patest2.entity.KnowledgeInfo;
-import com.csswust.patest2.entity.ProblemInfo;
-import com.csswust.patest2.entity.UserInfo;
+import com.csswust.patest2.entity.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
+import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
 
 /**
  * Created by 972536780 on 2018/4/17.
@@ -31,6 +33,10 @@ public class EpAction extends BaseAction {
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private KnowledgeInfoDao knowledgeInfoDao;
+    @Autowired
+    private ExamPaperDao examPaperDao;
+    @Autowired
+    private UserProfileDao userProfileDao;
 
     @RequestMapping(value = "/selectEpSite", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectEpSite() {
@@ -79,6 +85,38 @@ public class EpAction extends BaseAction {
         int total = knowledgeInfoDao.selectByConditionGetCount(new KnowledgeInfo(), new BaseQuery());
         apiResult.setDataKey("total", total);
         apiResult.setStatus(1);
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/selectExamGradeByUserName", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object selectExamGradeByUserName(@RequestParam String username) {
+        APIResult apiResult = new APIResult();
+        if (StringUtils.isBlank(username)) {
+            apiResult.setStatusAndDesc(-501, "username不能为空");
+            return apiResult;
+        }
+        UserInfo userInfo = userInfoDao.selectByUsername(username);
+        if (userInfo == null || userInfo.getUserId() == null) {
+            apiResult.setStatusAndDesc(-1, "此用户不存在");
+            return apiResult;
+        }
+        apiResult.setDataKey("userInfo", userInfo);
+        UserProfile userProfile = userProfileDao.selectByPrimaryKey(userInfo.getUserProfileId());
+        if (userProfile == null) userProfile = new UserProfile();
+        apiResult.setDataKey("userProfile", userProfile);
+        ExamPaper examPaper = new ExamPaper();
+        examPaper.setUserId(userInfo.getUserId());
+        List<ExamPaper> examPaperList = examPaperDao.selectByCondition(examPaper, new BaseQuery());
+        List<ExamInfo> examInfoList = selectRecordByIds(
+                getFieldByList(examPaperList, "examId", ExamPaper.class),
+                "examId", (BaseDao) examInfoDao, ExamInfo.class);
+        if (examPaperList != null && examPaperList.size() != 0) {
+            apiResult.setStatusAndDesc(1, "查询成功");
+            apiResult.setDataKey("examPaperList", examPaperList);
+            apiResult.setDataKey("examInfoList", examInfoList);
+        } else {
+            apiResult.setStatusAndDesc(0, "无认证记录");
+        }
         return apiResult;
     }
 }

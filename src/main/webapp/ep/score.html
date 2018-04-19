@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" type="text/css" href="../css/mainpage.css"/>
     <link rel="stylesheet" type="text/css" href="../css/print.css" media="print"/>
-    <script type="text/javascript" src="../lib/seajs/sea-debug.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: #000000;">
@@ -221,25 +220,26 @@
         </div>
     </div>
 </div>
-
 </body>
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jquery-migrate-1.2.1.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquery.jqprint.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="../js/patest.js"></script>
+<script type="text/javascript" src="./js/loginreg.js"></script>
+<script type="text/javascript" src="./js/commonet.js"></script>
+<script type="text/javascript" src="./js/score.js"></script>
 <script type="text/javascript">
-    //seajs的简单配置
-    seajs.config({
-        base: '../lib/',
-        alias: {
-            jquery: 'jQuery/jquery.min.js',
-            jCookie: 'jQuery/jquery.cookie.js',
-            jQprint: 'jQuery/jquery.jqprint.js',
-            jMigrate: 'jQuery/jquery-migrate-1.2.1.js',
-            jQrcode: 'jQuery/jquery.qrcode.min.js',
-            artTemplate: 'artTemplate/artTemplate.js',
-            paginator: 'jQuery/jqPaginator.js',
-            bootstrap: 'bootstrap/js/bootstrap.min.js'
-        }
-    });
-    //加载入口模块
-    seajs.use('jquery');
-    seajs.use("../js/score.js");
+    // 执行入口
+    score.init();
 </script>
 </html>
