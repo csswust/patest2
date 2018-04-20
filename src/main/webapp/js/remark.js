@@ -41,7 +41,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                $(".pageName").text(result.examInfoList[0].title);
+                $(".pageName").text(result.data.examInfoList[0].title);
             }
         });
     },
@@ -58,6 +58,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
+                result = result.data;
                 program.count = result.total;
                 for (var i = 0; i < result.examPaperList.length; i++) {
                     program.exaPapId[i] = result.examPaperList[i].exaPapId;
