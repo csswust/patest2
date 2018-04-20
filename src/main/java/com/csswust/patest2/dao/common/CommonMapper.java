@@ -1,5 +1,6 @@
 package com.csswust.patest2.dao.common;
 
+import com.alibaba.fastjson.JSON;
 import com.csswust.patest2.utils.ArrayUtil;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -12,6 +13,15 @@ import java.util.*;
 
 public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDaoSupport implements BaseDao<T, Q> {
     private static Logger log = LoggerFactory.getLogger(CommonMapper.class);
+
+    protected String getJson(Object object) {
+        try {
+            return JSON.toJSONString(object);
+        } catch (Exception e) {
+            log.error("JSON.toJSONString error: {}", e);
+            return e.getMessage();
+        }
+    }
 
     @Resource
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
@@ -69,7 +79,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             param.put("list", idsList);
             return getSqlSession().delete(getPackage() + "deleteByIdsList", param);
         } catch (Exception e) {
-            log.error("CommonMapper.deleteByIdsList({}) error: {}", idsList, e);
+            log.error("CommonMapper.deleteByIdsList({}) error: {}", getJson(idsList), e);
             return 0;
         }
     }
@@ -83,7 +93,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         try {
             return getSqlSession().insert(getPackage() + "insert", record);
         } catch (Exception e) {
-            log.error("CommonMapper.insert({}) error: {}", record, e);
+            log.error("CommonMapper.insert({}) error: {}", getJson(record), e);
             return 0;
         }
     }
@@ -97,7 +107,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         try {
             return getSqlSession().insert(getPackage() + "insertSelective", record);
         } catch (Exception e) {
-            log.error("CommonMapper.insertSelective({}) error: {}", record, e);
+            log.error("CommonMapper.insertSelective({}) error: {}", getJson(record), e);
             return 0;
         }
     }
@@ -124,7 +134,8 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKeySelective", record);
         } catch (Exception e) {
-            log.error("CommonMapper.updateByPrimaryKeySelective({}) error: {}", record, e);
+            log.error("CommonMapper.updateByPrimaryKeySelective({}) error: {}",
+                    getJson(record), e);
             return 0;
         }
     }
@@ -138,7 +149,8 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKeyWithBLOBs", record);
         } catch (Exception e) {
-            log.error("CommonMapper.updateByPrimaryKeyWithBLOBs({}) error: {}", record, e);
+            log.error("CommonMapper.updateByPrimaryKeyWithBLOBs({}) error: {}",
+                    getJson(record), e);
             return 0;
         }
     }
@@ -152,7 +164,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
         try {
             return getSqlSession().update(getPackage() + "updateByPrimaryKey", record);
         } catch (Exception e) {
-            log.error("CommonMapper.updateByPrimaryKey({}) error: {}", record, e);
+            log.error("CommonMapper.updateByPrimaryKey({}) error: {}", getJson(record), e);
             return 0;
         }
     }
@@ -170,7 +182,8 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             }
             return getSqlSession().selectList(getPackage() + "selectByCondition", param);
         } catch (Exception e) {
-            log.error("CommonMapper.selectByCondition({}) error: {}", record, e);
+            log.error("CommonMapper.selectByCondition({},{}) error: {}",
+                    getJson(record), getJson(query), e);
             return list;
         }
     }
@@ -187,7 +200,8 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             }
             return getSqlSession().selectOne(getPackage() + "selectByConditionGetCount", param);
         } catch (Exception e) {
-            log.error("CommonMapper.selectByConditionGetCount({}) error: {}", record, e);
+            log.error("CommonMapper.selectByConditionGetCount({},{}) error: {}",
+                    getJson(record), getJson(query), e);
             return 0;
         }
     }
@@ -214,7 +228,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             param.put("list", idsList);
             return getSqlSession().selectList(getPackage() + "selectByIdsList", param);
         } catch (Exception e) {
-            log.error("CommonMapper.selectByIdsList({}) error: {}", idsList, e);
+            log.error("CommonMapper.selectByIdsList({}) error: {}", getJson(idsList), e);
             return list;
         }
     }
@@ -229,7 +243,7 @@ public abstract class CommonMapper<T, Q extends BaseQuery> extends SqlSessionDao
             param.put("list", recordList);
             return getSqlSession().insert(getPackage() + "insertBatch", param);
         } catch (Exception e) {
-            log.error("CommonMapper.insertBatch({}) error: {}", recordList, e);
+            log.error("CommonMapper.insertBatch({}) error: {}", getJson(recordList), e);
             return 0;
         }
     }

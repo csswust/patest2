@@ -47,7 +47,8 @@ public class ExamParamDaoImpl extends CommonMapper<ExamParam, BaseQuery> impleme
             }
             return getSqlSession().selectOne(getPackage() + "getProblemNum", param);
         } catch (Exception e) {
-            log.error("ExamParamDaoImpl.getProblemNum({}) error: {}", record, e);
+            log.error("ExamParamDaoImpl.getProblemNum({},{}) error: {}",
+                    getJson(record), getJson(query), e);
             return 0;
         }
     }

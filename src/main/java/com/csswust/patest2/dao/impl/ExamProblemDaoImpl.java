@@ -46,7 +46,8 @@ public class ExamProblemDaoImpl extends CommonMapper<ExamProblem, BaseQuery> imp
             }
             return getSqlSession().selectList(getPackage() + "selectByProblem", param);
         } catch (Exception e) {
-            log.error("ExamProblemDaoImpl.selectByProblem({}) error: {}", record, e);
+            log.error("ExamProblemDaoImpl.selectByProblem({},{}) error: {}",
+                    getJson(record), getJson(query), e);
             return list;
         }
     }
