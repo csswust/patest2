@@ -16,6 +16,9 @@ import java.util.concurrent.Executors;
  * Created by 972536780 on 2018/4/2.
  */
 public class Main extends JunitBaseServiceDaoTest {
+    private static final String rootPath = "http://222.196.35.228:8080/patest";
+    private static final Integer examId = 5;
+
     @Autowired
     private SubmitInfoDao submitInfoDao;
 
@@ -29,6 +32,8 @@ public class Main extends JunitBaseServiceDaoTest {
             People people = new People();
             people.setUsername(in.next());
             people.setPassword(in.next());
+            people.setRootPath(rootPath);
+            people.setExamId(examId);
             people.setSubmitInfoDao(submitInfoDao);
             peopleList.add(people);
         }

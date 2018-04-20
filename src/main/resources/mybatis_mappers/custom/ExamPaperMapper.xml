@@ -14,7 +14,7 @@
             ORDER BY exa_pap_id DESC
         </if>
         <if test="query.customParam.sort != null">
-            ORDER BY aced_count DESC,used_time ASC
+            ORDER BY score DESC,aced_count DESC,used_time ASC
         </if>
     </sql>
     <delete id="deleteByExamId" parameterType="java.util.Map">

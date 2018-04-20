@@ -16,11 +16,11 @@ import java.util.Random;
  * Created by 972536780 on 2018/4/2.
  */
 public class People implements Runnable {
-    private static final String rootPath = "http://222.196.35.228:8080/patest";
-
+    private  String rootPath;
     private SubmitInfoDao submitInfoDao;
     private String username;
     private String password;
+    private Integer examId;
 
     @Override
     public void run() {
@@ -70,7 +70,7 @@ public class People implements Runnable {
     public String insertSubmitInfo(String JSESSIONID, String source, Integer paperProblemId, Integer judgerId) {
         try {
             Map<String, Object> param = new HashMap<>();
-            param.put("examId", 2);
+            param.put("examId", examId);
             param.put("source", source);
             param.put("paperProblemId", paperProblemId);
             param.put("judgerId", judgerId);
@@ -84,7 +84,7 @@ public class People implements Runnable {
     public String selectMyProblem(String JSESSIONID) {
         try {
             Map<String, Object> param = new HashMap<>();
-            param.put("examId", 2);
+            param.put("examId", examId);
             return HttpRequest.sendPost(rootPath + "/student/selectMyProblem", param, JSESSIONID);
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,5 +128,21 @@ public class People implements Runnable {
 
     public void setSubmitInfoDao(SubmitInfoDao submitInfoDao) {
         this.submitInfoDao = submitInfoDao;
+    }
+
+    public Integer getExamId() {
+        return examId;
+    }
+
+    public void setExamId(Integer examId) {
+        this.examId = examId;
+    }
+
+    public String getRootPath() {
+        return rootPath;
+    }
+
+    public void setRootPath(String rootPath) {
+        this.rootPath = rootPath;
     }
 }

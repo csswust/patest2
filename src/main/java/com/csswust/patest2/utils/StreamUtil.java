@@ -1,6 +1,7 @@
 package com.csswust.patest2.utils;
 
 import java.io.*;
+import java.nio.charset.Charset;
 
 public class StreamUtil {
 
@@ -8,7 +9,8 @@ public class StreamUtil {
      * 从输出流获取数据
      */
     public static String output(InputStream is) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is,
+                Charset.forName("GBK")));
         StringBuffer sb = new StringBuffer();
         String s = null;
         while ((s = reader.readLine()) != null) {
