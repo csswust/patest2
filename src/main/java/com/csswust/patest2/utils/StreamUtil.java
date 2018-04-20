@@ -9,8 +9,7 @@ public class StreamUtil {
      * 从输出流获取数据
      */
     public static String output(InputStream is) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is,
-                Charset.forName("GBK")));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuffer sb = new StringBuffer();
         String s = null;
         while ((s = reader.readLine()) != null) {
