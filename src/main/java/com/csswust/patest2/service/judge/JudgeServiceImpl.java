@@ -77,7 +77,7 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
         return null;
     }
 
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    // @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     @Override
     public Map<String, Object> refresh(JudgeTask judgeTask, JudgeResult judgeResult) {
         Integer submId = judgeTask.getSubmId();
