@@ -431,8 +431,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             }
             DateFormat df = new DateFormat("yyyy-MM-dd hh:mm:ss"); // 定义日期格式
             WritableCellFormat datewcf = new WritableCellFormat(df); // 创建WritableCellFormat对象
-            NumberFormat nf = new NumberFormat("0"); // 定义数字格式
-            WritableCellFormat wcf = new WritableCellFormat(nf);
+            NumberFormat numberFormat = new NumberFormat("#.00"); // 定义数字格式
+            WritableCellFormat numberwcf = new WritableCellFormat(numberFormat);
             Map<Integer, ProblemInfo> problemInfoCache = new HashMap<>();
             Map<Integer, ExamParam> examParamCache = new HashMap<>();
             Map<Integer, ResultInfo> resultInfoCache = new HashMap<>();
@@ -451,8 +451,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                 sheet.addCell(new Label(2, i + 2, userProfileList.get(i).getRealName()));
                 sheet.addCell(new Label(3, i + 2, userProfileList.get(i).getClassName()));
 
-                sheet.addCell(new jxl.write.Number(4, i + 2, examPaperList.get(i).getScore(), wcf));
-                sheet.addCell(new jxl.write.Number(5, i + 2, examPaperList.get(i).getAcedCount(), wcf));
+                sheet.addCell(new jxl.write.Number(4, i + 2, examPaperList.get(i).getScore(), numberwcf));
+                sheet.addCell(new jxl.write.Number(5, i + 2, examPaperList.get(i).getAcedCount(), numberwcf));
                 sheet.addCell(new DateTime(6, i + 2, examInfo.getStartTime(), datewcf));
 
                 PaperProblem paperProblem = new PaperProblem();
@@ -475,8 +475,8 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                             return examParamDao.selectByPrimaryKey(item.getExamParamId());
                         }
                     });
-                    sheet.addCell(new jxl.write.Number(8 + j * 4, i + 2, examParam1.getScore(), wcf));
-                    sheet.addCell(new jxl.write.Number(9 + j * 4, i + 2, item.getScore(), wcf));
+                    sheet.addCell(new jxl.write.Number(8 + j * 4, i + 2, examParam1.getScore(), numberwcf));
+                    sheet.addCell(new jxl.write.Number(9 + j * 4, i + 2, item.getScore(), numberwcf));
                     ResultInfo resultInfo = resultInfoCache.get(item.getIsAced());
                     String status = " ";
                     if (resultInfo != null) {
@@ -484,7 +484,6 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                     }
                     sheet.addCell(new Label(10 + j * 4, i + 2, status));
                 }
-
             }
         } catch (WriteException e) {
             log.error("构建sheet失败 file: {} error: {}", downFile.getPath(), e);
