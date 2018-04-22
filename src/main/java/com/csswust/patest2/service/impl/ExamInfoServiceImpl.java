@@ -431,8 +431,10 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             }
             DateFormat df = new DateFormat("yyyy-MM-dd hh:mm:ss"); // 定义日期格式
             WritableCellFormat datewcf = new WritableCellFormat(df); // 创建WritableCellFormat对象
-            NumberFormat numberFormat = new NumberFormat("#.00"); // 定义数字格式
-            WritableCellFormat numberwcf = new WritableCellFormat(numberFormat);
+
+            // NumberFormat numberFormat = new NumberFormat("#.##"); // 定义数字格式
+            WritableCellFormat numberwcf = new WritableCellFormat(NumberFormats.TEXT);
+
             Map<Integer, ProblemInfo> problemInfoCache = new HashMap<>();
             Map<Integer, ExamParam> examParamCache = new HashMap<>();
             Map<Integer, ResultInfo> resultInfoCache = new HashMap<>();
