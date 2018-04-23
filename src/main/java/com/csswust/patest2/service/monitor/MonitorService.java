@@ -28,6 +28,7 @@ public class MonitorService extends BaseService {
         timeUnit = timeUnit * 1000;
         long nowTime = getNowTime(timeUnit);
         long startTime = nowTime - (timeUnit * number);
+        MonitorType type = monitor.judgeType(key);
         List<MonitorRe> monitorReList = new ArrayList<>(number + 2);
         for (int i = 0; i < number; i++) {
             MonitorRe monitorRe = new MonitorRe();
@@ -45,9 +46,29 @@ public class MonitorService extends BaseService {
             int index = (int) (chaTime / (timeUnit));
             if (index < 0 || index >= number) continue;
             MonitorRe monitorRe = monitorReList.get(index);
-            monitorRe.setData(monitorRe.getData() + base.getData());
+            if (type == MonitorType.count) {
+                setCountData(monitorRe, base);
+            } else if (type == MonitorType.size) {
+                setsizeData(monitorRe, base);
+            }
+        }
+        if (type == MonitorType.size) {
+            for (int i = 0; i < number; i++) {
+                MonitorRe monitorRe = monitorReList.get(i);
+                if (monitorRe.getTempNum() == 0) continue;
+                monitorRe.setData(monitorRe.getData() / monitorRe.getTempNum());
+            }
         }
         return monitorReList;
+    }
+
+    private void setCountData(MonitorRe monitorRe, MonitorBase base) {
+        monitorRe.setData(monitorRe.getData() + base.getData());
+    }
+
+    private void setsizeData(MonitorRe monitorRe, MonitorBase base) {
+        monitorRe.setData(monitorRe.getData() + base.getData());
+        monitorRe.setTempNum(monitorRe.getTempNum() + 1);
     }
 
     private long getNowTime(long timeUnit) {

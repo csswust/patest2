@@ -8,6 +8,7 @@ import java.util.Date;
 public class MonitorRe {
     private int data;
     private Date date;
+    private int tempNum;
 
     public int getData() {
         return data;
@@ -23,5 +24,13 @@ public class MonitorRe {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getTempNum() {
+        return tempNum;
+    }
+
+    public void setTempNum(int tempNum) {
+        this.tempNum = tempNum;
     }
 }

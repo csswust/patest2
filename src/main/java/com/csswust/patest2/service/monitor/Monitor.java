@@ -37,6 +37,10 @@ public class Monitor extends BaseService {
         return count;
     }
 
+    public MonitorType judgeType(String key) {
+        return typeMap.get(key);
+    }
+
     private Queue<MonitorBase> getQueue(String key, MonitorType type) {
         Queue<MonitorBase> queue = data.get(key);
         if (queue == null) {
