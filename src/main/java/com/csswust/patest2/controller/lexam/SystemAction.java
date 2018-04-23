@@ -1,6 +1,7 @@
 package com.csswust.patest2.controller.lexam;
 
 import com.baidu.ueditor.ActionEnter;
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
@@ -8,6 +9,7 @@ import com.csswust.patest2.listener.ApplicationStartListener;
 import com.csswust.patest2.listener.OnlineListener;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.judge.JudgeThread;
+import com.csswust.patest2.service.monitor.MonitorRe;
 import com.csswust.patest2.service.monitor.MonitorService;
 import com.csswust.patest2.service.result.OnlineListRe;
 import com.csswust.patest2.utils.SystemInfo;
@@ -47,7 +49,10 @@ public class SystemAction extends BaseAction {
     @ResponseBody
     @RequestMapping(value = "/monitor", method = {RequestMethod.GET, RequestMethod.POST})
     public Object monitor() throws Exception {
-        return monitorService.getDataByKey("userInfoSelect", 20);
+        APIResult apiResult = new APIResult();
+        List<MonitorRe> list = monitorService.getDataByKey("userInfoSelect", 20);
+        apiResult.setDataKey("userInfoSelect", list);
+        return apiResult;
     }
 
     @ResponseBody

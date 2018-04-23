@@ -23,14 +23,11 @@ public class MonitorService extends BaseService {
     private static Map<String, List<MonitorBase>> data = new HashMap<>();
     private int number = 20;
 
-    public APIResult getDataByKey(String key, long timeUnit) {
+    public List<MonitorRe> getDataByKey(String key, long timeUnit) {
         APIResult apiResult = new APIResult();
         refresh(key);
         List<MonitorBase> list = data.get(key);
-        if (list == null) {
-            apiResult.setStatusAndDesc(-1, "数据为空");
-            return apiResult;
-        }
+        if (list == null) return null;
         long nowTime = new Date().getTime();
         long startTime = nowTime - (timeUnit * 1000 * number);
         List<MonitorRe> monitorReList = new ArrayList<>(number + 2);
@@ -52,8 +49,7 @@ public class MonitorService extends BaseService {
             MonitorRe monitorRe = monitorReList.get(index);
             monitorRe.setData(monitorRe.getData() + base.getData());
         }
-        apiResult.setDataKey("monitorReList", monitorReList);
-        return apiResult;
+        return monitorReList;
     }
 
     private void refresh(String key) {
