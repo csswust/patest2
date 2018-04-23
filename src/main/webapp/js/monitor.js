@@ -81,5 +81,14 @@ if (par.number) {
 if (par.timeUnit) {
     program.timeUnit = par.timeUnit;
 }
+$(".snumber").val(program.number);
+$(".stimeUnit").val(program.timeUnit);
 program.selectMonitor();
 program.showAll();
+$(".search").click(function () {
+    $("#monitor").html("");
+    program.number = $(".snumber").val();
+    program.timeUnit = $(".stimeUnit").val();
+    program.selectMonitor();
+    program.showAll();
+});
