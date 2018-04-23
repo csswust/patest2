@@ -21,9 +21,8 @@ public class MonitorService extends BaseService {
     @Autowired
     private Monitor monitor;
     private static Map<String, List<MonitorBase>> data = new HashMap<>();
-    private int number = 20;
 
-    public List<MonitorRe> getDataByKey(String key, long timeUnit) {
+    public List<MonitorRe> getDataByKey(String key, int number, long timeUnit) {
         APIResult apiResult = new APIResult();
         refresh(key);
         List<MonitorBase> list = data.get(key);

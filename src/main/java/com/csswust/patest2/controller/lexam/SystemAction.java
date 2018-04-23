@@ -48,9 +48,12 @@ public class SystemAction extends BaseAction {
 
     @ResponseBody
     @RequestMapping(value = "/monitor", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object monitor() throws Exception {
+    public Object monitor(
+            @RequestParam Integer number,
+            @RequestParam Long timeUnit) {
         APIResult apiResult = new APIResult();
-        List<MonitorRe> list = monitorService.getDataByKey("userInfoSelect", 20);
+        List<MonitorRe> list = monitorService.getDataByKey(
+                "userInfoSelect", number, timeUnit);
         apiResult.setDataKey("userInfoSelect", list);
         return apiResult;
     }

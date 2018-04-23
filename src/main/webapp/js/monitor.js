@@ -5,12 +5,15 @@ $(".monitor").css("color", "white");
 var program = {
     selectMonitor: function () {
         $.ajax({
-            type: "posy",
+            type: "post",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
             url: "../system/monitor",
             dataType: 'json',
             async: false,
-            data: null,
+            data: {
+                number: 10,
+                timeUnit: 20
+            },
             success: function (result) {
                 program.data = result.data;
             }
@@ -46,4 +49,4 @@ var program = {
 };
 /*pubMeth.getRowsnum("rowsnum");*/
 program.selectMonitor();
-program.show("userInfoSelect");
+program.showMonitor("userInfoSelect");
