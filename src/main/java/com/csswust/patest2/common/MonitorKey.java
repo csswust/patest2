@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum MonitorKey {
     JUDGE_RESPONSE_TIME("judge_response_time", "判题平均响应时间"),
-    USERINFO_SELECT_CONDITION("userInfo_select_condition", "条件查询用户次数");
+    USERINFO_SELECT_CONDITION("userInfo_select_condition", "条件查询用户次数"),
+    SYSTEM_REQUEST_CONCURRENCY("system_request_concurrency", "系统请求并发数"),
+    SYSTEM_REQUEST_TIME("system_request_time", "系统请求并发数");
 
     private String key;
     private String title;

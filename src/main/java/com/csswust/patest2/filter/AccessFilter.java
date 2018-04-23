@@ -1,9 +1,11 @@
 package com.csswust.patest2.filter;
 
+import com.csswust.patest2.common.MonitorKey;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.service.common.AuthService;
 import com.csswust.patest2.service.common.SpringUtilService;
+import com.csswust.patest2.service.monitor.Monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -45,6 +47,10 @@ public class AccessFilter extends BaseFilter implements Filter {
         String userPermisson = getPermisson(session);
         // 开始
         Integer userId = getUserId(session);
+        long startTime = System.currentTimeMillis();
+
+        Monitor monitor = SpringUtilService.getBean(Monitor.class);
+        monitor.addCount(MonitorKey.SYSTEM_REQUEST_CONCURRENCY.getKey(), 1);
         if (isAuthJudge != 1) {
             try {
                 chain.doFilter(request, response);
@@ -64,6 +70,8 @@ public class AccessFilter extends BaseFilter implements Filter {
                 httpServletResponse.sendRedirect("/patest/system/authError");
             }
         }
+        long endTime = System.currentTimeMillis();
+        monitor.addCount(MonitorKey.SYSTEM_REQUEST_TIME.getKey(), (int) (endTime - startTime));
         MDC.remove("userId");
     }
 
