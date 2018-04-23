@@ -13,6 +13,7 @@ import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
 import com.csswust.patest2.service.UserInfoService;
+import com.csswust.patest2.service.monitor.Monitor;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
 import com.csswust.patest2.utils.ArrayUtil;
@@ -44,6 +45,8 @@ public class UserInfoAction extends BaseAction {
     private UserLoginLogDao userLoginLogDao;
     @Autowired
     private ExamInfoDao examInfoDao;
+    @Autowired
+    private Monitor monitor;
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> login(
@@ -109,6 +112,7 @@ public class UserInfoAction extends BaseAction {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         Map<String, Object> res = new HashMap<>();
+        monitor.addCount("userInfoSelect", 1);
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(realName)) {
             UserProfile userProfile = new UserProfile();

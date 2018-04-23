@@ -8,6 +8,7 @@ import com.csswust.patest2.listener.ApplicationStartListener;
 import com.csswust.patest2.listener.OnlineListener;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.judge.JudgeThread;
+import com.csswust.patest2.service.monitor.MonitorService;
 import com.csswust.patest2.service.result.OnlineListRe;
 import com.csswust.patest2.utils.SystemInfo;
 import com.csswust.patest2.utils.SystemUtil;
@@ -40,6 +41,14 @@ public class SystemAction extends BaseAction {
 
     @Autowired
     private OnlineUserService onlineUserService;
+    @Autowired
+    private MonitorService monitorService;
+
+    @ResponseBody
+    @RequestMapping(value = "/monitor", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object monitor() throws Exception {
+        return monitorService.getDataByKey("userInfoSelect", 20);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/authError", method = {RequestMethod.GET, RequestMethod.POST})

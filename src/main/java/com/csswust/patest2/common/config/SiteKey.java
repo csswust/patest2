@@ -91,4 +91,8 @@ public class SiteKey {
     // 两次提交最大时间间隔
     public final static String SUBMIT_MAX_TIME_INTERVAL = "submit_max_time_interval";
     public final static int SUBMIT_MAX_TIME_INTERVAL_DE = 30000;
+
+    // 两次提交最大时间间隔
+    public final static String MONITOR_TIME_INTERVAL = "monitor_time_interval";
+    public final static long MONITOR_TIME_INTERVAL_DE = 3000000;
 }
