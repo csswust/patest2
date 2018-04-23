@@ -20,8 +20,16 @@ public class Monitor extends BaseService {
 
     public boolean addCount(String key, int count) {
         Queue<MonitorBase> queue = getQueue(key, MonitorType.count);
+        if (queue == null) return false;
         MonitorCount monitorCount = new MonitorCount(count, new Date());
         return queue.offer(monitorCount);
+    }
+
+    public boolean addSize(String key, int size) {
+        Queue<MonitorBase> queue = getQueue(key, MonitorType.size);
+        if (queue == null) return false;
+        MonitorSize monitorSize = new MonitorSize(size, new Date());
+        return queue.offer(monitorSize);
     }
 
     public int removeAll(String key, Collection<MonitorBase> collection) {

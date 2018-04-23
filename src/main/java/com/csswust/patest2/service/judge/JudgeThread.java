@@ -1,6 +1,8 @@
 package com.csswust.patest2.service.judge;
 
+import com.csswust.patest2.common.MonitorKey;
 import com.csswust.patest2.service.JudgeService;
+import com.csswust.patest2.service.monitor.Monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,8 +12,6 @@ import static com.csswust.patest2.listener.ApplicationStartListener.queue;
 import static com.csswust.patest2.listener.ApplicationStartListener.refreshExecutor;
 
 /**
- * 判题主线程，特别警告：此线程只能开启一个
- *
  * @author 杨顺丰
  */
 public class JudgeThread implements Runnable {
@@ -43,6 +43,7 @@ public class JudgeThread implements Runnable {
                 });
                 long endTime = System.currentTimeMillis();
                 log.info("submId: {}, time: {}ms", submId, endTime - startTime);
+                monitor.addSize(MonitorKey.JUDGE_RESPONSE_TIME, (int) (endTime - startTime));
                 setCurrSubmId(null);
             } catch (Exception e) {
                 if (e instanceof InterruptedException) {
@@ -55,6 +56,7 @@ public class JudgeThread implements Runnable {
     }
 
     private JudgeService judgeService;
+    private Monitor monitor;
 
     public JudgeThread(JudgeService judgeService) {
         super();
@@ -67,6 +69,14 @@ public class JudgeThread implements Runnable {
 
     public void setJudgeService(JudgeService judgeService) {
         this.judgeService = judgeService;
+    }
+
+    public Monitor getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(Monitor monitor) {
+        this.monitor = monitor;
     }
 
     public Integer getCurrSubmId() {

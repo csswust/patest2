@@ -3,6 +3,8 @@ $(".sysMana").addClass("leftActive");
 $(".monitor").css("color", "white");
 
 var program = {
+    number: 10,
+    timeUnit: 20,
     selectMonitor: function () {
         $.ajax({
             type: "post",
@@ -11,8 +13,8 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
-                number: 10,
-                timeUnit: 20
+                number: program.number,
+                timeUnit: program.timeUnit
             },
             success: function (result) {
                 program.data = result.data;
@@ -38,6 +40,7 @@ var program = {
         }
         // 指定图表的配置项和数据
         var option = {
+            color: "#70BAE1",
             xAxis: {
                 type: 'category',
                 data: type,
@@ -50,12 +53,24 @@ var program = {
                 data: value,
                 type: 'line',
                 smooth: true,
-                areaStyle: {}
+                lineStyle: {
+                    color: "#70BAE1"
+                },
+                areaStyle: {
+                    color: "#70BAE1"
+                }
             }]
         };
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
     }
 };
+var par = pubMeth.getQueryObject();
+if (par.number) {
+    program.number = par.number;
+}
+if (par.timeUnit) {
+    program.timeUnit = par.timeUnit;
+}
 program.selectMonitor();
 program.showAll();

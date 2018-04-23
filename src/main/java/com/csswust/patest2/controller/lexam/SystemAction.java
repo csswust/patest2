@@ -2,6 +2,7 @@ package com.csswust.patest2.controller.lexam;
 
 import com.baidu.ueditor.ActionEnter;
 import com.csswust.patest2.common.APIResult;
+import com.csswust.patest2.common.MonitorKey;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
@@ -46,15 +47,14 @@ public class SystemAction extends BaseAction {
     @Autowired
     private MonitorService monitorService;
 
-    private static final String[] monitorKeys = new String[]{
-            "userInfoSelect"
-    };
-
     @ResponseBody
     @RequestMapping(value = "/monitor", method = {RequestMethod.GET, RequestMethod.POST})
     public Object monitor(
             @RequestParam Integer number,
             @RequestParam Long timeUnit) {
+        String[] monitorKeys = new String[]{
+                "userInfoSelect", MonitorKey.JUDGE_RESPONSE_TIME
+        };
         APIResult apiResult = new APIResult();
         for (int i = 0; i < monitorKeys.length; i++) {
             List<MonitorRe> list = monitorService.getDataByKey(monitorKeys[i], number, timeUnit);

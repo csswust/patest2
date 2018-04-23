@@ -6,6 +6,7 @@ import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.dao.SiteInfoDao;
 import com.csswust.patest2.service.JudgeService;
 import com.csswust.patest2.service.judge.JudgeThread;
+import com.csswust.patest2.service.monitor.Monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -70,10 +71,12 @@ public class ApplicationStartListener implements ServletContextListener {
         judgeExecutor = Executors.newFixedThreadPool(num);
         refreshExecutor = Executors.newFixedThreadPool(num);
         JudgeService judgeService = context.getBean(JudgeService.class);
+        Monitor monitor = context.getBean(Monitor.class);
         queue = new ArrayBlockingQueue<>(Config.getToInt(SiteKey.JUDGE_TASK_QUEUE_TOTAL, SiteKey.JUDGE_TASK_QUEUE_TOTAL_DE), true);
         // 启动判题线程
         for (int i = 0; i < num; i++) {
             JudgeThread judgeThread = new JudgeThread(judgeService);
+            judgeThread.setMonitor(monitor);
             judgeThreadList.add(judgeThread);
             judgeExecutor.execute(judgeThread);
         }
