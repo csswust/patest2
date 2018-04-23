@@ -18,7 +18,7 @@ public class Monitor extends BaseService {
     private static Logger log = LoggerFactory.getLogger(Monitor.class);
 
     public Map<String, Queue<MonitorBase>> data = new HashMap<>();
-    public Map<String, MonitorType> typeMap = new HashMap<>();
+    private Map<String, MonitorType> typeMap = new HashMap<>();
 
     public boolean addCount(String key, int count) {
         Queue<MonitorBase> queue = getQueue(key, MonitorType.count);

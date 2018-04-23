@@ -113,7 +113,6 @@ public class UserInfoAction extends BaseAction {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         Map<String, Object> res = new HashMap<>();
-        monitor.addCount(MonitorKey.USERINFO_SELECT_CONDITION.getKey(), 1);
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(realName)) {
             UserProfile userProfile = new UserProfile();
