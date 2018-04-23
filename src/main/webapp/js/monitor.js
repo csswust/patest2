@@ -7,7 +7,7 @@ $(".footer p").hover(function () {
 });
 
 var program = {
-    number: 50,
+    number: 20,
     timeUnit: 20,
     selectMonitor: function () {
         $.ajax({
@@ -72,6 +72,13 @@ var program = {
         };
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+    },
+    refresh: function () {
+        $("#monitor").html("");
+        program.number = $(".snumber").val();
+        program.timeUnit = $(".stimeUnit").val();
+        program.selectMonitor();
+        program.showAll();
     }
 };
 var par = pubMeth.getQueryObject();
@@ -86,9 +93,10 @@ $(".stimeUnit").val(program.timeUnit);
 program.selectMonitor();
 program.showAll();
 $(".search").click(function () {
-    $("#monitor").html("");
-    program.number = $(".snumber").val();
-    program.timeUnit = $(".stimeUnit").val();
-    program.selectMonitor();
-    program.showAll();
+    program.refresh();
+});
+$(".timeUpdate").click(function () {
+    var value = this.value;
+    $(".stimeUnit").val(value);
+    program.refresh();
 });
