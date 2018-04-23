@@ -1,6 +1,10 @@
 $(".sysMana").next(".treeview-menu").toggle("slow");
 $(".sysMana").addClass("leftActive");
 $(".monitor").css("color", "white");
+$(".footer p").css('display', 'block');
+$(".footer p").hover(function () {
+    $(this).css({"color": "#333", "cursor": "default"});
+});
 
 var program = {
     number: 10,
@@ -29,7 +33,7 @@ var program = {
         }
     },
     showMonitor: function (key) {
-        $("#monitor").append('<div id="' + key + '" style="height:400px;"></div>');
+        $("#monitor").append('<div id="' + key + '" style="height:300px;"></div>');
         var list = program.data[key];
         if (!list) return;
         // 基于准备好的dom，初始化echarts实例

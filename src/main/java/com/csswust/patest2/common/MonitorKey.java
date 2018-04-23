@@ -1,8 +1,11 @@
 package com.csswust.patest2.common;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Created by 972536780 on 2018/4/23.
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum MonitorKey {
     JUDGE_RESPONSE_TIME("judge_response_time", "判题平均响应时间"),
     USERINFO_SELECT_CONDITION("userInfo_select_condition", "条件查询用户次数");
