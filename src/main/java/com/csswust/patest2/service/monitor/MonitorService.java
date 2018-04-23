@@ -1,6 +1,5 @@
 package com.csswust.patest2.service.monitor;
 
-import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.service.common.BaseService;
@@ -23,17 +22,17 @@ public class MonitorService extends BaseService {
     private static Map<String, List<MonitorBase>> data = new HashMap<>();
 
     public List<MonitorRe> getDataByKey(String key, int number, long timeUnit) {
-        APIResult apiResult = new APIResult();
         refresh(key);
         List<MonitorBase> list = data.get(key);
         if (list == null) return null;
-        long nowTime = new Date().getTime();
-        long startTime = nowTime - (timeUnit * 1000 * number);
+        timeUnit = timeUnit * 1000;
+        long nowTime = getNowTime(timeUnit);
+        long startTime = nowTime - (timeUnit * number);
         List<MonitorRe> monitorReList = new ArrayList<>(number + 2);
         for (int i = 0; i < number; i++) {
             MonitorRe monitorRe = new MonitorRe();
             monitorRe.setData(0);
-            monitorRe.setDate(new Date(startTime + i * timeUnit * 1000));
+            monitorRe.setDate(new Date(startTime + i * timeUnit));
             monitorReList.add(monitorRe);
         }
         int length = list.size();
@@ -43,12 +42,17 @@ public class MonitorService extends BaseService {
             long basetime = base.getCurrTime().getTime();
             if (basetime < startTime) break;
             long chaTime = basetime - startTime;
-            int index = (int) (chaTime / (timeUnit * 1000));
+            int index = (int) (chaTime / (timeUnit));
             if (index < 0 || index >= number) continue;
             MonitorRe monitorRe = monitorReList.get(index);
             monitorRe.setData(monitorRe.getData() + base.getData());
         }
         return monitorReList;
+    }
+
+    private long getNowTime(long timeUnit) {
+        long nowTime = new Date().getTime();
+        return nowTime - nowTime % timeUnit;
     }
 
     private void refresh(String key) {

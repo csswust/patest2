@@ -33,20 +33,22 @@ var program = {
         var option = {
             xAxis: {
                 type: 'category',
-                data: type
+                data: type,
+                boundaryGap: false
             },
             yAxis: {
                 type: 'value'
             },
             series: [{
                 data: value,
-                type: 'line'
+                type: 'line',
+                smooth: true,
+                areaStyle: {}
             }]
         };
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
     }
 };
-/*pubMeth.getRowsnum("rowsnum");*/
 program.selectMonitor();
 program.showMonitor("userInfoSelect");
