@@ -7,8 +7,8 @@ $(".footer p").hover(function () {
 });
 
 var program = {
-    number: 20,
-    timeUnit: 20,
+    number: 10,
+    timeUnit: 60,
     selectMonitor: function () {
         $.ajax({
             type: "post",
@@ -63,10 +63,8 @@ var program = {
                 type: 'line',
                 smooth: true,
                 lineStyle: {
-                    color: "#70BAE1"
                 },
                 areaStyle: {
-                    color: "#70BAE1"
                 }
             }]
         };
