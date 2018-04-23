@@ -49,7 +49,7 @@ public class AccessFilter extends BaseFilter implements Filter {
         Integer userId = getUserId(session);
         long startTime = System.currentTimeMillis();
 
-        Monitor monitor = SpringUtilService.getBean(Monitor.class);
+        Monitor monitor = SpringUtilService.getBean("monitor");
         monitor.addCount(MonitorKey.SYSTEM_REQUEST_CONCURRENCY.getKey(), 1);
         if (isAuthJudge != 1) {
             try {
