@@ -46,15 +46,20 @@ public class SystemAction extends BaseAction {
     @Autowired
     private MonitorService monitorService;
 
+    private static final String[] monitorKeys = new String[]{
+            "userInfoSelect"
+    };
+
     @ResponseBody
     @RequestMapping(value = "/monitor", method = {RequestMethod.GET, RequestMethod.POST})
     public Object monitor(
             @RequestParam Integer number,
             @RequestParam Long timeUnit) {
         APIResult apiResult = new APIResult();
-        List<MonitorRe> list = monitorService.getDataByKey(
-                "userInfoSelect", number, timeUnit);
-        apiResult.setDataKey("userInfoSelect", list);
+        for (int i = 0; i < monitorKeys.length; i++) {
+            List<MonitorRe> list = monitorService.getDataByKey(monitorKeys[i], number, timeUnit);
+            apiResult.setDataKey(monitorKeys[i], list);
+        }
         return apiResult;
     }
 

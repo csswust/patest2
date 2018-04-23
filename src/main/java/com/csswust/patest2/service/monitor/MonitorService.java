@@ -52,7 +52,7 @@ public class MonitorService extends BaseService {
 
     private long getNowTime(long timeUnit) {
         long nowTime = new Date().getTime();
-        return nowTime - nowTime % timeUnit;
+        return nowTime - nowTime % timeUnit + timeUnit;
     }
 
     private void refresh(String key) {

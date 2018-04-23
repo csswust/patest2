@@ -19,11 +19,18 @@ var program = {
             }
         });
     },
+    showAll: function () {
+        for (var i in program.data) {
+            var list = program.data[i];
+            program.showMonitor(i);
+        }
+    },
     showMonitor: function (key) {
+        $("#monitor").append('<div id="' + key + '" style="height:400px;"></div>');
         var list = program.data[key];
         if (!list) return;
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
+        var myChart = echarts.init(document.getElementById(key));
         var type = [], value = [];
         for (var i = 0; i < list.length; i++) {
             type.push(list[i].date.split(" ")[1]);
@@ -51,4 +58,4 @@ var program = {
     }
 };
 program.selectMonitor();
-program.showMonitor("userInfoSelect");
+program.showAll();
