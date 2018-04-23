@@ -82,10 +82,27 @@ public class MonitorService extends BaseService {
             list = new LinkedList<>();
             data.put(key, list);
         }
-        int removeCount = monitor.removeAll(key, list);
-        log.info("Monitor.removeAll key: {}, count: {}", key, removeCount);
+        int addCount = monitor.removeAll(key, list);
+        log.info("Monitor.addCount key: {}, count: {}", key, addCount);
         int deleteCount = deleteExpiredData(list);
         log.info("MonitorService.deleteExpiredData key: {}, count: {}", key, deleteCount);
+        int maxNum = Config.getToInt(SiteKey.MONITOR_DATA_MAX_NUMBER,
+                SiteKey.MONITOR_DATA_MAX_NUMBER_DE);
+        if (list.size() > maxNum) {
+            int removeBynum = removeBynum(list, list.size() - maxNum);
+            log.info("MonitorService.removeBynum key: {}, count: {}", key, removeBynum);
+        }
+    }
+
+    private int removeBynum(List<MonitorBase> list, int num) {
+        Iterator<MonitorBase> it = list.iterator();
+        int count = 0;
+        while (it.hasNext()) {
+            it.remove();
+            count++;
+            if (count == num) break;
+        }
+        return count;
     }
 
     private int deleteExpiredData(List<MonitorBase> list) {

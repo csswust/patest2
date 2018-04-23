@@ -1,5 +1,7 @@
 package com.csswust.patest2.service.monitor;
 
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.service.common.BaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,24 +24,31 @@ public class Monitor extends BaseService {
         Queue<MonitorBase> queue = getQueue(key, MonitorType.count);
         if (queue == null) return false;
         MonitorCount monitorCount = new MonitorCount(count, new Date());
-        return queue.offer(monitorCount);
+        boolean result = queue.offer(monitorCount);
+        if (!result) queue.clear();
+        return result;
     }
 
     public boolean addSize(String key, int size) {
         Queue<MonitorBase> queue = getQueue(key, MonitorType.size);
         if (queue == null) return false;
         MonitorSize monitorSize = new MonitorSize(size, new Date());
-        return queue.offer(monitorSize);
+        boolean result = queue.offer(monitorSize);
+        if (!result) queue.clear();
+        return result;
     }
 
     public int removeAll(String key, Collection<MonitorBase> collection) {
         Queue<MonitorBase> queue = getQueue(key, null);
         if (queue == null) return 0;
         int count = 0;
+        int maxNum = Config.getToInt(SiteKey.MONITOR_DATA_MAX_NUMBER,
+                SiteKey.MONITOR_DATA_MAX_NUMBER_DE);
         while (true) {
             MonitorBase base = queue.poll();
             if (base == null) break;
             count++;
+            if (count >= maxNum) break;
             collection.add(base);
         }
         return count;
@@ -53,7 +62,9 @@ public class Monitor extends BaseService {
         Queue<MonitorBase> queue = data.get(key);
         if (queue == null) {
             if (type == null) return null;
-            queue = new ArrayBlockingQueue<>(10000);
+            int maxNum = Config.getToInt(SiteKey.MONITOR_DATA_MAX_NUMBER,
+                    SiteKey.MONITOR_DATA_MAX_NUMBER_DE);
+            queue = new ArrayBlockingQueue<>(maxNum);
             data.put(key, queue);
             typeMap.put(key, type);
         }

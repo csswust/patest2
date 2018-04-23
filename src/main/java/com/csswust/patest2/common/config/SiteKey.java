@@ -95,4 +95,8 @@ public class SiteKey {
     // 保留一天内的监控数据
     public final static String MONITOR_TIME_INTERVAL = "monitor_time_interval";
     public final static long MONITOR_TIME_INTERVAL_DE = 1000 * 60 * 60 * 24;
+
+    // 保留一天内的监控数据
+    public final static String MONITOR_DATA_MAX_NUMBER = "monitor_data_max_number";
+    public final static int MONITOR_DATA_MAX_NUMBER_DE = 10000;
 }
