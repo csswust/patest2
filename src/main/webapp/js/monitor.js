@@ -24,6 +24,7 @@ var program = {
     showAll: function () {
         for (var i in program.data) {
             var list = program.data[i];
+            if (i.indexOf("_monitorKey") !== -1) continue;
             program.showMonitor(i);
         }
     },
@@ -42,7 +43,7 @@ var program = {
         var option = {
             color: "#70BAE1",
             title: {
-                text: program.data[key + "_data"].title
+                text: program.data[key + "_monitorKey"].title
             },
             xAxis: {
                 type: 'category',

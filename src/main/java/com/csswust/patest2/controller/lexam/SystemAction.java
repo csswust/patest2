@@ -57,7 +57,7 @@ public class SystemAction extends BaseAction {
             String key = monitorKey.getKey();
             List<MonitorRe> list = monitorService.getDataByKey(key, number, timeUnit);
             apiResult.setDataKey(key, list);
-            apiResult.setDataKey(key + "_data", monitorKey);
+            apiResult.setDataKey(key + "_monitorKey", monitorKey);
         }
         return apiResult;
     }
