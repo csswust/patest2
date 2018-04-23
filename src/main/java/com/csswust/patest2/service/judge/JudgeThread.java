@@ -43,7 +43,7 @@ public class JudgeThread implements Runnable {
                 });
                 long endTime = System.currentTimeMillis();
                 log.info("submId: {}, time: {}ms", submId, endTime - startTime);
-                monitor.addSize(MonitorKey.JUDGE_RESPONSE_TIME, (int) (endTime - startTime));
+                monitor.addSize(MonitorKey.JUDGE_RESPONSE_TIME.getKey(), (int) (endTime - startTime));
                 setCurrSubmId(null);
             } catch (Exception e) {
                 if (e instanceof InterruptedException) {

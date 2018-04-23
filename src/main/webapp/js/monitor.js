@@ -41,6 +41,9 @@ var program = {
         // 指定图表的配置项和数据
         var option = {
             color: "#70BAE1",
+            title: {
+                text: program.data[key + "_data"].title
+            },
             xAxis: {
                 type: 'category',
                 data: type,

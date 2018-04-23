@@ -52,13 +52,12 @@ public class SystemAction extends BaseAction {
     public Object monitor(
             @RequestParam Integer number,
             @RequestParam Long timeUnit) {
-        String[] monitorKeys = new String[]{
-                "userInfoSelect", MonitorKey.JUDGE_RESPONSE_TIME
-        };
         APIResult apiResult = new APIResult();
-        for (int i = 0; i < monitorKeys.length; i++) {
-            List<MonitorRe> list = monitorService.getDataByKey(monitorKeys[i], number, timeUnit);
-            apiResult.setDataKey(monitorKeys[i], list);
+        for (MonitorKey monitorKey : MonitorKey.values()) {
+            String key = monitorKey.getKey();
+            List<MonitorRe> list = monitorService.getDataByKey(key, number, timeUnit);
+            apiResult.setDataKey(key, list);
+            apiResult.setDataKey(key + "_data", monitorKey);
         }
         return apiResult;
     }
