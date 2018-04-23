@@ -7,7 +7,7 @@ $(".footer p").hover(function () {
 });
 
 var program = {
-    number: 10,
+    number: 50,
     timeUnit: 20,
     selectMonitor: function () {
         $.ajax({
@@ -49,6 +49,7 @@ var program = {
             title: {
                 text: program.data[key + "_monitorKey"].title
             },
+            tooltip: {},
             xAxis: {
                 type: 'category',
                 data: type,
