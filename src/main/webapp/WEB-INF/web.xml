@@ -61,22 +61,6 @@
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
 
-    <!-- javamelody监控 -->
-    <filter>
-        <filter-name>javamelody</filter-name>
-        <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
-        <async-supported>true</async-supported>
-    </filter>
-    <filter-mapping>
-        <filter-name>javamelody</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>ASYNC</dispatcher>
-    </filter-mapping>
-    <listener>
-        <listener-class>net.bull.javamelody.SessionListener</listener-class>
-    </listener>
-
     <!-- 核心控制器相关配置 -->
     <servlet>
         <servlet-name>appServlet</servlet-name>
