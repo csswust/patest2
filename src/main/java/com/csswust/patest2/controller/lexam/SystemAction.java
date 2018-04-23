@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Controller
 @RequestMapping("/system")
@@ -47,19 +48,30 @@ public class SystemAction extends BaseAction {
     @Autowired
     private MonitorService monitorService;
 
+    private ReentrantLock lock = new ReentrantLock();
+
     @ResponseBody
     @RequestMapping(value = "/monitor", method = {RequestMethod.GET, RequestMethod.POST})
     public Object monitor(
             @RequestParam Integer number,
             @RequestParam Long timeUnit) {
         APIResult apiResult = new APIResult();
-        for (MonitorKey monitorKey : MonitorKey.values()) {
-            String key = monitorKey.getKey();
-            List<MonitorRe> list = monitorService.getDataByKey(key, number, timeUnit);
-            apiResult.setDataKey(key, list);
-            apiResult.setDataKey(key + "_monitorKey", monitorKey);
+        boolean result = lock.tryLock();
+        try {
+            if (!result) {
+                apiResult.setStatusAndDesc(-1, "访问冲突，请等待");
+                return apiResult;
+            }
+            for (MonitorKey monitorKey : MonitorKey.values()) {
+                String key = monitorKey.getKey();
+                List<MonitorRe> list = monitorService.getDataByKey(key, number, timeUnit);
+                apiResult.setDataKey(key, list);
+                apiResult.setDataKey(key + "_monitorKey", monitorKey);
+            }
+            return apiResult;
+        } finally {
+            lock.unlock();
         }
-        return apiResult;
     }
 
     @ResponseBody
