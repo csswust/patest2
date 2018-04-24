@@ -11,6 +11,6 @@ public class MyArrayList<E> extends ArrayList<E> {
     }
 
     public void myRemoveRange(int fromIndex, int toIndex) {
-        myRemoveRange(fromIndex, toIndex);
+        this.removeRange(fromIndex, toIndex);
     }
 }

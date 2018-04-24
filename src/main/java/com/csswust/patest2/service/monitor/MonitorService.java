@@ -115,7 +115,7 @@ public class MonitorService extends BaseService {
             if (time.getTime() - nowTime > mo_interval_time) count++;
             else break;
         }
-        list.myRemoveRange(0, count);
+        if (count != 0) list.myRemoveRange(0, count);
         return count;
     }
 }
