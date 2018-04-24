@@ -37,6 +37,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
+                result = result.data;
                 program.count = result.total;
                 program.data = result;
                 program.showProblem();

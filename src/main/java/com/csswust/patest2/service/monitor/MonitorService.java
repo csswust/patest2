@@ -19,16 +19,17 @@ public class MonitorService extends BaseService {
 
     @Autowired
     private Monitor monitor;
-    private static Map<String, List<MonitorBase>> data = new HashMap<>();
+    private static Map<String, MyArrayList<MonitorBase>> data = new HashMap<>();
 
     public List<MonitorRe> getDataByKey(String key, int number, long timeUnit) {
         refresh(key);
-        List<MonitorBase> list = data.get(key);
+        MyArrayList<MonitorBase> list = data.get(key);
         if (list == null) return null;
         timeUnit = timeUnit * 1000;
         long nowTime = getNowTime(timeUnit);
         long startTime = nowTime - (timeUnit * number);
         MonitorType type = monitor.judgeType(key);
+
         List<MonitorRe> monitorReList = new ArrayList<>(number + 2);
         for (int i = 0; i < number; i++) {
             MonitorRe monitorRe = new MonitorRe();
@@ -78,9 +79,9 @@ public class MonitorService extends BaseService {
     }
 
     private void refresh(String key) {
-        List<MonitorBase> list = data.get(key);
+        MyArrayList<MonitorBase> list = (MyArrayList<MonitorBase>) data.get(key);
         if (list == null) {
-            list = new LinkedList<>();
+            list = new MyArrayList<>();
             data.put(key, list);
         }
         int addCount = monitor.removeAll(key, list);
@@ -95,19 +96,13 @@ public class MonitorService extends BaseService {
         }
     }
 
-    private int removeBynum(List<MonitorBase> list, int num) {
-        Iterator<MonitorBase> it = list.iterator();
-        int count = 0;
-        while (it.hasNext()) {
-            it.next();
-            it.remove();
-            count++;
-            if (count == num) break;
-        }
-        return count;
+    private int removeBynum(MyArrayList<MonitorBase> list, int num) {
+        num = Math.min(num, list.size());
+        list.myRemoveRange(0, num);
+        return num;
     }
 
-    private int deleteExpiredData(List<MonitorBase> list) {
+    private int deleteExpiredData(MyArrayList<MonitorBase> list) {
         Iterator<MonitorBase> it = list.iterator();
         long nowTime = System.currentTimeMillis();
         long mo_interval_time = Config.getToLong(
@@ -117,10 +112,10 @@ public class MonitorService extends BaseService {
             MonitorBase base = it.next();
             Date time = base.getCurrTime();
             if (time == null) continue;
-            if (time.getTime() - nowTime > mo_interval_time) it.remove();
+            if (time.getTime() - nowTime > mo_interval_time) count++;
             else break;
-            count++;
         }
+        list.myRemoveRange(0, count);
         return count;
     }
 }

@@ -9,7 +9,7 @@ $(".footer p").hover(function () {
 var map = {};
 
 var program = {
-    number: 100,
+    number: 200,
     timeUnit: 5,
     selectMonitor: function () {
         $.ajax({
