@@ -54,8 +54,8 @@ var program = {
             success: function (result) {
                 console.log(result);
                 $(".quesName").text(result.problemInfo.title);
-                $(".time").text(result.problemInfo.timeLimit + "S   ");
-                $(".memory").text(result.problemInfo.memoryLimit + "K");
+                $(".time").text(result.problemInfo.timeLimit + "MS   ");
+                $(".memory").text(result.problemInfo.memoryLimit + "KB");
                 $(".titleDescription").html(result.problemInfo.description);
                 $(".inputTip").html(result.problemInfo.inputTip);
                 $(".outputTip").html(result.problemInfo.outputTip);
