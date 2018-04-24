@@ -41,7 +41,6 @@ var program = {
         });
 
     },
-
     getProById: function () {
         $.ajax({
             type: "get",
@@ -143,7 +142,8 @@ var program = {
                     } else {//Others
                         className = 'label-warning';
                     }
-                    result = '<span class="label ' + className + '">' + program.status[program.submitResult.status] + '</span>';
+                    var resultText = program.status[program.submitResult.status];
+                    result = '<span class="label ' + className + '">' + resultText + '</span>';
                     if (program.submitResult.status == 8 ||
                         program.submitResult.status === 10) {
                         statuResult = "ceStatus";
@@ -156,6 +156,8 @@ var program = {
                         || program.submitResult.status === 12
                         || program.submitResult.status === 13) {
                         setTimeout(program.getsubmit, 500);
+                    } else {
+                        pubMeth.alertInfo("alert-info", "你的结果为：" + resultText);
                     }
                 }
             },
@@ -284,5 +286,4 @@ $(".submitResult").on('click', function () {
         program.getSubmitResult();
         $("#codeData").html(program.statuhtml);
     }
-
 });
