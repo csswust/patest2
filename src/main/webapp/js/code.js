@@ -99,9 +99,10 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.status == 1) {
+                if (result.status === 1) {
                     program.submitId = result.submId;
-                    $(".submitResult").html('');
+                    pubMeth.alertInfo("alert-success", "提交成功，判断中...");
+
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
                 }
@@ -159,7 +160,7 @@ var program = {
                 }
             },
             error: function () {
-                alert("1");
+                pubMeth.alertInfo("alert-danger", "请求错误");
             }
         });
     },
@@ -221,6 +222,9 @@ var program = {
                 for (var i = 0; i < result.data.length; i++) {
                     program.status[result.data[i].resuId] = result.data[i].name;
                 }
+            },
+            error: function () {
+                pubMeth.alertInfo("alert-info", "请求错误");
             }
         });
     }
@@ -255,26 +259,19 @@ $("#problemRight").on('click', function () {
 });
 
 $("#submit").on('click', function () {
-    var nowTime = new Date();
-    if (program.startTime >= nowTime) {
-        pubMeth.alertInfo("alert-info", "小提示：考试还未开始，不能提交");
-        return;
-    }
-    if (program.endTime <= nowTime) {
-        pubMeth.alertInfo("alert-info", "小提示：考试已结束，不能提交");
-        return;
-    }
+    pubMeth.alertInfo("alert-info", "小提示：出现问题刷新试试");
     var $btn = $(this).button('loading');
+    $(".submitResult").html('');
+    program.submitId = null;
     program.code = editor.getValue();
     program.judId = $(".selectJudId option:selected").val();
     program.submit();
-    if (program.submitId != '') {
+    setTimeout(function () {
+        $btn.button('reset');
+    }, 1000);
+    if (program.submitId !== null) {
         setTimeout(program.getsubmit, 500);
-        setTimeout(function () {
-            $btn.button('reset');
-        }, 1000);
     }
-
 });
 $(".submitResult").on('click', function () {
     console.log(program.submitResult);
