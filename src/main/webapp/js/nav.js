@@ -53,14 +53,7 @@ var nav = {
             '<li><a href="submit.html?&eId=' + par.eId + '"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> 我的提交</a></li>' +
             '<li><a href="studentfaqs.html?&eId=' + par.eId + '"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> FAQS</a></li>' +
             '<li><a href="javascript:void(0);"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>' + nav.username + ' [' + nav.realName + ']' + ' (' + nav.studentNumber + ')' + '</a></li>' +
-            '<li><a href="login.html"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> 注销</a></li></ul> </li>';
-        var noBegain = '<nav class="navbar navbar-default">' +
-            '<div class="navbar-header "><a class="navbar-brand" href="#">Lexam</a></div>' +
-            '<li class="dropdown">' +
-            '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' +
-            '' + nav.username + ' <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></a>' +
-            '<ul class="dropdown-menu">' +
-            ' <li class="loginout"><a href="login.html">注销</a></li></ul> </li></ul></nav>';
+            '<li class="loginout"><a href="#"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> 注销</a></li></ul> </li>';
         $("#head").append(htmlheader);
     },
     getNowTime: function () {
@@ -90,7 +83,6 @@ var nav = {
                 for (var i = 0; i < result.data.length; i++) {
                     nav.status[result.data[i].resuId] = result.data[i].name;
                 }
-                //nav.status = result.data;
             }
         });
     },
@@ -98,13 +90,11 @@ var nav = {
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../user/logout",
+            url: "../userInfo/logout",
             dataType: 'json',
             async: false,
             success: function (result) {
-                if (result.status == "1") {
-                    window.location.href = "login.html";
-                }
+                window.location.href = "login.html";
             }
         });
         nav.deleCookie("name");
@@ -162,3 +152,6 @@ nav.getCookie3("studentNumber");
 nav.head();
 nav.getStatus();
 nav.getfooter();
+$(".loginout").click(function () {
+    nav.loginout();
+});
