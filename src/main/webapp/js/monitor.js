@@ -6,6 +6,8 @@ $(".footer p").hover(function () {
     $(this).css({"color": "#333", "cursor": "default"});
 });
 
+var map = {};
+
 var program = {
     number: 100,
     timeUnit: 5,
@@ -41,6 +43,7 @@ var program = {
         if (!list) return;
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById(key));
+        map[key] = myChart;
         var type = [], value = [];
         for (var i = 0; i < list.length; i++) {
             type.push(list[i].date.split(" ")[1]);
@@ -78,6 +81,30 @@ var program = {
         program.timeUnit = $(".stimeUnit").val();
         program.selectMonitor();
         program.showAll();
+    },
+    load: function () {
+        program.number = $(".snumber").val();
+        program.timeUnit = $(".stimeUnit").val();
+        program.selectMonitor();
+        program.keyList = program.data.keyList;
+        program.valueList = program.data.valueList;
+        var len = program.keyList.length;
+        for (var i = 0; i < len; i++) {
+            var key = program.keyList[i].key;
+            var myChart = map[key];
+            var option = myChart.getOption();
+
+            var list = program.valueList[i];
+            if (!list) return;
+            var type = [], value = [];
+            for (var j = 0; j < list.length; j++) {
+                type.push(list[j].date.split(" ")[1]);
+                value.push(list[j].data);
+            }
+            option.series[0].data = value;
+            option.xAxis[0].data = type;
+            myChart.setOption(option);
+        }
     }
 };
 var par = pubMeth.getQueryObject();
@@ -99,3 +126,4 @@ $(".timeUpdate").click(function () {
     $(".stimeUnit").val(value);
     program.refresh();
 });
+setInterval(program.load, 5000);
