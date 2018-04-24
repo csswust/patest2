@@ -141,11 +141,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
                 ExamInfo examInfo = examInfoDao.selectByPrimaryKey(currUser.getExamId());
                 if (examInfo != null) {
                     ips = examInfo.getAllowIp();
-                }/* else {
-                    loginRe.setStatus(-5);
-                    loginRe.setDesc("你的账户未激活，请联系管理员激活");
-                    return loginRe;
-                }*/
+                }
                 if (ips != null) {
                     String[] strs = ips.split(",");
                     if (!(Arrays.asList(strs).contains(IP))) {
