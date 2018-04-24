@@ -98,5 +98,5 @@ public class SiteKey {
 
     // 保留一天内的监控数据
     public final static String MONITOR_DATA_MAX_NUMBER = "monitor_data_max_number";
-    public final static int MONITOR_DATA_MAX_NUMBER_DE = 10000;
+    public final static int MONITOR_DATA_MAX_NUMBER_DE = 1000000;
 }

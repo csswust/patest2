@@ -99,6 +99,7 @@ public class MonitorService extends BaseService {
         Iterator<MonitorBase> it = list.iterator();
         int count = 0;
         while (it.hasNext()) {
+            it.next();
             it.remove();
             count++;
             if (count == num) break;
