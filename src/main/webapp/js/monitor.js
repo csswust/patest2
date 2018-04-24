@@ -7,8 +7,8 @@ $(".footer p").hover(function () {
 });
 
 var program = {
-    number: 10,
-    timeUnit: 60,
+    number: 100,
+    timeUnit: 5,
     selectMonitor: function () {
         $.ajax({
             type: "post",
