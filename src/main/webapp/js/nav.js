@@ -46,7 +46,7 @@ var nav = {
         var par = pubMeth.getQueryObject();
         var htmlheader =
             '<nav class="navbar navbar-default">' +
-            '<div class="navbar-header "><a class="navbar-brand" href="#">LExamV3.0</a></div>' +
+            '<div class="navbar-header "><a class="navbar-brand" href="#">' + nav.systename + '</a></div>' +
             '<ul class="nav navbar-nav navbar-right">' +
             '<li><a href="contents.html?&eId=' + par.eId + '"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页</a></li>' +
             '<li><a href="contents.html?&eId=' + par.eId + '"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 题目列表</a></li>' +
@@ -144,11 +144,27 @@ var nav = {
             '<a href="../system/download?path=/static/Chrome.exe&isUeditorPath=true">点击下载</a>' +
             '</p></div></div>';
         $('body').append(footerHtml);
+    },
+    getsysname: function () {
+        $.ajax({
+            type: "get",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../siteInfo/selectByName",
+            dataType: 'json',
+            async: false,
+            data: {
+                name: "systemname"
+            },
+            success: function (result) {
+                nav.systename = result.value;
+            }
+        });
     }
 };
 nav.getCookie1("name");
 nav.getCookie2("realName");
 nav.getCookie3("studentNumber");
+nav.getsysname();
 nav.head();
 nav.getStatus();
 nav.getfooter();
