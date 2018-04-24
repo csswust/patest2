@@ -30,6 +30,7 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
+                result = result.data;
                 var nowtime = nav.getNowTime();
                 var nowTime = new Date(nowtime);
                 program.starttime = nav.transTime(result.examInfoList[0].startTime);
@@ -102,10 +103,10 @@ var program = {
                     program.submitId = result.submId;
                     $(".submitResult").html('');
                 } else {
-                    pubMeth.alertInfo("alert-info", result.desc);
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             }, error: function () {
-                pubMeth.alertInfo("alert-info", "请求错误");
+                pubMeth.alertInfo("alert-danger", "请求错误");
             }
         });
     },
