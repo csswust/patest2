@@ -33,6 +33,7 @@ public class MonitorService extends BaseService {
         for (int i = 0; i < number; i++) {
             MonitorRe monitorRe = new MonitorRe();
             monitorRe.setData(0);
+            monitorRe.setTempNum(0);
             monitorRe.setDate(new Date(startTime + i * timeUnit));
             monitorReList.add(monitorRe);
         }

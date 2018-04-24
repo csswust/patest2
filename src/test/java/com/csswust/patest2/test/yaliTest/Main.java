@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
  * Created by 972536780 on 2018/4/2.
  */
 public class Main extends JunitBaseServiceDaoTest {
-    private static final String rootPath = "http://222.196.35.228:8080/patest";
+    private static final String rootPath = "http://222.196.35.228:8081/patest";
     private static final Integer examId = 5;
 
     @Autowired

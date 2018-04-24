@@ -71,7 +71,7 @@ public class AccessFilter extends BaseFilter implements Filter {
             }
         }
         long endTime = System.currentTimeMillis();
-        monitor.addCount(MonitorKey.SYSTEM_REQUEST_TIME.getKey(), (int) (endTime - startTime));
+        monitor.addSize(MonitorKey.SYSTEM_REQUEST_TIME.getKey(), (int) (endTime - startTime));
         MDC.remove("userId");
     }
 
