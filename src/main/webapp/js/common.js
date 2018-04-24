@@ -55,7 +55,7 @@ var common = {
             + '<a href="javascript:;" class="treeview userMana"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  <span>考生管理</span></a>'
             + '<ul class="treeview-menu">'
             + '<li><a href="userProfile.html" class="userInfo">学生信息</a></li>'
-            + '<li><a href="account.html" class="accountInfo">账号管理</a></li>'
+            + '<li><a href="account.html" class="accountInfo">考号管理</a></li>'
             + '<li><a href="academyInfo.html" class="academyInfo">学院管理</a></li>'
             + '<li><a href="majorMana.html" class="majorInfo">专业管理</a></li>'
             + '</ul>'
