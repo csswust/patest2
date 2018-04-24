@@ -66,7 +66,13 @@ public class SystemAction extends BaseAction {
             List<Object> valueList = new ArrayList<>();
             for (MonitorKey monitorKey : MonitorKey.values()) {
                 String key = monitorKey.getKey();
-                List<MonitorRe> list = monitorService.getDataByKey(key, number, timeUnit);
+                List<MonitorRe> list = null;
+                try {
+                    list = monitorService.getDataByKey(key, number, timeUnit);
+                } catch (Exception e) {
+                    log.error("monitorService.getDataByKey({},{},{}) error: {}",
+                            key, number, timeUnit, e);
+                }
                 valueList.add(list);
                 keyList.add(monitorKey);
             }
