@@ -119,6 +119,7 @@ var program = {
                 rows: "10"
             },
             success: function (result) {
+                result = result.data;
                 program.count = result.total;
                 program.data = result;
                 program.showProblem();
@@ -146,26 +147,9 @@ var program = {
         return true;
     },
     getproblemInfoById: function () {
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../problemInfo/selectByIds",
-            dataType: 'json',
-            async: false,
-            data: {
-                ids: program.bankIds,
-            },
-            success: function (result) {
-                console.log(result);
-                program.problist = result.problemInfoList;
-                program.getproinfo();
-            },
-        });
-    },
-    getproinfo: function () {
-        var length = program.problist.length;
-        for (var i = 0; i < length; i++) {
-            program.probIdList[i] = program.problist[i].probId;
+        var problist = program.bankIds.split(",");
+        for (var i = 0; i < problist.length; i++) {
+            program.probIdList[i] = parseInt(problist[i]);
         }
         program.probIdstr = program.probIdList.join(",");
     },
