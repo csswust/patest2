@@ -16,7 +16,7 @@ var pubMeth = {
         } else {
             $("#tip").removeClass();
             $("#tip").addClass("alert " + className);
-            $("strong").text(info);
+            $(".tip > div > strong").text(info);
         }
     },
     getQueryObject: function () {
