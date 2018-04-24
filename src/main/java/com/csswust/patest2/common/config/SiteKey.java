@@ -14,11 +14,11 @@ public class SiteKey {
 
     // 上传临时目录
     public final static String UPLOAD_TEMP_DIR = "upload_temp_dir";
-    public final static String UPLOAD_TEMP_DIR_DE = "/temp";
+    public final static String UPLOAD_TEMP_DIR_DE = PATEST_WORK_PATH_DE + "/temp";
 
     // 	ueditor上传目录
     public final static String UPLOAD_UEDITOR_DIR = "upload_ueditor_dir";
-    public final static String UPLOAD_UEDITOR_DIR_DE = "/ueditor";
+    public final static String UPLOAD_UEDITOR_DIR_DE = PATEST_WORK_PATH_DE + "/ueditor";
 
     // 	判题最大线程数
     public final static String JUDGE_THREAD_POOL_NUM = "judge_thread_pool_num";
@@ -50,7 +50,7 @@ public class SiteKey {
 
     // judgeWork目录
     public final static String JUDGE_WORK_DIR = "judge_work_dir";
-    public final static String JUDGE_WORK_DIR_DE = "/judge/work";
+    public final static String JUDGE_WORK_DIR_DE = PATEST_WORK_PATH_DE + "/judge/work";
 
     // 	是否删除工作目录,如果设置为0，那么要定期删除
     public final static String JUDGE_IS_DELETE_DIR = "judge_is_delete_dir";
@@ -58,15 +58,15 @@ public class SiteKey {
 
     // 脚本文件地址
     public final static String JUDGE_SCRIPT_PATH = "judge_script_path";
-    public final static String JUDGE_SCRIPT_PATH_DE = "/judge/script/ysf.py";
+    public final static String JUDGE_SCRIPT_PATH_DE = PATEST_WORK_PATH_DE + "/judge/script/ysf.py";
 
     // 测试数据目录
     public final static String JUDGE_STANDARD_DATA_PATH = "judge_standard_data_path";
-    public final static String JUDGE_STANDARD_DATA_PATH_DE = "/judge/testdata";
+    public final static String JUDGE_STANDARD_DATA_PATH_DE = PATEST_WORK_PATH_DE + "/judge/testdata";
 
     // special目录
     public final static String JUDGE_SPECIAL_DATA_PATH = "judge_special_data_path";
-    public final static String JUDGE_SPECIAL_DATA_PATH_DE = "/judge/special";
+    public final static String JUDGE_SPECIAL_DATA_PATH_DE = PATEST_WORK_PATH_DE + "/judge/special";
 
     // 	是否开启登录锁
     public final static String IS_LOGIN_LOCK = "is_login_lock";
