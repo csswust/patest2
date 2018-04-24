@@ -54,7 +54,7 @@ public class Config {
                 if (item.getName() == null) continue;
                 if (item.getValue() == null) continue;
                 String value = item.getValue();
-                if (item.getExtra() != null || item.getExtra().contains("path")) {
+                if (item.getExtra() != null && item.getExtra().contains("path")) {
                     value = PATEST_WORK_PATH + item.getValue();
                 }
                 configFile.put(item.getName(), value);

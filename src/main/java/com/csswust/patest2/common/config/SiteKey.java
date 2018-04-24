@@ -4,7 +4,7 @@ package com.csswust.patest2.common.config;
  * Created by 972536780 on 2017/11/20.
  */
 public class SiteKey {
-    // 上传临时目录
+    // 系统运行根目录
     public final static String PATEST_WORK_PATH = "patest_work_path";
     public final static String PATEST_WORK_PATH_DE = "/home/mryang/patest/patest2";
 
