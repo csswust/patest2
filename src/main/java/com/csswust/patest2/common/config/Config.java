@@ -43,6 +43,8 @@ public class Config {
     // 刷新siteInfo中的信息，siteInfo优先于config
     public static void refreshSiteInfo(SiteInfoDao siteInfoDao, Integer siteId) {
         try {
+            String PATEST_WORK_PATH = get(SiteKey.PATEST_WORK_PATH,
+                    SiteKey.PATEST_WORK_PATH_DE);
             SiteInfo siteInfo = new SiteInfo();
             if (siteId != null) siteInfo.setSiteId(siteId);
             List<SiteInfo> siteInfoList = siteInfoDao.selectByCondition(siteInfo, new BaseQuery());
@@ -51,7 +53,11 @@ public class Config {
                 if (item == null) continue;
                 if (item.getName() == null) continue;
                 if (item.getValue() == null) continue;
-                configFile.put(item.getName(), item.getValue());
+                String value = item.getValue();
+                if (item.getExtra() != null || item.getExtra().contains("path")) {
+                    value = PATEST_WORK_PATH + item.getValue();
+                }
+                configFile.put(item.getName(), value);
             }
         } catch (Exception e) {
             log.error("读取SiteInfo出错 error: {}", e);
