@@ -62,12 +62,16 @@ public class SystemAction extends BaseAction {
                 apiResult.setStatusAndDesc(-1, "访问冲突，请等待");
                 return apiResult;
             }
+            List<Object> keyList = new ArrayList<>();
+            List<Object> valueList = new ArrayList<>();
             for (MonitorKey monitorKey : MonitorKey.values()) {
                 String key = monitorKey.getKey();
                 List<MonitorRe> list = monitorService.getDataByKey(key, number, timeUnit);
-                apiResult.setDataKey(key, list);
-                apiResult.setDataKey(key + "_monitorKey", monitorKey);
+                valueList.add(list);
+                keyList.add(monitorKey);
             }
+            apiResult.setDataKey("valueList", valueList);
+            apiResult.setDataKey("keyList", keyList);
             return apiResult;
         } finally {
             lock.unlock();

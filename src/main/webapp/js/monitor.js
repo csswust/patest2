@@ -26,15 +26,18 @@ var program = {
         });
     },
     showAll: function () {
-        for (var i in program.data) {
-            var list = program.data[i];
-            if (i.indexOf("_monitorKey") !== -1) continue;
+        program.keyList = program.data.keyList;
+        program.valueList = program.data.valueList;
+        var len = program.keyList.length;
+        for (var i = 0; i < len; i++) {
             program.showMonitor(i);
         }
     },
-    showMonitor: function (key) {
+    showMonitor: function (index) {
+        var key = program.keyList[index].key;
+        var title = program.keyList[index].title;
         $("#monitor").append('<div id="' + key + '" style="height:300px;"></div>');
-        var list = program.data[key];
+        var list = program.valueList[index];
         if (!list) return;
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById(key));
@@ -47,7 +50,7 @@ var program = {
         var option = {
             color: "#70BAE1",
             title: {
-                text: program.data[key + "_monitorKey"].title
+                text: title
             },
             tooltip: {},
             xAxis: {
@@ -62,10 +65,8 @@ var program = {
                 data: value,
                 type: 'line',
                 smooth: true,
-                lineStyle: {
-                },
-                areaStyle: {
-                }
+                lineStyle: {},
+                areaStyle: {}
             }]
         };
         // 使用刚指定的配置项和数据显示图表。
