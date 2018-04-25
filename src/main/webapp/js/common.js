@@ -71,7 +71,7 @@ var common = {
             + '<li>'
             + '<a href="javascript:;" class="treeview sysMana"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> <span>系统管理</span></a>'
             + '<ul class="treeview-menu">'
-            + '<li><a href="sysetting.html" class="systemset">系统参数设置</a></li>'
+            + '<li><a href="sysetting.html" class="systemset">参数设置</a></li>'
             + '<li><a href="monitor.html" class="monitor">系统监控</a></li>'
             + '</ul>' + '</li>' + '</ul>';
         $(".side-bar").append(htmlLeft);

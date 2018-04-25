@@ -11,7 +11,9 @@ import com.csswust.patest2.entity.SubmitInfo;
 import com.csswust.patest2.entity.SubmitSimilarity;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.utils.FileUtil;
 import com.csswust.patest2.utils.SimHash;
+import com.csswust.patest2.utils.StreamUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,6 +139,7 @@ public class SubmitSimilarityAction extends BaseAction {
             res.put("desc", "本题无提交数据");
             return res;
         }
+        String rootPath = "E:\\javawork\\Codecheck\\src\\temp\\file1";
         // 计算相似度
         int count = 0, length = submitInfoList.size();
         for (int i = 0; i < length; i++) {
@@ -147,6 +150,7 @@ public class SubmitSimilarityAction extends BaseAction {
             submitSimilarity.setSubmitId1(submId);
             submitSimilarity.setExamId(examId);
             submitSimilarity.setSubmitId2(subInfo2.getSubmId());
+            // FileUtil.generateFile(subInfo2.getSource(), rootPath, subInfo2.getSubmId() + ".txt");
             submitSimilarity.setSimilarity(getSimilarity(currSubmitInfo.getSource(), subInfo2.getSource()));
             count += submitSimilarityDao.insertSelective(submitSimilarity);
         }
