@@ -103,4 +103,20 @@ public class SiteKey {
     // 监控数据队列大小最大值
     public final static String MONITOR_DATA_MAX_NUMBER = "monitor_data_max_number";
     public final static int MONITOR_DATA_MAX_NUMBER_DE = 1000000;
+
+    // sim 工作目录
+    public final static String SIM_WORK_DIR = "sim_work_dir";
+    public final static String SIM_WORK_DIR_DE = PATEST_WORK_PATH_DE + "/sim/work";
+
+    // sim 脚本目录
+    public final static String SIM_SCRIPT_PATH = "sim_script_path";
+    public final static String SIM_SCRIPT_PATH_DE = PATEST_WORK_PATH_DE + "/sim/script";
+
+    // 判题任务最多执行的时间，秒
+    public final static String SIM_MAX_RUN_TIME = "sim_max_run_time";
+    public final static int SIM_MAX_RUN_TIME_DE = 60;
+
+    // 	是否删除工作目录,如果设置为0，那么要定期删除
+    public final static String SIM_IS_DELETE_DIR = "sim_is_delete_dir";
+    public final static int SIM_IS_DELETE_DIR_DE = 0;
 }

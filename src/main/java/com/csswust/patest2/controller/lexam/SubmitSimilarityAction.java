@@ -1,5 +1,8 @@
 package com.csswust.patest2.controller.lexam;
 
+import com.csswust.patest2.common.APIResult;
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.SubmitInfoDao;
 import com.csswust.patest2.dao.SubmitSimilarityDao;
@@ -11,6 +14,10 @@ import com.csswust.patest2.entity.SubmitInfo;
 import com.csswust.patest2.entity.SubmitSimilarity;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.service.sim.SimInput;
+import com.csswust.patest2.service.sim.SimOutput;
+import com.csswust.patest2.service.sim.SimResult;
+import com.csswust.patest2.service.sim.SimService;
 import com.csswust.patest2.utils.FileUtil;
 import com.csswust.patest2.utils.SimHash;
 import com.csswust.patest2.utils.StreamUtil;
@@ -24,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +56,8 @@ public class SubmitSimilarityAction extends BaseAction {
     private SubmitInfoDao submitInfoDao;
     @Autowired
     private UserProfileDao userProfileDao;
+    @Autowired
+    private SimService simService;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
@@ -104,57 +114,92 @@ public class SubmitSimilarityAction extends BaseAction {
         return res;
     }
 
-    private Double getSimilarity(String submSource, String submSource2) {
-        SimHash hash1 = new SimHash(submSource, 128);
-        SimHash hash2 = new SimHash(submSource2, 128);
-        return (double) (128 - hash1.hammingDistance(hash2)) / 128;
-    }
-
     @RequestMapping(value = "/getSimByProbId", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> getSimByProbId(
+    public Object getSimByProbId(
             @RequestParam Integer examId,
             @RequestParam Integer submId) {
-        Map<String, Object> res = new HashMap<>();
-        if (examId == null || submId == null) return res;
+        APIResult apiResult = new APIResult();
+        if (examId == null || submId == null) return apiResult;
         SubmitInfo currSubmitInfo = submitInfoDao.selectByPrimaryKey(submId);
-        if (currSubmitInfo == null) return res;
-        if (currSubmitInfo.getProblemId() == null) return res;
+        if (currSubmitInfo == null) return apiResult;
+        if (currSubmitInfo.getProblemId() == null) return apiResult;
+        if (currSubmitInfo.getJudgerId() == null) return apiResult;
+        if (currSubmitInfo.getUserId() == null) return apiResult;
+        Integer judgerId = currSubmitInfo.getJudgerId();
 
         // 判断该提交是否已经计算过相似度
         SubmitSimilarity temp = new SubmitSimilarity();
         temp.setSubmitId1(submId);
         int total = submitSimilarityDao.selectByConditionGetCount(temp, new BaseQuery());
         if (total > 0) {
-            res.put("status", -2);
-            res.put("desc", "不能重复计算相似度");
-            return res;
+            apiResult.setStatusAndDesc(-500, "不能重复计算相似度");
+            return apiResult;
         }
-        // 查询属于同一个题目下的所有提交
+        // 查询属于同一个题目下,同一种语言的所有提交
         SubmitInfo submitInfo = new SubmitInfo();
         submitInfo.setExamId(examId);
         submitInfo.setProblemId(currSubmitInfo.getProblemId());
+        submitInfo.setJudgerId(judgerId);
         List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(submitInfo, new BaseQuery());
         if (submitInfoList == null || submitInfoList.size() == 0) {
-            res.put("status", -1);
-            res.put("desc", "本题无提交数据");
-            return res;
+            apiResult.setStatusAndDesc(-1, "本提交无提交数据");
+            return apiResult;
         }
-        String rootPath = "E:\\javawork\\Codecheck\\src\\temp\\file1";
+        SimInput simInput = new SimInput();
+        List<SubmitInfo> leftList = new ArrayList<>();
+        List<SubmitInfo> rightList = new ArrayList<>();
+        leftList.add(currSubmitInfo);
+
         // 计算相似度
         int count = 0, length = submitInfoList.size();
         for (int i = 0; i < length; i++) {
-            SubmitInfo subInfo2;
-            subInfo2 = submitInfoList.get(i);
+            SubmitInfo subInfo2 = submitInfoList.get(i);
+            // 同一个人submId
+            if (subInfo2 == null) continue;
+            if (subInfo2.getSubmId() == null) continue;
+            if (subInfo2.getUserId() == null) continue;
             if (submId.intValue() == subInfo2.getSubmId().intValue()) continue;
-            SubmitSimilarity submitSimilarity = new SubmitSimilarity();
-            submitSimilarity.setSubmitId1(submId);
-            submitSimilarity.setExamId(examId);
-            submitSimilarity.setSubmitId2(subInfo2.getSubmId());
-            // FileUtil.generateFile(subInfo2.getSource(), rootPath, subInfo2.getSubmId() + ".txt");
-            submitSimilarity.setSimilarity(getSimilarity(currSubmitInfo.getSource(), subInfo2.getSource()));
-            count += submitSimilarityDao.insertSelective(submitSimilarity);
+            if (currSubmitInfo.getUserId().intValue() == subInfo2.getUserId().intValue()) continue;
+            rightList.add(subInfo2);
         }
-        res.put("status", count);
-        return res;
+        if (rightList.size() == 0) {
+            apiResult.setStatusAndDesc(-2, "本提交无参考数据");
+            return apiResult;
+        }
+        simInput.setLeftCodeList(leftList);
+        simInput.setRightCodeList(rightList);
+        String scriptPath = Config.get(SiteKey.SIM_SCRIPT_PATH, SiteKey.SIM_SCRIPT_PATH_DE);
+        if (judgerId == 1) scriptPath = scriptPath + "/sim_c.exe";
+        else if (judgerId == 2) scriptPath = scriptPath + "/sim_c++.exe";
+        else if (judgerId == 3) scriptPath = scriptPath + "/sim_java.exe";
+        else scriptPath = scriptPath + "/sim_text.exe";
+        simInput.setScriptPath(scriptPath);
+        SimOutput simOutput = simService.judge(simInput);
+        if (simOutput.getError() != null) {
+            apiResult.setStatusAndDesc(-3, simOutput.getError());
+            return apiResult;
+        }
+        List<SimResult> simResultList = simOutput.getSimResultList();
+        if (simResultList == null || simResultList.size() == 0) {
+            apiResult.setStatusAndDesc(-4, "相识度计算无结果");
+            return apiResult;
+        }
+        List<SubmitSimilarity> similarityList = new ArrayList<>();
+        for (int i = 0; i < simResultList.size(); i++) {
+            SimResult simResult = simResultList.get(i);
+            SubmitSimilarity similarity = new SubmitSimilarity();
+            similarity.setSubmitId1(simResult.getSubmId1());
+            similarity.setSubmitId2(simResult.getSubmId2());
+            similarity.setExamId(examId);
+            similarity.setSimilarity(simResult.getValue());
+            similarityList.add(similarity);
+        }
+        int insertCount = submitSimilarityDao.insertBatch(similarityList);
+        if (insertCount != 0) {
+            apiResult.setStatusAndDesc(1, "成功");
+        } else {
+            apiResult.setStatusAndDesc(-5, "插入失败");
+        }
+        return apiResult;
     }
 }

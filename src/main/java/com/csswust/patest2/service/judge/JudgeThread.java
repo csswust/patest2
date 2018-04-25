@@ -1,7 +1,6 @@
 package com.csswust.patest2.service.judge;
 
 import com.csswust.patest2.common.MonitorKey;
-import com.csswust.patest2.service.JudgeService;
 import com.csswust.patest2.service.monitor.Monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

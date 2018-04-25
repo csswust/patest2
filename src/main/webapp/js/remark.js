@@ -213,11 +213,10 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                if (result.status <= 0 && result.status !== -2) {
-                    $("#tip").modal({
-                        backdrop: 'static'
-                    });
+                if (result.status === 1) {
+                    pubMeth.alertInfo("alert-success", "相识度检测成功");
                 } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {
@@ -308,7 +307,7 @@ $(".similarity").click(function () {
     var str = $(".tab-pane.active").attr("id").split("_");
     var number = program.codeList.length - parseInt(str[str.length - 1]);
     if (!program.codeList[number].problemId) {
-        $("#tip").modal({
+        $("#tip_info").modal({
             backdrop: 'static'
         });
         return;

@@ -4,7 +4,7 @@ import com.csswust.patest2.common.cache.SiteCache;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.dao.SiteInfoDao;
-import com.csswust.patest2.service.JudgeService;
+import com.csswust.patest2.service.judge.JudgeService;
 import com.csswust.patest2.service.judge.JudgeThread;
 import com.csswust.patest2.service.monitor.Monitor;
 import org.slf4j.Logger;

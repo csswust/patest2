@@ -25,4 +25,6 @@ public interface SubmitSimilarityDao {
     List<SubmitSimilarity> selectByCondition(SubmitSimilarity record, BaseQuery query);
 
     int selectByConditionGetCount(SubmitSimilarity record, BaseQuery query);
+
+    int insertBatch(List<SubmitSimilarity> recordList);
 }

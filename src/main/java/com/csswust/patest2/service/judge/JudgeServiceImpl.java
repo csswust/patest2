@@ -6,7 +6,6 @@ import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
-import com.csswust.patest2.service.JudgeService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.utils.ArrayUtil;
 import com.csswust.patest2.utils.FileUtil;
@@ -19,8 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -325,7 +322,6 @@ public class JudgeServiceImpl extends BaseService implements JudgeService {
             String errMsg = StreamUtil.output(proc.getErrorStream());
             // 获得控制台信息
             String consoleMsg = StreamUtil.output(proc.getInputStream());
-            System.out.println(judgeTask + "\n" + errMsg + "\n" + consoleMsg);
             judgeResult.setErrMsg(errMsg);
             judgeResult.setConsoleMsg(consoleMsg);
             log.info("judge \nconsoleMsg :{}info :{}", consoleMsg, JSON.toJSONString(judgeTask));

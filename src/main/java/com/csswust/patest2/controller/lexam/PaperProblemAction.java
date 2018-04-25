@@ -3,7 +3,7 @@ package com.csswust.patest2.controller.lexam;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.PaperProblemDao;
 import com.csswust.patest2.entity.PaperProblem;
-import com.csswust.patest2.service.JudgeService;
+import com.csswust.patest2.service.judge.JudgeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
