@@ -6,6 +6,7 @@ import com.csswust.patest2.common.MonitorKey;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
+import com.csswust.patest2.dao.SiteInfoDao;
 import com.csswust.patest2.listener.ApplicationStartListener;
 import com.csswust.patest2.listener.OnlineListener;
 import com.csswust.patest2.service.OnlineUserService;
@@ -47,6 +48,8 @@ public class SystemAction extends BaseAction {
     private OnlineUserService onlineUserService;
     @Autowired
     private MonitorService monitorService;
+    @Autowired
+    private SiteInfoDao siteInfoDao;
 
     private ReentrantLock lock = new ReentrantLock();
 
@@ -94,11 +97,12 @@ public class SystemAction extends BaseAction {
 
     @ResponseBody
     @RequestMapping(value = "/refreshConfig", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> refreshConfig() throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        Config.refreshConfig();
-        map.put("status", 1);
-        return map;
+    public Object refreshConfig() throws Exception {
+        APIResult apiResult = new APIResult();
+        Config.refreshConfig();// 先刷新配置文件配置
+        Config.refreshSiteInfo(siteInfoDao, null);// 在刷新数据库的配置
+        apiResult.setStatusAndDesc(1, "刷新成功");
+        return apiResult;
     }
 
     @ResponseBody

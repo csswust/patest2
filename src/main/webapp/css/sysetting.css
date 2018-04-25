@@ -5,6 +5,10 @@
 .margin {
     margin-top: 30px;
 }
+.opration{
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
 
 .emargin {
     margin-top: 30px;
@@ -44,5 +48,5 @@ p:hover {
 }
 
 .main table {
-    margin-top: 30px;
+    margin-top: 7px;
 }

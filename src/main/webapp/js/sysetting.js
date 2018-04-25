@@ -116,6 +116,24 @@ var program = {
                 }
             }
         });
+    },
+    refreshconfig: function () {
+        $.ajax({
+            type: "post",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../system/refreshConfig",
+            dataType: 'json',
+            async: false,
+            data: null,
+            success: function (result) {
+                console.log(result);
+                if (result.status === 1) {
+                    pubMeth.alertInfo("alert-success", result.desc);
+                } else {
+                    pubMeth.alertInfo("alert-warning", "修改失败");
+                }
+            }
+        });
     }
 };
 
@@ -127,29 +145,9 @@ var ue = UE.getEditor('data', {
     initialFrameWidth: 1170,//初始化编辑器宽度,默认1000
     initialFrameHeight: 400  //初始化编辑器高度,默认320
 });
-$(".index").click(function () {
-    $('#settingdata').modal();
-    $("#myModalLabel").text("首页数据");
-    ue.ready(function () {
-        ue.setContent(program.index);
-    });
-    program.dataName = this.className;
-});
-$(".faqs").click(function () {
-    $('#settingdata').modal();
-    $("#myModalLabel").text("FAQS数据");
-    ue.ready(function () {
-        ue.setContent(program.faqs);
-    });
-    program.dataName = this.className;
-});
-$(".examNotes").click(function () {
-    $('#settingdata').modal();
-    $("#myModalLabel").text("考试须知数据");
-    ue.ready(function () {
-        ue.setContent(program.examNotes);
-    });
-    program.dataName = this.className;
+
+$(".refreshConfig").click(function () {
+    program.refreshconfig();
 });
 $(".save").click(function () {
     ue.ready(function () {
