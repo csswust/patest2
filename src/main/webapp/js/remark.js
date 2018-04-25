@@ -113,20 +113,20 @@ var program = {
             }
             tab_nav += '' + liActive + '<a href="#Q_' + flag
                 + '" data-toggle="tab" onclick="aClick()">Q' + flag + '：'
-                + program.paperProblemList[i].score + '</a></li>';
-            program.probIds[i] = program.problemInfoList[i].probId;
-            program.prproIds[i] = program.paperProblemList[i].papProId;
+                + program.paperProblemList[tmp].score + '</a></li>';
+            program.probIds[tmp] = program.problemInfoList[tmp].probId;
+            program.prproIds[tmp] = program.paperProblemList[tmp].papProId;
 
-            var source = program.safeStr(program.codeList[i].source);
+            var source = program.safeStr(program.codeList[tmp].source);
             content += '' + divAcitve
                 + '<h2 style="text-align:center;">'
-                + program.problemInfoList[i].title
+                + program.problemInfoList[tmp].title
                 + '</h2>'
                 + '<div style="margin:0 auto;width:800px;"><ul class="nav-pills nav-justified" style="text-align:center;color:#3c8dbc;">'
-                + '<li>提交时间:' + program.paperProblemList[i].lastSubmitTime
-                + '</li><li>时间:' + program.paperProblemList[i].usedTime
-                + '</li>' + '<li>状态:' + program.codeList[i].status
-                + '</li><li>分数:' + program.paperProblemList[i].score
+                + '<li>提交时间:' + program.paperProblemList[tmp].lastSubmitTime
+                + '</li><li>时间:' + program.paperProblemList[tmp].usedTime
+                + '</li>' + '<li>状态:' + program.codeList[tmp].status
+                + '</li><li>分数:' + program.paperProblemList[tmp].score
                 + '</li></ul></div>' + '<div class="allcon"><div class="changed"><pre class="prettyprint linenums pre-scrollable">'
                 + source + '</pre></div><div class="addcss"><pre class="addchanged"></pre></div></div></div>';
             flag--;
@@ -165,7 +165,6 @@ var program = {
             }
         });
     },
-
     selectSimilary: function (temp) {
         console.log(program.codeList[temp].submId);
         $.ajax({
@@ -241,7 +240,7 @@ var program = {
             flag++;
         }
     },
-    showMyCode: function (temp) {
+    showMyCode: function () {
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -304,8 +303,8 @@ program.getAllExamPaper();
 program.selectPaperById();
 
 $(".similarity").click(function () {
-    var str = $(".tab-pane.active").attr("id").split("_");
-    var number = program.codeList.length - parseInt(str[str.length - 1]);
+    var str = $(".tab-pane.active").attr("id").split("_")[1];
+    var number = parseInt(str) - 1;
     if (!program.codeList[number].problemId) {
         $("#tip_info").modal({
             backdrop: 'static'
@@ -358,11 +357,9 @@ $(".submit").click(function () {
 });
 
 $("#problemlistInfo").on('click', '.search', function () {
-    var str = $(".tab-pane.active").attr("id").split("_");
-    var number = program.codeList.length - parseInt(str[str.length - 1]);
     var index = this.id.split("-")[0];
     program.submId = program.submIds[index];
-    program.showMyCode(number);
+    program.showMyCode();
 });
 function aClick() {
     if ($(".addchanged").css("display") == 'block') {
