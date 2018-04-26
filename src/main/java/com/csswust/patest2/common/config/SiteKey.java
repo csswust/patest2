@@ -112,7 +112,7 @@ public class SiteKey {
     public final static String SIM_SCRIPT_PATH = "sim_script_path";
     public final static String SIM_SCRIPT_PATH_DE = PATEST_WORK_PATH_DE + "/sim/script";
 
-    // 判题任务最多执行的时间，秒
+    // 相似度检测任务最多执行的时间，秒
     public final static String SIM_MAX_RUN_TIME = "sim_max_run_time";
     public final static int SIM_MAX_RUN_TIME_DE = 60;
 
