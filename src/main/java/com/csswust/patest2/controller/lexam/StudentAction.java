@@ -196,7 +196,7 @@ public class StudentAction extends BaseAction {
                 SiteKey.SUBMIT_MAX_TIME_INTERVAL_DE);
         if (oldDate != null && (nowDate.getTime() - oldDate.getTime()) < maxTime) {
             res.put("status", -501);
-            res.put("desc", "提交太频繁，请等待30s");
+            res.put("desc", "提交太频繁，请等待" + maxTime / 1000 + "s");
             return res;
         }
         submInfoMap.put(userId, nowDate);
