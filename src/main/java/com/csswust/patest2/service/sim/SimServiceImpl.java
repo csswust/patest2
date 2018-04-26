@@ -47,16 +47,18 @@ public class SimServiceImpl extends BaseService implements SimService {
             return simOutput;
         }
         try {
-            File resultFile = new File(finalWorkPath, "result.txt");
-            if (!resultFile.exists()) resultFile.createNewFile();
+            File file = new File(finalWorkPath, "/result.txt");
+            if (!file.exists()) file.createNewFile();
             // 构建命令行命令
             StringBuilder cmd = new StringBuilder();
             cmd.append(scriptPath + " ")
                     .append("-epS -o ")
                     .append(finalWorkPath + "/result.txt ")
-                    .append(finalWorkPath + "/file1/* ")
-                    .append("\"|\" ")
-                    .append(finalWorkPath + "/file2/*");
+                    .append(simInput.getLeftCmd())
+                    .append("| ")
+                    .append(simInput.getRightCmd());
+            FileUtil.generateFile(cmd.toString(), finalWorkPath,
+                    "cmd.txt");
             // 执行
             Runtime rt = Runtime.getRuntime();
             Process proc = rt.exec(cmd.toString());
@@ -75,8 +77,8 @@ public class SimServiceImpl extends BaseService implements SimService {
                 simOutput.setError(errMsg);
                 return simOutput;
             }
-            // 获得控制台信息
             String result = FileUtil.readFile(finalWorkPath, "result.txt");
+            log.info("sim info data :{}", result);
             analysisResult(finalWorkPath, result, simOutput);
         } catch (Exception e) {
             log.error("sim error data :{} error: {}", getJson(simInput), e);
@@ -98,7 +100,6 @@ public class SimServiceImpl extends BaseService implements SimService {
         }
         List<SimResult> simResultList = new ArrayList<>();
         // 按指定模式在字符串查找
-        String line = "This order was placed for QT3000! OK?";
         String pattern = workPath + "/file1/(\\d+).txt consists for (\\d+) % of "
                 + workPath + "/file2/(\\d+).txt material";
         // 创建 Pattern 对象
@@ -130,6 +131,8 @@ public class SimServiceImpl extends BaseService implements SimService {
         if (right == null || left.size() == 0) return false;
         int temp1 = writeByList(workPath + "/file1", left);
         int temp2 = writeByList(workPath + "/file2", right);
+        simInput.setLeftCmd(getCmd(workPath + "/file1", left));
+        simInput.setRightCmd(getCmd(workPath + "/file2", right));
         return temp1 != 0 && temp2 != 0;
     }
 
@@ -146,5 +149,17 @@ public class SimServiceImpl extends BaseService implements SimService {
             count = count + 1;
         }
         return count;
+    }
+
+    private String getCmd(String workPath, List<SubmitInfo> list) {
+        StringBuilder builder = new StringBuilder();
+        if (list == null || list.size() == 0) return builder.toString();
+        for (int i = 0; i < list.size(); i++) {
+            SubmitInfo item = list.get(i);
+            if (item == null) continue;
+            if (item.getSubmId() == null) continue;
+            builder.append(workPath + "/" + item.getSubmId() + ".txt ");
+        }
+        return builder.toString();
     }
 }

@@ -11,6 +11,8 @@ public class SimInput {
     private String scriptPath;
     private List<SubmitInfo> leftCodeList;
     private List<SubmitInfo> rightCodeList;
+    private String leftCmd;
+    private String rightCmd;
 
     public String getScriptPath() {
         return scriptPath;
@@ -34,5 +36,21 @@ public class SimInput {
 
     public void setRightCodeList(List<SubmitInfo> rightCodeList) {
         this.rightCodeList = rightCodeList;
+    }
+
+    public String getLeftCmd() {
+        return leftCmd;
+    }
+
+    public void setLeftCmd(String leftCmd) {
+        this.leftCmd = leftCmd;
+    }
+
+    public String getRightCmd() {
+        return rightCmd;
+    }
+
+    public void setRightCmd(String rightCmd) {
+        this.rightCmd = rightCmd;
     }
 }

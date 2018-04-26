@@ -169,9 +169,9 @@ public class SubmitSimilarityAction extends BaseAction {
         simInput.setLeftCodeList(leftList);
         simInput.setRightCodeList(rightList);
         String scriptPath = Config.get(SiteKey.SIM_SCRIPT_PATH, SiteKey.SIM_SCRIPT_PATH_DE);
-        if (judgerId == 1) scriptPath = scriptPath + "/sim_c.exe";
-        else if (judgerId == 2) scriptPath = scriptPath + "/sim_c++.exe";
-        else if (judgerId == 3) scriptPath = scriptPath + "/sim_java.exe";
+        if (judgerId == 1) scriptPath = scriptPath + "/sim_c";
+        else if (judgerId == 2) scriptPath = scriptPath + "/sim_c++";
+        else if (judgerId == 3) scriptPath = scriptPath + "/sim_java";
         else scriptPath = scriptPath + "/sim_text.exe";
         simInput.setScriptPath(scriptPath);
         SimOutput simOutput = simService.judge(simInput);
