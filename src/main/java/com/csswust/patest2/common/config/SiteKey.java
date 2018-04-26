@@ -119,4 +119,12 @@ public class SiteKey {
     // 	是否删除工作目录,如果设置为0，那么要定期删除
     public final static String SIM_IS_DELETE_DIR = "sim_is_delete_dir";
     public final static int SIM_IS_DELETE_DIR_DE = 0;
+
+    // 进行相似度计算时允许的最大提交数，超过100会有性能影响
+    public final static String SIM_TEST_DATA_MAX_NUM = "sim_test_data_max_num";
+    public final static int SIM_TEST_DATA_MAX_NUM_DE = 100;
+
+    // 相似度结果最多保存多少到数据库，不建议超过10
+    public final static String SIM_SAVE_DATABASE_NUM = "sim_save_database_num";
+    public final static int SIM_SAVE_DATABASE_NUM_DE = 10;
 }

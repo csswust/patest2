@@ -140,7 +140,10 @@ public class SubmitSimilarityAction extends BaseAction {
         submitInfo.setExamId(examId);
         submitInfo.setProblemId(currSubmitInfo.getProblemId());
         submitInfo.setJudgerId(judgerId);
-        List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(submitInfo, new BaseQuery());
+        int testMaxNum = Config.getToInt(SiteKey.SIM_TEST_DATA_MAX_NUM,
+                SiteKey.SIM_TEST_DATA_MAX_NUM_DE);
+        List<SubmitInfo> submitInfoList = submitInfoDao.selectByCondition(submitInfo,
+                new BaseQuery(1, testMaxNum));
         if (submitInfoList == null || submitInfoList.size() == 0) {
             apiResult.setStatusAndDesc(-1, "本提交无提交数据");
             return apiResult;
@@ -184,8 +187,10 @@ public class SubmitSimilarityAction extends BaseAction {
             apiResult.setStatusAndDesc(-4, "相识度计算无结果");
             return apiResult;
         }
+        int saveMaxNum = Config.getToInt(SiteKey.SIM_SAVE_DATABASE_NUM,
+                SiteKey.SIM_SAVE_DATABASE_NUM_DE);
         List<SubmitSimilarity> similarityList = new ArrayList<>();
-        for (int i = 0; i < simResultList.size(); i++) {
+        for (int i = 0; i < simResultList.size() && i < saveMaxNum; i++) {
             SimResult simResult = simResultList.get(i);
             SubmitSimilarity similarity = new SubmitSimilarity();
             similarity.setSubmitId1(simResult.getSubmId1());
