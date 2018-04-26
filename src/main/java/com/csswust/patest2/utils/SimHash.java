@@ -13,18 +13,18 @@ public class SimHash {
     private BigInteger strSimHash;
     private int hashbits = 128;
 
-    public SimHash(String tokens) {
+    private SimHash(String tokens) {
         this.tokens = tokens;
         this.strSimHash = this.simHash();
     }
 
-    public SimHash(String tokens, int hashbits) {
+    private SimHash(String tokens, int hashbits) {
         this.tokens = tokens;
         this.hashbits = hashbits;
         this.strSimHash = this.simHash();
     }
 
-    public BigInteger simHash() {
+    private BigInteger simHash() {
         int[] v = new int[this.hashbits];
         StringTokenizer stringTokens = new StringTokenizer(this.tokens);
         while (stringTokens.hasMoreTokens()) {
@@ -68,7 +68,7 @@ public class SimHash {
         }
     }
 
-    public int hammingDistance(SimHash other) {
+    private int hammingDistance(SimHash other) {
         BigInteger m = new BigInteger("1").shiftLeft(this.hashbits).subtract(new BigInteger("1"));
         BigInteger x = this.strSimHash.xor(other.strSimHash).and(m);
         int tot = 0;
@@ -77,5 +77,11 @@ public class SimHash {
             x = x.and(x.subtract(new BigInteger("1")));
         }
         return tot;
+    }
+
+    public static Double getSimilarity(String submSource, String submSource2) {
+        SimHash hash1 = new SimHash(submSource, 128);
+        SimHash hash2 = new SimHash(submSource2, 128);
+        return (double) (128 - hash1.hammingDistance(hash2)) / 128;
     }
 }

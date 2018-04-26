@@ -193,6 +193,7 @@ public class SubmitSimilarityAction extends BaseAction {
             similarity.setExamId(examId);
             similarity.setSimilarity(simResult.getValue());
             similarityList.add(similarity);
+            // diff(simResult.getSubmId1(), simResult.getSubmId2(), simResult.getValue());
         }
         int insertCount = submitSimilarityDao.insertBatch(similarityList);
         if (insertCount != 0) {
@@ -201,5 +202,12 @@ public class SubmitSimilarityAction extends BaseAction {
             apiResult.setStatusAndDesc(-5, "插入失败");
         }
         return apiResult;
+    }
+
+    private void diff(Integer submId1, Integer submId2, double value) {
+        SubmitInfo submitInfo1 = submitInfoDao.selectByPrimaryKey(submId1);
+        SubmitInfo submitInfo2 = submitInfoDao.selectByPrimaryKey(submId2);
+        Double oldValue = SimHash.getSimilarity(submitInfo1.getSource(), submitInfo2.getSource());
+        System.out.printf("%d %d %f %f\n", submId1, submId2, value, oldValue);
     }
 }
