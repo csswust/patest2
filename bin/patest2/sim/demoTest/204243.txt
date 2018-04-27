@@ -1,0 +1,18 @@
+#include<iostream>
+#include<stdio.h>
+#include<algorithm>
+#include<math.h>
+using namespace std;
+
+int main()
+{
+	int n,sum=0;
+	cin >> n;
+	for(int i=1;i<=n;i++)
+	{
+		int x = sqrt(i);
+		if(x*x == i)
+		sum++;
+	}
+	cout<<sum<<endl;
+}

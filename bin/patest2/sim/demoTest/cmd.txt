@@ -1,0 +1,1 @@
+/home/mryang/patest/patest2/sim/script/sim_c++ -epS -o /home/mryang/patest/patest2/sim/demoTest/result.txt /home/mryang/patest/patest2/sim/demoTest/204243.txt "|" /home/mryang/patest/patest2/sim/demoTest/204252.txt
