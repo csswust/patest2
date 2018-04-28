@@ -13,7 +13,9 @@ import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.service.OperateLogService;
 import com.csswust.patest2.service.UserInfoService;
+import com.csswust.patest2.service.input.OperateLogInsert;
 import com.csswust.patest2.service.monitor.Monitor;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
@@ -52,7 +54,7 @@ public class UserInfoAction extends BaseAction {
             @RequestParam String username,
             @RequestParam String password) {
         Map<String, Object> res = new HashMap<String, Object>();
-        LoginRe result = userInfoService.login(username, password, getIp(request));
+        LoginRe result = userInfoService.login(username, password, getIp());
         // 进行实际登录
         Map<String, Object> sessionMap = new HashMap<>();
         if (result.getCurrUser() != null) {
@@ -101,6 +103,10 @@ public class UserInfoAction extends BaseAction {
         return res;
     }
 
+
+    @Autowired
+    private OperateLogService operateLogService;
+
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
             UserInfo userInfo,
@@ -111,6 +117,12 @@ public class UserInfoAction extends BaseAction {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         Map<String, Object> res = new HashMap<>();
+
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "用户查询");
+        insert.setArgcData("realName", "realName");
+        operateLogService.insertOne(insert);
+
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(realName)) {
             UserProfile userProfile = new UserProfile();

@@ -3,10 +3,7 @@ package com.csswust.patest2.service.common;
 import com.csswust.patest2.dao.UserInfoDao;
 import com.csswust.patest2.dao.UserProfileDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.ExamPaper;
-import com.csswust.patest2.entity.UserInfo;
-import com.csswust.patest2.entity.UserLoginLog;
-import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.entity.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,6 +42,15 @@ public class ConditionBuild extends BaseService {
         if (StringUtils.isNotBlank(userName)) {
             UserInfo userInfo = userInfoDao.selectByUsername(userName);
             loginLog.setUserId(userInfo == null ? -1 : userInfo.getUserId());
+        }
+        buildByStudentNumber(baseQuery, studentNumber);
+    }
+
+    public void buildOperateLog(BaseQuery baseQuery, OperateLog operateLog,
+                                String userName, String studentNumber) {
+        if (StringUtils.isNotBlank(userName)) {
+            UserInfo userInfo = userInfoDao.selectByUsername(userName);
+            operateLog.setUserId(userInfo == null ? -1 : userInfo.getUserId());
         }
         buildByStudentNumber(baseQuery, studentNumber);
     }

@@ -48,13 +48,20 @@ public class BaseAction extends Base {
     }
 
 
-    protected String getIp(HttpServletRequest request) {
-        return request.getRemoteAddr();
+    protected String getIp() {
+        return this.request.getRemoteAddr();
     }
 
     protected Integer getUserId() {
         HttpSession session = request.getSession();
         return (Integer) session.getAttribute("userId");
+    }
+
+    protected String getUrl() {
+        // 获取请求地址url
+        String contextPath = request.getContextPath();
+        String URI = request.getRequestURI();
+        return URI.replace(contextPath, "");
     }
 
     protected Integer getEpUserId() {

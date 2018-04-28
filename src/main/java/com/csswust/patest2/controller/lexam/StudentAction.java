@@ -201,7 +201,7 @@ public class StudentAction extends BaseAction {
         }
         submInfoMap.put(userId, nowDate);
         submitInfo.setUserId(userId);
-        submitInfo.setIp(getIp(request));
+        submitInfo.setIp(getIp());
         submitInfo.setIsTeacherTest(0);
         submitInfo.setStatus(11);
         PaperProblem paperProblem = paperProblemDao.selectByPrimaryKey(submitInfo.getPaperProblemId());

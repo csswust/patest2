@@ -21,6 +21,16 @@ public class OperateLogInsert {
 
     private Integer problemId;
 
+    public OperateLogInsert() {
+    }
+
+    public OperateLogInsert(Integer userId, String ip, String apiUrl, String apiDesc) {
+        this.userId = userId;
+        this.ip = ip;
+        this.apiUrl = apiUrl;
+        this.apiDesc = apiDesc;
+    }
+
     public Integer getUserId() {
         return userId;
     }

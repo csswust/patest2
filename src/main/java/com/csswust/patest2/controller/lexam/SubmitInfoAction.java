@@ -113,7 +113,7 @@ public class SubmitInfoAction extends BaseAction {
     public Map<String, Object> testData(SubmitInfo submitInfo) {
         Map<String, Object> res = new HashMap<>();
         submitInfo.setUserId(getUserId());
-        submitInfo.setIp(getIp(request));
+        submitInfo.setIp(getIp());
         submitInfo.setIsTeacherTest(1);
         submitInfo.setStatus(11);
         int result = submitInfoDao.insertSelective(submitInfo);

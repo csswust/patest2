@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LExamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <!--<link rel="stylesheet" href="../css/exam.css">-->
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .tdhidden {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+<div id="head">
+    <!-- 头部菜单 -->
+</div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2">
+            <!-- 左侧导航 -->
+        </div>
+        <div class="col-md-10 main">
+            <div class="tip">
+                <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+                    <a href="#" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>小提示：出现问题刷新试试</strong>
+                </div>
+            </div>
+            <div class="row opration">
+                <div class="btn-group col-md-1" role="group">
+
+                </div>
+                <form class="form-inline col-md-10 col-md-offset-1">
+                    <div class="form-group">
+                        <input class="form-control form_datetime startTime" type="text" placeholder="开始时间">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control form_datetime endTime" type="text" placeholder="结束时间">
+                    </div>
+                    <div class="form-group">
+                        <input style="width: 120px" type="text" class="form-control sapiUrl" placeholder="api地址">
+                    </div>
+                    <div class="form-group">
+                        <input style="width: 120px" type="text" class="form-control sexamId" placeholder="examId">
+                    </div>
+                    <div class="form-group">
+                        <input style="width: 120px" type="text" class="form-control susername" placeholder="用户名">
+                    </div>
+                    <div class="input-group">
+                        <input style="width: 120px" type="text" class="form-control sstudentNumber" placeholder="学号/工号">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary search" type="button">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                查询
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <table
+                    class="table table-bordered table-hover table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="check_list"/>全选</th>
+                    <th>ID</th>
+                    <!--<th>考号</th>-->
+                    <th>姓名</th>
+                    <!--<th>学号/工号</th>-->
+                    <th>api地址</th>
+                    <th>api描述</th>
+                    <th>api参数</th>
+                    <th>examId</th>
+                    <th>problemId</th>
+                    <th>IP</th>
+                    <th>操作时间</th>
+                </tr>
+                </thead>
+                <tbody id="listInfo">
+                </tbody>
+            </table>
+            <div class="row paging">
+                <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个
+                </div>
+                <div class="col-md-5 ">
+                    <ul class="pagination " id="pagination"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade " id="settingdata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><!--index/faqs  --></h4>
+            </div>
+            <div class="modal-body">
+                <div id="code">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/operateLog.js"></script>
+</html>
