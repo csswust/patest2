@@ -33,7 +33,7 @@ define(function (require, exports, module) {
         },
         topMenu: function () {
             var tophtml = '<div id="nav"  class="navmenu"><ul>' +
-                '<li class="homepage"><a href="homepaged.html">首页</a>' +
+                '<li class="homepage"><a href="home.html">首页</a>' +
                 '<ul><li><a href="#instro">平台介绍</a></li>' +
                 '<li><a href="#info">平台公告</a></li>' +
                 '<li><a href="score.html">成绩查询</a></li>' +

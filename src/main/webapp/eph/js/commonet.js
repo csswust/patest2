@@ -62,7 +62,7 @@ var commonet = {
         }
     },
     alreadyLogin: function () {
-        var menuHtml = '<li class="homepaged"><a href="homepaged.html">首页</a></li>' +
+        var menuHtml = '<li class="homepaged"><a href="home.html">首页</a></li>' +
             '<li class="applyexam"><a href="applyexam.html">考试申请</a></li> ' +
             '<li class="myapply"><a href="applywait.html">我的申请</a></li> ' +
             '<li class="mybill"><a href="billlist.html">我的账单</a></li> ' +
@@ -77,8 +77,8 @@ var commonet = {
             commonet.sysname +
             '</a> ' +
             '<ul class="dropdown-menu"> ' +
-            '<li class="loginoutet"><a href="#">注销</a></li> ' +
             '<li class="perinfo"><a href="perinfo.html">个人信息</a></li> ' +
+            '<li class="loginoutet"><a href="#">注销</a></li> ' +
             '</ul> ' +
             '</li>';
         $(".userHtml").html(userHtml);
@@ -87,7 +87,7 @@ var commonet = {
         });
     },
     notLogin: function () {
-        var menuHtml = '<li class="homepaged"><a href="homepaged.html">首页</a></li>' +
+        var menuHtml = '<li class="homepaged"><a href="home.html">首页</a></li>' +
             '<li class="score"><a href="score.html">成绩查询</a></li> ' +
             '<li class="epnotices"><a href="epnotices.html">公告</a></li>';
         $(".menuHtml").html(menuHtml);
@@ -154,7 +154,7 @@ var commonet = {
         }, null, function (result) {
             if (result.status === 1) {
                 commonet.deleCookie("sysname");
-                window.location.href = "homepaged.html";
+                window.location.href = "home.html";
             }
         });
     },

@@ -1,17 +1,17 @@
-var homepaged = {
+var home = {
     init: function () {
         commonet.init(); // 公共模块初始化
         $(".homepaged").addClass("onet");
-        homepaged.testMenu();
+        home.testMenu();
 
         // 统计个数
-        homepaged.examselect();
-        homepaged.userselect();
-        homepaged.problemselect();
-        homepaged.knowledgeselect();
+        home.examselect();
+        home.userselect();
+        home.problemselect();
+        home.knowledgeselect();
         // 查询公告
-        homepaged.selectNotice();
-        homepaged.Carousel();
+        home.selectNotice();
+        home.Carousel();
     },
     Carousel: function () {
         $('#carousel-example-generic').carousel({
@@ -72,27 +72,27 @@ var homepaged = {
             page: 1,
             row: 10
         }, function (result) {
-            homepaged.data = result.data.list;
-            homepaged.count = result.data.total;
-            homepaged.showNotice();
+            home.data = result.data.list;
+            home.count = result.data.total;
+            home.showNotice();
             $(".shownotice").empty();
-            $(".shownotice").append(homepaged.html);
+            $(".shownotice").append(home.html);
         });
     },
     showNotice: function () {
-        homepaged.html = "";
+        home.html = "";
         var length;
-        if (homepaged.data.length >= 8) {
+        if (home.data.length >= 8) {
             length = 8;
         } else {
-            length = homepaged.data.length;
+            length = home.data.length;
         }
-        homepaged.html = "";
+        home.html = "";
         for (var i = 0; i < length; i++) {
-            var time = homepaged.data[i].createTime.split(" ")[0];
-            homepaged.html += '<li class="list-group-item"><div class="record clearfix"><div class="link">'
+            var time = home.data[i].createTime.split(" ")[0];
+            home.html += '<li class="list-group-item"><div class="record clearfix"><div class="link">'
                 + '<span class="glyphicon glyphicon-chevron-right " aria-hidden="true "></span>'
-                + '<a href="epnoticetext.html?epid=' + homepaged.data[i].epnoId + '">' + homepaged.data[i].title + '</a></div>'
+                + '<a href="epnoticetext.html?epid=' + home.data[i].epnoId + '">' + home.data[i].title + '</a></div>'
                 + '<div class="badge">[' + time + ']</div></div></li>';
         }
     }
