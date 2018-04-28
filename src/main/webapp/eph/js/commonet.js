@@ -138,10 +138,10 @@ var commonet = {
             $('#myReg').modal();
         });
         $("#btnlogin").click(function () {
-            loginreg.judgeLogin();
+            commonet.judgeLogin();
         });
         $("#register").click(function () {
-            loginreg.judgeRegister();
+            commonet.judgeRegister();
         });
     },
     headet: function () {
@@ -190,7 +190,7 @@ var commonet = {
         }, null, function (result) {
             if (result.status === 1) {
                 commonet.deleCookie("sysname");
-                window.location.href = "mainpage.html";
+                window.location.href = "homepaged.html";
             }
         });
     },
@@ -338,8 +338,8 @@ var commonet = {
         patest.request({
             url: "../ep/epUserInfo/login"
         }, {
-            username: loginreg.username,
-            password: loginreg.password
+            username: commonet.username,
+            password: commonet.password
         }, function (result) {
             var exp = new Date();
             if (result.status !== 1) {
@@ -353,14 +353,14 @@ var commonet = {
         });
     },
     judgeLogin: function () {
-        loginreg.username = $("#username").val();
-        loginreg.password = $("#password").val();
-        if (loginreg.username && loginreg.password) {
-            loginreg.login();
+        commonet.username = $("#username").val();
+        commonet.password = $("#password").val();
+        if (commonet.username && commonet.password) {
+            commonet.login();
         }
-        else if (!loginreg.username) {
+        else if (!commonet.username) {
             alert("用户名不能为空");
-        } else if (!loginreg.password) {
+        } else if (!commonet.password) {
             alert("密码不能为空");
         } else {
             alert("请完善登录信息或去注册");
@@ -370,11 +370,11 @@ var commonet = {
         patest.request({
             url: "../ep/epUserInfo/register"
         }, {
-            username: loginreg.nickname,
-            email: loginreg.inputMail,
-            password: loginreg.inputpassword,
-            phone: loginreg.telephone,
-            unit: loginreg.unit
+            username: commonet.nickname,
+            email: commonet.inputMail,
+            password: commonet.inputpassword,
+            phone: commonet.telephone,
+            unit: commonet.unit
         }, function (result) {
             if (result.status === 1) {
                 $("#myReg").modal('hide');
@@ -386,23 +386,23 @@ var commonet = {
     },
     judgeRegister: function () {
         var reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
-        loginreg.nickname = $("#nickname").val();
-        loginreg.inputMail = $("#inputMail").val();
-        loginreg.inputpassword = $("#inputpassword").val();
-        loginreg.inputpass = $("#inputpass").val();
-        loginreg.unit = $("#unit").val();
-        loginreg.telephone = $("#telephone").val();
-        if (loginreg.nickname && loginreg.inputMail && loginreg.inputpassword
-            && loginreg.inputpass && loginreg.unit && loginreg.telephone) {
-            if (!reg.test(loginreg.inputMail)) {
+        commonet.nickname = $("#nickname").val();
+        commonet.inputMail = $("#inputMail").val();
+        commonet.inputpassword = $("#inputpassword").val();
+        commonet.inputpass = $("#inputpass").val();
+        commonet.unit = $("#unit").val();
+        commonet.telephone = $("#telephone").val();
+        if (commonet.nickname && commonet.inputMail && commonet.inputpassword
+            && commonet.inputpass && commonet.unit && commonet.telephone) {
+            if (!reg.test(commonet.inputMail)) {
                 alert("邮箱格式不正确");
             }
             else {
-                if (loginreg.inputpassword !== loginreg.inputpass) {
+                if (commonet.inputpassword !== commonet.inputpass) {
                     alert("密码和确认密码不一致");
                 }
                 else {
-                    loginreg.register();
+                    commonet.register();
                 }
             }
         }
