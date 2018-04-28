@@ -2,6 +2,8 @@ package com.csswust.patest2.controller.lexam;
 
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.service.ExamProblemService;
+import com.csswust.patest2.service.OperateLogService;
+import com.csswust.patest2.service.input.OperateLogInsert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class ExamProblemAction extends BaseAction {
 
     @Autowired
     private ExamProblemService examProblemService;
+    @Autowired
+    private OperateLogService operateLogService;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
@@ -33,11 +37,19 @@ public class ExamProblemAction extends BaseAction {
     public Object insertByArray(
             @RequestParam Integer examId,
             @RequestParam Integer[] probIdList) {
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "添加临时题库", examId);
+        insert.setArgcData("probIdList", probIdList);
+        operateLogService.insertOne(insert);
         return examProblemService.insertByArray(examId, probIdList);
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Object deleteByIds(@RequestParam String ids) {
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "删除临时题库");
+        insert.setArgcData("ids", ids);
+        operateLogService.insertOne(insert);
         return examProblemService.deleteByIds(ids);
     }
 }

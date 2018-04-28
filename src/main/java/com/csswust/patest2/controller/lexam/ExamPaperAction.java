@@ -7,6 +7,8 @@ import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.ExamPaperService;
+import com.csswust.patest2.service.OperateLogService;
+import com.csswust.patest2.service.input.OperateLogInsert;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,8 @@ public class ExamPaperAction extends BaseAction {
     private ProblemInfoDao problemInfoDao;
     @Autowired
     private SubmitInfoDao submitInfoDao;
+    @Autowired
+    private OperateLogService operateLogService;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
@@ -102,6 +106,12 @@ public class ExamPaperAction extends BaseAction {
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> insertOne(@RequestParam Integer examId, @RequestParam String userName) {
         if (examId == null || StringUtils.isBlank(userName)) return null;
+
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "插入单张试卷", examId);
+        insert.setArgcData("userName", userName);
+        operateLogService.insertOne(insert);
+
         Map<String, Object> res = new HashMap<>();
         UserInfo userInfo = userInfoDao.selectByUsername(userName);
         if (userInfo == null) {
@@ -129,6 +139,10 @@ public class ExamPaperAction extends BaseAction {
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> updateById(ExamPaper examPaper) {
         Map<String, Object> res = new HashMap<>();
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "更新试卷", examPaper.getExamId());
+        insert.setArgcData("examPaper", examPaper);
+        operateLogService.insertOne(insert);
         int result = examPaperDao.updateByPrimaryKeySelective(examPaper);
         res.put("status", result);
         return res;
@@ -137,6 +151,10 @@ public class ExamPaperAction extends BaseAction {
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "删除试卷");
+        insert.setArgcData("ids", ids);
+        operateLogService.insertOne(insert);
         int result = examPaperDao.deleteByIds(ids);
         res.put("status", result);
         return res;
@@ -149,12 +167,20 @@ public class ExamPaperAction extends BaseAction {
             @RequestParam(required = false, defaultValue = "false") Boolean isIgnoreError) {
         if (examId == null) return new APIResult(-501, "examId不能为空");
         if (namefile == null) return new APIResult(-501, "namefile不能为空");
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "导入考试名单", examId);
+        insert.setArgcData("examId", examId);
+        operateLogService.insertOne(insert);
         return examPaperService.insertByExcel(namefile, examId, isIgnoreError);
     }
 
     @RequestMapping(value = "/drawProblem", method = {RequestMethod.GET, RequestMethod.POST})
     public Object drawProblem(@RequestParam Integer examId) {
         if (examId == null) return new APIResult(-501, "examId不能为空");
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "抽题", examId);
+        insert.setArgcData("examId", examId);
+        operateLogService.insertOne(insert);
         return examPaperService.drawProblemByExamId(examId, null);
     }
 }
