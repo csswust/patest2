@@ -15,10 +15,8 @@ var addParm = {
     knowName: '',
     init: function () {
         commonet.init(); // 公共模块初始化
+        commonet.listMenu();
 
-        $(".examMana").next(".treeview-menu").toggle("slow");
-        $(".examMana").addClass("leftActive");
-        $(".examList").css("color", "white");
         $(".ettemplate").addClass("on");
         $(".mytest").addClass("onet");
 

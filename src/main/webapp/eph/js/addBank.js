@@ -8,10 +8,8 @@ var addBank = {
     page: 1,
     init: function () {
         commonet.init(); // 公共模块初始化
+        commonet.listMenu();
 
-        $(".examMana").next(".treeview-menu").toggle("slow");
-        $(".examMana").addClass("leftActive");
-        $(".examList").css("color", "white");
         $(".etbank").addClass("on");
         $(".mytest").addClass("onet");
         var par = patest.getQueryObject();

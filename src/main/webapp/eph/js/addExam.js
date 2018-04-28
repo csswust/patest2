@@ -10,10 +10,8 @@ var addExam = {
     expmIds: [],
     init: function () {
         commonet.init(); // 公共模块初始化
+        commonet.listMenu();
 
-        $(".examMana").next(".treeview-menu").toggle("slow");
-        $(".examMana").addClass("leftActive");
-        $(".examList").css("color", "white");
         $(".etinfo").addClass("on");
         $(".mytest").addClass("onet");
 

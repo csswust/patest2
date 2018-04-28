@@ -9,42 +9,35 @@ var commonet = {
         commonet.footcon();
         commonet.selectEpinfo();
     },
+    listMenu: function () {
+        var list = '<div class="col-md-3 stinfo  etinfo" id="sinfo">'
+            + '<h5>基本信息</h5>' + '</div>'
+            + '<div class="col-md-3 stbank etbank" id="sbank">'
+            + ' <h5>所选题库</h5>' + '</div>'
+            + '<div class="col-md-3 sttemplate ettemplate">'
+            + '<h5>试卷参数</h5>' + '</div>'
+            + '<div class="col-md-3 stlist etlist">' + '<h5>考生名单</h5>'
+            + '</div>';
+        $(".etstep .row").append(list);
+        commonet.editExam();
+    },
     editExam: function () {
+        var par = patest.getQueryObject();
         $(".etinfo").click(function () {
-            if (par.examId) {
-                commonet.examId = par.examId;
-                window.location.href = 'addExam.html?examId=' + commonet.examId;
-            } else if (par.Id) {
-                commonet.examId = par.Id;
-                window.location.href = 'addExam.html?Id=' + commonet.examId;
-            }
+            commonet.examId = par.Id;
+            window.location.href = 'addExam.html?Id=' + commonet.examId;
         });
         $(".etbank").click(function () {
-            if (par.examId) {
-                commonet.examId = par.examId;
-                window.location.href = 'addBank.html?examId=' + commonet.examId;
-            } else if (par.Id) {
-                commonet.examId = par.Id;
-                window.location.href = 'addBank.html?Id=' + commonet.examId;
-            }
+            commonet.examId = par.Id;
+            window.location.href = 'addBank.html?Id=' + commonet.examId;
         });
         $(".ettemplate").click(function () {
-            if (par.examId) {
-                commonet.examId = par.examId;
-                window.location.href = 'addParm.html?examId=' + commonet.examId;
-            } else if (par.Id) {
-                commonet.examId = par.Id;
-                window.location.href = 'addParm.html?Id=' + commonet.examId;
-            }
+            commonet.examId = par.Id;
+            window.location.href = 'addParm.html?Id=' + commonet.examId;
         });
         $(".etlist").click(function () {
-            if (par.examId) {
-                commonet.examId = par.examId;
-                window.location.href = 'addUplist.html?examId=' + commonet.examId;
-            } else if (par.Id) {
-                commonet.examId = par.Id;
-                window.location.href = 'addUplist.html?Id=' + commonet.examId;
-            }
+            commonet.examId = par.Id;
+            window.location.href = 'addUplist.html?Id=' + commonet.examId;
         });
     },
 

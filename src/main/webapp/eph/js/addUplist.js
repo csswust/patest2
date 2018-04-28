@@ -13,10 +13,7 @@ var addUplist = {
     expmId: '',
     init: function () {
         commonet.init(); // 公共模块初始化
-
-        $(".examMana").next(".treeview-menu").toggle("slow");
-        $(".examMana").addClass("leftActive");
-        $(".examList").css("color", "white");
+        commonet.listMenu();
         $(".etlist").addClass("on");
         $(".mytest").addClass("onet");
 
@@ -44,18 +41,10 @@ var addUplist = {
             addUplist.importList();
         });
         $(".save").click(function () {
-            if (par.examId) {
-                if (addUplist.userInfo) {
-                    window.location.href = "exam.html";
-                } else {
-                    patest.alertInfo("alert-warning", "考生名单没有上传");
-                }
-            } else if (par.Id) {
-                if (addUplist.userInfo) {
-                    window.location.href = "exam.html";
-                } else {
-                    patest.alertInfo("alert-warning", "考生名单没有上传");
-                }
+            if (addUplist.userInfo) {
+                window.location.href = "test.html";
+            } else {
+                patest.alertInfo("alert-warning", "考生名单没有上传");
             }
         });
         //下载学生上传模板
