@@ -2,6 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csswust.patest2.dao.UserLoginLogDao">
     <sql id="custom_condition">
+        <if test="query.customParam.userIds != null">
+            AND
+            user_id in
+            <foreach collection="query.customParam.userIds" item="item" index="index" open="(" close=")"
+                     separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="query.customParam.startTime != null">
+            AND
+            create_time > #{query.customParam.startTime}
+        </if>
+        <if test="query.customParam.endTime != null">
+            AND
+            create_time &lt; #{query.customParam.endTime}
+        </if>
         ORDER BY use_log_id DESC
     </sql>
 </mapper>

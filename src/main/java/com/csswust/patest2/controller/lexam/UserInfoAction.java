@@ -46,8 +46,6 @@ public class UserInfoAction extends BaseAction {
     private UserLoginLogDao userLoginLogDao;
     @Autowired
     private ExamInfoDao examInfoDao;
-    @Autowired
-    private Monitor monitor;
 
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> login(

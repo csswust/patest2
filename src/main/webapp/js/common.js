@@ -73,6 +73,7 @@ var common = {
             + '<ul class="treeview-menu">'
             + '<li><a href="sysetting.html" class="systemset">参数设置</a></li>'
             + '<li><a href="monitor.html" class="monitor">系统监控</a></li>'
+            + '<li><a href="userLoginLog.html" class="userLoginLog">登录日志</a></li>'
             + '</ul>' + '</li>' + '</ul>';
         $(".side-bar").append(htmlLeft);
     },

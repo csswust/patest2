@@ -5,6 +5,7 @@ import com.csswust.patest2.dao.UserProfileDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.ExamPaper;
 import com.csswust.patest2.entity.UserInfo;
+import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class ConditionBuild extends BaseService {
     @Autowired
     private UserProfileDao userProfileDao;
 
+
     public void buildExamPaper(BaseQuery baseQuery, ExamPaper examPaper,
                                String userName, String studentNumber) {
         if (StringUtils.isNotBlank(userName)) {
@@ -35,16 +37,29 @@ public class ConditionBuild extends BaseService {
                 examPaper.setUserId(-1);
             }
         }
+        buildByStudentNumber(baseQuery, studentNumber);
+    }
+
+    public void buildUserLoginLog(BaseQuery baseQuery, UserLoginLog loginLog,
+                                  String userName, String studentNumber) {
+        if (StringUtils.isNotBlank(userName)) {
+            UserInfo userInfo = userInfoDao.selectByUsername(userName);
+            loginLog.setUserId(userInfo == null ? -1 : userInfo.getUserId());
+        }
+        buildByStudentNumber(baseQuery, studentNumber);
+    }
+
+    private void buildByStudentNumber(BaseQuery query, String studentNumber) {
         if (StringUtils.isNotBlank(studentNumber)) {
             UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
             if (userProfile == null) {
-                baseQuery.setCustom("userIds", new ArrayList<Integer>());
+                query.setCustom("userIds", new ArrayList<Integer>());
             } else {
                 UserInfo userInfo = new UserInfo();
                 userInfo.setUserProfileId(userProfile.getUseProId());
                 List<UserInfo> userInfoList = userInfoDao.selectByCondition(userInfo, new BaseQuery());
                 List<Integer> userIds = getFieldByList(userInfoList, "userId", UserInfo.class);
-                baseQuery.setCustom("userIds", userIds);
+                query.setCustom("userIds", userIds);
             }
         }
     }
