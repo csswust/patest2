@@ -1,5 +1,5 @@
-$(".userMana").next(".treeview-menu").toggle("slow");
-$(".userMana").addClass("leftActive");
+$(".sysMana").next(".treeview-menu").toggle("slow");
+$(".sysMana").addClass("leftActive");
 $(".userLoginLog").css("color", "white");
 
 $(".form_datetime").datetimepicker({

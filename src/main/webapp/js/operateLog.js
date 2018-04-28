@@ -1,6 +1,6 @@
-$(".userMana").next(".treeview-menu").toggle("slow");
-$(".userMana").addClass("leftActive");
-$(".userLoginLog").css("color", "white");
+$(".sysMana").next(".treeview-menu").toggle("slow");
+$(".sysMana").addClass("leftActive");
+$(".operateLog").css("color", "white");
 
 $(".form_datetime").datetimepicker({
     format: 'yyyy-mm-dd hh:ii:ss'
