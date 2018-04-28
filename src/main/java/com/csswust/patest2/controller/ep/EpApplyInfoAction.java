@@ -3,6 +3,7 @@ package com.csswust.patest2.controller.ep;
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.EpApplyInfoDao;
+import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.EpApplyInfo;
 import com.csswust.patest2.service.EpApplyInfoService;
 import com.csswust.patest2.service.common.AuthService;
@@ -48,6 +49,14 @@ public class EpApplyInfoAction extends BaseAction {
         Integer epUserId = getEpUserId();
         if (epUserId == null) {
             apiResult.setStatusAndDesc(-1, "未登录");
+            return apiResult;
+        }
+        EpApplyInfo condition = new EpApplyInfo();
+        condition.setEpUserId(epUserId);
+        condition.setExamName(examName);
+        int total = epApplyInfoDao.selectByConditionGetCount(condition, new BaseQuery());
+        if (total != 0) {
+            apiResult.setStatusAndDesc(-2, "考试名字不能重复");
             return apiResult;
         }
         EpApplyInfo epApplyInfo = new EpApplyInfo();

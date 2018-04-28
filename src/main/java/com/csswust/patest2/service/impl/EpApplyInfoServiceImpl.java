@@ -61,7 +61,12 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
     @Override
     public APIResult accept(Integer applyId, Integer status, Double money, String reason) {
         APIResult apiResult = new APIResult();
+        if (status != 0 && status != 1) {
+            apiResult.setStatusAndDesc(-501, "参数非法");
+            return apiResult;
+        }
         EpApplyInfo epApplyInfo = epApplyInfoDao.selectByPrimaryKey(applyId);
+
         if (epApplyInfo == null) {
             apiResult.setStatusAndDesc(-1, "applyId无效");
             return apiResult;
@@ -77,46 +82,47 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
         }
         EpApplyInfo record = new EpApplyInfo();
         record.setApplyId(applyId);
-        record.setStatus(status);
+        record.setStatus(status == 1 ? 1 : -1);
         record.setReason(reason);
         int result = epApplyInfoDao.updateByPrimaryKeySelective(record);
-        if (result == 1 && status == 1) {
-            // 添加订单
-            EpOrderInfo epOrderInfo = new EpOrderInfo();
-            epOrderInfo.setApplyId(applyId);
-            epOrderInfo.setDescription(epApplyInfo.getExamName());
-            epOrderInfo.setEpUserId(epApplyInfo.getEpUserId());
-            epOrderInfo.setIsPay(0);
-            epOrderInfo.setMoney(money);
+        if (result == 1) {
+            if (status == 1) {
+                // 添加订单
+                EpOrderInfo epOrderInfo = new EpOrderInfo();
+                epOrderInfo.setApplyId(applyId);
+                epOrderInfo.setDescription(epApplyInfo.getExamName());
+                epOrderInfo.setEpUserId(epApplyInfo.getEpUserId());
+                epOrderInfo.setIsPay(0);
+                epOrderInfo.setMoney(money);
 
-            Calendar now = Calendar.getInstance();
-            String examYear = String.format("%d", now.get(Calendar.YEAR));
-            String examDay = String.format("%1$02d", now.get(Calendar.DAY_OF_MONTH));
-            String examMoth = String.format("%1$02d", now.get(Calendar.MONTH) + 1);
-            String newexamId = String.format("%1$06d", epApplyInfo.getApplyId());
-            String newSysId = String.format("%1$06d", epApplyInfo.getEpUserId());
-            epOrderInfo.setOrderNum(examYear + examMoth + examDay + newSysId + newexamId);
-            int temp = epOrderInfoDao.insertSelective(epOrderInfo);
-            if (temp == 0) {
-                apiResult.setStatusAndDesc(-4, "插入订单失败" +
-                        JSON.toJSONString(epOrderInfo));
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            } else {
-                EpApplyInfo recordApply = new EpApplyInfo();
-                recordApply.setApplyId(record.getApplyId());
-                recordApply.setOrderId(epOrderInfo.getOrderId());
-                temp = epApplyInfoDao.updateByPrimaryKeySelective(recordApply);
+                Calendar now = Calendar.getInstance();
+                String examYear = String.format("%d", now.get(Calendar.YEAR));
+                String examDay = String.format("%1$02d", now.get(Calendar.DAY_OF_MONTH));
+                String examMoth = String.format("%1$02d", now.get(Calendar.MONTH) + 1);
+                String newexamId = String.format("%1$06d", epApplyInfo.getApplyId());
+                String newSysId = String.format("%1$06d", epApplyInfo.getEpUserId());
+                epOrderInfo.setOrderNum(examYear + examMoth + examDay + newSysId + newexamId);
+                int temp = epOrderInfoDao.insertSelective(epOrderInfo);
                 if (temp == 0) {
-                    apiResult.setStatusAndDesc(-5, "更新申请失败" +
-                            JSON.toJSONString(recordApply));
-                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    apiResult.setStatusAndDesc(-4, "插入订单失败" + getJson(epOrderInfo));
                 } else {
-                    apiResult.setStatusAndDesc(temp, "审核成功");
+                    EpApplyInfo recordApply = new EpApplyInfo();
+                    recordApply.setApplyId(record.getApplyId());
+                    recordApply.setOrderId(epOrderInfo.getOrderId());
+                    temp = epApplyInfoDao.updateByPrimaryKeySelective(recordApply);
+                    if (temp == 0) {
+                        apiResult.setStatusAndDesc(-5, "更新申请失败" + getJson(recordApply));
+                    } else {
+                        apiResult.setStatusAndDesc(temp, "审核成功");
+                    }
                 }
+            } else {
+                apiResult.setStatusAndDesc(result, "拒绝成功");
             }
         } else {
-            apiResult.setStatusAndDesc(-5, "更新申请失败" +
-                    JSON.toJSONString(record));
+            apiResult.setStatusAndDesc(-5, "更新申请失败" + getJson(record));
+        }
+        if (apiResult.getStatus() != 1) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return apiResult;

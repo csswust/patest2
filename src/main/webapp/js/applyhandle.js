@@ -72,7 +72,7 @@ var program = {
                 console.log(result);
                 if (result.status === 1) {
                     program.selectallInfo();
-                    pubMeth.alertInfo("alert-success", "修改成功");
+                    pubMeth.alertInfo("alert-success", result.desc);
                     $("#mexamine").modal('hide');
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
