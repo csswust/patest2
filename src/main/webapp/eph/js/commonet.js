@@ -3,20 +3,13 @@ var commonet = {
     epUserId: null,
     init: function () {
         commonet.getCookie("sysname");
+        // 导航
         commonet.headet();
-        commonet.testMenu();
+        // 页脚
         commonet.footcon();
         commonet.selectEpinfo();
-        var par = patest.getQueryObject();
-        $(".treeview").on('click', function () {
-            $(this).next(".treeview-menu").toggle("slow");
-        });
-        $(".loginout").click(function () {
-            commonet.loginout();
-        });
-        $(".loginoutet").click(function () {
-            commonet.loginoutet();
-        });
+    },
+    editExam: function () {
         $(".etinfo").click(function () {
             if (par.examId) {
                 commonet.examId = par.examId;
@@ -54,38 +47,6 @@ var commonet = {
             }
         });
     },
-    examselect: function () {
-        patest.request({
-            url: "../ep/selectExamTotal"
-        }, null, function (result) {
-            var num = document.getElementById("examnum");
-            num.innerText = result.data.total + "场";
-        });
-    },
-    userselect: function () {
-        patest.request({
-            url: "../ep/selectUserTotal"
-        }, null, function (result) {
-            var num = document.getElementById("usernum");
-            num.innerText = result.data.total + "人";
-        });
-    },
-    problemselect: function () {
-        patest.request({
-            url: "../ep/selectProblemAllCount"
-        }, null, function (result) {
-            var num = document.getElementById("problemnum");
-            num.innerText = result.data.total + "个";
-        });
-    },
-    knowledgeselect: function () {
-        patest.request({
-            url: "../ep/selectKnowledgeAllCount"
-        }, null, function (result) {
-            var num = document.getElementById("knowledgenum");
-            num.innerText = result.data.total + "个";
-        });
-    },
     getCookie: function (objName) {
         var arrStr = document.cookie.split("; ");
         for (var i = 0; i < arrStr.length; i++) {
@@ -120,6 +81,9 @@ var commonet = {
             '</ul> ' +
             '</li>';
         $(".userHtml").html(userHtml);
+        $(".loginoutet").click(function () {
+            commonet.loginoutet();
+        });
     },
     notLogin: function () {
         var menuHtml = '<li class="homepaged"><a href="homepaged.html">首页</a></li>' +
@@ -150,21 +114,6 @@ var commonet = {
         } else {
             commonet.notLogin();
         }
-    },
-    testMenu: function () {
-        var list = '<div class="col-md-3 etinfo" id="sinfo">' +
-            '<h5>基本信息</h5>' +
-            '</div>' +
-            '<div class="col-md-3  etbank" id="sbank">' +
-            ' <h5>所选题库</h5>' +
-            '</div>' +
-            '<div class="col-md-3  ettemplate">' +
-            '<h5>试卷参数</h5>' +
-            '</div>' +
-            '<div class="col-md-3  etlist">' +
-            '<h5>考生名单</h5>' +
-            '</div>';
-        $(".etstep .row").append(list);
     },
     footcon: function () {
         var foothtml = '<div class="row"><div class="col-md-4 col-md-offset-1">' +
@@ -212,37 +161,7 @@ var commonet = {
             }
         });
     },
-    selectNotice: function () {
-        patest.request({
-            url: "../ep/epNotice/selectByCondition"
-        }, {
-            page: 1,
-            row: 10
-        }, function (result) {
-            commonet.data = result.data.list;
-            commonet.count = result.data.total;
-            commonet.showNotice();
-            $(".shownotice").empty();
-            $(".shownotice").append(commonet.html);
-        });
-    },
-    showNotice: function () {
-        commonet.html = "";
-        var length;
-        if (commonet.data.length >= 8) {
-            length = 8;
-        } else {
-            length = commonet.data.length;
-        }
-        commonet.html = "";
-        for (var i = 0; i < length; i++) {
-            var time = commonet.data[i].createTime.split(" ")[0];
-            commonet.html += '<li class="list-group-item"><div class="record clearfix"><div class="link">'
-                + '<span class="glyphicon glyphicon-chevron-right " aria-hidden="true "></span>'
-                + '<a href="epnoticetext.html?epid=' + commonet.data[i].epnoId + '">' + commonet.data[i].title + '</a></div>'
-                + '<div class="badge">[' + time + ']</div></div></li>';
-        }
-    },
+
     loginModal: function () {
         var loginModal = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> ' +
             '<div class="modal-dialog " style="width:380px;margin-top: 160px;"> ' +
