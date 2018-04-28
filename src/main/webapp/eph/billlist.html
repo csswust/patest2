@@ -80,28 +80,34 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="unpaid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h4 class="modal-title" id="myModalLabel">未支付</h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default closebill" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- 关于我们 -->
 <div id="footer">
     <!-- 页脚 -->
 </div>
 <div id="loginmodal"></div>
 <div id="registermodal"></div>
+<div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">付款方式</h4>
+            </div>
+            <div class="modal-body">
+                <div class="content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closeper" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary saveper" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
-<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
-<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>
 <!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
 <script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
 <!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->

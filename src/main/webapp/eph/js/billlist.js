@@ -85,17 +85,17 @@ var billlist = {
     },
     // 付款
     payment: function (id) {
+        $('#payModal').modal({
+            backdrop: 'static'
+        });
+
         patest.request({
-            url: "../ep/epOrderInfo/payment"
+            url: "../siteInfo/selectByName"
         }, {
-            orderId: id
+            name: "ep_pay_info"
         }, function (result) {
-            if (result.status === 1) {
-                patest.alertInfo("alert-success", "付款成功");
-                applywait.selectallInfo();
-            } else {
-                patest.alertInfo("alert-danger", result.desc);
-            }
+            program.faqs = result.value;
+            $(".content").html(program.faqs);
         });
     }
 };

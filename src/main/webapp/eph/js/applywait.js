@@ -15,14 +15,6 @@ var applywait = {
                 applywait.deleteApply(id);
             }
         });
-        $("#applyInfo").on('click', '.payment', function () {
-            var index = this.id;
-            if (index !== "null") {
-                applywait.payment(index);
-            } else {
-                patest.alertInfo("alert-danger", " 未申请通过");
-            }
-        });
         $("#applyInfo").on('click', '.addexam', function () {
             var index = this.id;
             if (index !== "null") {
@@ -52,24 +44,6 @@ var applywait = {
                 }
             });
         }
-    },
-    // 付款
-    payment: function (id) {
-        $('#payModal').modal({
-            backdrop: 'static'
-        });
-        /*patest.request({
-         url: "../ep/epOrderInfo/payment"
-         }, {
-         orderId: id
-         }, function (result) {
-         if (result.status === 1) {
-         patest.alertInfo("alert-success", "付款成功");
-         applywait.selectallInfo();
-         } else {
-         patest.alertInfo("alert-danger", result.desc);
-         }
-         });*/
     },
     //删除一场申请
     deleteApply: function (id) {
