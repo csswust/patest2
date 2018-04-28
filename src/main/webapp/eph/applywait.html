@@ -17,12 +17,19 @@
     <![endif]-->
 </head>
 <body>
-<div id="headet"><!-- 头部菜单 --></div>
+<div id="headet">
+    <!-- 头部菜单 -->
+    <nav class="navbar navbar-default">
+        <div class="navbar-header ">
+            <a class="navbar-brand" href="#">程序设计能力认证平台</a>
+        </div>
+        <ul class="nav navbar-nav menuHtml">
+        </ul>
+        <ul class="nav navbar-nav navbar-right userHtml">
+        </ul>
+    </nav>
+</div>
 <div class="container-fluid ">
-    <!--nav-->
-    <div class="topmenu">
-        <!-- 顶部导航 -->
-    </div>
     <!-- content -->
     <div class="col-md-10 col-md-offset-1 allcontent">
         <div class="tip">
@@ -76,9 +83,12 @@
         </div>
     </div>
 </div>
+<!-- 关于我们 -->
 <div id="footer">
     <!-- 页脚 -->
 </div>
+<div id="loginmodal"></div>
+<div id="registermodal"></div>
 </body>
 <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
@@ -91,7 +101,6 @@
 <!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
 
 <script type="text/javascript" src="../js/patest.js"></script>
-<script type="text/javascript" src="./js/loginreg.js"></script>
 <script type="text/javascript" src="./js/commonet.js"></script>
 <script type="text/javascript" src="./js/applywait.js"></script>
 <script type="text/javascript">

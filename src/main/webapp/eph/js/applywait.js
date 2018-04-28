@@ -3,7 +3,6 @@ var applywait = {
     epUserInfoList: [],
     init: function () {
         commonet.init(); // 公共模块初始化
-        commonet.selectEpinfo();
         $(".myapply").addClass("onet");
 
         patest.getRowsnum("rowsnum");

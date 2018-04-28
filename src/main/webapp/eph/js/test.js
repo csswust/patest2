@@ -11,6 +11,7 @@ var test = {
     sysuserid: '',
     init: function () {
         commonet.init(); // 公共模块初始化
+        $(".mytest").addClass("onet");
 
         var now = (new Date()).toLocaleString();
         $('.nowTime').text(now);
@@ -19,10 +20,6 @@ var test = {
             $('.nowTime').text(now);
         }, 1000);
 
-        $(".examRoom").next(".treeview-menu").toggle("slow");
-        $(".examRoom").addClass("leftActive");
-        $(".examination").css("color", "white");
-        $(".mytest").addClass("onet");
 
         test.getExamInfo();
         $(".drawQuestion").on('click', function () {

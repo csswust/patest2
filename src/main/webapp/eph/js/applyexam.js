@@ -1,7 +1,6 @@
 var applyexam = {
     init: function () {
         commonet.init(); // 公共模块初始化
-        commonet.selectEpinfo();
         $(".applyexam").addClass("onet");
 
         var date = new Date();

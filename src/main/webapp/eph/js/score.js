@@ -4,8 +4,9 @@ var score = {
     lookhtml: '',
     lookhtmls: '',
     init: function () {
-        //commonet.init(); // 公共模块初始化
-        commonet.selectEpinfo();
+        commonet.init(); // 公共模块初始化
+        $(".score").addClass("onet");
+
         var str = window.location.href;
         $("#serchScore").click(function () {
             score.judgeselect();
