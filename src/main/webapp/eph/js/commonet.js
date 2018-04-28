@@ -96,7 +96,7 @@ var commonet = {
     notLogin: function () {
         var menuHtml = '<li class="homepaged"><a href="homepaged.html">首页</a></li>' +
             '<li class="score"><a href="score.html">成绩查询</a></li> ' +
-            '<li class="score"><a href="score.html">公告</a></li>';
+            '<li class="epnotices"><a href="epnotices.html">公告</a></li>';
         $(".menuHtml").html(menuHtml);
         var userHtml = '<li class="userlogin"><a href="#" id="userlogin">登录</a></li> ' +
             '<li class="userreg"><a href="#" id="userreg">注册</a></li>';
