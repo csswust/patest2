@@ -47,6 +47,7 @@ var commonet = {
             }
         });
     },
+
     getCookie: function (objName) {
         var arrStr = document.cookie.split("; ");
         for (var i = 0; i < arrStr.length; i++) {
@@ -59,6 +60,13 @@ var commonet = {
         var date = new Date();
         date.setTime(date.getTime() - 10000);
         document.cookie = name + "=a; expires=" + date.toGMTString();
+    },
+    headet: function () {
+        if (commonet.sysname) {
+            commonet.alreadyLogin();
+        } else {
+            commonet.notLogin();
+        }
     },
     alreadyLogin: function () {
         var menuHtml = '<li class="homepaged"><a href="homepaged.html">首页</a></li>' +
@@ -108,13 +116,7 @@ var commonet = {
             commonet.judgeRegister();
         });
     },
-    headet: function () {
-        if (commonet.sysname) {
-            commonet.alreadyLogin();
-        } else {
-            commonet.notLogin();
-        }
-    },
+
     footcon: function () {
         var foothtml = '<div class="row"><div class="col-md-4 col-md-offset-1">' +
             '<p style="font-size:20px;font-weight:bold;"><span class="glyphicon glyphicon-asterisk"></span>团队介绍</p>' +
@@ -132,16 +134,6 @@ var commonet = {
             '©Copyright 2016 - 2017<a href="http://www.cs.swust.edu.cn/academic/lab-kownledge.html">西南科技大学数据与知识工程实验室</a>版权所有' +
             '</div>';
         $("#footer").append(foothtml);
-    },
-    loginoutet: function () {
-        patest.request({
-            url: "../ep/epUserInfo/logout"
-        }, null, function (result) {
-            if (result.status === 1) {
-                commonet.deleCookie("sysname");
-                window.location.href = "homepaged.html";
-            }
-        });
     },
     selectEpinfo: function () {
         patest.request({
@@ -162,6 +154,16 @@ var commonet = {
         });
     },
 
+    loginoutet: function () {
+        patest.request({
+            url: "../ep/epUserInfo/logout"
+        }, null, function (result) {
+            if (result.status === 1) {
+                commonet.deleCookie("sysname");
+                window.location.href = "homepaged.html";
+            }
+        });
+    },
     loginModal: function () {
         var loginModal = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> ' +
             '<div class="modal-dialog " style="width:380px;margin-top: 160px;"> ' +

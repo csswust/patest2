@@ -4,10 +4,11 @@ var epnotices = {
     count: '',
     init: function () {
         patest.getRowsnum("rowsnum");
+
         commonet.init();
         $(".epnotices").addClass("onet");
-
         epnotices.selectNotice();
+
         if (epnotices.count > 0) {
             $.jqPaginator('#pagination', {
                 totalCounts: epnotices.count,
