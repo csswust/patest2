@@ -5,15 +5,9 @@ var testbank = {
     probIdList: [],
     init: function () {
         commonet.init(); // 公共模块初始化
-
-        $(".examMana").next(".treeview-menu").toggle("slow");
-        $(".examMana").addClass("leftActive");
-        $(".examList").css("color", "white");
-        $(".etbank").addClass("on");
+        // $(".etbank").addClass("on");
         $(".mytest").addClass("onet");
-
         patest.getRowsnum("rowsnum");
-
         var parm = patest.getQueryObject();
         if (parm["Id"] !== null) {
             testbank.examId = parm["Id"];
