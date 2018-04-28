@@ -88,14 +88,13 @@ var billlist = {
         $('#payModal').modal({
             backdrop: 'static'
         });
-
         patest.request({
             url: "../siteInfo/selectByName"
         }, {
             name: "ep_pay_info"
         }, function (result) {
-            program.faqs = result.value;
-            $(".content").html(program.faqs);
+            billlist.faqs = result.value;
+            $(".content").html(billlist.faqs);
         });
     }
 };
