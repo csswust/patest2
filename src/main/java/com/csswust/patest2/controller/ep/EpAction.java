@@ -7,6 +7,7 @@ import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.*;
+import com.csswust.patest2.service.EpService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,8 @@ public class EpAction extends BaseAction {
     private ExamPaperDao examPaperDao;
     @Autowired
     private UserProfileDao userProfileDao;
+    @Autowired
+    private EpService epService;
 
     @RequestMapping(value = "/selectEpSite", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectEpSite() {
@@ -118,6 +121,26 @@ public class EpAction extends BaseAction {
         } else {
             apiResult.setStatusAndDesc(0, "无认证记录");
         }
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/selectExamGradeByNumber", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object selectExamGradeByNumber(@RequestParam String number) {
+        if (StringUtils.isBlank(number)) {
+            return new APIResult(-501, "number不能为空");
+        }
+        UserProfile userProfile = userProfileDao.selectByStudentNumber(number);
+        if (userProfile == null || userProfile.getUseProId() == null) {
+            return new APIResult(-1, "此学生不存在");
+        }
+        UserInfo condition = new UserInfo();
+        condition.setUserProfileId(userProfile.getUseProId());
+        List<UserInfo> userInfoList = userInfoDao.selectByCondition(condition, new BaseQuery());
+        for (UserInfo userInfo : userInfoList) {
+            userInfo.setPassword(null);
+        }
+        APIResult apiResult = epService.selectUserInfoList(userInfoList);
+        apiResult.setDataKey("userProfile", userProfile);
         return apiResult;
     }
 }

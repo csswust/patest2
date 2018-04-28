@@ -54,18 +54,10 @@ var score = {
                 result = result.data;
                 for (i = 0; i < result.examInfoList.length; i++) {
                     score.lookhtml += '<tr>'
-                        + '<td >'
-                        + result.examInfoList[i].title
-                        + '</td>'
-                        + '<td >'
-                        + result.examPaperList[i].score
-                        + '</td>'
-                        + '<td >'
-                        + result.examInfoList[i].startTime
-                        + '</td>'
-                        + '<td >'
-                        + result.examInfoList[i].endTime
-                        + '</td>'
+                        + '<td >' + result.examInfoList[i].title + '</td>'
+                        + '<td >' + result.examPaperList[i].score + '</td>'
+                        + '<td >' + result.examInfoList[i].startTime + '</td>'
+                        + '<td >' + result.examInfoList[i].endTime + '</td>'
                         + '</tr>';
                 }
                 $('#serchlist').html(score.lookhtml);
