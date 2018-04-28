@@ -107,7 +107,7 @@ var commonet = {
             '<li class="mybill"><a href="billlist.html">我的账单</a></li> ' +
             '<li class="mytest"><a href="test.html">我的考试</a></li> ' +
             '<li class="score"><a href="score.html">成绩查询</a></li> ' +
-            '<li class="score"><a href="score.html">公告</a></li>';
+            '<li class="epnotices"><a href="epnotices.html">公告</a></li>';
         $(".menuHtml").html(menuHtml);
         var userHtml = '<li class="dropdown"> ' +
             '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> ' +

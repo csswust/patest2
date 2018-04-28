@@ -2,8 +2,8 @@ var epnoticetext = {
     epnoId: '',
     init: function () {
         commonet.init();
-        $(".homepage").addClass("onet");
-        commonet.selectEpinfo();
+        $(".epnotices").addClass("onet");
+
         var par = patest.getQueryObject();
         console.log(par.epid);
         epnoticetext.epnoId = par.epid;

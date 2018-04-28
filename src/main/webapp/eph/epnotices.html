@@ -19,38 +19,19 @@
     <![endif]-->
 </head>
 <body>
-<!--nav-->
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation"
-     style="background: #000000;">
-    <!--缩小自适应-->
-    <div class="navbar-header">
-        <button class="navbar-toggle" type="button" data-toggle="collapse">
-            <span class="sr-only">Toggle Navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <span class="navbar-brand;" style="font-size: 25px;color: white;line-height: 50px; margin-left:50px;margin-right:20px;">EP能力认证系统</span>
-    </div>
-
-    <!--导航部分-->
-    <div class="col-md-offset-2 collapse navbar-collapse navbar-responsive-collapse">
-        <ul class="nav navbar-nav" id="topnav">
-            <li><a class=" " href="mainpage.html">首页</a></li>
-            <!--<li><a class=" " href="mainpage.html#instro">EP介绍</a></li>-->
-            <li><a class="active" href="mainpage.html#info">公告</a></li>
-            <li><a class=" " href="score.html">成绩查询</a></li>
-            <!--<li><a class="" href="mainpage.html#abtwe">关于我们</a></li>-->
-        </ul>
-        <div style="float: right;">
-            <ul class="nav navbar-nav" id="gtlogin">
-                <li><a id="userlogin">登录</a></li>
-                <li><a id="userreg">注册</a></li>
-            </ul>
+<div id="headet">
+    <!-- 头部菜单 -->
+    <nav class="navbar navbar-default">
+        <div class="navbar-header ">
+            <a class="navbar-brand" href="#">程序设计能力认证平台</a>
         </div>
-    </div>
-</nav>
-<div class="container-fluid" style="margin-top:50px;">
+        <ul class="nav navbar-nav menuHtml">
+        </ul>
+        <ul class="nav navbar-nav navbar-right userHtml">
+        </ul>
+    </nav>
+</div>
+<div class="container-fluid">
     <!-- content -->
     <div class="col-md-10 col-md-offset-1 allcontent">
         <div class="allnotice">
@@ -81,120 +62,12 @@
         </div>
     </div>
 </div>
+<!-- 关于我们 -->
 <div id="footer">
     <!-- 页脚 -->
 </div>
-<!-- 登录模态框 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog " style="width:380px;margin-top: 160px;">
-        <div class="modal-content">
-            <div style="text-align: center;">
-                <button style="margin-right: 30px;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h3 style="color: orange;margin: 15px auto;" class="modal-title" id="myModalLabel1">欢迎登录</h3>
-                <form class="form-horizontal">
-                    <!--注册邮箱-->
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-2 ">
-                            <input style="height: 40px;" type="text" class="form-control  inputDlg" id="username"
-                                   placeholder="请输入登录账号" z-index="1"/>
-                        </div>
-                    </div>
-                    <!--密码-->
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-2">
-                            <input style="height: 40px;" type="password" class="form-control inputDlg" id="password"
-                                   placeholder="请输入密码，区分大小写" z-index="2"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-2" style="color: #FFFFFF;text-align: center;">
-                            <button id="btnlogin"
-                                    style="width: 100%;height: 45px;color:#fff;font-size: 16px;font-weight: bold; background-color:#3c8dbd;"
-                                    type="button" class="btn btn-block btn-default">登&nbsp;&nbsp;录
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 注册模态框 -->
-<div class="modal fade" id="myReg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog " style="width:380px;margin-top: 160px;">
-        <div class="modal-content">
-            <div style="text-align: center;">
-                <button style="margin-right: 30px;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h3 style="color: orange;margin: 15px auto;" class="modal-title" id="myModalLabel2">欢迎注册</h3>
-                <form class="form-horizontal">
-                    <!--昵称-->
-                    <div class="form-group">
-                        <label for="inputMail" class="col-md-4 control-label">昵&nbsp;称：</label>
-                        <div class="col-md-6 ">
-                            <input type="text" class="form-control  inputDlg" id="nickname" placeholder="" z-index="1"/>
-                        </div>
-                    </div>
-                    <!--注册邮箱-->
-                    <div class="form-group">
-                        <label for="inputMail" class="col-md-4 control-label">邮&nbsp;箱：</label>
-                        <div class="col-md-6 ">
-                            <input type="text" class="form-control  inputDlg" id="inputMail" placeholder=""
-                                   z-index="1"/>
-                        </div>
-                    </div>
-                    <!--密码-->
-                    <div class="form-group">
-                        <label for="inputpassword" class="col-md-4  control-label">密&nbsp;码：</label>
-                        <div class="col-md-6 ">
-                            <input type="password" class="form-control inputDlg" id="inputpassword" placeholder=""
-                                   z-index="2"/>
-                        </div>
-                    </div>
-                    <!--确认密码-->
-                    <div class="form-group">
-                        <label for="inputpass" class="col-md-4  control-label">确认密码：</label>
-                        <div class="col-md-6">
-                            <input type="password" class="form-control inputDlg" id="inputpass" placeholder=""
-                                   z-index="3"/>
-                        </div>
-                    </div>
-                    <!--真实姓名-->
-                    <div class="form-group">
-                        <label for="inputMail" class="col-md-4 control-label">联系方式：</label>
-                        <div class="col-md-6 ">
-                            <input type="text" class="form-control  inputDlg" id="telephone" placeholder=""
-                                   z-index="1"/>
-                        </div>
-                    </div>
-                    <!--联系方式-->
-                    <div class="form-group">
-                        <label for="inputMail" class="col-md-4 control-label">联系单位：</label>
-                        <div class="col-md-6 ">
-                            <input type="text" class="form-control  inputDlg" id="unit" placeholder="" z-index="1"/>
-                        </div>
-                    </div>
-                    <!--按钮-->
-                    <div class="form-group btnreg">
-                        <div class="col-md-8 col-md-offset-2" style="padding-top: 20px;margin-top:-20px;">
-                            <button style="width: 100%;height: 45px;font-size: 16px;color:#fff;font-weight: bold;background-color:#3c8dbd;"
-                                    type="button" class="btn btn-block btn-default " id="register">立即注册
-                            </button>
-                        </div>
-                        <!-- 	<div class="col-md-8 col-md-offset-2">
-                                <p><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;已有账号，<a class="userlogin">马上登录！</a></p>
-                            </div> -->
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+<div id="loginmodal"></div>
+<div id="registermodal"></div>
 </body>
 <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
 <script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
