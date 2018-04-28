@@ -53,16 +53,25 @@ var billlist = {
             } else if (bills[i].isPay == 1) {
                 paystate = "已支付"
             }
+            var applyId = epApplys[i].applyId;
             var orderId = bills[i].orderId;
+            var payMoney = '';
+            if (bills[i].isPay === 0) {
+                payMoney = '<td><button type="button" class="btn btn-info btn-xs payment" id="' + orderId + '">付款</button></td>'
+            } else{
+                payMoney = '<td><button type="button" class="btn btn-info btn-xs payment" disabled="disabled" id="' + orderId + '">付款</button></td>'
+            }
             billlist.billhtml += '<tr  class="' + orderId + '">'
                 + '<td>' + orderId + '</td>'
                 + '<td>' + bills[i].orderNum + '</td>'
+                + '<td><a   href="applyexam.html?applyid=' + applyId + '">' + epApplys[i].examName + '</a></td>'
+                + '<td>' + epApplys[i].peopleNumber + '</td>'
                 + '<td>' + epUsers[i].username + '</td>'
                 + '<td>' + epUsers[i].phone + '</td>'
                 + '<td>' + bills[i].createTime + '</td>'
                 + '<td>' + bills[i].money + '</td>'
                 + '<td>' + paystate + '</td>'
-                + '<td><button type="button" class="btn btn-info btn-xs payment" id="' + orderId + '">付款</button></td>'
+                + payMoney
                 + '</tr>';
         }
 
