@@ -41,7 +41,6 @@ var program = {
                             } else {
                                 statusClass = "status ce";
                             }
-
                             $("#listInfo").append(' <div class="col-sm-6 col-md-3"><div class="thumbnail">' +
                                 '<div class="caption"><h2>' + asc + '</h2><h5><a href="code.html?' +
                                 '&prproId=' + program.listProb[i].papProId +
@@ -66,7 +65,7 @@ var program = {
             window.location.href = "login.html";
         }
     },
-    showTime: function () {
+    selectExamIfoById: function () {
         $.ajax({
             type: "post",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -90,10 +89,20 @@ var program = {
                 program.startTime = new Date(program.starttime);
                 program.endTime = new Date(program.endtime);
                 var intDiff = 0;
-                if (program.startTime > nowTime)
+                if (program.startTime > nowTime) {
                     intDiff = parseInt((program.startTime - nowTime) / 1000);
-                else intDiff = parseInt((program.endTime - nowTime) / 1000);//倒计时总秒数量
-                nav.countDown(intDiff);
+                    nav.countDown(intDiff, function () {
+                        $(".timeTip").html('<span class="overTime">考试开始</span>');
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                    });
+                } else {
+                    intDiff = parseInt((program.endTime - nowTime) / 1000);//倒计时总秒数量
+                    nav.countDown(intDiff, function () {
+                        $(".timeTip").html('<span class="overTime">考试已结束</span>');
+                    });
+                }
             }
         });
     },
@@ -117,7 +126,7 @@ var program = {
         });
     }
 };
-program.showTime();
+program.selectExamIfoById();
 program.getuserId();
 program.getExam();
 

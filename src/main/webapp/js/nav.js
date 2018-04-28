@@ -101,7 +101,7 @@ var nav = {
         nav.deleCookie("userId");
         nav.deleCookie("role");
     },
-    countDown: function (intDiff) {
+    countDown: function (intDiff,callBack) {
         setInterval(function () {
             var day = 0, hour = 0, minute = 0, second = 0;// 时间默认值
             if (intDiff > 0) {
@@ -125,9 +125,8 @@ var nav = {
                 $('.second').text(second);
                 intDiff--;
             } else {
-                $(".timeTip").html('<span class="overTime">考试已结束</span>');
+                callBack();
             }
-
         }, 1000);
     },
     getfooter: function () {
