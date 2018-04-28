@@ -18,19 +18,6 @@ var program = {
     tempProbId: '',
     showproinfo: function () {
         var length = program.probArr.length;
-        var order = 1;
-        if (program.probArr.length != 0) {
-            var banklist = '<tr>'
-                + '<th>序号</th>'
-                + '<th>编号</th>'
-                + '<th style="width:400px">题目</th>'
-                + '<th>难度</th>'
-                + '<th>课程</th>'
-                + '<th>知识点</th>'
-                + '<th>操作</th>'
-                + '<tr>';
-            $("#listhead").html(banklist);
-        }
         program.html = "";
         for (var i = 0; i < length; i++) {
             var level;
@@ -42,16 +29,15 @@ var program = {
                 level = '困难';
             }
             program.html += '<tr class="' + flag + '-' + flag + '">'
-                + '<td>' + order + '</td>'
+                + '<td style="width:80px;"><input type="checkbox" value="' + program.tempProArr[i].exaProId + '" name="title"/></td>'
+                + '<td>' + program.tempProArr[i].exaProId + '</td>'
                 + '<td>' + program.probArr[i].probId + '</td>'
                 + '<td><a href="question.html?id=' + program.probArr[i].probId + '"  class="title">' + program.probArr[i].title + '</a></td>'
                 + '<td>' + level + '</td>'
                 + '<td>' + program.couseNamesArr[i].courseName + '</td>'
                 + '<td>' + program.knowNameArr[i].knowName + '</td>'
-                + '<td class="deletepro" id="' + flag + '-' + flag + '"><a><span class="glyphicon glyphicon-remove-circle"  ></span></a></td>'
                 + '</tr>';
             program.tempProbIds[i] = program.tempProArr[i].exaProId;
-            order++;
             flag++;
         }
     },
@@ -86,7 +72,7 @@ var program = {
         });
     },
     //通过问题Id来删除题目
-    deleteTempProblemById: function () {
+    deleteTempProblemById: function (vals) {
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -94,7 +80,7 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
-                ids: program.tempProbId,
+                ids: vals
             },
             success: function (result) {
                 console.log(result);
@@ -110,7 +96,7 @@ var program = {
                 pubMeth.alertInfo("alert-danger", "请求失败");
             }
         });
-    },
+    }
 };
 pubMeth.getRowsnum("rowsnum");
 //解析url
@@ -148,6 +134,18 @@ $(".downBank").click(function () {
         window.location.href = "editParm.html?examId=" + program.examId;
     } else if (par.Id) {
         window.location.href = "editParm.html?Id=" + par.Id;
+    }
+});
+$(".deletePro").click(function () {
+    var valArr = new Array;
+    $(":checkbox[name='title']:checked").each(function (i) {
+        valArr[i] = $(this).val();
+    });
+    var vals = valArr.join(',');// 转换为逗号隔开的字符串
+    if (vals != "") {
+        program.deleteTempProblemById(vals);
+    } else {
+        pubMeth.alertInfo("alert-info", "请先勾选删除项！");
     }
 });
 $("#listInfo").on('click', '.deletepro', function () {

@@ -48,17 +48,32 @@
                                 <div class="col-md-2">
                                     <div class="banktitle"><label class="control-label">所选题库</label></div>
                                 </div>
-                                <div class="col-md-1 problem">
-                                    <button type="button" class="btn btn-primary btn-sm localBank problem"><span
-                                            class="glyphicon glyphicon-th-list"></span> 参考题库
-                                    </button>
+                                <div class="btn-group col-md-3" role="group">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn  btn-primary localBank problem ">
+                                            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>参考题库
+                                        </button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn  btn-warning deletePro">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <table class="table table-bordered table-hover table-condensed table-striped">
                                 <thead id="listhead">
-
+                                    <tr>
+                                        <th><input type="checkbox" class="check_list">全选</th>
+                                        <th>序号</th>
+                                        <th>编号</th>
+                                        <th style="width:400px">题目</th>
+                                        <th>难度</th>
+                                        <th>课程</th>
+                                        <th>知识点</th>
+                                    </tr>
                                 </thead>
                                 <tbody id="listInfo">
 

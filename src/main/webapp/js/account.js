@@ -84,15 +84,6 @@ var program = {
                 program.showAccount();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.html);
-                $("#listInfo tr").each(function (i) {
-                    $("td:last a.title", this).click(function () {
-                        program.userId = $(this).attr("value");
-                        $('#user').modal({
-                            backdrop: 'static'
-                        });
-                        program.setValueId();
-                    });
-                });
             }
         });
     },
