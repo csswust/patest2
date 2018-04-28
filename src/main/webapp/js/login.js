@@ -21,15 +21,11 @@ $(function () {
                     document.cookie = "userId=" + escape(result.userId);
                     document.cookie = "realName=" + escape(result.realName);
                     document.cookie = "studentNumber=" + escape(result.studentNumber);
-                    /*if (result.status == "0") {
-                     program.alertInfo("alert-danger", "无此账号!");
-                     }
-                     else */
-                    if (result.loginRe.status == "1" && result.isAdmin == "1") {
+                    if (result.loginRe.status === 1 && (result.isAdmin === 1 || result.isTeacher === 1)) {
                         window.location.href = "index.html";
                         document.cookie = "role=" + escape('Admin');
                     }
-                    else if (result.loginRe.status == "1" && result.isAdmin == "0" && result.isTeacher == "0") {
+                    else if (result.loginRe.status === 1 && result.isAdmin === 0 && result.isTeacher === 0) {
                         var nowTime = program.getNowTime();
                         window.location.href = "examnotes.html?" + "&eId=" + result.examId;
                         document.cookie = "role=" + escape('Student');
@@ -37,18 +33,6 @@ $(function () {
                     else {
                         program.alertInfo("alert-danger", result.loginRe.desc);
                     }
-                    /*else if (result.status == "4") {
-                     program.alertInfo("alert-danger", "账号被锁定! 请联系老师！");
-                     }
-                     else if (result.status == "2") {
-                     program.alertInfo("alert-danger", "密码错误!");
-                     }
-                     else if (result.status == "3") {
-                     program.alertInfo("alert-danger", "账号未激活!");
-                     }
-                     else if (result.status == "6") {
-                     program.alertInfo("alert-danger", "登录地点异常");
-                     }*/
                 },
                 error: function () {
                     program.alertInfo("alert-danger", "登录失败!");

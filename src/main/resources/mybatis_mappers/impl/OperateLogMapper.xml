@@ -1,22 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csswust.patest2.dao.UserLoginLogDao">
+<mapper namespace="com.csswust.patest2.dao.OperateLogDao">
     <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM user_login_log
+        FROM operate_log
         WHERE 1 = 1
-            <if test="record.useLogId != null">
+            <if test="record.id != null">
             AND
-            use_log_id = #{record.useLogId}
+            id = #{record.id}
         </if>
         <if test="record.userId != null">
             AND
             user_id = #{record.userId}
         </if>
-        <if test="record.loginIp != null">
+        <if test="record.ip != null">
             AND
-            login_ip = #{record.loginIp}
+            ip = #{record.ip}
+        </if>
+        <if test="record.apiUrl != null">
+            AND
+            api_url = #{record.apiUrl}
+        </if>
+        <if test="record.apiDesc != null">
+            AND
+            api_desc = #{record.apiDesc}
+        </if>
+        <if test="record.apiArgc != null">
+            AND
+            api_argc = #{record.apiArgc}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
         </if>
         <if test="record.createTime != null">
             AND
@@ -31,19 +51,39 @@
     <select id="selectByConditionGetCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         SELECT
         count(*)
-        FROM user_login_log
+        FROM operate_log
         WHERE 1 = 1
-            <if test="record.useLogId != null">
+            <if test="record.id != null">
             AND
-            use_log_id = #{record.useLogId}
+            id = #{record.id}
         </if>
         <if test="record.userId != null">
             AND
             user_id = #{record.userId}
         </if>
-        <if test="record.loginIp != null">
+        <if test="record.ip != null">
             AND
-            login_ip = #{record.loginIp}
+            ip = #{record.ip}
+        </if>
+        <if test="record.apiUrl != null">
+            AND
+            api_url = #{record.apiUrl}
+        </if>
+        <if test="record.apiDesc != null">
+            AND
+            api_desc = #{record.apiDesc}
+        </if>
+        <if test="record.apiArgc != null">
+            AND
+            api_argc = #{record.apiArgc}
+        </if>
+        <if test="record.examId != null">
+            AND
+            exam_id = #{record.examId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
         </if>
         <if test="record.createTime != null">
             AND
@@ -56,8 +96,8 @@
         </if>
     </select>
     <delete id="deleteByIdsList" parameterType="java.util.Map">
-        delete from user_login_log
-        where use_log_id in
+        delete from operate_log
+        where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
         #{item}
         </foreach>
@@ -65,17 +105,17 @@
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        from user_login_log
-        where use_log_id in
+        from operate_log
+        where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
         #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
-        insert into user_login_log
-        (user_id, login_ip, create_time) values
+        insert into operate_log
+        (user_id, ip, api_url, api_desc, api_argc, exam_id, problem_id, create_time) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.userId}, #{item.loginIp}, #{item.createTime})
+            (#{item.userId}, #{item.ip}, #{item.apiUrl}, #{item.apiDesc}, #{item.apiArgc}, #{item.examId}, #{item.problemId}, #{item.createTime})
         </foreach>
     </select>
 </mapper>

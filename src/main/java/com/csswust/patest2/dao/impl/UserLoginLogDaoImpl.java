@@ -1,8 +1,8 @@
 package com.csswust.patest2.dao.impl;
 
-import com.csswust.patest2.dao.UserLoginLogDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.dao.common.CommonMapper;
+import com.csswust.patest2.dao.UserLoginLogDao;
 import com.csswust.patest2.entity.UserLoginLog;
 import org.springframework.stereotype.Repository;
 
@@ -19,13 +19,13 @@ public class UserLoginLogDaoImpl extends CommonMapper<UserLoginLog, BaseQuery> i
     public void insertInit(UserLoginLog record, Date date) {
         record.setUseLogId(null);
         record.setCreateTime(date);
-        record.setModifyTime(date);
-        record.setModifyUserId(getUserId());
+        // record.setModifyTime(date);
+        // record.setModifyUserId(getUserId());
     }
 
     @Override
     public void updateInit(UserLoginLog record, Date date) {
-        record.setModifyTime(date);
-        record.setModifyUserId(getUserId());
+        // record.setModifyTime(date);
+        // record.setModifyUserId(getUserId());
     }
 }

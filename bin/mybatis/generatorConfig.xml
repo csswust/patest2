@@ -20,7 +20,8 @@
 
         <!-- 数据连接相关配置 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/patest2" userId="root"
+                        connectionURL="jdbc:mysql://222.196.35.228:3306/patest2"
+                        userId="loco"
                         password="cs.swust">
         </jdbcConnection>
 
@@ -159,14 +160,14 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="user_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="user_login_log" domainObjectName="UserLoginLog"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="use_log_id" sqlStatement="JDBC"/>
         </table>
-        <table schema="patest2" tableName="user_profile" domainObjectName="UserProfile"
+        <!--<table schema="patest2" tableName="user_profile" domainObjectName="UserProfile"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -190,12 +191,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="apply_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="ep_order_info" domainObjectName="EpOrderInfo"
+        <!--<table schema="patest2" tableName="ep_order_info" domainObjectName="EpOrderInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="order_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="ep_user_info" domainObjectName="EpUserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -208,6 +209,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="epno_id" sqlStatement="JDBC"/>
         </table>-->
+        <table schema="patest2" tableName="operate_log" domainObjectName="OperateLog"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
     </context>
 </generatorConfiguration>
 
