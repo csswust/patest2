@@ -30,6 +30,7 @@ import java.io.IOException;
                 "/paperProblem/*", "/problemInfo/*", "/resultInfo/*",
                 "/siteInfo/*", "/student/*", "/submitInfo/*", "/submitResult/*",
                 "/submitSimilarity/*", "/system/*", "/userInfo/*", "/userProfile/*",
+                "/userLoginLog/*", "/operateLog/*",
                 "/epApplyInfo/*", "/epNotice/*", "/epOrderInfo/*", "/ep/*"
         })
 public class AccessFilter extends BaseFilter implements Filter {
