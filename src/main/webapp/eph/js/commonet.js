@@ -1,9 +1,9 @@
 var commonet = {
-    sysname: '',
+    sysname: null,
+    epUserId: null,
     init: function () {
         commonet.getCookie("sysname");
         commonet.headet();
-        commonet.topMenu();
         commonet.testMenu();
         commonet.footcon();
         commonet.selectEpinfo();
@@ -54,9 +54,6 @@ var commonet = {
             }
         });
     },
-    /**
-     * 考试场次数目
-     */
     examselect: function () {
         patest.request({
             url: "../ep/selectExamTotal"
@@ -65,9 +62,6 @@ var commonet = {
             num.innerText = result.data.total + "场";
         });
     },
-    /**
-     * 考试人数
-     */
     userselect: function () {
         patest.request({
             url: "../ep/selectUserTotal"
@@ -76,9 +70,6 @@ var commonet = {
             num.innerText = result.data.total + "人";
         });
     },
-    /**
-     * 考试题目数目
-     */
     problemselect: function () {
         patest.request({
             url: "../ep/selectProblemAllCount"
@@ -87,9 +78,6 @@ var commonet = {
             num.innerText = result.data.total + "个";
         });
     },
-    /**
-     * 系统题目类型数目
-     */
     knowledgeselect: function () {
         patest.request({
             url: "../ep/selectKnowledgeAllCount"
@@ -98,7 +86,6 @@ var commonet = {
             num.innerText = result.data.total + "个";
         });
     },
-
     getCookie: function (objName) {
         var arrStr = document.cookie.split("; ");
         for (var i = 0; i < arrStr.length; i++) {
@@ -106,41 +93,63 @@ var commonet = {
             if (temp[0] === objName)
                 commonet.sysname = unescape(temp[1]);
         }
-        if (!commonet.sysname) {
-            window.location.href = "mainpage.html";
-        }
     },
-    deleCookie: function (name) {//为了删除指定名称的cookie，可以将其过期时间设定为一个过去的时间
+    deleCookie: function (name) {
         var date = new Date();
         date.setTime(date.getTime() - 10000);
         document.cookie = name + "=a; expires=" + date.toGMTString();
     },
-    headet: function () {
-        var htmlheader =
-            '<nav class="navbar navbar-default">' +
-            '<div class="navbar-header "><a class="navbar-brand" href="#">程序设计能力认证平台</a></div>' +
-            '<ul class="nav navbar-nav navbar-right">' +
-            '<li class="dropdown">' +
-            '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' +
-            '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>' + commonet.sysname + ' </a>' +
-            '<ul class="dropdown-menu">' +
-            ' <li class="loginoutet"><a href="#">注销</a></li></ul> </li></ul></nav>';
-        $("#headet").append(htmlheader);
+    alreadyLogin: function () {
+        var menuHtml = '<li class="homepaged"><a href="homepaged.html">首页</a></li>' +
+            '<li class="applyexam"><a href="applyexam.html">考试申请</a></li> ' +
+            '<li class="myapply"><a href="applywait.html">我的申请</a></li> ' +
+            '<li class="uploadsub"><a href="uploadsub.html">上传题目</a></li> ' +
+            '<li class="mybill"><a href="billlist.html">我的账单</a></li> ' +
+            '<li class="mytest"><a href="test.html">我的考试</a></li> ' +
+            '<li class="score"><a href="score.html">成绩查询</a></li> ' +
+            '<li class="score"><a href="score.html">公告</a></li>';
+        $(".menuHtml").html(menuHtml);
+        var userHtml = '<li class="dropdown"> ' +
+            '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> ' +
+            '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>' +
+            commonet.sysname +
+            '</a> ' +
+            '<ul class="dropdown-menu"> ' +
+            '<li class="loginoutet"><a href="#">注销</a></li> ' +
+            '<li class="perinfo"><a href="perinfo.html">个人信息</a></li> ' +
+            '</ul> ' +
+            '</li>';
+        $(".userHtml").html(userHtml);
     },
-    topMenu: function () {
-        var tophtml = '<div id="nav"  class="navmenu"><ul>' +
-            '<li class="homepage"><a href="homepaged.html">首页</a>' +
-            '<ul><li><a href="#instro">平台介绍</a></li>' +
-            '<li><a href="#info">平台公告</a></li>' +
-            '<li><a href="score.html">成绩查询</a></li>' +
-            '<li><a href="#abtwe">关于我们</a></li></ul></li>' +
-            '<li class="applyexam"><a href="applyexam.html">考试申请</a></li>' +
-            '<li class="myapply"><a href="applywait.html">我的申请</a></li>' +
-            '<li class="uploadsub"><a href="uploadsub.html">上传题目</a></li>' +
-            '<li class="perinfo"><a href="perinfo.html">个人信息</a></li>' +
-            '<li class="mybill"><a href="billlist.html">我的账单</a></li>' +
-            '<li class="mytest"><a href="test.html">我的考试</a></li> </ul></div>';
-        $(".topmenu").html(tophtml);
+    notLogin: function () {
+        var menuHtml = '<li class="homepaged"><a href="homepaged.html">首页</a></li>' +
+            '<li class="score"><a href="score.html">成绩查询</a></li> ' +
+            '<li class="score"><a href="score.html">公告</a></li>';
+        $(".menuHtml").html(menuHtml);
+        var userHtml = '<li class="userlogin"><a href="#" id="userlogin">登录</a></li> ' +
+            '<li class="userreg"><a href="#" id="userreg">注册</a></li>';
+        $(".userHtml").html(userHtml);
+        commonet.loginModal();
+        commonet.registermodal();
+        $("#userlogin").click(function () {
+            $('#myModal').modal();
+        });
+        $("#userreg").click(function () {
+            $('#myReg').modal();
+        });
+        $("#btnlogin").click(function () {
+            loginreg.judgeLogin();
+        });
+        $("#register").click(function () {
+            loginreg.judgeRegister();
+        });
+    },
+    headet: function () {
+        if (commonet.sysname) {
+            commonet.alreadyLogin();
+        } else {
+            commonet.notLogin();
+        }
     },
     testMenu: function () {
         var list = '<div class="col-md-3 etinfo" id="sinfo">' +
@@ -232,6 +241,173 @@ var commonet = {
                 + '<span class="glyphicon glyphicon-chevron-right " aria-hidden="true "></span>'
                 + '<a href="epnoticetext.html?epid=' + commonet.data[i].epnoId + '">' + commonet.data[i].title + '</a></div>'
                 + '<div class="badge">[' + time + ']</div></div></li>';
+        }
+    },
+    loginModal: function () {
+        var loginModal = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> ' +
+            '<div class="modal-dialog " style="width:380px;margin-top: 160px;"> ' +
+            '<div class="modal-content"> ' +
+            '<div style="text-align: center;"> ' +
+            '<button style="margin-right: 30px;" type="button" class="close" data-dismiss="modal" aria-hidden="true"> ' +
+            '&times; ' +
+            '</button> ' +
+            '<h3 style="color: orange;margin: 15px auto;" class="modal-title" id="myModalLabel2">欢迎登录</h3> ' +
+            '<form class="form-horizontal"> ' +
+            '<div class="form-group"> ' +
+            '<div class="col-md-8 col-md-offset-2 "> ' +
+            '<input style="height: 40px;" type="text" class="form-control  inputDlg" id="username" placeholder="请输入登录账号" z-index="1"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
+            '<div class="col-md-8 col-md-offset-2"> ' +
+            '<input style="height: 40px;" type="password" class="form-control inputDlg" id="password" placeholder="请输入密码，区分大小写" z-index="2"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
+            '<div class="col-md-8 col-md-offset-2" style="color: #FFFFFF;text-align: center;"> ' +
+            '<button id="btnlogin" style="width: 100%;height: 45px;color:#fff;font-size: 16px;font-weight: bold; background-color:#3c8dbd;" type="button" class="btn btn-block btn-default">登&nbsp;&nbsp;录 ' +
+            '</button> ' +
+            '</div> ' +
+            '</div> ' +
+            '</form> ' +
+            '</div> ' +
+            '</div> ' +
+            '</div> ' +
+            '</div>';
+        $("#loginmodal").html(loginModal);
+    },
+    registermodal: function () {
+        var registermodal = '<div class="modal fade" id="myReg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> ' +
+            '<div class="modal-dialog " style="width:380px;margin-top: 160px;"> ' +
+            '<div class="modal-content"> ' +
+            '<div style="text-align: center;"> ' +
+            '<button style="margin-right: 30px;" type="button" class="close" data-dismiss="modal" aria-hidden="true"> ' +
+            '&times; ' +
+            '</button> ' +
+            '<h3 style="color: orange;margin: 15px auto;" class="modal-title" id="myModalLabel1">欢迎注册</h3> ' +
+            '<form class="form-horizontal"> ' +
+            '<div class="form-group"> ' +
+            '<label for="inputMail" class="col-md-4 control-label">昵&nbsp;称：</label> ' +
+            '<div class="col-md-6 "> ' +
+            '<input type="text" class="form-control  inputDlg" id="nickname" placeholder="" z-index="1"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
+            '<label for="inputMail" class="col-md-4 control-label">邮&nbsp;箱：</label> ' +
+            '<div class="col-md-6 "> ' +
+            '<input type="text" class="form-control  inputDlg" id="inputMail" placeholder="" z-index="1"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
+            '<label for="inputpassword" class="col-md-4  control-label">密&nbsp;码：</label> ' +
+            '<div class="col-md-6 "> ' +
+            '<input type="password" class="form-control inputDlg" id="inputpassword" placeholder="" z-index="2"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
+            '<label for="inputpass" class="col-md-4  control-label">确认密码：</label> ' +
+            '<div class="col-md-6"> ' +
+            '<input type="password" class="form-control inputDlg" id="inputpass" placeholder="" z-index="3"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
+            '<label for="inputMail" class="col-md-4 control-label">联系方式：</label> ' +
+            '<div class="col-md-6 "> ' +
+            '<input type="text" class="form-control  inputDlg" id="telephone" placeholder="" z-index="1"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
+            '<label for="inputMail" class="col-md-4 control-label">联系单位：</label> ' +
+            '<div class="col-md-6 "> ' +
+            '<input type="text" class="form-control  inputDlg" id="unit" placeholder="" z-index="1"/> ' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group btnreg"> ' +
+            '<div class="col-md-8 col-md-offset-2" style="padding-top: 20px;margin-top:-20px;"> ' +
+            '<button style="width: 100%;height: 45px;font-size: 16px;color:#fff;font-weight: bold;background-color:#3c8dbd;"type="button" class="btn btn-block btn-default " id="register">立即注册 </button> ' +
+            '</div> ' +
+            '</div> ' +
+            '</form> ' +
+            '</div> ' +
+            '</div> ' +
+            '</div> ' +
+            '</div>';
+        $("#registermodal").html(registermodal);
+    },
+    login: function () {
+        patest.request({
+            url: "../ep/epUserInfo/login"
+        }, {
+            username: loginreg.username,
+            password: loginreg.password
+        }, function (result) {
+            var exp = new Date();
+            if (result.status !== 1) {
+                alert(result.desc);
+            }
+            else {
+                $.cookie("sysname", result.data.epUserName);
+                $.cookie("sysuserId", result.epUserId);
+                window.location.reload();
+            }
+        });
+    },
+    judgeLogin: function () {
+        loginreg.username = $("#username").val();
+        loginreg.password = $("#password").val();
+        if (loginreg.username && loginreg.password) {
+            loginreg.login();
+        }
+        else if (!loginreg.username) {
+            alert("用户名不能为空");
+        } else if (!loginreg.password) {
+            alert("密码不能为空");
+        } else {
+            alert("请完善登录信息或去注册");
+        }
+    },
+    register: function () {
+        patest.request({
+            url: "../ep/epUserInfo/register"
+        }, {
+            username: loginreg.nickname,
+            email: loginreg.inputMail,
+            password: loginreg.inputpassword,
+            phone: loginreg.telephone,
+            unit: loginreg.unit
+        }, function (result) {
+            if (result.status === 1) {
+                $("#myReg").modal('hide');
+                alert("注册成功");
+            } else {
+                alert(result.desc);
+            }
+        });
+    },
+    judgeRegister: function () {
+        var reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+        loginreg.nickname = $("#nickname").val();
+        loginreg.inputMail = $("#inputMail").val();
+        loginreg.inputpassword = $("#inputpassword").val();
+        loginreg.inputpass = $("#inputpass").val();
+        loginreg.unit = $("#unit").val();
+        loginreg.telephone = $("#telephone").val();
+        if (loginreg.nickname && loginreg.inputMail && loginreg.inputpassword
+            && loginreg.inputpass && loginreg.unit && loginreg.telephone) {
+            if (!reg.test(loginreg.inputMail)) {
+                alert("邮箱格式不正确");
+            }
+            else {
+                if (loginreg.inputpassword !== loginreg.inputpass) {
+                    alert("密码和确认密码不一致");
+                }
+                else {
+                    loginreg.register();
+                }
+            }
+        }
+        else {
+            alert("请完善信息");
         }
     }
 };
