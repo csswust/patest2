@@ -19,7 +19,13 @@ public class EpApplyInfo {
 
     private Integer status;
 
+    private Integer orderId;
+
     private Integer examId;
+
+    private Integer examineUserId;
+
+    private Date examineTime;
 
     private String reason;
 
@@ -93,12 +99,36 @@ public class EpApplyInfo {
         this.status = status;
     }
 
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
     public Integer getExamId() {
         return examId;
     }
 
     public void setExamId(Integer examId) {
         this.examId = examId;
+    }
+
+    public Integer getExamineUserId() {
+        return examineUserId;
+    }
+
+    public void setExamineUserId(Integer examineUserId) {
+        this.examineUserId = examineUserId;
+    }
+
+    public Date getExamineTime() {
+        return examineTime;
+    }
+
+    public void setExamineTime(Date examineTime) {
+        this.examineTime = examineTime;
     }
 
     public String getReason() {

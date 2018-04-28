@@ -20,10 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class EpOrderInfoAction extends BaseAction {
     @Autowired
     private EpOrderInfoService epOrderInfoService;
-    @Autowired
-    private EpOrderInfoDao epOrderInfoDao;
-    @Autowired
-    private AuthService authService;
 
     @RequestMapping(value = "/epOrderInfo/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
@@ -33,18 +29,5 @@ public class EpOrderInfoAction extends BaseAction {
         if (epOrderInfo == null) return new APIResult(-501, "epOrderInfo不能为空");
         epOrderInfo.setEpUserId(getEpUserId());
         return epOrderInfoService.selectByCondition(epOrderInfo, page, rows);
-    }
-
-    @RequestMapping(value = "/epOrderInfo/payment", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object payment(@RequestParam Integer orderId) {
-        EpOrderInfo epOrderInfo = epOrderInfoDao.selectByPrimaryKey(orderId);
-        if (epOrderInfo == null) {
-            return new APIResult(-501, "orderId无效");
-        } else {
-            if (getEpUserId().intValue() != epOrderInfo.getEpUserId().intValue()) {
-                return new APIResult(-501, "权限不足");
-            }
-        }
-        return epOrderInfoService.payment(orderId);
     }
 }

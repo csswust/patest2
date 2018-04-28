@@ -10,7 +10,10 @@
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
         <result column="ep_user_id" property="epUserId" jdbcType="INTEGER" />
         <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="order_id" property="orderId" jdbcType="INTEGER" />
         <result column="exam_id" property="examId" jdbcType="INTEGER" />
+        <result column="examine_user_id" property="examineUserId" jdbcType="INTEGER" />
+        <result column="examine_time" property="examineTime" jdbcType="TIMESTAMP" />
         <result column="reason" property="reason" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
@@ -18,7 +21,8 @@
     </resultMap>
     <sql id="Base_Column_List" >
         apply_id, exam_name, people_number, is_problem, start_time, end_time, ep_user_id, 
-        `status`, exam_id, reason, create_time, modify_time, modify_user_id
+        `status`, order_id, exam_id, examine_user_id, examine_time, reason, create_time, 
+        modify_time, modify_user_id
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select 
@@ -33,12 +37,14 @@
     <insert id="insert" parameterType="com.csswust.patest2.entity.EpApplyInfo" useGeneratedKeys="true" keyProperty="applyId" >
         insert into ep_apply_info (exam_name, people_number, is_problem, 
             start_time, end_time, ep_user_id, 
-            `status`, exam_id, reason, 
+            `status`, order_id, exam_id, 
+            examine_user_id, examine_time, reason, 
             create_time, modify_time, modify_user_id
             )
         values (#{examName,jdbcType=VARCHAR}, #{peopleNumber,jdbcType=INTEGER}, #{isProblem,jdbcType=INTEGER}, 
             #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{epUserId,jdbcType=INTEGER}, 
-            #{status,jdbcType=INTEGER}, #{examId,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, 
+            #{status,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{examId,jdbcType=INTEGER}, 
+            #{examineUserId,jdbcType=INTEGER}, #{examineTime,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}, 
             #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}
             )
     </insert>
@@ -66,8 +72,17 @@
             <if test="status != null" >
                 `status`,
             </if>
+            <if test="orderId != null" >
+                order_id,
+            </if>
             <if test="examId != null" >
                 exam_id,
+            </if>
+            <if test="examineUserId != null" >
+                examine_user_id,
+            </if>
+            <if test="examineTime != null" >
+                examine_time,
             </if>
             <if test="reason != null" >
                 reason,
@@ -104,8 +119,17 @@
             <if test="status != null" >
                 #{status,jdbcType=INTEGER},
             </if>
+            <if test="orderId != null" >
+                #{orderId,jdbcType=INTEGER},
+            </if>
             <if test="examId != null" >
                 #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="examineUserId != null" >
+                #{examineUserId,jdbcType=INTEGER},
+            </if>
+            <if test="examineTime != null" >
+                #{examineTime,jdbcType=TIMESTAMP},
             </if>
             <if test="reason != null" >
                 #{reason,jdbcType=VARCHAR},
@@ -145,8 +169,17 @@
             <if test="status != null" >
                 `status` = #{status,jdbcType=INTEGER},
             </if>
+            <if test="orderId != null" >
+                order_id = #{orderId,jdbcType=INTEGER},
+            </if>
             <if test="examId != null" >
                 exam_id = #{examId,jdbcType=INTEGER},
+            </if>
+            <if test="examineUserId != null" >
+                examine_user_id = #{examineUserId,jdbcType=INTEGER},
+            </if>
+            <if test="examineTime != null" >
+                examine_time = #{examineTime,jdbcType=TIMESTAMP},
             </if>
             <if test="reason != null" >
                 reason = #{reason,jdbcType=VARCHAR},
@@ -172,7 +205,10 @@
             end_time = #{endTime,jdbcType=TIMESTAMP},
             ep_user_id = #{epUserId,jdbcType=INTEGER},
             `status` = #{status,jdbcType=INTEGER},
+            order_id = #{orderId,jdbcType=INTEGER},
             exam_id = #{examId,jdbcType=INTEGER},
+            examine_user_id = #{examineUserId,jdbcType=INTEGER},
+            examine_time = #{examineTime,jdbcType=TIMESTAMP},
             reason = #{reason,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP},

@@ -99,7 +99,8 @@ var commonet = {
             '<li class="epnotices"><a href="epnotices.html">公告</a></li>';
         $(".menuHtml").html(menuHtml);
         var userHtml = '<li class="userlogin"><a href="#" id="userlogin">登录</a></li> ' +
-            '<li class="userreg"><a href="#" id="userreg">注册</a></li>';
+            '<li class="userreg"><a href="#" id="userreg">注册</a></li>' +
+            '<li class="student"><a href="../html/login.html">学生登录</a></li>';
         $(".userHtml").html(userHtml);
         commonet.loginModal();
         commonet.registermodal();

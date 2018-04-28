@@ -53,4 +53,13 @@ public class EplOrderInfoAction extends BaseAction {
         apiResult.setStatus(result);
         return apiResult;
     }
+
+    @RequestMapping(value = "/payment", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object payment(@RequestParam Integer orderId) {
+        EpOrderInfo epOrderInfo = epOrderInfoDao.selectByPrimaryKey(orderId);
+        if (epOrderInfo == null) {
+            return new APIResult(-501, "orderId无效");
+        }
+        return epOrderInfoService.payment(orderId);
+    }
 }

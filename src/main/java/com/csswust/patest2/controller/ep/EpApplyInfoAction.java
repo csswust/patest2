@@ -73,6 +73,9 @@ public class EpApplyInfoAction extends BaseAction {
                 return new APIResult(-501, "权限不足");
             }
         }
+        if (epApplyInfo.getStatus() != 0) {
+            return new APIResult(-1, "处于申请中才能删除");
+        }
         return epApplyInfoService.deleteById(applyId);
     }
 }
