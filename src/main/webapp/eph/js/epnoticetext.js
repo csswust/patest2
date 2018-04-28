@@ -1,8 +1,8 @@
 var epnoticetext = {
     epnoId: '',
     init: function () {
+        commonet.init();
         $(".homepage").addClass("onet");
-        loginreg.init();
         commonet.selectEpinfo();
         var par = patest.getQueryObject();
         console.log(par.epid);
