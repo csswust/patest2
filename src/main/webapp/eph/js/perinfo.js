@@ -28,11 +28,6 @@ var perinfo = {
             perinfo.realname = $(".mrealname").val();
             perinfo.updateallbill();
         });
-        $(".examMana").next(".treeview-menu").toggle("slow");
-        $(".examMana").addClass("leftActive");
-        $(".examList").css("color", "white");
-        $(".perinfo").addClass("onet");
-
         $(".form_datetime").datetimepicker({
             format: 'yyyy-mm-dd hh:ii:ss'
         });

@@ -19,12 +19,17 @@
 <body>
 <div id="headet">
     <!-- 头部菜单 -->
+    <nav class="navbar navbar-default">
+        <div class="navbar-header ">
+            <a class="navbar-brand" href="#">程序设计能力认证平台</a>
+        </div>
+        <ul class="nav navbar-nav menuHtml">
+        </ul>
+        <ul class="nav navbar-nav navbar-right userHtml">
+        </ul>
+    </nav>
 </div>
 <div class="container-fluid ">
-    <!--nav-->
-    <div class="topmenu">
-        <!-- 顶部导航 -->
-    </div>
     <div class="col-md-10 col-md-offset-1 allcontent">
         <div class="tip">
             <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 10px;" id="tip">
@@ -82,10 +87,12 @@
         </div>
     </div>
 </div>
+<!-- 关于我们 -->
 <div id="footer">
-    <!--      页脚 -->
+    <!-- 页脚 -->
 </div>
-</body>
+<div id="loginmodal"></div>
+<div id="registermodal"></div>
 <div class="modal fade" id="perinfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -136,20 +143,11 @@
 
     </div>
 </div>
-<script id="getcontent" type="text/html">
-    {{each data as value i}}
-    <tr>
-        <td><input type="checkbox" value="{{value.examId}}" name="title"/></td>
-        <td>{{++i}}</td>
-        <td><a href="../html/editExam.html?id={{value.examId}}" class="title">{{value.title}}</a></td>
-        <td>{{value.startTime}}</td>
-        <td>{{value.endTime}}</td>
-    </tr>
-    {{/each}}
-</script>
+</body>
+
 <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
-<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
-<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>
 <!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
 <script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
 <!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
@@ -158,7 +156,6 @@
 <script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 
 <script type="text/javascript" src="../js/patest.js"></script>
-<script type="text/javascript" src="./js/loginreg.js"></script>
 <script type="text/javascript" src="./js/commonet.js"></script>
 <script type="text/javascript" src="./js/perinfo.js"></script>
 <script type="text/javascript">
