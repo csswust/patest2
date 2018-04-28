@@ -6,6 +6,8 @@ import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.service.ExamInfoService;
+import com.csswust.patest2.service.OperateLogService;
+import com.csswust.patest2.service.input.OperateLogInsert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class ExamInfoAction extends BaseAction {
     private ExamInfoDao examInfoDao;
     @Autowired
     private ExamInfoService examInfoService;
+    @Autowired
+    private OperateLogService operateLogService;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
@@ -71,17 +75,29 @@ public class ExamInfoAction extends BaseAction {
         int result = examInfoDao.insertSelective(examInfo);
         res.put("status", result);
         res.put("examId", examInfo.getExamId());
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "添加考试", examInfo.getExamId());
+        insert.setArgcData("examInfo", examInfo);
+        operateLogService.insertOne(insert);
         return res;
     }
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object updateById(ExamInfo examInfo) {
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "修改考试", examInfo.getExamId());
+        insert.setArgcData("examInfo", examInfo);
+        operateLogService.insertOne(insert);
         return examInfoService.updateById(examInfo);
     }
 
     @RequestMapping(value = "/deleteByIds", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> deleteByIds(@RequestParam String ids) {
         Map<String, Object> res = new HashMap<>();
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "删除考试");
+        insert.setArgcData("ids", ids);
+        operateLogService.insertOne(insert);
         int result = examInfoDao.deleteByIds(ids);
         res.put("status", result);
         return res;

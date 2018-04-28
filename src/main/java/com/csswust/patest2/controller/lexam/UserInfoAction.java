@@ -103,10 +103,6 @@ public class UserInfoAction extends BaseAction {
         return res;
     }
 
-
-    @Autowired
-    private OperateLogService operateLogService;
-
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
             UserInfo userInfo,
@@ -117,12 +113,6 @@ public class UserInfoAction extends BaseAction {
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer rows) {
         Map<String, Object> res = new HashMap<>();
-
-        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
-                getUrl(), "用户查询");
-        insert.setArgcData("realName", "realName");
-        operateLogService.insertOne(insert);
-
         BaseQuery baseQuery = new BaseQuery();
         if (StringUtils.isNotBlank(realName)) {
             UserProfile userProfile = new UserProfile();

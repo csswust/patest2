@@ -31,6 +31,14 @@ public class OperateLogInsert {
         this.apiDesc = apiDesc;
     }
 
+    public OperateLogInsert(Integer userId, String ip, String apiUrl, String apiDesc, Integer examId) {
+        this.userId = userId;
+        this.ip = ip;
+        this.apiUrl = apiUrl;
+        this.apiDesc = apiDesc;
+        this.examId = examId;
+    }
+
     public Integer getUserId() {
         return userId;
     }
