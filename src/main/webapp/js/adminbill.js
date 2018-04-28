@@ -12,7 +12,6 @@ var program = {
     allbill: '',
     examname: [],
     showallbill: function () {
-        var order = 1;
         var billlist = program.data;
         var epApplys = program.epApplyInfoList;
         var epUsers = program.epUserInfoList;
@@ -27,16 +26,16 @@ var program = {
             var orderId = billlist[i].orderId;
             program.billhtml += '<tr  class="' + orderId + '">'
                 + '<td><input type="checkbox" value="' + orderId + '" name="title"/></td>'
-                + '<td>' + order + '</td>'
+                + '<td>' + orderId + '</td>'
                 + '<td>' + billlist[i].orderNum + '</td>'
-                + '<td><a class="title"  href="../eph/applyexam.html?applyid=' + epApplys[i].applyId + '">' + epApplys[i].examName + '</a></td>'
+                + '<td><a class="title"  href="editExam.html?Id=' + epApplys[i].examId + '">' + epApplys[i].examName + '</a></td>'
                 + '<td>' + epUsers[i].realName + '</td>'
                 + '<td>' + epUsers[i].phone + '</td>'
                 + '<td>' + billlist[i].createTime + '</td>'
                 + '<td>' + billlist[i].money + '</td>'
                 + '<td>' + payinfo + '</td>'
+                + '<td class="payment" id="' + orderId + '"><button type="button" class="btn btn-info btn-xs" id="pay">付款</button></td>'
                 + '</tr>';
-            order++;
         }
     },
     //查询账单信息
@@ -103,9 +102,34 @@ var program = {
                 pubMeth.alertInfo("alert-info", "请先勾选删除项！");
             }
         });
+    },
+    // 付款
+    payment: function (id) {
+        $.ajax({
+            type: "post",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../epOrderInfo/payment",
+            dataType: 'json',
+            async: false,
+            data: {
+                orderId: id
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.status === 1) {
+                    pubMeth.alertInfo("alert-success", "付款成功");
+                    program.selectallbill();
+                } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
+                }
+            }
+        });
     }
 };
-
+$("#billInfo").on('click', '.payment', function () {
+    var index = this.id;
+    program.payment(index);
+});
 pubMeth.getRowsnum("rowsnum");
 program.selectallbill();
 program.deletebill();

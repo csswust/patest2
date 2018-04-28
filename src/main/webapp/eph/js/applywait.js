@@ -55,18 +55,21 @@ var applywait = {
     },
     // 付款
     payment: function (id) {
-        patest.request({
-            url: "../ep/epOrderInfo/payment"
-        }, {
-            orderId: id
-        }, function (result) {
-            if (result.status === 1) {
-                patest.alertInfo("alert-success", "付款成功");
-                applywait.selectallInfo();
-            } else {
-                patest.alertInfo("alert-danger", result.desc);
-            }
+        $('#payModal').modal({
+            backdrop: 'static'
         });
+        /*patest.request({
+         url: "../ep/epOrderInfo/payment"
+         }, {
+         orderId: id
+         }, function (result) {
+         if (result.status === 1) {
+         patest.alertInfo("alert-success", "付款成功");
+         applywait.selectallInfo();
+         } else {
+         patest.alertInfo("alert-danger", result.desc);
+         }
+         });*/
     },
     //删除一场申请
     deleteApply: function (id) {
@@ -116,16 +119,25 @@ var applywait = {
             var ispassinfo = statusDesc[infolist[i].status];
             var id = infolist[i].applyId;
             var orderId = epOrderInfoList[i].orderId;
-            applywait.applyhtml += '<tr  class="' + id + '"><td>' + infolist[i].applyId + '</td>'
+            var oparate = "";
+            if (infolist[i].status === 0) {
+                oparate = '<td class="deleteap" id="' + id + '"><button type="button" class="btn btn-primary btn-xs  ">取消申请</button></td>';
+            } else if (infolist[i].status === 1) {
+                // oparate = '<td class="payment" id="' + orderId + '"><button type="button" class="btn btn-info btn-xs" style="margin-left:17px;" id="pay">付款</button></td>'
+                oparate = '<td><a href="billlist.html">请在我的账单付款</a></td>';
+            } else if (infolist[i].status === 2) {
+                oparate = '<td class="addexam" id="' + infolist[i].examId + '"><button type="button" class="btn btn-success btn-xs">编辑考试</button></td>';
+            } else {
+                oparate = '<td>' + infolist[i].reason + '</td>';
+            }
+            applywait.applyhtml += '<tr class="' + id + '"><td>' + infolist[i].applyId + '</td>'
                 + '<td><a   href="applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'
                 + '<td>' + infolist[i].peopleNumber + '</td>'
                 + '<td>' + infolist[i].startTime + '</td>'
                 + '<td>' + infolist[i].endTime + '</td>'
                 + '<td>' + epUserInfoList[i].username + '</td>'
                 + '<td class="ispass" id="' + id + '">' + ispassinfo + '</td>'
-                + '<td class="deleteap" id="' + id + '"><button type="button" class="btn btn-primary btn-xs  ">取消申请</button></td>'
-                + '<td class="payment" id="' + orderId + '"><button type="button" class="btn btn-info btn-xs" style="margin-left:17px;" id="pay">付款</button></td>'
-                + '<td class="addexam" id="' + infolist[i].examId + '"><button type="button" class="btn btn-success btn-xs">编辑考试</button></td>'
+                + oparate
                 + '</tr>';
         }
     }

@@ -46,13 +46,9 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
         List<EpUserInfo> epUserInfoList = selectRecordByIds(
                 getFieldByList(epApplyInfoList, "epUserId", EpApplyInfo.class),
                 "userId", (BaseDao) epUserInfoDao, EpUserInfo.class);
-        List<EpOrderInfo> epOrderInfoList = new ArrayList<>();
-        for (int i = 0; i < epApplyInfoList.size(); i++) {
-            EpApplyInfo item = epApplyInfoList.get(i);
-            EpOrderInfo temp = epOrderInfoDao.selectByApplyId(item.getApplyId());
-            if (temp == null) temp = new EpOrderInfo();
-            epOrderInfoList.add(temp);
-        }
+        List<EpOrderInfo> epOrderInfoList = selectRecordByIds(
+                getFieldByList(epApplyInfoList, "orderId", EpApplyInfo.class),
+                "orderId", (BaseDao) epOrderInfoDao, EpOrderInfo.class);
         apiResult.setDataKey("total", total);
         apiResult.setDataKey("list", epApplyInfoList);
         apiResult.setDataKey("epUserInfoList", epUserInfoList);
@@ -106,7 +102,17 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
                         JSON.toJSONString(epOrderInfo));
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             } else {
-                apiResult.setStatusAndDesc(temp, "审核成功");
+                EpApplyInfo recordApply = new EpApplyInfo();
+                recordApply.setApplyId(record.getApplyId());
+                recordApply.setOrderId(epOrderInfo.getOrderId());
+                temp = epApplyInfoDao.updateByPrimaryKeySelective(recordApply);
+                if (temp == 0) {
+                    apiResult.setStatusAndDesc(-5, "更新申请失败" +
+                            JSON.toJSONString(recordApply));
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                } else {
+                    apiResult.setStatusAndDesc(temp, "审核成功");
+                }
             }
         } else {
             apiResult.setStatusAndDesc(-5, "更新申请失败" +

@@ -89,10 +89,8 @@ public class SystemAction extends BaseAction {
 
     @ResponseBody
     @RequestMapping(value = "/authError", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> authError() throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", "权限不足");
-        return map;
+    public Object authError() throws Exception {
+        return new APIResult(-47, "权限不足");
     }
 
     @ResponseBody
