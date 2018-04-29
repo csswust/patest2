@@ -55,7 +55,13 @@ var program = {
             title: {
                 text: title
             },
-            tooltip: {},
+            tooltip: {
+                show: true,
+                trigger: "axis",
+                axisPointer: {
+                    type: "cross"
+                }
+            },
             xAxis: {
                 type: 'category',
                 data: type,
