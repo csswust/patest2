@@ -3,11 +3,6 @@
     padding: 0;
 }
 
-body {
-    font-family: "微软雅黑";
-    overflow-x: hidden;
-}
-
 .navbar {
     margin-bottom: 0px;
 }
@@ -39,8 +34,31 @@ body {
     font-size: 25px;
 }
 
+body {
+    font-family: "微软雅黑";
+    overflow-x: hidden;
+    position:absolute;
+    width:100%;
+    min-height:100%;
+}
+
+
 .container-fluid {
-    padding: 0px;
+    padding-bottom: 180px;
+}
+
+#footer {
+    background-color: #2385B3;
+    color: #fff;
+    margin:0;
+    padding:0;
+    bottom:0;
+    clear:both;
+    position:absolute;
+    width:100%;
+}
+#footer a{
+    color: #e8faff;
 }
 
 .topmenu {
@@ -161,13 +179,6 @@ body {
 
 .opration .col-md-offset-2 {
     margin-left: 22.666667%;
-}
-
-#footer {
-    background-color: #2385B3;
-    color: #fff;
-    margin-top: 30px;
-    padding-top: 10px;
 }
 
 .copyright {

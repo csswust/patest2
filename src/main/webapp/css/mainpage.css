@@ -1,11 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 1349px;
-}
 
 .clearfix :after {
     clear: both;
