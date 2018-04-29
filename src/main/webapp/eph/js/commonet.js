@@ -5,9 +5,21 @@ var commonet = {
         commonet.getCookie("sysname");
         // 导航
         commonet.headet();
+        commonet.getsysname();
         // 页脚
         commonet.footcon();
         commonet.selectEpinfo();
+    },
+
+    getsysname: function () {
+        patest.request({
+            url: "../siteInfo/selectByName"
+        }, {
+            name: "systemname"
+        }, function (result) {
+            commonet.systename = result.value;
+            $(".navbar-brand").text(commonet.systename);
+        });
     },
     listMenu: function () {
         var list = '<div class="col-md-3 stinfo  etinfo" id="sinfo">'
