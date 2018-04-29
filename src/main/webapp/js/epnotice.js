@@ -119,9 +119,10 @@ var program = {
             program.html +=
                 '<tr><td><input type="checkbox" value="' + program.data[i].epnoId + '" name="title"/></td>'
                 + '<td>' + program.data[i].epnoId + '</td>'
-                + '<td class="show">' + program.data[i].title + '</td>'
+                + '<td >' + program.data[i].title + '</td>'
                 + '<td>' + program.data[i].createTime + '</td>'
-                + '<td><a href="javascript:;"class="title" value="' + program.data[i].epnoId + '" >修改</a></td>'
+                + '<td>' + program.data[i].modifyTime + '</td>'
+                + '<td><a href="javascript:;" class="title" value="' + program.data[i].epnoId + '" >修改</a></td>'
                 + '</tr>';
         }
     },
