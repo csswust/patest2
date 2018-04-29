@@ -84,6 +84,15 @@ var program = {
                 program.showAccount();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.html);
+                $("#listInfo tr").each(function (i) {
+                    $("td:last a.title", this).click(function () {
+                        program.userId = $(this).attr("value");
+                        $('#user').modal({
+                            backdrop: 'static'
+                        });
+                        program.setValueId();
+                    });
+                });
             }
         });
     },
@@ -105,7 +114,7 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
-                userId: program.userId,
+                userId: program.userId
             },
             success: function (result) {
                 console.log(result);
@@ -175,7 +184,6 @@ var program = {
                     pubMeth.alertInfo("alert-danger", "修改失败！");
                 } else {
                     pubMeth.alertInfo("alert-danger", result.APIResult.desc);
-                    /*pubMeth.alertInfo("alert-danger", "修改失败！");*/
                 }
             }
         });
@@ -200,9 +208,7 @@ var program = {
                 if (result.userInfoInsertRe.status == 1) {
                     program.selectAccount();
                     pubMeth.alertInfo("alert-success", "添加成功！");
-                } /*else if (result.status == -1) {
-                 pubMeth.alertInfo("alert-info", "无此对应学号的考生！");
-                 } */ else {
+                } else {
                     pubMeth.alertInfo("alert-danger", result.userInfoInsertRe.desc);
                 }
             }
