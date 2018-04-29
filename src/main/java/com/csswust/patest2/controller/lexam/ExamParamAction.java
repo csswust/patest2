@@ -2,9 +2,6 @@ package com.csswust.patest2.controller.lexam;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.CourseInfoDao;
-import com.csswust.patest2.dao.ExamParamDao;
-import com.csswust.patest2.dao.KnowledgeInfoDao;
 import com.csswust.patest2.entity.ExamParam;
 import com.csswust.patest2.service.ExamParamService;
 import com.csswust.patest2.service.OperateLogService;

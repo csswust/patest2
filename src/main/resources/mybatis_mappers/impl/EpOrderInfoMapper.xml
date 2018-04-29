@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM ep_order_info
         WHERE 1 = 1
-            <if test="record.orderId != null">
+        <if test="record.orderId != null">
             AND
             order_id = #{record.orderId}
         </if>
@@ -61,7 +61,7 @@
         count(*)
         FROM ep_order_info
         WHERE 1 = 1
-            <if test="record.orderId != null">
+        <if test="record.orderId != null">
             AND
             order_id = #{record.orderId}
         </if>
@@ -115,7 +115,7 @@
         delete from ep_order_info
         where order_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -124,14 +124,16 @@
         from ep_order_info
         where order_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into ep_order_info
-        (apply_id, order_num, description, money, ep_user_id, is_pay, pay_money, create_time, modify_time, modify_user_id) values
+        (apply_id, order_num, description, money, ep_user_id, is_pay, pay_money, create_time, modify_time,
+        modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.applyId}, #{item.orderNum}, #{item.description}, #{item.money}, #{item.epUserId}, #{item.isPay}, #{item.payMoney}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.applyId}, #{item.orderNum}, #{item.description}, #{item.money}, #{item.epUserId}, #{item.isPay},
+            #{item.payMoney}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

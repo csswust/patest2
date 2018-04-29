@@ -2,13 +2,9 @@ package com.csswust.patest2.controller.ep;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.*;
-import com.csswust.patest2.dao.common.BaseDao;
-import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.*;
+import com.csswust.patest2.entity.ExamPaper;
 import com.csswust.patest2.service.ExamPaperService;
 import com.csswust.patest2.service.common.AuthService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
-import static com.csswust.patest2.service.common.BatchQueryService.selectRecordByIds;
 
 /**
  * Created by 972536780 on 2018/3/21.

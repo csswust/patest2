@@ -1,7 +1,6 @@
 package com.csswust.patest2.utils;
 
 import java.io.*;
-import java.nio.charset.Charset;
 
 public class StreamUtil {
 

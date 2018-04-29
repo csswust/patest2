@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM ep_apply_info
         WHERE 1 = 1
-            <if test="record.applyId != null">
+        <if test="record.applyId != null">
             AND
             apply_id = #{record.applyId}
         </if>
@@ -81,7 +81,7 @@
         count(*)
         FROM ep_apply_info
         WHERE 1 = 1
-            <if test="record.applyId != null">
+        <if test="record.applyId != null">
             AND
             apply_id = #{record.applyId}
         </if>
@@ -155,7 +155,7 @@
         delete from ep_apply_info
         where apply_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -164,14 +164,17 @@
         from ep_apply_info
         where apply_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into ep_apply_info
-        (exam_name, people_number, is_problem, start_time, end_time, ep_user_id, status, order_id, exam_id, examine_user_id, examine_time, reason, create_time, modify_time, modify_user_id) values
+        (exam_name, people_number, is_problem, start_time, end_time, ep_user_id, status, order_id, exam_id,
+        examine_user_id, examine_time, reason, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.examName}, #{item.peopleNumber}, #{item.isProblem}, #{item.startTime}, #{item.endTime}, #{item.epUserId}, #{item.status}, #{item.orderId}, #{item.examId}, #{item.examineUserId}, #{item.examineTime}, #{item.reason}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.examName}, #{item.peopleNumber}, #{item.isProblem}, #{item.startTime}, #{item.endTime},
+            #{item.epUserId}, #{item.status}, #{item.orderId}, #{item.examId}, #{item.examineUserId},
+            #{item.examineTime}, #{item.reason}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

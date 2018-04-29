@@ -1,5 +1,5 @@
 var applyexam = {
-    isProblem:0,
+    isProblem: 0,
     init: function () {
         commonet.init(); // 公共模块初始化
         $(".applyexam").addClass("onet");
@@ -73,23 +73,23 @@ var applyexam = {
         });
     },
     /*getTop: function () {
-        var radios = $('input[name="status"]');
-        for (var i = 0; i < radios.length; i++) {
-            applyexam.isProblem = $('input[name="status"]:checked').val();
-            radios[i].onclick = function () {
-                applyexam.isProblem = $('input[name="status"]:checked').val();
-            }
-        }
-    },*/
+     var radios = $('input[name="status"]');
+     for (var i = 0; i < radios.length; i++) {
+     applyexam.isProblem = $('input[name="status"]:checked').val();
+     radios[i].onclick = function () {
+     applyexam.isProblem = $('input[name="status"]:checked').val();
+     }
+     }
+     },*/
     setValue: function () {
         $(".testname").val(applyexam.testName);
         $(".peoplenum").val(applyexam.peopleNum);
         $(".startTime").val(applyexam.startTime);
         $(".endTime").val(applyexam.endTime);
         /*if (applyexam.isProblem === 1) {
-            $(".yesbank").prop("checked", true);
-        } else {
-            $(".nobank").prop("checked", true);
-        }*/
+         $(".yesbank").prop("checked", true);
+         } else {
+         $(".nobank").prop("checked", true);
+         }*/
     }
 };

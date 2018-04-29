@@ -1,7 +1,6 @@
 package com.csswust.patest2.controller.lexam;
 
 import com.csswust.patest2.common.APIResult;
-import com.csswust.patest2.common.MonitorKey;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.ExamInfoDao;
 import com.csswust.patest2.dao.UserInfoDao;
@@ -13,10 +12,7 @@ import com.csswust.patest2.entity.ExamInfo;
 import com.csswust.patest2.entity.UserInfo;
 import com.csswust.patest2.entity.UserLoginLog;
 import com.csswust.patest2.entity.UserProfile;
-import com.csswust.patest2.service.OperateLogService;
 import com.csswust.patest2.service.UserInfoService;
-import com.csswust.patest2.service.input.OperateLogInsert;
-import com.csswust.patest2.service.monitor.Monitor;
 import com.csswust.patest2.service.result.LoginRe;
 import com.csswust.patest2.service.result.UserInfoInsertRe;
 import com.csswust.patest2.utils.ArrayUtil;

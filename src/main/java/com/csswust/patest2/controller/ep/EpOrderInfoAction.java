@@ -2,10 +2,8 @@ package com.csswust.patest2.controller.ep;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.EpOrderInfoDao;
 import com.csswust.patest2.entity.EpOrderInfo;
 import com.csswust.patest2.service.EpOrderInfoService;
-import com.csswust.patest2.service.common.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

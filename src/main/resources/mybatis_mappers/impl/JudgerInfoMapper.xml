@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM judger_info
         WHERE 1 = 1
-            <if test="record.judId != null">
+        <if test="record.judId != null">
             AND
             jud_id = #{record.judId}
         </if>
@@ -57,7 +57,7 @@
         count(*)
         FROM judger_info
         WHERE 1 = 1
-            <if test="record.judId != null">
+        <if test="record.judId != null">
             AND
             jud_id = #{record.judId}
         </if>
@@ -107,7 +107,7 @@
         delete from judger_info
         where jud_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -116,14 +116,15 @@
         from judger_info
         where jud_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into judger_info
         (name, repr, file_name, exec_file_name, suffix, enabled, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.name}, #{item.repr}, #{item.fileName}, #{item.execFileName}, #{item.suffix}, #{item.enabled}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.name}, #{item.repr}, #{item.fileName}, #{item.execFileName}, #{item.suffix}, #{item.enabled},
+            #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

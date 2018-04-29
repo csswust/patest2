@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM academy_info
         WHERE 1 = 1
-            <if test="record.acaId != null">
+        <if test="record.acaId != null">
             AND
             aca_id = #{record.acaId}
         </if>
@@ -37,7 +37,7 @@
         count(*)
         FROM academy_info
         WHERE 1 = 1
-            <if test="record.acaId != null">
+        <if test="record.acaId != null">
             AND
             aca_id = #{record.acaId}
         </if>
@@ -67,7 +67,7 @@
         delete from academy_info
         where aca_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -76,7 +76,7 @@
         from academy_info
         where aca_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">

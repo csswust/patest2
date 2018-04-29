@@ -1,113 +1,115 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csswust.patest2.dao.EpNoticeDao" >
-    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.EpNotice" >
-        <id column="epno_id" property="epnoId" jdbcType="INTEGER" />
-        <result column="title" property="title" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
-        <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
+<mapper namespace="com.csswust.patest2.dao.EpNoticeDao">
+    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.EpNotice">
+        <id column="epno_id" property="epnoId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER"/>
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="com.csswust.patest2.entity.EpNotice" extends="BaseResultMap" >
-        <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <resultMap id="ResultMapWithBLOBs" type="com.csswust.patest2.entity.EpNotice" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
         epno_id, title, create_time, modify_time, modify_user_id
     </sql>
-    <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
         content
     </sql>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-        select 
-        <include refid="Base_Column_List" />
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         from ep_notice
         where epno_id = #{epnoId,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from ep_notice
         where epno_id = #{epnoId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.csswust.patest2.entity.EpNotice" useGeneratedKeys="true" keyProperty="epnoId" >
-        insert into ep_notice (title, create_time, modify_time, 
-            modify_user_id, content)
-        values (#{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
-            #{modifyUserId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+    <insert id="insert" parameterType="com.csswust.patest2.entity.EpNotice" useGeneratedKeys="true"
+            keyProperty="epnoId">
+        insert into ep_notice (title, create_time, modify_time,
+        modify_user_id, content)
+        values (#{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyUserId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.EpNotice" useGeneratedKeys="true" keyProperty="epnoId" >
+    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.EpNotice" useGeneratedKeys="true"
+            keyProperty="epnoId">
         insert into ep_notice
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="title != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
                 title,
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time,
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time,
             </if>
-            <if test="modifyUserId != null" >
+            <if test="modifyUserId != null">
                 modify_user_id,
             </if>
-            <if test="content != null" >
+            <if test="content != null">
                 content,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="title != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
                 #{title,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyUserId != null" >
+            <if test="modifyUserId != null">
                 #{modifyUserId,jdbcType=INTEGER},
             </if>
-            <if test="content != null" >
+            <if test="content != null">
                 #{content,jdbcType=LONGVARCHAR},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.EpNotice" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.EpNotice">
         update ep_notice
-        <set >
-            <if test="title != null" >
+        <set>
+            <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyTime != null" >
+            <if test="modifyTime != null">
                 modify_time = #{modifyTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="modifyUserId != null" >
+            <if test="modifyUserId != null">
                 modify_user_id = #{modifyUserId,jdbcType=INTEGER},
             </if>
-            <if test="content != null" >
+            <if test="content != null">
                 content = #{content,jdbcType=LONGVARCHAR},
             </if>
         </set>
         where epno_id = #{epnoId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.EpNotice" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csswust.patest2.entity.EpNotice">
         update ep_notice
         set title = #{title,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-            modify_user_id = #{modifyUserId,jdbcType=INTEGER},
-            content = #{content,jdbcType=LONGVARCHAR}
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+        content = #{content,jdbcType=LONGVARCHAR}
         where epno_id = #{epnoId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.EpNotice" >
+    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.EpNotice">
         update ep_notice
         set title = #{title,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-            modify_user_id = #{modifyUserId,jdbcType=INTEGER}
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER}
         where epno_id = #{epnoId,jdbcType=INTEGER}
     </update>
 </mapper>

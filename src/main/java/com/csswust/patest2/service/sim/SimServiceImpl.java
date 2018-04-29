@@ -1,6 +1,5 @@
 package com.csswust.patest2.service.sim;
 
-import com.alibaba.fastjson.JSON;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.entity.SubmitInfo;

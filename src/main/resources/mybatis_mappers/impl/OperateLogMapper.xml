@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM operate_log
         WHERE 1 = 1
-            <if test="record.id != null">
+        <if test="record.id != null">
             AND
             id = #{record.id}
         </if>
@@ -53,7 +53,7 @@
         count(*)
         FROM operate_log
         WHERE 1 = 1
-            <if test="record.id != null">
+        <if test="record.id != null">
             AND
             id = #{record.id}
         </if>
@@ -99,7 +99,7 @@
         delete from operate_log
         where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -108,14 +108,15 @@
         from operate_log
         where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into operate_log
         (user_id, ip, api_url, api_desc, api_argc, exam_id, problem_id, create_time) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.userId}, #{item.ip}, #{item.apiUrl}, #{item.apiDesc}, #{item.apiArgc}, #{item.examId}, #{item.problemId}, #{item.createTime})
+            (#{item.userId}, #{item.ip}, #{item.apiUrl}, #{item.apiDesc}, #{item.apiArgc}, #{item.examId},
+            #{item.problemId}, #{item.createTime})
         </foreach>
     </select>
 </mapper>

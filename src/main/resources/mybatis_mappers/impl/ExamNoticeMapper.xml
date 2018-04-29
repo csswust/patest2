@@ -8,7 +8,7 @@
         <include refid="Blob_Column_List"/>
         FROM exam_notice
         WHERE 1 = 1
-            <if test="record.exaNotId != null">
+        <if test="record.exaNotId != null">
             AND
             exa_not_id = #{record.exaNotId}
         </if>
@@ -47,7 +47,7 @@
         count(*)
         FROM exam_notice
         WHERE 1 = 1
-            <if test="record.exaNotId != null">
+        <if test="record.exaNotId != null">
             AND
             exa_not_id = #{record.exaNotId}
         </if>
@@ -85,7 +85,7 @@
         delete from exam_notice
         where exa_not_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
@@ -96,14 +96,15 @@
         from exam_notice
         where exa_not_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into exam_notice
         (exam_id, title, create_time, modify_time, modify_user_id, content) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.examId}, #{item.title}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.content})
+            (#{item.examId}, #{item.title}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId},
+            #{item.content})
         </foreach>
     </select>
 </mapper>

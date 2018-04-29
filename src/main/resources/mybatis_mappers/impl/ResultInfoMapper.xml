@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM result_info
         WHERE 1 = 1
-            <if test="record.resuId != null">
+        <if test="record.resuId != null">
             AND
             resu_id = #{record.resuId}
         </if>
@@ -41,7 +41,7 @@
         count(*)
         FROM result_info
         WHERE 1 = 1
-            <if test="record.resuId != null">
+        <if test="record.resuId != null">
             AND
             resu_id = #{record.resuId}
         </if>
@@ -75,7 +75,7 @@
         delete from result_info
         where resu_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -84,7 +84,7 @@
         from result_info
         where resu_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">

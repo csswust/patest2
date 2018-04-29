@@ -1,6 +1,5 @@
 package com.csswust.patest2.service.impl;
 
-import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.dao.OperateLogDao;
 import com.csswust.patest2.entity.OperateLog;
 import com.csswust.patest2.service.OperateLogService;

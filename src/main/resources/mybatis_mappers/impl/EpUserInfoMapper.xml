@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM ep_user_info
         WHERE 1 = 1
-            <if test="record.userId != null">
+        <if test="record.userId != null">
             AND
             user_id = #{record.userId}
         </if>
@@ -57,7 +57,7 @@
         count(*)
         FROM ep_user_info
         WHERE 1 = 1
-            <if test="record.userId != null">
+        <if test="record.userId != null">
             AND
             user_id = #{record.userId}
         </if>
@@ -107,7 +107,7 @@
         delete from ep_user_info
         where user_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -116,14 +116,15 @@
         from ep_user_info
         where user_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into ep_user_info
         (username, password, email, phone, unit, real_name, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.username}, #{item.password}, #{item.email}, #{item.phone}, #{item.unit}, #{item.realName}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.username}, #{item.password}, #{item.email}, #{item.phone}, #{item.unit}, #{item.realName},
+            #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

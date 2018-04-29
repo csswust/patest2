@@ -198,7 +198,8 @@ var program = {
 };
 var ue = UE.getEditor('notdes', {
     initialFrameWidth: 700,//初始化编辑器宽度,默认1000
-    initialFrameHeight: 400  //初始化编辑器高度,默认320
+    initialFrameHeight: 400,  //初始化编辑器高度,默认320
+    scaleEnabled: true//设置不自动调整高度
 });
 pubMeth.getRowsnum("rowsnum");
 var parm = pubMeth.getQueryObject();

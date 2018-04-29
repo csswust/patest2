@@ -8,7 +8,7 @@
         <include refid="Blob_Column_List"/>
         FROM submit_info
         WHERE 1 = 1
-            <if test="record.submId != null">
+        <if test="record.submId != null">
             AND
             subm_id = #{record.submId}
         </if>
@@ -91,7 +91,7 @@
         count(*)
         FROM submit_info
         WHERE 1 = 1
-            <if test="record.submId != null">
+        <if test="record.submId != null">
             AND
             subm_id = #{record.submId}
         </if>
@@ -173,7 +173,7 @@
         delete from submit_info
         where subm_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
@@ -184,14 +184,18 @@
         from submit_info
         where subm_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into submit_info
-        (user_id, exam_id, exam_paper_id, exam_param_id, paper_problem_id, problem_id, judger_id, ip, is_teacher_test, status, used_time, used_memory, create_time, modify_time, modify_user_id, source, err_msg) values
+        (user_id, exam_id, exam_paper_id, exam_param_id, paper_problem_id, problem_id, judger_id, ip, is_teacher_test,
+        status, used_time, used_memory, create_time, modify_time, modify_user_id, source, err_msg) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.userId}, #{item.examId}, #{item.examPaperId}, #{item.examParamId}, #{item.paperProblemId}, #{item.problemId}, #{item.judgerId}, #{item.ip}, #{item.isTeacherTest}, #{item.status}, #{item.usedTime}, #{item.usedMemory}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.source}, #{item.errMsg})
+            (#{item.userId}, #{item.examId}, #{item.examPaperId}, #{item.examParamId}, #{item.paperProblemId},
+            #{item.problemId}, #{item.judgerId}, #{item.ip}, #{item.isTeacherTest}, #{item.status}, #{item.usedTime},
+            #{item.usedMemory}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.source},
+            #{item.errMsg})
         </foreach>
     </select>
 </mapper>

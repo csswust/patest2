@@ -1,9 +1,6 @@
 package com.csswust.patest2.service.judge;
 
 
-import com.csswust.patest2.service.judge.JudgeResult;
-import com.csswust.patest2.service.judge.JudgeTask;
-
 import java.util.Map;
 
 /**

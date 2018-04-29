@@ -101,7 +101,7 @@ var nav = {
         nav.deleCookie("userId");
         nav.deleCookie("role");
     },
-    countDown: function (intDiff,callBack) {
+    countDown: function (intDiff, callBack) {
         setInterval(function () {
             var day = 0, hour = 0, minute = 0, second = 0;// 时间默认值
             if (intDiff > 0) {

@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM exam_problem
         WHERE 1 = 1
-            <if test="record.exaProId != null">
+        <if test="record.exaProId != null">
             AND
             exa_pro_id = #{record.exaProId}
         </if>
@@ -41,7 +41,7 @@
         count(*)
         FROM exam_problem
         WHERE 1 = 1
-            <if test="record.exaProId != null">
+        <if test="record.exaProId != null">
             AND
             exa_pro_id = #{record.exaProId}
         </if>
@@ -75,7 +75,7 @@
         delete from exam_problem
         where exa_pro_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -84,7 +84,7 @@
         from exam_problem
         where exa_pro_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">

@@ -58,7 +58,7 @@ var billlist = {
             var payMoney = '';
             if (bills[i].isPay === 0) {
                 payMoney = '<td><button type="button" class="btn btn-info btn-xs payment" id="' + orderId + '">付款</button></td>'
-            } else{
+            } else {
                 payMoney = '<td><button type="button" class="btn btn-info btn-xs payment" disabled="disabled" id="' + orderId + '">付款</button></td>'
             }
             billlist.billhtml += '<tr  class="' + orderId + '">'

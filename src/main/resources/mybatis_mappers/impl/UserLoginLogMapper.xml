@@ -6,7 +6,7 @@
         <include refid="Base_Column_List"/>
         FROM user_login_log
         WHERE 1 = 1
-            <if test="record.useLogId != null">
+        <if test="record.useLogId != null">
             AND
             use_log_id = #{record.useLogId}
         </if>
@@ -33,7 +33,7 @@
         count(*)
         FROM user_login_log
         WHERE 1 = 1
-            <if test="record.useLogId != null">
+        <if test="record.useLogId != null">
             AND
             use_log_id = #{record.useLogId}
         </if>
@@ -59,7 +59,7 @@
         delete from user_login_log
         where use_log_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -68,7 +68,7 @@
         from user_login_log
         where use_log_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">

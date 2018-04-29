@@ -2,7 +2,6 @@ package com.csswust.patest2.service;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.entity.ExamInfo;
-import com.csswust.patest2.service.result.ImportDataRe;
 
 import java.util.List;
 

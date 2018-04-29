@@ -1,133 +1,134 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csswust.patest2.dao.OperateLogDao" >
-    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.OperateLog" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="user_id" property="userId" jdbcType="INTEGER" />
-        <result column="ip" property="ip" jdbcType="VARCHAR" />
-        <result column="api_url" property="apiUrl" jdbcType="VARCHAR" />
-        <result column="api_desc" property="apiDesc" jdbcType="VARCHAR" />
-        <result column="api_argc" property="apiArgc" jdbcType="VARCHAR" />
-        <result column="exam_id" property="examId" jdbcType="INTEGER" />
-        <result column="problem_id" property="problemId" jdbcType="INTEGER" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+<mapper namespace="com.csswust.patest2.dao.OperateLogDao">
+    <resultMap id="BaseResultMap" type="com.csswust.patest2.entity.OperateLog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="api_url" property="apiUrl" jdbcType="VARCHAR"/>
+        <result column="api_desc" property="apiDesc" jdbcType="VARCHAR"/>
+        <result column="api_argc" property="apiArgc" jdbcType="VARCHAR"/>
+        <result column="exam_id" property="examId" jdbcType="INTEGER"/>
+        <result column="problem_id" property="problemId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
         id, user_id, ip, api_url, api_desc, api_argc, exam_id, problem_id, create_time
     </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        select 
-        <include refid="Base_Column_List" />
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
         from operate_log
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from operate_log
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.csswust.patest2.entity.OperateLog" useGeneratedKeys="true" keyProperty="id" >
-        insert into operate_log (user_id, ip, api_url, 
-            api_desc, api_argc, exam_id, 
-            problem_id, create_time)
-        values (#{userId,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{apiUrl,jdbcType=VARCHAR}, 
-            #{apiDesc,jdbcType=VARCHAR}, #{apiArgc,jdbcType=VARCHAR}, #{examId,jdbcType=INTEGER}, 
-            #{problemId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+    <insert id="insert" parameterType="com.csswust.patest2.entity.OperateLog" useGeneratedKeys="true" keyProperty="id">
+        insert into operate_log (user_id, ip, api_url,
+        api_desc, api_argc, exam_id,
+        problem_id, create_time)
+        values (#{userId,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{apiUrl,jdbcType=VARCHAR},
+        #{apiDesc,jdbcType=VARCHAR}, #{apiArgc,jdbcType=VARCHAR}, #{examId,jdbcType=INTEGER},
+        #{problemId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.OperateLog" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insertSelective" parameterType="com.csswust.patest2.entity.OperateLog" useGeneratedKeys="true"
+            keyProperty="id">
         insert into operate_log
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="userId != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
                 user_id,
             </if>
-            <if test="ip != null" >
+            <if test="ip != null">
                 ip,
             </if>
-            <if test="apiUrl != null" >
+            <if test="apiUrl != null">
                 api_url,
             </if>
-            <if test="apiDesc != null" >
+            <if test="apiDesc != null">
                 api_desc,
             </if>
-            <if test="apiArgc != null" >
+            <if test="apiArgc != null">
                 api_argc,
             </if>
-            <if test="examId != null" >
+            <if test="examId != null">
                 exam_id,
             </if>
-            <if test="problemId != null" >
+            <if test="problemId != null">
                 problem_id,
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="userId != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
                 #{userId,jdbcType=INTEGER},
             </if>
-            <if test="ip != null" >
+            <if test="ip != null">
                 #{ip,jdbcType=VARCHAR},
             </if>
-            <if test="apiUrl != null" >
+            <if test="apiUrl != null">
                 #{apiUrl,jdbcType=VARCHAR},
             </if>
-            <if test="apiDesc != null" >
+            <if test="apiDesc != null">
                 #{apiDesc,jdbcType=VARCHAR},
             </if>
-            <if test="apiArgc != null" >
+            <if test="apiArgc != null">
                 #{apiArgc,jdbcType=VARCHAR},
             </if>
-            <if test="examId != null" >
+            <if test="examId != null">
                 #{examId,jdbcType=INTEGER},
             </if>
-            <if test="problemId != null" >
+            <if test="problemId != null">
                 #{problemId,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.OperateLog" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.csswust.patest2.entity.OperateLog">
         update operate_log
-        <set >
-            <if test="userId != null" >
+        <set>
+            <if test="userId != null">
                 user_id = #{userId,jdbcType=INTEGER},
             </if>
-            <if test="ip != null" >
+            <if test="ip != null">
                 ip = #{ip,jdbcType=VARCHAR},
             </if>
-            <if test="apiUrl != null" >
+            <if test="apiUrl != null">
                 api_url = #{apiUrl,jdbcType=VARCHAR},
             </if>
-            <if test="apiDesc != null" >
+            <if test="apiDesc != null">
                 api_desc = #{apiDesc,jdbcType=VARCHAR},
             </if>
-            <if test="apiArgc != null" >
+            <if test="apiArgc != null">
                 api_argc = #{apiArgc,jdbcType=VARCHAR},
             </if>
-            <if test="examId != null" >
+            <if test="examId != null">
                 exam_id = #{examId,jdbcType=INTEGER},
             </if>
-            <if test="problemId != null" >
+            <if test="problemId != null">
                 problem_id = #{problemId,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.OperateLog" >
+    <update id="updateByPrimaryKey" parameterType="com.csswust.patest2.entity.OperateLog">
         update operate_log
         set user_id = #{userId,jdbcType=INTEGER},
-            ip = #{ip,jdbcType=VARCHAR},
-            api_url = #{apiUrl,jdbcType=VARCHAR},
-            api_desc = #{apiDesc,jdbcType=VARCHAR},
-            api_argc = #{apiArgc,jdbcType=VARCHAR},
-            exam_id = #{examId,jdbcType=INTEGER},
-            problem_id = #{problemId,jdbcType=INTEGER},
-            create_time = #{createTime,jdbcType=TIMESTAMP}
+        ip = #{ip,jdbcType=VARCHAR},
+        api_url = #{apiUrl,jdbcType=VARCHAR},
+        api_desc = #{apiDesc,jdbcType=VARCHAR},
+        api_argc = #{apiArgc,jdbcType=VARCHAR},
+        exam_id = #{examId,jdbcType=INTEGER},
+        problem_id = #{problemId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

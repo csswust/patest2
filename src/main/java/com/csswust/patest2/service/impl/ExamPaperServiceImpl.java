@@ -13,8 +13,6 @@ import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.common.ConditionBuild;
 import com.csswust.patest2.service.result.DrawProblemParam;
-import com.csswust.patest2.service.result.DrawProblemRe;
-import com.csswust.patest2.service.result.ExamPaperLoadRe;
 import com.csswust.patest2.utils.CipherUtil;
 import jxl.Sheet;
 import jxl.Workbook;

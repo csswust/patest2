@@ -2,8 +2,6 @@ package com.csswust.patest2.service;
 
 import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.entity.ExamPaper;
-import com.csswust.patest2.service.result.DrawProblemRe;
-import com.csswust.patest2.service.result.ExamPaperLoadRe;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
