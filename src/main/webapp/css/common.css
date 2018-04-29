@@ -5,7 +5,6 @@ body {
 
 ul {
     list-style: none;
-    /* -webkit-padding-start: 0px; */
 }
 
 .wrap {
@@ -305,4 +304,9 @@ ul {
 
 .paging .col-md-4 {
     width: 27.333333%;
+}
+
+.CodeMirror {
+    font-family: "Lucida Console", Times, serif;
+    font-size: 16px;
 }
