@@ -37,27 +37,27 @@
 body {
     font-family: "微软雅黑";
     overflow-x: hidden;
-    position:absolute;
-    width:100%;
-    min-height:100%;
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
 }
-
 
 .container-fluid {
     padding-bottom: 180px;
 }
 
 #footer {
-    background-color: #2385B3;
+    background-color: #52a2e8;
     color: #fff;
-    margin:0;
-    padding:0;
-    bottom:0;
-    clear:both;
-    position:absolute;
-    width:100%;
+    margin: 0;
+    padding: 0;
+    bottom: 0;
+    clear: both;
+    position: absolute;
+    width: 100%;
 }
-#footer a{
+
+#footer a {
     color: #e8faff;
 }
 
