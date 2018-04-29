@@ -88,7 +88,7 @@ var program = {
                     $("td:last a.title", this).click(function () {
                         program.userId = $(this).attr("value");
                         $('#user').modal({
-                            backdrop: 'static'
+                            //backdrop: 'static'
                         });
                         program.setValueId();
                     });
@@ -219,7 +219,7 @@ pubMeth.getRowsnum("rowsnum");
 program.selectAccount();
 $(".addUser").click(function () {
     $('#user').modal({
-        backdrop: 'static'
+        //backdrop: 'static'
     });
     $(".username").val("");
     $(".schoolNumber").val("");

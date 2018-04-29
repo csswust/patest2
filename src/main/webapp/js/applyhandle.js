@@ -131,7 +131,7 @@ program.deleteIt();
 
 $("#listInfo").on('click', '.examine', function () {
     $('#mexamine').modal({
-        backdrop: 'static'
+        //backdrop: 'static'
     });
     program.applyId = this.id;
 });

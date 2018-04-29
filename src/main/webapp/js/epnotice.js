@@ -93,7 +93,7 @@ var program = {
                     $("#listInfo tr").each(function (i) {
                         $("td:last a.title", this).click(function () {
                             $('#addnotice').modal({
-                                backdrop: 'static'
+                                //backdrop: 'static'
                             });
                             program.epnoId = $(this).attr("value");
                             program.selectId();
@@ -208,7 +208,7 @@ program.deleteNotice();
 
 $(".addnotice").click(function () {
     $('#addnotice').modal({
-        backdrop: 'static'
+        //backdrop: 'static'
     });
     $(".nottitle").val("");
     ue.ready(function () {

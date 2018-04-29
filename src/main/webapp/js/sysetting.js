@@ -75,14 +75,14 @@ var program = {
                             program.selectById(program.siteId);
                             if (program.stype == 1) {
                                 $('#oneInput').modal({
-                                    backdrop: 'static'
+                                    //backdrop: 'static'
                                 });
                                 $(".display").val(program.display);
                                 $(".parameterValue").val(program.content);
                             }
                             if (program.stype == 2) {
                                 $('#settingdata').modal({
-                                    backdrop: 'static'
+                                    //backdrop: 'static'
                                 });
                                 $("#myModalLabe2").text(program.display);
                                 ue.ready(function () {

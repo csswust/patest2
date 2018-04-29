@@ -79,7 +79,7 @@ var program = {
                     $("td:last a.title", this).click(function () {
                         program.userId = $(this).attr("value");
                         $('#user').modal({
-                            backdrop: 'static'
+                            //backdrop: 'static'
                         });
                         $(".schoolName").empty();
                         $(".knowName").empty();
@@ -352,7 +352,7 @@ $(".dschoolName").change(function () {
 });
 $(".addUser").click(function () {
     $('#user').modal({
-        backdrop: 'static'
+        //backdrop: 'static'
     });
     program.setValue();
     program.appendSchool();
@@ -414,7 +414,7 @@ $(".search").click(function () {
 program.change('input[id=namefile]', '.namefile');
 $(".addUsers").click(function () {
     $('#importuser').modal({
-        backdrop: 'static'
+        //backdrop: 'static'
     });
 });
 $(".comImport").click(function () {

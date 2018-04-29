@@ -307,7 +307,7 @@ $(".similarity").click(function () {
     var number = parseInt(str) - 1;
     if (!program.codeList[number].problemId) {
         $("#tip_info").modal({
-            backdrop: 'static'
+            //backdrop: 'static'
         });
         return;
     }

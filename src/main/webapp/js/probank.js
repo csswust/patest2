@@ -252,7 +252,7 @@ $('.addbank').on('click', function (e) {
     if (program.bankIds != "") {
         if (parm.examId) {
             $("#modaladdbank").modal({
-                backdrop: 'static'
+                //backdrop: 'static'
             });
             $(".confirmadd").click(function () {
                 program.getproblemInfoById();
@@ -261,7 +261,7 @@ $('.addbank').on('click', function (e) {
             });
         } else if (parm.Id) {
             $("#modaladdbank").modal({
-                backdrop: 'static'
+                //backdrop: 'static'
             });
             $(".confirmadd").click(function () {
                 program.getproblemInfoById();

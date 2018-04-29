@@ -12,7 +12,7 @@ var perinfo = {
         perinfo.setInfo();
         $(".saveInfo").click(function () {
             $('#perinfo').modal({
-                backdrop: 'static'
+                //backdrop: 'static'
             });
             $(".mtestname").val(perinfo.username);
             $(".mmail").val(perinfo.mail);

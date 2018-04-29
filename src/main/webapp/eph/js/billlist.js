@@ -95,7 +95,7 @@ var billlist = {
     // 付款
     payment: function (id) {
         $('#payModal').modal({
-            backdrop: 'static'
+            //backdrop: 'static'
         });
         patest.request({
             url: "../siteInfo/selectByName"

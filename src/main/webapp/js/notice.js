@@ -173,7 +173,7 @@ program.deleteNotice();
 
 $(".addnotice").click(function () {
     $('#addnotice').modal({
-        backdrop: 'static'
+        //backdrop: 'static'
     });
     $(".savenot").click(function () {
         program.title = $(".nottitle").val();

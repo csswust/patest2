@@ -61,7 +61,7 @@ var program = {
                 if (result.status == '1') {
                     program.probId = result.data.proId;
                     $('#upload').modal({
-                        backdrop: 'static'
+                        //backdrop: 'static'
                     });
                     $(".uploadData").click(function () {
                         program.uploadByFile();
@@ -513,7 +513,7 @@ if (par.id) {
     program.setValue();
     $(".formTest").click(function () {
         $('#upload').modal({
-            backdrop: 'static'
+            //backdrop: 'static'
         });
         $(".uploadData").click(function () {
             program.uploadByFile();

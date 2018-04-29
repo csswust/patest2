@@ -32,7 +32,7 @@ var addUplist = {
         $(".importList").click(function () {
             $(".namefile").val("");
             $('#import').modal({
-                backdrop: 'static'
+                //backdrop: 'static'
             });
             addUplist.change("input[type=file]", ".namefile");
         });

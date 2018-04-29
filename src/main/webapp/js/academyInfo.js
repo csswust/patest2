@@ -59,7 +59,7 @@ var program = {
                     $("td:last a.title", this).click(function () {
                         program.id = $(this).attr("value");
                         $('#major').modal({
-                            backdrop: 'static'
+                            //backdrop: 'static'
                         });
                         $(".majorName").empty();
                         $(".schoolName").empty();

@@ -181,7 +181,7 @@ var addParm = {
                             patest.alertInfo("alert-info", "问题总量不可为0，请修改参数");
                         } else {
                             $("#modaladdpram").modal({
-                                backdrop: 'static'
+                                //backdrop: 'static'
                             });
                             $(".allscore").html(allscore);
                             $(".allques").html(allquestion);
@@ -203,7 +203,7 @@ var addParm = {
                             patest.alertInfo("alert-info", "问题总量不可为0，请修改参数");
                         } else {
                             $("#modaladdpram").modal({
-                                backdrop: 'static'
+                                //backdrop: 'static'
                             });
                             $(".allscore").html(allscore);
                             $(".allques").html(allquestion);

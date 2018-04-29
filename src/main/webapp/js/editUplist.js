@@ -151,7 +151,7 @@ program.pagingFun();
 $(".importList").click(function () {
     $(".namefile").val("");
     $('#import').modal({
-        backdrop: 'static'
+        //backdrop: 'static'
     });
     program.change("input[type=file]", ".namefile");
 });

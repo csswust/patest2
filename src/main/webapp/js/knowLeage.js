@@ -104,7 +104,7 @@ var program = {
                         program.id = $(this).attr("value");
                         console.log(i);
                         $('#addKnow').modal({
-                            backdrop: 'static'
+                            //backdrop: 'static'
                         });
                         $(".coName").empty();
                         $(".knowName").empty();
@@ -119,7 +119,7 @@ var program = {
                         program.id = $(this).attr("value");
                         console.log(i);
                         $('#addKnow').modal({
-                            backdrop: 'static'
+                            //backdrop: 'static'
                         });
                         $(".coName").empty();
                         $(".knowName").empty();
@@ -134,7 +134,7 @@ var program = {
                         program.id = $(this).attr("value");
                         console.log(i);
                         $('#addKnow').modal({
-                            backdrop: 'static'
+                            //backdrop: 'static'
                         });
                         $(".coName").empty();
                         $(".knowName").empty();

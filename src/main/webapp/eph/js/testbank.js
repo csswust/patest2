@@ -21,7 +21,7 @@ var testbank = {
         $('.addbank').on('click', function (e) {
             if (testbank.bankIds !== "") {
                 $("#modaladdbank").modal({
-                    backdrop: 'static'
+                    //backdrop: 'static'
                 });
                 $(".confirmadd").click(function () {
                     testbank.getproblemInfoById();
