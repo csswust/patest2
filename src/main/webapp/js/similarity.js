@@ -73,7 +73,7 @@ var program = {
                 console.log(0);
             }
         });
-    },
+    }
 };
 pubMeth.getRowsnum("rowsnum");
 var par = pubMeth.getQueryObject();
@@ -86,11 +86,36 @@ $(".search").click(function () {
     });
     program.stunum = $(".searTitle").val();
     program.seardu = $(".seardu ").val();
+    program.examId = $(".searExamId").val();
     program.searchbyid();
     $(".countnum").html(program.count);
     $('#pagination').jqPaginator('option', {
         totalCounts: program.count
     });
+});
+
+$("#listInfo").on('click', '.diff', function () {
+    var index = this.value;
+
+    /*$('#diffCode').modal('shown.bs.modal');*/
+    $('#diffCode').on('shown.bs.modal', function () {
+        var value = program.submitInfoList1[index].source;
+        var orig2 = program.submitInfoList2[index].source;
+        var dv, highlight = true, connect = "align", collapse = false;
+        var target = document.getElementById("view");
+        target.innerHTML = "";
+        dv = CodeMirror.MergeView(target, {
+            value: value,
+            origLeft: null,
+            orig: orig2,
+            lineNumbers: true,
+            mode: "text/x-c++src",
+            highlightDifferences: highlight,
+            connect: connect,
+            collapseIdentical: collapse
+        });
+    });
+    $('#diffCode').modal();
 });
 
 if (program.count > 0) {
@@ -113,4 +138,30 @@ if (program.count > 0) {
     });
 } else {
     $(".pagenum").css("display", "none");
+}
+function mergeViewHeight(mergeView) {
+    function editorHeight(editor) {
+        if (!editor) return 0;
+        return editor.getScrollInfo().height;
+    }
+
+    return Math.max(editorHeight(mergeView.leftOriginal()),
+        editorHeight(mergeView.editor()),
+        editorHeight(mergeView.rightOriginal()));
+}
+
+function resize(mergeView) {
+    var height = mergeViewHeight(mergeView);
+    for (; ;) {
+        if (mergeView.leftOriginal())
+            mergeView.leftOriginal().setSize(null, height);
+        mergeView.editor().setSize(null, height);
+        if (mergeView.rightOriginal())
+            mergeView.rightOriginal().setSize(null, height);
+
+        var newHeight = mergeViewHeight(mergeView);
+        if (newHeight >= height) break;
+        else height = newHeight;
+    }
+    mergeView.wrap.style.height = height + "px";
 }
