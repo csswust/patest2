@@ -75,7 +75,10 @@ var program = {
             title = '<a  href="examInfo.html?id=' + program.data[i].examId + '">' + program.data[i].title + '</a>';
             if (program.state[i] == '2') {
                 if (program.prostate[i] == '1') {
-                    stateInfo = '已结束&nbsp;<a href="remark.html?id=' + program.data[i].examId + ' "class="markPaper">阅卷</a>';
+                    stateInfo = '已结束&nbsp;<a href="remark.html?id=' +
+                        program.data[i].examId + ' "class="markPaper">阅卷</a>'
+                        + '&nbsp;<a href="#" id=' + program.data[i].examId +
+                        ' class="simTest">检测相似度</a>';
                 } else if (program.prostate[i] == '0') {
                     stateInfo = '已结束 未抽题';
                 }
@@ -101,6 +104,31 @@ var program = {
                 + '</tr>';
         }
     },
+    simTest:function () {
+        $.ajax({
+            type: "get",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../submitSimilarity/getSimByExamId",
+            dataType: 'json',
+            async: false,
+            data: {
+                examId: program.examId
+            },
+            success: function (result) {
+                console.log(result);
+                $(".loading").html("<img />");
+                if (result.status > 0) {
+                    pubMeth.alertInfo("alert-success", result.desc);
+                } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
+                }
+                program.showInfo();
+            },
+            error: function () {
+                pubMeth.alertInfo("alert-danger", "请求错误！");
+            }
+        });
+    }
 };
 pubMeth.getRowsnum("rowsnum");
 program.getExamInfo();
@@ -110,10 +138,16 @@ $(".drawQuestion").on('click', function () {
     $(".loading img").css({
         width: 20,
         height: 20,
-    })
+    });
     program.examId = this.id;
     program.drawQuestion();
 });
+$(".simTest").on('click', function () {
+    console.log(this.id);
+    program.examId = this.id;
+    program.simTest();
+});
+
 if (program.count > 0) {
     $(".countnum").html(program.count);
     $.jqPaginator('#pagination', {

@@ -198,11 +198,11 @@ var program = {
             }
         });
     },
-    getSimByProbId: function (temp) {
+    getSimBySubmId: function (temp) {
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../submitSimilarity/getSimByProbId",
+            url: "../submitSimilarity/getSimBySubmId",
             dataType: 'json',
             async: false,
             data: {
@@ -311,7 +311,7 @@ $(".similarity").click(function () {
         });
         return;
     }
-    program.getSimByProbId(number);
+    program.getSimBySubmId(number);
     program.selectSimilary(number);
     if (program.similaryTotal > 0) {
         $.jqPaginator('#pagination', {

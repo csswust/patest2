@@ -7,6 +7,7 @@ import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
+import com.csswust.patest2.dao.result.SelectProblemNumRe;
 import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.sim.SimInput;
 import com.csswust.patest2.service.sim.SimOutput;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sun.dc.path.PathError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +56,8 @@ public class SubmitSimilarityAction extends BaseAction {
     private ExamInfoDao examInfoDao;
     @Autowired
     private ProblemInfoDao problemInfoDao;
+    @Autowired
+    private PaperProblemDao paperProblemDao;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
@@ -119,8 +123,104 @@ public class SubmitSimilarityAction extends BaseAction {
         return res;
     }
 
-    @RequestMapping(value = "/getSimByProbId", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object getSimByProbId(
+    @RequestMapping(value = "/getSimByExamId", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object getSimByExamId(@RequestParam Integer examId) {
+        APIResult apiResult = new APIResult();
+        if (examId == null) {
+            apiResult.setStatusAndDesc(-1, "examId不能为空");
+            return apiResult;
+        }
+        List<SelectProblemNumRe> problemNumReList = paperProblemDao.selectProblemNum(examId);
+        if (problemNumReList == null || problemNumReList.size() == 0) {
+            apiResult.setStatusAndDesc(-2, "无题目数据");
+            return apiResult;
+        }
+        int count = 0;
+        for (SelectProblemNumRe problemNumRe : problemNumReList) {
+            if (problemNumRe == null) continue;
+            if (problemNumRe.getProbId() == null) continue;
+            PaperProblem condition = new PaperProblem();
+            condition.setExamId(examId);
+            condition.setProblemId(problemNumRe.getProbId());
+            List<PaperProblem> paperProblemList = paperProblemDao.selectByCondition(condition, new BaseQuery());
+            if (paperProblemList == null || paperProblemList.size() == 0) continue;
+
+            Map<Integer, List<SubmitInfo>> map = new HashMap<>();
+            List<SubmitInfo> submitInfoList = selectRecordByIds(
+                    getFieldByList(paperProblemList, "submitId", PaperProblem.class),
+                    "submId", (BaseDao) submitInfoDao, SubmitInfo.class);
+            for (SubmitInfo submitInfo : submitInfoList) {
+                if (submitInfo == null) continue;
+                if (submitInfo.getSubmId() == null) continue;
+                if (submitInfo.getUserId() == null) continue;
+                if (submitInfo.getJudgerId() == null) continue;
+                Integer judgeId = submitInfo.getJudgerId();
+                List<SubmitInfo> temp = map.get(judgeId);
+                if (temp == null) temp = new ArrayList<>();
+                map.put(judgeId, temp);
+                temp.add(submitInfo);
+            }
+            for (Map.Entry<Integer, List<SubmitInfo>> entry : map.entrySet()) {
+                Integer judgeId = entry.getKey();
+                List<SubmitInfo> temp = entry.getValue();
+
+                if (temp == null || temp.size() == 0) continue;
+                SimInput simInput = new SimInput();
+                List<SubmitInfo> leftList = new ArrayList<>();
+                List<SubmitInfo> rightList = new ArrayList<>();
+                for (SubmitInfo submitInfo : temp) {
+                    leftList.add(submitInfo);
+                    rightList.add(submitInfo);
+                }
+                simInput.setLeftCodeList(leftList);
+                simInput.setRightCodeList(rightList);
+                simInput.setScriptPath(getScriptPathByJudgeId(judgeId));
+                SimOutput simOutput = simService.judge(simInput);
+                if (simOutput.getError() != null) continue;
+                List<SimResult> simResultList = simOutput.getSimResultList();
+                List<SubmitSimilarity> similarityList = dataConsert(simResultList,
+                        examId, problemNumRe.getProbId());
+                int insertCount = submitSimilarityDao.insertBatch(similarityList);
+                count = count + insertCount;
+            }
+        }
+        if (count != 0) {
+            apiResult.setStatusAndDesc(count, "共检测出" + count + "条相似度");
+        } else {
+            apiResult.setStatusAndDesc(count, "无记录");
+        }
+        return apiResult;
+    }
+
+    private String getScriptPathByJudgeId(Integer judgeId) {
+        String scriptPath = Config.get(SiteKey.SIM_SCRIPT_PATH, SiteKey.SIM_SCRIPT_PATH_DE);
+        if (judgeId == 1) scriptPath = scriptPath + "/sim_c";
+        else if (judgeId == 2) scriptPath = scriptPath + "/sim_c++";
+        else if (judgeId == 3) scriptPath = scriptPath + "/sim_java";
+        else scriptPath = scriptPath + "/sim_text";
+        return scriptPath;
+    }
+
+    private List<SubmitSimilarity> dataConsert(List<SimResult> simResultList, Integer examId, Integer problemId) {
+        List<SubmitSimilarity> similarityList = new ArrayList<>();
+        if (simResultList == null || simResultList.size() == 0) return similarityList;
+        for (int i = 0; i < simResultList.size(); i++) {
+            SimResult simResult = simResultList.get(i);
+            SubmitSimilarity similarity = new SubmitSimilarity();
+            if (simResult.getSubmId1().intValue() == simResult.getSubmId2().intValue()) continue;
+            similarity.setSubmitId1(simResult.getSubmId1());
+            similarity.setSubmitId2(simResult.getSubmId2());
+            similarity.setExamId(examId);
+            similarity.setSimilarity(simResult.getValue());
+            similarity.setProblemId(problemId);
+            similarityList.add(similarity);
+        }
+        return similarityList;
+    }
+
+
+    @RequestMapping(value = "/getSimBySubmId", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object getSimBySubmId(
             @RequestParam Integer examId,
             @RequestParam Integer submId) {
         APIResult apiResult = new APIResult();
@@ -176,11 +276,7 @@ public class SubmitSimilarityAction extends BaseAction {
         }
         simInput.setLeftCodeList(leftList);
         simInput.setRightCodeList(rightList);
-        String scriptPath = Config.get(SiteKey.SIM_SCRIPT_PATH, SiteKey.SIM_SCRIPT_PATH_DE);
-        if (judgerId == 1) scriptPath = scriptPath + "/sim_c";
-        else if (judgerId == 2) scriptPath = scriptPath + "/sim_c++";
-        else if (judgerId == 3) scriptPath = scriptPath + "/sim_java";
-        else scriptPath = scriptPath + "/sim_text.exe";
+        String scriptPath = getScriptPathByJudgeId(judgerId);
         simInput.setScriptPath(scriptPath);
         SimOutput simOutput = simService.judge(simInput);
         if (simOutput.getError() != null) {
@@ -204,7 +300,6 @@ public class SubmitSimilarityAction extends BaseAction {
             similarity.setSimilarity(simResult.getValue());
             similarity.setProblemId(currSubmitInfo.getProblemId());
             similarityList.add(similarity);
-            // diff(simResult.getSubmId1(), simResult.getSubmId2(), simResult.getValue());
         }
         int insertCount = submitSimilarityDao.insertBatch(similarityList);
         if (insertCount != 0) {
