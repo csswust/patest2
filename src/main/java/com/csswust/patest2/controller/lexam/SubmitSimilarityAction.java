@@ -130,6 +130,19 @@ public class SubmitSimilarityAction extends BaseAction {
             apiResult.setStatusAndDesc(-1, "examId不能为空");
             return apiResult;
         }
+        ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
+        if (examInfo == null) {
+            apiResult.setStatusAndDesc(-1, "examInfo为空");
+            return apiResult;
+        }
+        if (examInfo.getIsSimTest() != 0) {
+            apiResult.setStatusAndDesc(-1, "不能重复计算相似度");
+            return apiResult;
+        }
+        ExamInfo record = new ExamInfo();
+        record.setExamId(examId);
+        record.setIsSimTest(1);
+        examInfoDao.updateByPrimaryKeySelective(record);
         List<SelectProblemNumRe> problemNumReList = paperProblemDao.selectProblemNum(examId);
         if (problemNumReList == null || problemNumReList.size() == 0) {
             apiResult.setStatusAndDesc(-2, "无题目数据");

@@ -58,14 +58,14 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="cou_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="exam_info" domainObjectName="ExamInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exam_id" sqlStatement="JDBC"/>
         </table>
-        <table schema="patest2" tableName="exam_notice" domainObjectName="ExamNotice"
+        <!--<table schema="patest2" tableName="exam_notice" domainObjectName="ExamNotice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -149,12 +149,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="sub_res_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="submit_similarity" domainObjectName="SubmitSimilarity"
+        <!--<table schema="patest2" tableName="submit_similarity" domainObjectName="SubmitSimilarity"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="sub_sim_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="user_info" domainObjectName="UserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
