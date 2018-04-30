@@ -29,8 +29,8 @@ var program = {
                 + '<td>' + program.submitSimilarityList[i].subSimId + '</td>'
                 + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle + '"><a href="editExam.html?Id=' + examId + '">' + examTitle + '(' + examId + ')' + '</a></td>'
                 + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + problemTitle + '"><a href="question.html?id=' + problemId + '">' + problemTitle + '(' + problemId + ')' + '</a></td>'
-                + '<td>' + program.userInfoList1[i].username + '_' + program.userProfileList1[i].realName + '26626262626</td>'
-                + '<td>' + program.userInfoList2[i].username + '_' + program.userProfileList2[i].realName + '266266262626</td>'
+                + '<td>' + program.userInfoList1[i].username + '_' + program.userProfileList1[i].realName + '</td>'
+                + '<td>' + program.userInfoList2[i].username + '_' + program.userProfileList2[i].realName + '</td>'
                 + '<td>' + program.submitSimilarityList[i].similarity + '</td>'
                 + '<td><button class="btn btn-success btn-xs diff" type="button" value=' + i + '>查看</button></td>'
                 + '</tr>';
@@ -101,19 +101,9 @@ $("#listInfo").on('click', '.diff', function () {
     $('#diffCode').on('shown.bs.modal', function () {
         var value = program.submitInfoList1[index].source;
         var orig2 = program.submitInfoList2[index].source;
-        var dv, highlight = true, connect = "align", collapse = false;
-        var target = document.getElementById("view");
-        target.innerHTML = "";
-        dv = CodeMirror.MergeView(target, {
-            value: value,
-            origLeft: null,
-            orig: orig2,
-            lineNumbers: true,
-            mode: "text/x-c++src",
-            highlightDifferences: highlight,
-            connect: connect,
-            collapseIdentical: collapse
-        });
+        dv.editor().setOption("value",value);
+        dv.rightOriginal().setOption("value",orig2);
+        dv.editor().refresh();
     });
     $('#diffCode').modal();
 });
@@ -139,29 +129,16 @@ if (program.count > 0) {
 } else {
     $(".pagenum").css("display", "none");
 }
-function mergeViewHeight(mergeView) {
-    function editorHeight(editor) {
-        if (!editor) return 0;
-        return editor.getScrollInfo().height;
-    }
 
-    return Math.max(editorHeight(mergeView.leftOriginal()),
-        editorHeight(mergeView.editor()),
-        editorHeight(mergeView.rightOriginal()));
-}
-
-function resize(mergeView) {
-    var height = mergeViewHeight(mergeView);
-    for (; ;) {
-        if (mergeView.leftOriginal())
-            mergeView.leftOriginal().setSize(null, height);
-        mergeView.editor().setSize(null, height);
-        if (mergeView.rightOriginal())
-            mergeView.rightOriginal().setSize(null, height);
-
-        var newHeight = mergeViewHeight(mergeView);
-        if (newHeight >= height) break;
-        else height = newHeight;
-    }
-    mergeView.wrap.style.height = height + "px";
-}
+var target = document.getElementById("view");
+target.innerHTML = "";
+var dv = CodeMirror.MergeView(target, {
+    value: "",
+    origLeft: null,
+    orig: "",
+    lineNumbers: true,
+    mode: "text/x-c++src",
+    highlightDifferences: true,
+    connect: "align",
+    collapseIdentical: false
+});
