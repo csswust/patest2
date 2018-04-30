@@ -4,16 +4,10 @@ import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.common.config.Config;
 import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
-import com.csswust.patest2.dao.SubmitInfoDao;
-import com.csswust.patest2.dao.SubmitSimilarityDao;
-import com.csswust.patest2.dao.UserInfoDao;
-import com.csswust.patest2.dao.UserProfileDao;
+import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.SubmitInfo;
-import com.csswust.patest2.entity.SubmitSimilarity;
-import com.csswust.patest2.entity.UserInfo;
-import com.csswust.patest2.entity.UserProfile;
+import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.sim.SimInput;
 import com.csswust.patest2.service.sim.SimOutput;
 import com.csswust.patest2.service.sim.SimResult;
@@ -56,6 +50,10 @@ public class SubmitSimilarityAction extends BaseAction {
     private UserProfileDao userProfileDao;
     @Autowired
     private SimService simService;
+    @Autowired
+    private ExamInfoDao examInfoDao;
+    @Autowired
+    private ProblemInfoDao problemInfoDao;
 
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Map<String, Object> selectByCondition(
@@ -82,6 +80,12 @@ public class SubmitSimilarityAction extends BaseAction {
         Integer total = submitSimilarityDao.selectByConditionGetCount(submitSimilarity, baseQuery);
         baseQuery.setPageRows(page, rows);
         List<SubmitSimilarity> submitSimilarityList = submitSimilarityDao.selectByCondition(submitSimilarity, baseQuery);
+        List<ExamInfo> examInfoList = selectRecordByIds(
+                getFieldByList(submitSimilarityList, "examId", SubmitSimilarity.class),
+                "examId", (BaseDao) examInfoDao, ExamInfo.class);
+        List<ProblemInfo> problemInfoList = selectRecordByIds(
+                getFieldByList(submitSimilarityList, "problemId", SubmitSimilarity.class),
+                "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
         List<SubmitInfo> submitInfoList1 = selectRecordByIds(
                 getFieldByList(submitSimilarityList, "submitId1", SubmitSimilarity.class),
                 "submId", (BaseDao) submitInfoDao, SubmitInfo.class);
@@ -102,6 +106,9 @@ public class SubmitSimilarityAction extends BaseAction {
                 getFieldByList(userInfoList2, "userProfileId", UserInfo.class),
                 "useProId", (BaseDao) userProfileDao, UserProfile.class);
         res.put("total", total);
+        res.put("examInfoList", examInfoList);
+        res.put("problemInfoList", problemInfoList);
+
         res.put("submitSimilarityList", submitSimilarityList);
         res.put("submitInfoList1", submitInfoList1);
         res.put("submitInfoList2", submitInfoList2);
@@ -195,6 +202,7 @@ public class SubmitSimilarityAction extends BaseAction {
             similarity.setSubmitId2(simResult.getSubmId2());
             similarity.setExamId(examId);
             similarity.setSimilarity(simResult.getValue());
+            similarity.setProblemId(currSubmitInfo.getProblemId());
             similarityList.add(similarity);
             // diff(simResult.getSubmId1(), simResult.getSubmId2(), simResult.getValue());
         }

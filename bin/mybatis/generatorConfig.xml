@@ -148,14 +148,14 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="sub_res_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <table schema="patest2" tableName="submit_similarity" domainObjectName="SubmitSimilarity"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="sub_sim_id" sqlStatement="JDBC"/>
         </table>
-        <table schema="patest2" tableName="user_info" domainObjectName="UserInfo"
+        <!--<table schema="patest2" tableName="user_info" domainObjectName="UserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -185,7 +185,7 @@
                selectByExampleQueryId="false">
             <generatedKey column="vis_pat_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="ep_apply_info" domainObjectName="EpApplyInfo"
+        <!--<table schema="patest2" tableName="ep_apply_info" domainObjectName="EpApplyInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -196,7 +196,7 @@
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="order_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="ep_user_info" domainObjectName="EpUserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"

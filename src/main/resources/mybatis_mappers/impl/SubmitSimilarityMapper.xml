@@ -6,13 +6,17 @@
         <include refid="Base_Column_List"/>
         FROM submit_similarity
         WHERE 1 = 1
-        <if test="record.subSimId != null">
+            <if test="record.subSimId != null">
             AND
             sub_sim_id = #{record.subSimId}
         </if>
         <if test="record.examId != null">
             AND
             exam_id = #{record.examId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
         </if>
         <if test="record.submitId1 != null">
             AND
@@ -49,13 +53,17 @@
         count(*)
         FROM submit_similarity
         WHERE 1 = 1
-        <if test="record.subSimId != null">
+            <if test="record.subSimId != null">
             AND
             sub_sim_id = #{record.subSimId}
         </if>
         <if test="record.examId != null">
             AND
             exam_id = #{record.examId}
+        </if>
+        <if test="record.problemId != null">
+            AND
+            problem_id = #{record.problemId}
         </if>
         <if test="record.submitId1 != null">
             AND
@@ -91,7 +99,7 @@
         delete from submit_similarity
         where sub_sim_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </delete>
     <select id="selectByIdsList" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -100,15 +108,14 @@
         from submit_similarity
         where sub_sim_id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+        #{item}
         </foreach>
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into submit_similarity
-        (exam_id, submit_id1, submit_id2, similarity, create_time, modify_time, modify_user_id) values
+        (exam_id, problem_id, submit_id1, submit_id2, similarity, create_time, modify_time, modify_user_id) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.examId}, #{item.submitId1}, #{item.submitId2}, #{item.similarity}, #{item.createTime},
-            #{item.modifyTime}, #{item.modifyUserId})
+            (#{item.examId}, #{item.problemId}, #{item.submitId1}, #{item.submitId2}, #{item.similarity}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId})
         </foreach>
     </select>
 </mapper>

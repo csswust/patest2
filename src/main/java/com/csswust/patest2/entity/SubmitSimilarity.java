@@ -7,6 +7,8 @@ public class SubmitSimilarity {
 
     private Integer examId;
 
+    private Integer problemId;
+
     private Integer submitId1;
 
     private Integer submitId2;
@@ -33,6 +35,14 @@ public class SubmitSimilarity {
 
     public void setExamId(Integer examId) {
         this.examId = examId;
+    }
+
+    public Integer getProblemId() {
+        return problemId;
+    }
+
+    public void setProblemId(Integer problemId) {
+        this.problemId = problemId;
     }
 
     public Integer getSubmitId1() {

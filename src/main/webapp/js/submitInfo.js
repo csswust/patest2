@@ -122,7 +122,7 @@ var program = {
                 statuResult = "noCeStatus";
             }
             html += '<tr><td>' + program.submitInfoList[i].submId + '</td>'
-                + '<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + proTitle + '"><a href="question.html?id=' + probId + '">' + proTitle + '(' + probId + ')' + '</a></td>'
+                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + proTitle + '"><a href="question.html?id=' + probId + '">' + proTitle + '(' + probId + ')' + '</a></td>'
                 + '<td>' + username + '</td>'
                 + '<td>' + realName + '</td>'
                 /*+ '<td>' + cName + '</td>'*/

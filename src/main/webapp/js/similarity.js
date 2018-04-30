@@ -20,12 +20,19 @@ var program = {
         var length = program.submitSimilarityList.length;
         program.html = "";
         for (var i = 0; i < length; i++) {
+            var examTitle = program.examInfoList[i].title;
+            var examId = program.examInfoList[i].examId;
+            var problemTitle = program.problemInfoList[i].title;
+            var problemId = program.problemInfoList[i].probId;
             program.html += '<tr>'
                 + '<td><input type="checkbox" name="title"/></td>'
                 + '<td>' + program.submitSimilarityList[i].subSimId + '</td>'
-                + '<td>' + program.submitSimilarityList[i].submitId1 + '+' + program.userInfoList1[i].username + '+' + program.userProfileList1[i].realName + '</td>'
-                + '<td>' + program.submitSimilarityList[i].submitId2 + '+' + program.userInfoList2[i].username + '+' + program.userProfileList2[i].realName + '</td>'
+                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle + '"><a href="editExam.html?Id=' + examId + '">' + examTitle + '(' + examId + ')' + '</a></td>'
+                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + problemTitle + '"><a href="question.html?id=' + problemId + '">' + problemTitle + '(' + problemId + ')' + '</a></td>'
+                + '<td>' + program.userInfoList1[i].username + '_' + program.userProfileList1[i].realName + '26626262626</td>'
+                + '<td>' + program.userInfoList2[i].username + '_' + program.userProfileList2[i].realName + '266266262626</td>'
                 + '<td>' + program.submitSimilarityList[i].similarity + '</td>'
+                + '<td><button class="btn btn-success btn-xs diff" type="button" value=' + i + '>查看</button></td>'
                 + '</tr>';
 
         }
@@ -48,13 +55,16 @@ var program = {
                 console.log(result);
                 program.count = result.total;
                 program.submitSimilarityList = result.submitSimilarityList;
+                program.examInfoList = result.examInfoList;
+                program.problemInfoList = result.problemInfoList;
+
                 program.submitInfoList1 = result.submitInfoList1;
                 program.submitInfoList2 = result.submitInfoList2;
                 program.userInfoList1 = result.userInfoList1;
                 program.userInfoList2 = result.userInfoList2;
                 program.userProfileList1 = result.userProfileList1;
                 program.userProfileList2 = result.userProfileList2;
-                /*program.userProfileList = result.userProfileList;*/
+
                 program.showSimilarity();
                 $("#listInfo").html("");
                 $("#listInfo").append(program.html);

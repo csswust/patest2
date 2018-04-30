@@ -34,28 +34,34 @@
             </div>
             <div class="col-md-6" style="margin-bottom:10px;">
                 <div class="col-md-3" style="padding:0px">
+                    <input type="text" class="form-control searExamId" placeholder="考试ID"/>
+                </div>
+                <div class="col-md-3" style="padding:0px">
                     <input type="text" class="form-control searTitle" placeholder="考号"/>
                 </div>
                 <div class="col-md-5" style="padding:0px">
                     <div class="input-group">
                         <input type="text" class="form-control seardu col-md-3" placeholder="相似度下限"/>
                         <span class="input-group-btn">
-										<button class="btn btn-primary search" type="button"><span
-                                                class="glyphicon glyphicon-search"
-                                                aria-hidden="true"></span>&nbsp;查询</button>
-									</span>
+                            <button class="btn btn-primary search" type="button">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true">
+                                </span>&nbsp;查询
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
-            <table
-                    class="table table-bordered table-hover table-condensed table-striped">
+            <table style="table-layout:fixed" class="table table-bordered table-hover table-condensed table-striped">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" class="check_list"/>全选</th>
-                    <th>编号</th>
-                    <th>提交</th>
-                    <th>相似</th>
-                    <th>相似度</th>
+                    <th width="3%"><input type="checkbox" class="check_list"/>全选</th>
+                    <th width="5%">编号</th>
+                    <th width="15%">考试</th>
+                    <th width="10%">问题</th>
+                    <th width="25%">提交</th>
+                    <th width="25%">相似</th>
+                    <th width="5%">相似度</th>
+                    <th width="5%">对比</th>
                 </tr>
                 </thead>
                 <tbody id="listInfo">
@@ -63,7 +69,7 @@
             </table>
         </div>
         <div class="row ">
-            <div class="col-md-3 col-md-offset-4  pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个
+            <div class="col-md-2 col-md-offset-2  pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个
             </div>
             <div class="col-md-5">
                 <ul class="pagination " id="pagination"></ul>
@@ -72,23 +78,12 @@
     </div>
 </div>
 </body>
-<script id="getcontent" type="text/html">
-    {{each list as value i}}
-    <tr>
-        <td><input type="checkbox" name="title"/></td>
-        <td>{{value.submsId}}</td>
-        <td>{{value.problemTitle1}}{{value.userName1}}</td>
-        <td>{{value.problemTitle2}}{{value.userName2}}</td>
-        <td>{{value.similarity}}</td>
-    </tr>
-    {{/each}}
-</script>
 <script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
 <!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
 <script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
 <!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
 <script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
-<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
 <!--<script type="text/javascript" src="../lib/ueditor/ueditor.config.js"></script>-->
 <!--<script type="text/javascript" src="../lib/ueditor/ueditor.all.min.js"></script>-->
 

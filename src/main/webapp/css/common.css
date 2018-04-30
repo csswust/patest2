@@ -318,3 +318,9 @@ ul {
     display: block;
     line-height: 1.42857143;
 }
+
+.tdhidden {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -11,10 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 972536780 on 2018/4/9.
@@ -38,14 +35,20 @@ public class Generator {
 
     public static void main(String[] args) throws IOException {
         File oldPathFile = new File(modelPath + "\\auto");
+        String[] fileList = new String[]{
+                "SubmitSimilarityMapper.xml"
+        };
         File[] files = oldPathFile.listFiles();
         for (File file : files) {
             if (file.isDirectory()) {
                 continue;
             }
+            if (fileList.length != 0 && !Arrays.asList(fileList).contains(file.getName())) {
+                continue;
+            }
             Model model = Generator.getModel(file);
             System.out.println(JSON.toJSONString(model));
-            DaoImplGenerator.generator(model);
+            // DaoImplGenerator.generator(model);
             MapperImplGenerator.generator(model);
             //ActionGenerator.generator(model);
         }
