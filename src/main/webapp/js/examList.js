@@ -105,6 +105,32 @@ var program = {
                 + '</tr>';
         }
     },
+    loadStatus: function () {
+        $.ajax({
+            type: "get",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../submitSimilarity/getSimStatus",
+            dataType: 'json',
+            async: true,
+            data: {
+                examId: program.statusId
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.status === 0) {
+                    pubMeth.alertInfo("alert-info", "运行中，进度：" + result.data.schedule);
+                    setTimeout(program.loadStatus, 500);
+                } else if (result.status > 0) {
+                    pubMeth.alertInfo("alert-success", result.desc);
+                } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
+                }
+            },
+            error: function () {
+                pubMeth.alertInfo("alert-danger", "请求错误！");
+            }
+        });
+    },
     simTest: function () {
         $.ajax({
             type: "get",
@@ -119,10 +145,11 @@ var program = {
                 console.log(result);
                 if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", result.desc);
+                    program.statusId = program.examId;
+                    setTimeout(program.loadStatus, 500);
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
                 }
-                program.getExamInfo();
             },
             error: function () {
                 pubMeth.alertInfo("alert-danger", "请求错误！");
