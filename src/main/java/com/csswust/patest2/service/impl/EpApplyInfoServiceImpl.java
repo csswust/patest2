@@ -1,14 +1,10 @@
 package com.csswust.patest2.service.impl;
 
 import com.csswust.patest2.common.APIResult;
-import com.csswust.patest2.dao.EpApplyInfoDao;
-import com.csswust.patest2.dao.EpOrderInfoDao;
-import com.csswust.patest2.dao.EpUserInfoDao;
+import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.EpApplyInfo;
-import com.csswust.patest2.entity.EpOrderInfo;
-import com.csswust.patest2.entity.EpUserInfo;
+import com.csswust.patest2.entity.*;
 import com.csswust.patest2.service.EpApplyInfoService;
 import com.csswust.patest2.service.common.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
@@ -33,6 +30,10 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
     private EpUserInfoDao epUserInfoDao;
     @Autowired
     private EpOrderInfoDao epOrderInfoDao;
+    @Autowired
+    private UserInfoDao userInfoDao;
+    @Autowired
+    private UserProfileDao userProfileDao;
 
     @Override
     public APIResult selectByCondition(EpApplyInfo epApplyInfo, Integer page, Integer rows) {
@@ -47,17 +48,25 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
         List<EpOrderInfo> epOrderInfoList = selectRecordByIds(
                 getFieldByList(epApplyInfoList, "orderId", EpApplyInfo.class),
                 "orderId", (BaseDao) epOrderInfoDao, EpOrderInfo.class);
+        List<UserInfo> userInfoList = selectRecordByIds(
+                getFieldByList(epApplyInfoList, "examineUserId", EpApplyInfo.class),
+                "userId", (BaseDao) userInfoDao, UserInfo.class);
+        List<UserProfile> userProfileList = selectRecordByIds(
+                getFieldByList(userInfoList, "userProfileId", UserInfo.class),
+                "useProId", (BaseDao) userProfileDao, UserProfile.class);
         apiResult.setDataKey("total", total);
         apiResult.setDataKey("list", epApplyInfoList);
         apiResult.setDataKey("epUserInfoList", epUserInfoList);
         apiResult.setDataKey("epOrderInfoList", epOrderInfoList);
+        apiResult.setDataKey("userInfoList", userInfoList);
+        apiResult.setDataKey("userProfileList", userProfileList);
         apiResult.setStatus(1);
         return apiResult;
     }
 
     @Transactional
     @Override
-    public APIResult accept(Integer applyId, Integer status, Double money, String reason) {
+    public APIResult accept(Integer applyId, Integer status, Double money, String reason, Integer examineUserId) {
         APIResult apiResult = new APIResult();
         if (status != 0 && status != 1) {
             apiResult.setStatusAndDesc(-501, "参数非法");
@@ -81,6 +90,8 @@ public class EpApplyInfoServiceImpl extends BaseService implements EpApplyInfoSe
         EpApplyInfo record = new EpApplyInfo();
         record.setApplyId(applyId);
         record.setStatus(status == 1 ? 1 : -1);
+        record.setExamineUserId(examineUserId);
+        record.setExamineTime(new Date());
         record.setReason(reason);
         int result = epApplyInfoDao.updateByPrimaryKeySelective(record);
         if (result == 1) {

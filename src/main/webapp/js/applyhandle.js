@@ -19,17 +19,29 @@ var program = {
             var id = infolist[i].applyId;
             var userId = uesrs[i].userId;
             var username = uesrs[i].username;
+            var opate = '';
+            if (infolist[i].status === 0) {
+                opate = '<td><button type="button" class="btn btn-primary btn-xs examine" id="' + id + '">审核</button></td>';
+            } else if (infolist[i].status === 1) {
+                opate = '<td><button type="button" class="btn btn-success btn-xs selectApply" id="' + i + '">查看审核信息</button></td>';
+            } else if (infolist[i].status === 2) {
+                opate = '<td class="addexam" id="' + infolist[i].examId + '"><button type="button" class="btn btn-success btn-xs">编辑考试</button></td>';
+            } else if (infolist[i].status === -1) {
+                opate = '<td>' + '拒绝原因：' + infolist[i].reason + '</td>';
+            } else {
+                opate = '<td>' + '异常状态' + '</td>';
+            }
             program.applyhtml += '<tr>'
                 + '<td><input type="checkbox" value="' + id + '" name="title" /></td>'
                 + '<td>' + id + '</td>'
-                + '<td><a class="title"  href="../eph/applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'
+                + '<td>' + infolist[i].examName + '</td>'
                 + '<td>' + uesrs[i].phone + '</td>'
                 + '<td>' + username + '</td>'
                 + '<td>' + infolist[i].peopleNumber + '</td>'
                 + '<td>' + infolist[i].startTime + '</td>'
                 + '<td>' + infolist[i].endTime + '</td>'
                 + '<td>' + passstate + '</td>'
-                + '<td><button type="button" class="btn btn-primary btn-xs examine" id="' + id + '">审核</button></td>'
+                + opate
                 + '</tr>';
         }
     },
@@ -49,6 +61,9 @@ var program = {
                 program.count = result.data.total;
                 program.data = result.data.list;
                 program.uesrs = result.data.epUserInfoList;
+                program.epOrderInfoList = result.data.epOrderInfoList;
+                program.userInfoList = result.data.userInfoList;
+                program.userProfileList = result.data.userProfileList;
                 program.showapplyInfo();
                 $("#listInfo").empty();
                 $("#listInfo").append(program.applyhtml);
@@ -130,10 +145,26 @@ program.selectallInfo();
 program.deleteIt();
 
 $("#listInfo").on('click', '.examine', function () {
-    $('#mexamine').modal({
-        //backdrop: 'static'
-    });
+    $('#mexamine').modal({});
     program.applyId = this.id;
+});
+$("#listInfo").on('click', '.selectApply', function () {
+    $('#passed').modal({});
+    var index = this.id;
+    $(".passUsername").text(program.userInfoList[index].username +
+        "(" + program.userProfileList[index].realName + ")");
+    $(".passTime").text(program.data[index].examineTime);
+    $(".passId").text(program.epOrderInfoList[index].orderNum);
+    $(".passMoney").text(program.epOrderInfoList[index].money);
+});
+
+$("#listInfo").on('click', '.addexam', function () {
+    var index = this.id;
+    if (index !== "null") {
+        window.location.href = "editExam.html?Id=" + index;
+    } else {
+        patest.alertInfo("alert-danger", "未付款");
+    }
 });
 $(".saveapply").click(function () {
     program.money = $(".money").val();

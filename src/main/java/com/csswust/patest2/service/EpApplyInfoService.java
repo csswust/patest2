@@ -9,7 +9,7 @@ import com.csswust.patest2.entity.EpApplyInfo;
 public interface EpApplyInfoService {
     APIResult selectByCondition(EpApplyInfo epApplyInfo, Integer page, Integer rows);
 
-    APIResult accept(Integer applyId, Integer status, Double money, String reason);
+    APIResult accept(Integer applyId, Integer status, Double money, String reason,Integer examineUserId);
 
     APIResult deleteById(Integer applyId);
 }

@@ -310,3 +310,11 @@ ul {
     font-family: "Lucida Console", Times, serif;
     font-size: 16px;
 }
+
+.passedDiv {
+    padding: 6px 12px;
+    font-size: 14px;
+    width: 100%;
+    display: block;
+    line-height: 1.42857143;
+}

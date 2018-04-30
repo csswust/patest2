@@ -39,7 +39,7 @@ public class EplApplyInfoAction extends BaseAction {
             @RequestParam Integer status,
             @RequestParam(required = false) Double money,
             @RequestParam(required = false) String reason) {
-        return epApplyInfoService.accept(applyId, status, money, reason);
+        return epApplyInfoService.accept(applyId, status, money, reason, getUserId());
     }
 
     @RequestMapping(value = "/deleteById", method = {RequestMethod.GET, RequestMethod.POST})
