@@ -7,6 +7,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     theme: "3024-night",
     mode: "text/x-c++src"
 });
+editor.setSize("height", "600px");
 var program = {
     code: "",
     judId: '',
