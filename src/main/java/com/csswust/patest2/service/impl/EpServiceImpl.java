@@ -27,12 +27,6 @@ public class EpServiceImpl extends BaseService implements EpService {
     @Autowired
     private ExamInfoDao examInfoDao;
     @Autowired
-    private UserInfoDao userInfoDao;
-    @Autowired
-    private ProblemInfoDao problemInfoDao;
-    @Autowired
-    private KnowledgeInfoDao knowledgeInfoDao;
-    @Autowired
     private ExamPaperDao examPaperDao;
     @Autowired
     private UserProfileDao userProfileDao;
