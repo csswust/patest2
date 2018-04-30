@@ -111,10 +111,6 @@
     width: 8%;
 }
 
-table {
-    table-layout: fixed;
-}
-
 .tdhidden {
     white-space: nowrap;
     overflow: hidden;
