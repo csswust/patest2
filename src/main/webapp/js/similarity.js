@@ -20,15 +20,15 @@ var program = {
         var length = program.submitSimilarityList.length;
         program.html = "";
         for (var i = 0; i < length; i++) {
-            var examTitle = program.examInfoList[i].title;
             var examId = program.examInfoList[i].examId;
-            var problemTitle = program.problemInfoList[i].title;
+            var examTitle = program.examInfoList[i].title + '(' + examId + ')';
             var problemId = program.problemInfoList[i].probId;
+            var problemTitle = program.problemInfoList[i].title + '(' + problemId + ')';
             program.html += '<tr>'
                 + '<td><input type="checkbox" name="title"/></td>'
                 + '<td>' + program.submitSimilarityList[i].subSimId + '</td>'
-                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle + '"><a href="editExam.html?Id=' + examId + '">' + examTitle + '(' + examId + ')' + '</a></td>'
-                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + problemTitle + '"><a href="question.html?id=' + problemId + '">' + problemTitle + '(' + problemId + ')' + '</a></td>'
+                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle + '"><a href="editExam.html?Id=' + examId + '">' + examTitle + '</a></td>'
+                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + problemTitle + '"><a href="question.html?id=' + problemId + '">' + problemTitle + '</a></td>'
                 + '<td>' + program.userInfoList1[i].username + '_' + program.userProfileList1[i].realName + '</td>'
                 + '<td>' + program.userInfoList2[i].username + '_' + program.userProfileList2[i].realName + '</td>'
                 + '<td>' + program.submitSimilarityList[i].similarity + '</td>'
@@ -48,6 +48,7 @@ var program = {
                 userName: program.stunum,
                 lowerLimit: program.seardu,
                 examId: program.examId,
+                problemId: program.probId,
                 page: program.page,
                 rows: pubMeth.rowsnum
             },
@@ -87,6 +88,7 @@ $(".search").click(function () {
     program.stunum = $(".searTitle").val();
     program.seardu = $(".seardu ").val();
     program.examId = $(".searExamId").val();
+    program.probId = $(".searProbId").val();
     program.searchbyid();
     $(".countnum").html(program.count);
     $('#pagination').jqPaginator('option', {
@@ -96,13 +98,16 @@ $(".search").click(function () {
 
 $("#listInfo").on('click', '.diff', function () {
     var index = this.value;
-
-    /*$('#diffCode').modal('shown.bs.modal');*/
     $('#diffCode').on('shown.bs.modal', function () {
+        var txt = program.userInfoList1[index].username + '_' +
+            program.userProfileList1[index].realName
+            + '<-->' + program.userInfoList2[index].username + '_'
+            + program.userProfileList2[index].realName;
+        $("#myModalLabel2").text(txt);
         var value = program.submitInfoList1[index].source;
         var orig2 = program.submitInfoList2[index].source;
-        dv.editor().setOption("value",value);
-        dv.rightOriginal().setOption("value",orig2);
+        dv.editor().setOption("value", value);
+        dv.rightOriginal().setOption("value", orig2);
         dv.editor().refresh();
     });
     $('#diffCode').modal();
