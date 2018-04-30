@@ -141,3 +141,7 @@
     float: right;
     margin-right: 10px;
 }
+
+.tableFix {
+    table-layout: fixed
+}
