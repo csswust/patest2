@@ -53,13 +53,12 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                $(".loading").html("<img />");
                 if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "抽题成功！");
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
                 }
-                program.showInfo();
+                program.getExamInfo();
             },
             error: function () {
                 pubMeth.alertInfo("alert-danger", "请求错误！");
@@ -76,9 +75,11 @@ var program = {
             if (program.state[i] == '2') {
                 if (program.prostate[i] == '1') {
                     stateInfo = '已结束&nbsp;<a href="remark.html?id=' +
-                        program.data[i].examId + ' "class="markPaper">阅卷</a>'
-                        + '&nbsp;<a href="#" id=' + program.data[i].examId +
-                        ' class="simTest">检测相似度</a>';
+                        program.data[i].examId + ' "class="markPaper">阅卷</a>';
+                    if (program.data[i].isSimTest === 0) {
+                        stateInfo += '&nbsp;<a href="#" id=' + program.data[i].examId +
+                            ' class="simTest">检测相似度</a>';
+                    }
                 } else if (program.prostate[i] == '0') {
                     stateInfo = '已结束 未抽题';
                 }
@@ -86,13 +87,13 @@ var program = {
                 if (program.prostate[i] == '1') {
                     stateInfo = "进行中";
                 } else if (program.prostate[i] == '0') {
-                    stateInfo = '进行中&nbsp;未抽题<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">抽题</a>&nbsp;<span class="loading"><img /></span>';
+                    stateInfo = '进行中&nbsp;未抽题&nbsp;<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">抽题</a>&nbsp;<span class="loading"><img /></span>';
                 }
             } else if (program.state[i] == '0') {
                 if (program.prostate[i] == '0') {
-                    stateInfo = '未开始&nbsp;未抽题<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">抽题</a>&nbsp;<span class="loading"><img /></span>';
+                    stateInfo = '未开始&nbsp;未抽题&nbsp;<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">抽题</a>&nbsp;<span class="loading"><img /></span>';
                 } else if (program.prostate[i] == '1') {
-                    stateInfo = '未开始&nbsp;已抽题<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">重新抽题</a>&nbsp;<span class="loading"><img /></span>';
+                    stateInfo = '未开始&nbsp;已抽题&nbsp;<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">重新抽题</a>&nbsp;<span class="loading"><img /></span>';
                 }
             }
             program.html += '<tr><td>' + program.data[i].examId + '</td>'
@@ -104,25 +105,24 @@ var program = {
                 + '</tr>';
         }
     },
-    simTest:function () {
+    simTest: function () {
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
             url: "../submitSimilarity/getSimByExamId",
             dataType: 'json',
-            async: false,
+            async: true,
             data: {
                 examId: program.examId
             },
             success: function (result) {
                 console.log(result);
-                $(".loading").html("<img />");
                 if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", result.desc);
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
                 }
-                program.showInfo();
+                program.getExamInfo();
             },
             error: function () {
                 pubMeth.alertInfo("alert-danger", "请求错误！");
@@ -134,11 +134,6 @@ pubMeth.getRowsnum("rowsnum");
 program.getExamInfo();
 $(".drawQuestion").on('click', function () {
     console.log(this.id);
-    $(".loading img").attr("src", "../img/loading.gif");
-    $(".loading img").css({
-        width: 20,
-        height: 20,
-    });
     program.examId = this.id;
     program.drawQuestion();
 });
