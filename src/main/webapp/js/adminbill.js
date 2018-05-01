@@ -24,7 +24,7 @@ var program = {
                 payinfo = "已支付";
             }
             var orderId = billlist[i].orderId;
-            var payMoney = '<td><button type="button" class="btn btn-primary btn-xs updateOrder" id="' + orderId + '">修改</button>';
+            var payMoney = '<td><button type="button" class="btn btn-primary btn-xs updateOrder" id="' + i + '">修改</button>';
             if (billlist[i].isPay === 0) {
                 payMoney += ' <button type="button" class="btn btn-info btn-xs payment" id="' + orderId + '">付款</button>'
             } else {
@@ -35,7 +35,7 @@ var program = {
                 + '<td><input type="checkbox" value="' + orderId + '" name="title"/></td>'
                 + '<td>' + orderId + '</td>'
                 + '<td>' + billlist[i].orderNum + '</td>'
-                + '<td><a class="title"  href="editExam.html?Id=' + epApplys[i].examId + '">' + epApplys[i].examName + '</a></td>'
+                + '<td>' + epApplys[i].examName + '</td>'
                 + '<td>' + epUsers[i].realName + '</td>'
                 + '<td>' + epUsers[i].phone + '</td>'
                 + '<td>' + billlist[i].createTime + '</td>'
@@ -164,7 +164,8 @@ $("#billInfo").on('click', '.payment', function () {
 $("#billInfo").on('click', '.updateOrder', function () {
     $(".updateMoney").val('');
     $('#updateOrder').modal({});
-    program.orderId = this.id;
+    $(".updateNum").val(program.data[this.id].orderNum);
+    program.orderId = program.data[this.id].orderId;
 });
 $(".saveOrder").click(function () {
     program.money = $(".updateMoney").val();

@@ -25,7 +25,7 @@ var program = {
             } else if (infolist[i].status === 1) {
                 opate = '<td><button type="button" class="btn btn-success btn-xs selectApply" id="' + i + '">查看审核信息</button></td>';
             } else if (infolist[i].status === 2) {
-                opate = '<td class="addexam" id="' + infolist[i].examId + '"><button type="button" class="btn btn-success btn-xs">编辑考试</button></td>';
+                opate = '<td ><button type="button" class="btn btn-success btn-xs addexam" id="' + infolist[i].examId + '">编辑考试</button></td>';
             } else if (infolist[i].status === -1) {
                 opate = '<td>' + '拒绝原因：' + infolist[i].reason + '</td>';
             } else {
