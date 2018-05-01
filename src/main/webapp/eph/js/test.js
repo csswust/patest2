@@ -79,7 +79,6 @@ var test = {
     },
     showInfo: function () {
         var length = test.data.length;
-        var order = 1;
         var stateInfo = "";
         var title = '';
         test.html = "";
@@ -104,14 +103,13 @@ var test = {
                     stateInfo = '未开始&nbsp;已抽题<a href="#" class="drawQuestion" id="' + test.data[i].examId + '">重新抽题</a>&nbsp;<span class="loading"><img /></span>';
                 }
             }
-            test.html += '<tr><td>' + order + '</td>'
+            test.html += '<tr><td>' + test.data[i].examId + '</td>'
                 + '<td>' + title + '</td>'
                 + '<td>' + test.data[i].startTime + '</td>'
                 + '<td>' + test.data[i].endTime + '</td>'
                 + '<td>' + test.peopleTotal[i] + '</td>'
                 + '<td>' + stateInfo + '</td>'
                 + '</tr>';
-            order++;
         }
     }
 };
