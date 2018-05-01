@@ -57,11 +57,12 @@ var program = {
                         ranknav += '<th colspan="2">Q' + j + '</th>';
                     }
                     $(".rankInfo").html(
-                        '<th class="examid">考号</th>' +
-                        '<th>姓名</th>' +
-                        '<th class="noid">学号</th>' +
-                        '<th>班级</th>'
-                        + '<th>分数</th><th>AC</th>'
+                        '<th style="width: 12%">考号</th>'
+                        + '<th style="width: 5%">姓名</th>'
+                        + '<th style="width: 10%">学号</th>'
+                        + '<th style="width: 8%">班级</th>'
+                        + '<th style="width: 5%">分数</th>' +
+                        '<th style="width: 3%">AC</th>'
                         + ranknav);
                     for (var i = 0; i < result.examPaperList.length; i++) {
                         userName = result.userInfoList[i].username;
