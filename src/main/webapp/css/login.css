@@ -12,12 +12,11 @@ body {
 }
 
 .form {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.6);
     width: 600px;
     margin: 160px auto;
 }
 
-/*阴影*/
 .fa {
     display: inline-block;
     top: 27px;
@@ -31,6 +30,7 @@ body {
     padding-top: 16px;
     margin-top: 0;
     margin-bottom: 0;
+    font-weight: bold;
 }
 
 input[type="text"], input[type="password"] {
