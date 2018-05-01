@@ -54,7 +54,7 @@ var program = {
                         score = "", acedCount = "";
                     var ranknav = '';
                     for (var j = 1; j <= program.problemTotal; j++) {
-                        ranknav += '<th colspan="2">Q' + j + '</th>';
+                        ranknav += '<th colspan="4">Q' + j + '</th>';
                     }
                     $(".rankInfo").html(
                         '<th style="width: 12%">考号</th>'
@@ -81,10 +81,10 @@ var program = {
                                 title = "";
                             }
                             var probId = result.ProblemInfoList[i][j].probId;
-                            titName += '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + title
+                            titName += '<td colspan="3" class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + title
                                 + '"><a href="question.html?id=' + probId + '">' + title + '</a>'
                                 + '</td>'
-                                + '<td>' + pass + '</td>';
+                                + '<td colspan="1">' + pass + '</td>';
 
                         }
                         content += '<tr><td>' + userName + '</td><td>'
