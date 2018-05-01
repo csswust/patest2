@@ -52,6 +52,8 @@ var program = {
                         '<td>' + result.list[i].acaId + '</td>' +
                         '<td>' + result.list[i].academyName + '</td>' +
                         /*'<td>' + result.list[i].majorName + '</td>' +*/
+                        '<td>' + result.list[i].createTime + '</td>' +
+                        '<td>' + result.list[i].modifyTime + '</td>' +
                         '<td><a href="javascript:;" class="title" value="' + result.list[i].acaId + '">修改</a></td>' +
                         '</tr>');
                 }
