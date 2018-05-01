@@ -20,27 +20,34 @@
 <body>
 <div class="wrap">
     <div class="container">
-        <h1 class="webName">LExam 3.0</h1>
-        <form class="form-signin">
-            <h2 class="form-signin-heading">欢迎登录</h2>
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon ">账号</span>
-                <input type="text " class="form-control" id="username"/>
+        <div class="form row">
+            <div class="webName">
+                <h3 class="form-title"></h3>
             </div>
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon ">密码</span>
-                <input type="password" class="form-control" id="password"/>
-            </div>
-        </form>
-        <div class="input-group input-group-lg opration">
-            <button type="button" class="btn btn-primary loginRepeat">
-                <span class="glyphicon glyphicon-repeat " aria-hidden="true "></span>重置
-            </button>
-            <button type="button" class="btn btn-primary login">
-                <span class="glyphicon glyphicon-user " aria-hidden="true "></span>登录
-            </button>
-            <div class="col-md-8">
-                <div class="tip">
+            <div class="form-horizontal col-md-offset-2" id="login_form">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <span class="fa glyphicon glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <input class="form-control required" type="text" placeholder="Username" id="username"
+                               name="username" autofocus="autofocus" maxlength="20"/>
+                    </div>
+                    <div class="form-group">
+                        <span class="fa glyphicon glyphicon glyphicon-lock" aria-hidden="true"></span>
+                        <input class="form-control required" type="password" placeholder="Password" id="password"
+                               name="password" maxlength="8"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success  pull-right login">
+                            <span class="glyphicon glyphicon-user " aria-hidden="true "></span>登录
+                        </button>
+                        <button type="button" class="btn btn-primary pull-right loginRepeat">
+                            <span class="glyphicon glyphicon-repeat " aria-hidden="true "></span>重置
+                        </button>
+                        <div class="col-md-6">
+                            <div class="tip">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -16,7 +16,6 @@ $(function () {
                 },
                 success: function (result) {
                     console.log(result);
-                    var exp = new Date();
                     document.cookie = "name=" + escape(result.username);
                     document.cookie = "userId=" + escape(result.userId);
                     document.cookie = "realName=" + escape(result.realName);
@@ -26,7 +25,6 @@ $(function () {
                         document.cookie = "role=" + escape('Admin');
                     }
                     else if (result.loginRe.status === 1 && result.isAdmin === 0 && result.isTeacher === 0) {
-                        var nowTime = program.getNowTime();
                         window.location.href = "examnotes.html?" + "&eId=" + result.examId;
                         document.cookie = "role=" + escape('Student');
                     }
@@ -36,15 +34,13 @@ $(function () {
                 },
                 error: function () {
                     program.alertInfo("alert-danger", "登录失败!");
-                    $("#username").val("");
-                    $("#password").val("");
                 }
             });
         },
         alertInfo: function (className, info) {
             if ($(".tip").text().trim() == "") {
                 $(".tip").html(' <div class="alert  ' + className + '"  id="tip">' +
-                    '<a href="#" class="close" data-dismiss="alert">&times;</a>' +
+                    /*'<a href="#" class="close" data-dismiss="alert">&times;</a>' +*/
                     '<strong>' + info + '</strong></div>');
             } else {
                 $("#tip").removeClass();
@@ -55,39 +51,11 @@ $(function () {
         judge: function () {
             program.username = $("#username").val();
             program.password = $("#password").val();
-            if (program.username != "" && program.password != "") {
+            if (program.username && program.password) {
                 program.login();
             } else {
                 program.alertInfo("alert-danger", "账号和密码不能为空！");
             }
-        },
-        getNowTime: function () {
-            var now = new Date();
-            var year = now.getFullYear();
-            var month = ( now.getMonth() + 1) < 10 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1;
-            var day = now.getDate();
-            var dayInfo = now.toString().split(" ")[4];
-            var nowTime = year + "-" + month + "-" + day + " " + dayInfo;
-            console.log(nowTime);
-            return nowTime;
-        },
-        legTimeRange: function (startTime, endTime) {
-            var stadate = startTime.split(" ");
-            var enddate = endTime.split(" ");
-            var stayear = stadate[0].split('-');
-            var endyear = enddate[0].split('-');
-            var stadate = stadate[1].split(':');
-            var enddate = enddate[1].split(':');
-
-            //年份更大，同年月份更大，同年同月日更大，同年同月同日时更大，同年同月同日同时分更大，同年同月同日同时同分秒更大
-            if (stayear[0] > endyear[0] || stayear[0] == endyear[0] && stayear[1] > endyear[1] ||
-                stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] > endyear[2] ||
-                stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] == endyear[2] && stadate[0] > enddate[0] ||
-                stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] == endyear[2] && stadate[0] == enddate[0] && stadate[1] > enddate[1] ||
-                stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] == endyear[2] && stadate[0] == enddate[0] && stadate[1] == enddate[1] && stadate[2] > enddate[2]) {
-                return false;
-            }
-            return true;
         },
         getfooter: function () {
             var now = new Date();
@@ -103,9 +71,26 @@ $(function () {
                 '<a href="../system/download?path=/static/Chrome.exe&isUeditorPath=true">点击下载</a>' +
                 '</p></div></div>';
             $('body').append(footerHtml);
+        },
+        getsysname: function () {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../siteInfo/selectByName",
+                dataType: 'json',
+                async: false,
+                data: {
+                    name: "systemname"
+                },
+                success: function (result) {
+                    program.systename = result.value;
+                }
+            });
         }
     };
     program.getfooter();
+    program.getsysname();
+    $(".form-title").text(program.systename);
     $(".loginRepeat").click(function () {
         $("#username").val("");
         $("#password").val("");
