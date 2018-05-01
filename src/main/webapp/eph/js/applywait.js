@@ -95,19 +95,18 @@ var applywait = {
             var orderId = epOrderInfoList[i].orderId;
             var oparate = "";
             if (infolist[i].status === 0) {
-                oparate = '<td class="deleteap" id="' + id + '"><button type="button" class="btn btn-primary btn-xs  ">取消申请</button></td>';
+                oparate = '<td ><button type="button" class="btn btn-primary btn-xs deleteap" id="' + id + '">取消申请</button></td>';
             } else if (infolist[i].status === 1) {
-                // oparate = '<td class="payment" id="' + orderId + '"><button type="button" class="btn btn-info btn-xs" style="margin-left:17px;" id="pay">付款</button></td>'
                 oparate = '<td><a href="billlist.html">请在我的账单付款</a></td>';
             } else if (infolist[i].status === 2) {
-                oparate = '<td class="addexam" id="' + infolist[i].examId + '"><button type="button" class="btn btn-success btn-xs">编辑考试</button></td>';
+                oparate = '<td ><button type="button" class="btn btn-success btn-xs addexam" id="' + infolist[i].examId + '">编辑考试</button></td>';
             } else if (infolist[i].status === -1) {
                 oparate = '<td>' + '拒绝原因：' + infolist[i].reason + '</td>';
             } else {
                 oparate = '<td>' + '异常状态' + '</td>';
             }
             applywait.applyhtml += '<tr class="' + id + '"><td>' + infolist[i].applyId + '</td>'
-                + '<td><a   href="applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'
+                + '<td><a href="applyexam.html?applyid=' + id + '">' + infolist[i].examName + '</a></td>'
                 + '<td>' + infolist[i].peopleNumber + '</td>'
                 + '<td>' + infolist[i].startTime + '</td>'
                 + '<td>' + infolist[i].endTime + '</td>'
