@@ -125,7 +125,7 @@ var commonet = {
 
     footcon: function () {
         var foothtml = '<div class="row"><div class="col-md-4 col-md-offset-1">' +
-            '<p style="font-size:20px;font-weight:bold;"><span class="glyphicon glyphicon-asterisk"></span>团队介绍</p>' +
+            '<p style="margin-top: 20px;font-size:20px;font-weight:bold;"><span class="glyphicon glyphicon-asterisk"></span>团队介绍</p>' +
             '<p class="teaminfo"></p>' +
             '</div>' +
             '<div class="col-md-5 col-md-offset-1">' +
