@@ -67,6 +67,7 @@
                     <td>开始时间</td>
                     <td>结束时间</td>
                     <td>是否通过</td>
+                    <td>修改</td>
                     <td>操作</td>
                 </tr>
                 </thead>
@@ -162,7 +163,52 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default closebill" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary saveapply">保存</button>
+                <button type="button" class="btn btn-primary acceptpply">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 审核 -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel3">修改信息(带*必填)</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group ">
+                        <label class="col-md-2 control-label"><span class="require">*</span>考试名称：</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control updatetestname" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>考试人数：</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control updatepeoplenum" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>开始时间：</label>
+                        <div class="col-md-4">
+                            <input class="form-control form_datetime updatestartTime" type="text" placeholder="开始时间">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>结束时间：</label>
+                        <div class="col-md-4">
+                            <input class="form-control form_datetime updateendTime" type="text" placeholder="结束时间">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closebill" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary updateClick">保存</button>
             </div>
         </div>
 
@@ -193,7 +239,7 @@
 <!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
 
 <script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
-<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
 
 <script type="text/javascript" src="../js/public.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>

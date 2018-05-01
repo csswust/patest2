@@ -162,9 +162,9 @@ $("#billInfo").on('click', '.payment', function () {
     program.payment(index);
 });
 $("#billInfo").on('click', '.updateOrder', function () {
-    $(".updateMoney").val('');
     $('#updateOrder').modal({});
     $(".updateNum").val(program.data[this.id].orderNum);
+    $(".updateMoney").val(program.data[this.id].money);
     program.orderId = program.data[this.id].orderId;
 });
 $(".saveOrder").click(function () {

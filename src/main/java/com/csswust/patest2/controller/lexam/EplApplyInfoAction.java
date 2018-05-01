@@ -22,7 +22,6 @@ public class EplApplyInfoAction extends BaseAction {
     @Autowired
     private EpApplyInfoService epApplyInfoService;
 
-
     @RequestMapping(value = "/selectByCondition", method = {RequestMethod.GET, RequestMethod.POST})
     public Object selectByCondition(
             EpApplyInfo epApplyInfo,
@@ -31,6 +30,20 @@ public class EplApplyInfoAction extends BaseAction {
         if (epApplyInfo == null)
             return new APIResult(-501, "epApplyInfo not null");
         return epApplyInfoService.selectByCondition(epApplyInfo, page, rows);
+    }
+
+    @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object updateById(EpApplyInfo epApplyInfo) {
+        APIResult apiResult = new APIResult();
+        EpApplyInfo record = new EpApplyInfo();
+        record.setApplyId(epApplyInfo.getApplyId());
+        record.setExamName(epApplyInfo.getExamName());
+        record.setPeopleNumber(epApplyInfo.getPeopleNumber());
+        record.setStartTime(epApplyInfo.getStartTime());
+        record.setEndTime(epApplyInfo.getEndTime());
+        int result = epApplyInfoDao.updateByPrimaryKeySelective(record);
+        apiResult.setStatusAndDesc(result, result == 1 ? "成功" : "失败");
+        return apiResult;
     }
 
     @RequestMapping(value = "/accept", method = {RequestMethod.GET, RequestMethod.POST})

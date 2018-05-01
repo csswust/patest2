@@ -41,6 +41,7 @@ var program = {
                 + '<td>' + infolist[i].startTime + '</td>'
                 + '<td>' + infolist[i].endTime + '</td>'
                 + '<td>' + passstate + '</td>'
+                + '<td><button type="button" class="btn btn-info btn-xs updateApply" id="' + i + '">修改</button></td>'
                 + opate
                 + '</tr>';
         }
@@ -70,7 +71,7 @@ var program = {
             }
         });
     },
-    updateInfo: function () {
+    accept: function () {
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -89,6 +90,35 @@ var program = {
                     program.selectallInfo();
                     pubMeth.alertInfo("alert-success", result.desc);
                     $("#mexamine").modal('hide');
+                } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
+                }
+            },
+            error: function () {
+                pubMeth.alertInfo("alert-danger", "请求失败");
+            }
+        });
+    },
+    updateInfo: function () {
+        $.ajax({
+            type: "get",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../epApplyInfo/updateById",
+            dataType: 'json',
+            async: false,
+            data: {
+                applyId: program.applyId,
+                examName: program.examName,
+                peopleNumber: program.peopleNumber,
+                startTime: program.startTime,
+                endTime: program.endTime
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.status === 1) {
+                    program.selectallInfo();
+                    pubMeth.alertInfo("alert-success", result.desc);
+                    $('#updateModal').modal('hide');
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
                 }
@@ -144,10 +174,23 @@ var par = pubMeth.getQueryObject();
 program.selectallInfo();
 program.deleteIt();
 
+var date = new Date();
+$(".form_datetime").datetimepicker({
+    format: 'yyyy-mm-dd hh:ii:ss',
+    startDate: date
+});
+
 $("#listInfo").on('click', '.examine', function () {
     $('#mexamine').modal({});
     program.applyId = this.id;
 });
+$(".acceptpply").click(function () {
+    program.money = $(".money").val();
+    program.reason = $(".reason").val();
+    program.isPass = $(".handle option:selected").val();
+    program.accept();
+});
+
 $("#listInfo").on('click', '.selectApply', function () {
     $('#passed').modal({});
     var index = this.id;
@@ -157,7 +200,6 @@ $("#listInfo").on('click', '.selectApply', function () {
     $(".passId").text(program.epOrderInfoList[index].orderNum);
     $(".passMoney").text(program.epOrderInfoList[index].money);
 });
-
 $("#listInfo").on('click', '.addexam', function () {
     var index = this.id;
     if (index !== "null") {
@@ -166,13 +208,27 @@ $("#listInfo").on('click', '.addexam', function () {
         patest.alertInfo("alert-danger", "未付款");
     }
 });
-$(".saveapply").click(function () {
-    program.money = $(".money").val();
-    program.reason = $(".reason").val();
-    program.isPass = $(".handle option:selected").val();
-    program.updateInfo();
 
+$("#listInfo").on('click', '.updateApply', function () {
+    $('#updateModal').modal({});
+    $(".updatetestname").val(program.data[this.id].examName);
+    $(".updatepeoplenum").val(program.data[this.id].peopleNumber);
+    $(".updatestartTime").val(program.data[this.id].startTime);
+    $(".updateendTime").val(program.data[this.id].endTime);
+    program.applyId = program.data[this.id].applyId;
 });
+$(".updateClick").click(function () {
+    program.examName = $(".updatetestname").val();
+    program.peopleNumber = $(".updatepeoplenum").val();
+    program.startTime = $(".updatestartTime").val();
+    program.endTime = $(".updateendTime").val();
+    if (!program.peopleNumber || !program.examName || !program.startTime || !program.endTime) {
+        pubMeth.alertInfo("alert-danger", "请填写必填参数");
+    } else {
+        program.updateInfo();
+    }
+});
+
 if (program.count > 0) {
     $(".countnum").html(program.count);
     $.jqPaginator('#pagination', {
