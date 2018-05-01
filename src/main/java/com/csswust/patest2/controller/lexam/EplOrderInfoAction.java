@@ -41,8 +41,12 @@ public class EplOrderInfoAction extends BaseAction {
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
     public Object updateById(EpOrderInfo epOrderInfo) {
         APIResult apiResult = new APIResult();
-        int result = epOrderInfoDao.updateByPrimaryKeySelective(epOrderInfo);
-        apiResult.setStatus(result);
+        // 只能修改金额
+        EpOrderInfo record = new EpOrderInfo();
+        record.setMoney(epOrderInfo.getMoney());
+        record.setOrderId(epOrderInfo.getOrderId());
+        int result = epOrderInfoDao.updateByPrimaryKeySelective(record);
+        apiResult.setStatusAndDesc(result, result == 1 ? "成功" : "失败");
         return apiResult;
     }
 

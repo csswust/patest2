@@ -24,6 +24,13 @@ var program = {
                 payinfo = "已支付";
             }
             var orderId = billlist[i].orderId;
+            var payMoney = '<td><button type="button" class="btn btn-primary btn-xs updateOrder" id="' + orderId + '">修改</button>';
+            if (billlist[i].isPay === 0) {
+                payMoney += ' <button type="button" class="btn btn-info btn-xs payment" id="' + orderId + '">付款</button>'
+            } else {
+                payMoney += ' <button type="button" class="btn btn-info btn-xs payment" disabled="disabled" id="' + orderId + '">付款</button>'
+            }
+            payMoney += '</td>';
             program.billhtml += '<tr  class="' + orderId + '">'
                 + '<td><input type="checkbox" value="' + orderId + '" name="title"/></td>'
                 + '<td>' + orderId + '</td>'
@@ -34,7 +41,7 @@ var program = {
                 + '<td>' + billlist[i].createTime + '</td>'
                 + '<td>' + billlist[i].money + '</td>'
                 + '<td>' + payinfo + '</td>'
-                + '<td class="payment" id="' + orderId + '"><button type="button" class="btn btn-info btn-xs" id="pay">付款</button></td>'
+                + payMoney
                 + '</tr>';
         }
     },
@@ -124,11 +131,49 @@ var program = {
                 }
             }
         });
+    },
+    // 付款
+    updtateById: function () {
+
+        $.ajax({
+            type: "post",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../epOrderInfo/updateById",
+            dataType: 'json',
+            async: false,
+            data: {
+                orderId: program.orderId,
+                money: program.money
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.status === 1) {
+                    pubMeth.alertInfo("alert-success", "修改成功");
+                    program.selectallbill();
+                } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
+                }
+            }
+        });
     }
 };
 $("#billInfo").on('click', '.payment', function () {
     var index = this.id;
     program.payment(index);
+});
+$("#billInfo").on('click', '.updateOrder', function () {
+    $(".updateMoney").val('');
+    $('#updateOrder').modal({});
+    program.orderId = this.id;
+});
+$(".saveOrder").click(function () {
+    program.money = $(".updateMoney").val();
+    if (!program.money) {
+        pubMeth.alertInfo("alert-danger", "金额是必填参数");
+    } else {
+        program.updtateById();
+    }
+    $('#updateOrder').modal('hide');
 });
 pubMeth.getRowsnum("rowsnum");
 program.selectallbill();

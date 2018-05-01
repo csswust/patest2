@@ -75,6 +75,8 @@
                 <bean class="com.csswust.patest2.spring.DateConverter"/>
                 <bean class="com.csswust.patest2.spring.StringConverter"/>
                 <bean class="com.csswust.patest2.spring.IntegerConverter"/>
+                <bean class="com.csswust.patest2.spring.LongConverter"/>
+                <bean class="com.csswust.patest2.spring.DoubleConverter"/>
             </set>
         </property>
     </bean>
