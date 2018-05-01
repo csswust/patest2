@@ -5,6 +5,7 @@
 .webName {
     /*background-color: #dae6e8;*/
     height: 60px;
+    border-bottom: 2px solid #00a2d4;
 }
 body {
     background: url("../img/image.jpg") no-repeat;
@@ -13,7 +14,7 @@ body {
 
 .form {
     background: rgba(255, 255, 255, 0.6);
-    width: 600px;
+    width: 500px;
     margin: 160px auto;
 }
 
@@ -56,7 +57,7 @@ input[type="text"], input[type="password"] {
 .alert {
     margin-top: 20px;
     margin-bottom: 0;
-    padding: 5px 0;
+    padding: 5px 5px;
 }
 
 .footer {

@@ -40,7 +40,7 @@ $(function () {
         alertInfo: function (className, info) {
             if ($(".tip").text().trim() == "") {
                 $(".tip").html(' <div class="alert  ' + className + '"  id="tip">' +
-                    /*'<a href="#" class="close" data-dismiss="alert">&times;</a>' +*/
+                    '<a href="#" class="close" data-dismiss="alert">&times;</a>' +
                     '<strong>' + info + '</strong></div>');
             } else {
                 $("#tip").removeClass();
