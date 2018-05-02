@@ -78,7 +78,7 @@ public class EpApplyInfoAction extends BaseAction {
         if (epApplyInfo == null) {
             return new APIResult(-501, "applyId无效");
         } else {
-            Integer userId = getUserId();
+            Integer userId = getEpUserId();
             if (userId == null || (userId.intValue() != epApplyInfo.getEpUserId().intValue())) {
                 return new APIResult(-501, "权限不足");
             }
