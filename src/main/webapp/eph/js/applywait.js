@@ -53,10 +53,10 @@ var applywait = {
             applyId: id
         }, function (result) {
             if (result.status === 1) {
-                patest.alertInfo("alert-success", "删除成功");
+                patest.alertInfo("alert-success", result.desc);
                 applywait.selectallInfo();
             } else {
-                patest.alertInfo("alert-danger", "删除失败");
+                patest.alertInfo("alert-danger", result.desc);
             }
         });
     },
