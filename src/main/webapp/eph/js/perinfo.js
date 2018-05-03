@@ -28,6 +28,25 @@ var perinfo = {
             perinfo.realname = $(".mrealname").val();
             perinfo.updateallbill();
         });
+
+        $(".updatePassClick").click(function () {
+            $('#updatePassModal').modal({});
+            $(".inputpassword").val("");
+            $(".inputpass").val("");
+        });
+        $(".updatePass").click(function () {
+            var pass1 = $("#inputpassword").val();
+            var pass2 = $("#inputpass").val();
+            if (!pass1 || !pass2) {
+                patest.alertInfo("alert-danger", "密码不能为空");
+            } else if (pass1 !== pass2) {
+                patest.alertInfo("alert-danger", "两次密码不相等");
+            } else {
+                perinfo.password = pass1;
+                perinfo.updateaPass();
+            }
+        });
+
         $(".form_datetime").datetimepicker({
             format: 'yyyy-mm-dd hh:ii:ss'
         });
@@ -63,6 +82,20 @@ var perinfo = {
                 location.reload(false);
                 perinfo.selectallbill();
                 perinfo.setInfo();
+            } else {
+                patest.alertInfo("alert-danger", result.desc);
+            }
+        });
+    },
+    updateaPass: function () {
+        patest.request({
+            url: "../ep/epUserInfo/updatePass"
+        }, {
+            password: perinfo.password
+        }, function (result) {
+            if (result.status === 1) {
+                patest.alertInfo("alert-success", result.desc);
+                $('#updatePassModal').modal('hide');
             } else {
                 patest.alertInfo("alert-danger", result.desc);
             }

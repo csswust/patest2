@@ -122,4 +122,20 @@ public class EpUserInfoAction extends BaseAction {
         }
         return apiResult;
     }
+
+    @RequestMapping(value = "/epUserInfo/updatePass", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object updatePass(@RequestParam String password) {
+        APIResult apiResult = new APIResult();
+        if (StringUtils.isBlank(password)) {
+            apiResult.setStatusAndDesc(-501, "password不能为空");
+            return apiResult;
+        }
+        EpUserInfo epUserInfo = new EpUserInfo();
+        epUserInfo.setUserId(getEpUserId());
+        epUserInfo.setPassword(CipherUtil.encode(password));
+        int result = epUserInfoDao.updateByPrimaryKeySelective(epUserInfo);
+        if (result == 0) apiResult.setStatusAndDesc(-1, "更新失败");
+        else apiResult.setStatusAndDesc(1, "更新成功");
+        return apiResult;
+    }
 }
