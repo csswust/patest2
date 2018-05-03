@@ -45,6 +45,10 @@ public class EpUserInfoAction extends BaseAction {
             apiResult.setStatusAndDesc(-4, "密码错误");
             return apiResult;
         }
+        if (epUserInfo.getIsActive() != 1) {
+            apiResult.setStatusAndDesc(-5, "账号未激活，请等待管理员激活");
+            return apiResult;
+        }
         apiResult.setStatusAndDesc(1, "登录成功");
         apiResult.setDataKey("epUserId", epUserInfo.getUserId());
         apiResult.setDataKey("epUserName", epUserInfo.getUsername());
