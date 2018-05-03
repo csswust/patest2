@@ -63,6 +63,7 @@ var common = {
             + '<li>'
             + '<a href="javascript:;" class="treeview applyMana"><span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> <span>认证管理</span></a>'
             + '<ul class="treeview-menu">'
+            + '<li><a href="epUserInfo.html" class="epUserInfo">用户管理</a></li>'
             + '<li><a href="applyhandle.html" class="applyset">申请管理</a></li>'
             + '<li><a href="adminbill.html" class="billset">账单管理</a></li>'
             + '<li><a href="epnotice.html" class="epnotice">公告管理</a></li>'

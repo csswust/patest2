@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>LExamV3.0</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <!--<link rel="stylesheet" href="../css/exam.css">-->
+    <!--[if lt IE 9]>
+    <script src="../lib/bootstrap/js/html5shiv.min.js"></script>
+    <script src="../lib/bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="head">
+    <!-- 头部菜单 -->
+</div>
+<div class="container-fuild">
+    <div class="row">
+        <div class="side-bar col-md-2">
+            <!-- 左侧导航 -->
+        </div>
+        <div class="col-md-10 main">
+            <div class="tip">
+                <div class="alert alert-warning" style="margin-top:10px;" id="tip">
+                    <a href="#" class="close" data-dismiss="alert">
+                        &times;
+                    </a>
+                    <strong>小提示：出现问题刷新试试</strong>
+                </div>
+            </div>
+            <div class="row opration">
+                <div class="btn-group col-md-3" role="group">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn  btn-success addUser">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn  btn-warning deleteUser">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                        </button>
+                    </div>
+                </div>
+                <form class="form-inline col-md-6 col-md-offset-2">
+                    <div class="form-group">
+                        <input style="width: 120px" type="text" class="form-control susername" placeholder="用户名">
+                    </div>
+                    <div class="form-group">
+                        <input style="width: 120px" type="text" class="form-control semail" placeholder="邮箱">
+                    </div>
+                    <div class="input-group">
+                        <input style="width: 120px" type="text" class="form-control searname" placeholder="姓名">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary search" type="button">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                查询
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <table
+                    class="table table-bordered table-hover table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="check_list"/>全选</th>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>电话</th>
+                    <th>地址</th>
+                    <th>真实名字</th>
+                    <th>注册时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="listInfo">
+                </tbody>
+            </table>
+            <div class="row paging">
+                <div class="col-md-3 col-md-offset-4 pagenum">共 <span class="countnum" style="color:#337ab7"></span> 个
+                </div>
+                <div class="col-md-5 ">
+                    <ul class="pagination " id="pagination"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">用户信息(带*必填)</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>用户名</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control musername"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>密码</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control mpassword"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>邮箱</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control memail"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>电话</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control mphone"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="require">*</span>地址</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control munit"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">名字</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control mrealName"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closebutton" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary saveData">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript" src="../lib/jQuery/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../lib/jQuery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jQuery/jquerySession.js"></script>-->
+<!--<script type="text/javascript" src="../lib/jQuery/ajaxfileupload.js"></script>-->
+<script type="text/javascript" src="../lib/jQuery/jqPaginator.js"></script>
+<!--<script type="text/javascript" src="../lib/artTemplate/artTemplate.js"></script>-->
+
+<script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="../lib/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
+
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/epUserInfo.js"></script>
+</html>

@@ -36,7 +36,7 @@ public class Generator {
     public static void main(String[] args) throws IOException {
         File oldPathFile = new File(modelPath + "\\auto");
         String[] fileList = new String[]{
-                "ExamInfoMapper.xml"
+                "EpUserInfoMapper.xml"
         };
         File[] files = oldPathFile.listFiles();
         for (File file : files) {

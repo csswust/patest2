@@ -17,6 +17,8 @@ public class EpUserInfo {
 
     private String realName;
 
+    private Integer isActive;
+
     private Date createTime;
 
     private Date modifyTime;
@@ -77,6 +79,14 @@ public class EpUserInfo {
 
     public void setRealName(String realName) {
         this.realName = realName == null ? null : realName.trim();
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 
     public Date getCreateTime() {

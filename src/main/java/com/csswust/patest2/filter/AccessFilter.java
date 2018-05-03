@@ -31,7 +31,8 @@ import java.io.IOException;
                 "/siteInfo/*", "/student/*", "/submitInfo/*", "/submitResult/*",
                 "/submitSimilarity/*", "/system/*", "/userInfo/*", "/userProfile/*",
                 "/userLoginLog/*", "/operateLog/*",
-                "/epApplyInfo/*", "/epNotice/*", "/epOrderInfo/*", "/ep/*"
+                "/epApplyInfo/*", "/epNotice/*", "/epOrderInfo/*", "/ep/*",
+                "*.do"
         })
 public class AccessFilter extends BaseFilter implements Filter {
     private static Logger log = LoggerFactory.getLogger(AccessFilter.class);

@@ -59,12 +59,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="cou_id" sqlStatement="JDBC"/>
         </table>-->
-        <table schema="patest2" tableName="exam_info" domainObjectName="ExamInfo"
+        <!--<table schema="patest2" tableName="exam_info" domainObjectName="ExamInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="exam_id" sqlStatement="JDBC"/>
-        </table>
+        </table>-->
         <!--<table schema="patest2" tableName="exam_notice" domainObjectName="ExamNotice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -197,12 +197,12 @@
                selectByExampleQueryId="false">
             <generatedKey column="order_id" sqlStatement="JDBC"/>
         </table>-->
-        <!--<table schema="patest2" tableName="ep_user_info" domainObjectName="EpUserInfo"
+       <table schema="patest2" tableName="ep_user_info" domainObjectName="EpUserInfo"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="user_id" sqlStatement="JDBC"/>
-        </table>-->
+        </table>
         <!--<table schema="patest2" tableName="ep_notice" domainObjectName="EpNotice"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
