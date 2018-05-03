@@ -51,6 +51,7 @@ var epnotices = {
             epnotices.html += '<tr><td>' + epnotices.data[i].epnoId + '</td>'
                 + '<td><a href="epnoticetext.html?epid=' + epnotices.data[i].epnoId + '">' + epnotices.data[i].title + '</a></td>'
                 + '<td>' + epnotices.data[i].createTime + '</td>'
+                + '<td>' + epnotices.data[i].modifyTime + '</td>'
                 + '</tr>';
         }
     }
