@@ -10,6 +10,7 @@ import com.csswust.patest2.dao.SiteInfoDao;
 import com.csswust.patest2.listener.ApplicationStartListener;
 import com.csswust.patest2.listener.OnlineListener;
 import com.csswust.patest2.service.OnlineUserService;
+import com.csswust.patest2.service.idenCode.CodeService;
 import com.csswust.patest2.service.judge.JudgeThread;
 import com.csswust.patest2.service.monitor.MonitorRe;
 import com.csswust.patest2.service.monitor.MonitorService;
@@ -31,7 +32,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpSession;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,6 +54,32 @@ public class SystemAction extends BaseAction {
     private MonitorService monitorService;
     @Autowired
     private SiteInfoDao siteInfoDao;
+    @Autowired
+    private CodeService codeService;
+
+    @ResponseBody
+    @RequestMapping(value = "/getIdenCode", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object getIdenCode() {
+        // 调用工具类生成的验证码和验证码图片
+        Map<String, Object> codeMap = codeService.generateCodeAndPic();
+        // 将四位数字的验证码保存到Session中。
+        saveSession(request, "code", codeMap.get("code").toString());
+        // 禁止图像缓存。
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", -1);
+        response.setContentType("image/jpeg");
+        // 将图像输出到Servlet输出流中。
+        ServletOutputStream sos;
+        try {
+            sos = response.getOutputStream();
+            ImageIO.write((RenderedImage) codeMap.get("codePic"), "jpeg", sos);
+            sos.close();
+        } catch (IOException e) {
+            log.error("getIdenCode error :{}", e);
+        }
+        return null;
+    }
 
     private ReentrantLock lock = new ReentrantLock();
 

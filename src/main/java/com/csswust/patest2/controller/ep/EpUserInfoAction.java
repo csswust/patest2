@@ -25,8 +25,19 @@ public class EpUserInfoAction extends BaseAction {
     @RequestMapping(value = "/epUserInfo/login", method = {RequestMethod.GET, RequestMethod.POST})
     public Object login(
             @RequestParam String username,
-            @RequestParam String password) {
+            @RequestParam String password,
+            @RequestParam String idenCode) {
         APIResult apiResult = new APIResult();
+        if (StringUtils.isBlank(idenCode)) {
+            apiResult.setStatusAndDesc(-501, "验证码不能为空");
+            return apiResult;
+        }
+        String correctCode = (String) getSession(request, "code");
+        if (correctCode == null || !correctCode.equalsIgnoreCase(idenCode)) {
+            removeSession(request, "code");
+            apiResult.setStatusAndDesc(-500, "验证码正确");
+            return apiResult;
+        }
         if (StringUtils.isBlank(username)) {
             apiResult.setStatusAndDesc(-1, "用户不能为空");
             return apiResult;

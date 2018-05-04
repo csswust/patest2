@@ -2,8 +2,8 @@ var home = {
     init: function () {
         commonet.init(); // 公共模块初始化
         $(".homepaged").addClass("onet");
-        home.testMenu();
 
+        home.testMenu();
         // 统计个数
         home.examselect();
         home.userselect();

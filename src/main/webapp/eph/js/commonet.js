@@ -191,6 +191,13 @@ var commonet = {
             '</div> ' +
             '</div> ' +
             '<div class="form-group"> ' +
+            '<div class="col-md-8 col-md-offset-2"> ' +
+            '<input type="text" name="code" id="idenCode" style="width: 80px;" /> ' +
+            '<img id="imgObj" alt="验证码" ' +
+            'src="../system/getIdenCode"><a href="#" onclick="commonet.changeImg()">换一张</a>' +
+            '</div> ' +
+            '</div> ' +
+            '<div class="form-group"> ' +
             '<div class="col-md-8 col-md-offset-2" style="color: #FFFFFF;text-align: center;"> ' +
             '<button id="btnlogin" style="width: 100%;height: 45px;color:#fff;font-size: 16px;font-weight: bold; background-color:#3c8dbd;" type="button" class="btn btn-block btn-default">登&nbsp;&nbsp;录 ' +
             '</button> ' +
@@ -266,11 +273,15 @@ var commonet = {
             url: "../ep/epUserInfo/login"
         }, {
             username: commonet.username,
-            password: commonet.password
+            password: commonet.password,
+            idenCode: commonet.idenCode
         }, function (result) {
             var exp = new Date();
             if (result.status !== 1) {
                 alert(result.desc);
+                if (result.statu === -500) {
+                    commonet.changeImg();
+                }
             }
             else {
                 $.cookie("sysname", result.data.epUserName);
@@ -282,13 +293,16 @@ var commonet = {
     judgeLogin: function () {
         commonet.username = $("#username").val();
         commonet.password = $("#password").val();
-        if (commonet.username && commonet.password) {
+        commonet.idenCode = $("#idenCode").val();
+        if (commonet.username && commonet.password && commonet.idenCode) {
             commonet.login();
         }
         else if (!commonet.username) {
             alert("用户名不能为空");
         } else if (!commonet.password) {
             alert("密码不能为空");
+        } else if (!commonet.idenCode) {
+            alert("验证码不能为空");
         } else {
             alert("请完善登录信息或去注册");
         }
@@ -336,5 +350,21 @@ var commonet = {
         else {
             alert("请完善信息");
         }
+    },
+    changeImg: function () {
+        var imgSrc = $("#imgObj");
+        var src = imgSrc.attr("src");
+        imgSrc.attr("src", commonet.chgUrl(src));
+    },
+
+    chgUrl: function (url) {
+        var timestamp = (new Date()).valueOf();
+        url = "../system/getIdenCode";
+        if ((url.indexOf("&") >= 0)) {
+            url = url + "×tamp=" + timestamp;
+        } else {
+            url = url + "?timestamp=" + timestamp;
+        }
+        return url;
     }
 };
