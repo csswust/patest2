@@ -33,9 +33,9 @@ public class EpUserInfoAction extends BaseAction {
             return apiResult;
         }
         String correctCode = (String) getSession(request, "code");
+        removeSession(request, "code");// 移除，保证验证码是一次性的
         if (correctCode == null || !correctCode.equalsIgnoreCase(idenCode)) {
-            removeSession(request, "code");
-            apiResult.setStatusAndDesc(-500, "验证码正确");
+            apiResult.setStatusAndDesc(-500, "验证码不正确");
             return apiResult;
         }
         if (StringUtils.isBlank(username)) {

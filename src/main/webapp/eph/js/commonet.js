@@ -276,12 +276,9 @@ var commonet = {
             password: commonet.password,
             idenCode: commonet.idenCode
         }, function (result) {
-            var exp = new Date();
+            commonet.changeImg();
             if (result.status !== 1) {
                 alert(result.desc);
-                if (result.statu === -500) {
-                    commonet.changeImg();
-                }
             }
             else {
                 $.cookie("sysname", result.data.epUserName);
