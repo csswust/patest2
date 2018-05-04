@@ -194,7 +194,7 @@ var commonet = {
             '<div class="col-md-8 col-md-offset-2"> ' +
             '<input type="text" name="code" id="idenCode" style="width: 80px;" /> ' +
             '<img id="imgObj" alt="验证码" ' +
-            'src="../system/getIdenCode"><a href="#" onclick="commonet.changeImg()">换一张</a>' +
+            'src="../system/getIdenCode"> <a href="#" onclick="commonet.changeImg()">换一张</a>' +
             '</div> ' +
             '</div> ' +
             '<div class="form-group"> ' +
@@ -353,7 +353,6 @@ var commonet = {
         var src = imgSrc.attr("src");
         imgSrc.attr("src", commonet.chgUrl(src));
     },
-
     chgUrl: function (url) {
         var timestamp = (new Date()).valueOf();
         url = "../system/getIdenCode";
