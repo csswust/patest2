@@ -80,4 +80,10 @@
     <session-config>
         <session-timeout>120</session-timeout>
     </session-config>
+
+    <welcome-file-list>
+        <welcome-file>html/login.html</welcome-file>
+        <welcome-file>html/login.htm</welcome-file>
+        <welcome-file>html/login.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
