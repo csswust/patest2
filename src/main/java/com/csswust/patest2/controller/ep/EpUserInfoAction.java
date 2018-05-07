@@ -87,12 +87,13 @@ public class EpUserInfoAction extends BaseAction {
         }
         String newPass = CipherUtil.encode(epUserInfo.getPassword());
         epUserInfo.setPassword(newPass);
+        epUserInfo.setIsActive(0);
         int result = epUserInfoDao.insertSelective(epUserInfo);
         if (result != 1) {
             apiResult.setStatusAndDesc(-4, "注册失败");
             return apiResult;
         }
-        apiResult.setStatus(1);
+        apiResult.setStatusAndDesc(1, "注册成功，等待管理员审核");
         return apiResult;
     }
 
