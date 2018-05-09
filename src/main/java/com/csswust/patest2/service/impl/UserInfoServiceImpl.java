@@ -133,19 +133,19 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             loginRe.setDesc("你的账号未激活！请联系管理员激活");
             return loginRe;
         }
+        ExamInfo examInfo = examInfoDao.selectByPrimaryKey(currUser.getExamId());
+        loginRe.setExamInfo(examInfo);
+        if (examInfo == null && currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
+            loginRe.setStatus(-11);
+            loginRe.setDesc("未关联考试");
+            return loginRe;
+        }
         // 当登录的是学生时，需要判断ip是否在限定范围内
         int isLimitIP = Config.getToInt(SiteKey.IS_LIMIT_IP, SiteKey.IS_LIMIT_IP_DE);
         if (isLimitIP == 1 && currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
             if (!"0:0:0:0:0:0:0:1".equals(IP)) {
                 String ips = null;
-                ExamInfo examInfo = examInfoDao.selectByPrimaryKey(currUser.getExamId());
-                if (examInfo != null) {
-                    ips = examInfo.getAllowIp();
-                } else {
-                    loginRe.setStatus(-11);
-                    loginRe.setDesc("未关联考试，请联系老师添加考试");
-                    return loginRe;
-                }
+                ips = examInfo == null ? "" : examInfo.getAllowIp();
                 if (ips != null) {
                     String[] strs = ips.split(",");
                     if (!(Arrays.asList(strs).contains(IP))) {
@@ -160,8 +160,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         loginRe.setStatus(1);
         UserProfile userProfile = userProfileDao.selectByPrimaryKey(currUser.getUserProfileId());
         loginRe.setUserProfile(userProfile);
-        ExamInfo examInfo = examInfoDao.selectByPrimaryKey(currUser.getExamId());
-        loginRe.setExamInfo(examInfo);
+
         //插入登录日志
         UserLoginLog userLoginLog = new UserLoginLog();
         userLoginLog.setUserId(currUser.getUserId());
