@@ -15,4 +15,6 @@ public interface ExamPaperService {
     APIResult insertByExcel(MultipartFile file, Integer examId, boolean isIgnoreError);
 
     APIResult drawProblemByExamId(Integer examId, Integer userId);
+
+    APIResult insertOne(Integer examId, String userName);
 }

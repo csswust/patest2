@@ -12,6 +12,7 @@ import com.csswust.patest2.service.ExamPaperService;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.common.ConditionBuild;
+import com.csswust.patest2.service.input.OperateLogInsert;
 import com.csswust.patest2.service.result.DrawProblemParam;
 import com.csswust.patest2.utils.CipherUtil;
 import jxl.Sheet;
@@ -20,6 +21,7 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -401,6 +403,40 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             return apiResult;
         }
         apiResult.setStatusAndDesc(sum, "抽题成功");
+        return apiResult;
+    }
+
+    @Transactional
+    @Override
+    public APIResult insertOne(Integer examId, String userName) {
+        APIResult apiResult = new APIResult();
+        if (examId == null || StringUtils.isBlank(userName)) {
+            apiResult.setStatusAndDesc(-501, "参数不合法");
+            return apiResult;
+        }
+        UserInfo userInfo = userInfoDao.selectByUsername(userName);
+        if (userInfo == null) {
+            apiResult.setStatusAndDesc(-1, "用户不存在");
+        } else {
+            ExamPaper examPaper = new ExamPaper();
+            examPaper.setExamId(examId);
+            examPaper.setUserId(userInfo.getUserId());
+            examPaper.setAcedCount(0);
+            examPaper.setScore(0.0);
+            examPaper.setIsMarked(0);
+            int status1 = examPaperDao.insertSelective(examPaper);
+            UserInfo record = new UserInfo();
+            record.setUserId(userInfo.getUserId());
+            record.setExamId(examId);
+            int status2 = userInfoDao.updateByPrimaryKeySelective(record);
+            if (status1 != 1 || status2 != 1) {
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                apiResult.setStatusAndDesc(-2,
+                        format("插入失败：examID: %d,%s", examId, userName));
+            } else {
+                apiResult.setStatusAndDesc(1, "添加成功");
+            }
+        }
         return apiResult;
     }
 

@@ -104,36 +104,12 @@ public class ExamPaperAction extends BaseAction {
     }
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> insertOne(@RequestParam Integer examId, @RequestParam String userName) {
-        if (examId == null || StringUtils.isBlank(userName)) return null;
-
+    public Object insertOne(@RequestParam Integer examId, @RequestParam String userName) {
         OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
                 getUrl(), "插入单张试卷", examId);
         insert.setArgcData("userName", userName);
         operateLogService.insertOne(insert);
-
-        Map<String, Object> res = new HashMap<>();
-        UserInfo userInfo = userInfoDao.selectByUsername(userName);
-        if (userInfo == null) {
-            res.put("status", -1);
-            res.put("desc", "用户不存在");
-        } else {
-            ExamPaper examPaper = new ExamPaper();
-            examPaper.setExamId(examId);
-            examPaper.setUserId(userInfo.getUserId());
-            examPaper.setAcedCount(0);
-            examPaper.setScore(0.0);
-            examPaper.setIsMarked(0);
-            int status = examPaperDao.insertSelective(examPaper);
-            if (status == 1) {
-                UserInfo record = new UserInfo();
-                record.setUserId(userInfo.getUserId());
-                record.setExamId(examId);
-                userInfoDao.updateByPrimaryKeySelective(userInfo);
-            }
-            res.put("status", status);
-        }
-        return res;
+        return examPaperService.insertOne(examId, userName);
     }
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})
