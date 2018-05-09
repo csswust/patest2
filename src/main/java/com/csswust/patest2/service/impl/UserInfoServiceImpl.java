@@ -137,10 +137,14 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         int isLimitIP = Config.getToInt(SiteKey.IS_LIMIT_IP, SiteKey.IS_LIMIT_IP_DE);
         if (isLimitIP == 1 && currUser.getIsAdmin() != 1 && currUser.getIsTeacher() != 1) {
             if (!"0:0:0:0:0:0:0:1".equals(IP)) {
-                String ips = "";
+                String ips = null;
                 ExamInfo examInfo = examInfoDao.selectByPrimaryKey(currUser.getExamId());
                 if (examInfo != null) {
                     ips = examInfo.getAllowIp();
+                } else {
+                    loginRe.setStatus(-11);
+                    loginRe.setDesc("未关联考试，请联系老师添加考试");
+                    return loginRe;
                 }
                 if (ips != null) {
                     String[] strs = ips.split(",");
