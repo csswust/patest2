@@ -127,16 +127,22 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         List<List<PaperProblem>> PaperProblemList = new ArrayList<>();
         List<List<ProblemInfo>> ProblemInfoList = new ArrayList<>();
         PaperProblem paperProblem = new PaperProblem();
-        int problemTotal = 0;
+        ExamParam examParam = new ExamParam();
+        examParam.setExamId(examId);
+        int problemTotal = examParamDao.selectByConditionGetCount(examParam, new BaseQuery());
         for (ExamPaper item : allExamPaperList) {
             paperProblem.setExamPaperId(item.getExaPapId());
             List<PaperProblem> paperProblems = paperProblemDao.selectByCondition(paperProblem, new BaseQuery());
+            if (paperProblems == null) paperProblems = new ArrayList<>();
+            if (paperProblems.size() < problemTotal) {
+                int size = problemTotal - paperProblems.size();
+                for (int i = 0; i < size; i++) {
+                    paperProblems.add(new PaperProblem());
+                }
+            }
             List<ProblemInfo> problemInfos = selectRecordByIds(
                     getFieldByList(paperProblems, "problemId", PaperProblem.class),
                     "probId", (BaseDao) problemInfoDao, ProblemInfo.class);
-            if (paperProblems.size() > problemTotal) {
-                problemTotal = paperProblems.size();
-            }
             PaperProblemList.add(paperProblems);
             ProblemInfoList.add(problemInfos);
         }
