@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 @Service
 public class UserInfoServiceImpl extends BaseService implements UserInfoService {
@@ -146,13 +147,11 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             if (!"0:0:0:0:0:0:0:1".equals(IP)) {
                 String ips = null;
                 ips = examInfo == null ? "" : examInfo.getAllowIp();
-                if (ips != null) {
-                    String[] strs = ips.split(",");
-                    if (!(Arrays.asList(strs).contains(IP))) {
-                        loginRe.setStatus(-6);
-                        loginRe.setDesc("登录ip异常");
-                        return loginRe;
-                    }
+                boolean temp = judgeIp(ips, IP);
+                if (!temp) {
+                    loginRe.setStatus(-6);
+                    loginRe.setDesc("登录ip异常");
+                    return loginRe;
                 }
             }
         }
@@ -177,5 +176,23 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         userInfoDao.updateByPrimaryKeySelective(recordUser);
         return loginRe;
     }
+
+    private boolean judgeIp(String allowIp, String ip) {
+        if (StringUtils.isBlank(allowIp)) return true;
+        if (StringUtils.isBlank(ip)) return false;
+        String[] strs = allowIp.split(",");
+        for (int i = 0; i < strs.length; i++) {
+            String pattern = strs[i];
+            boolean isMatch = Pattern.matches(pattern, ip);
+            if (isMatch) return true;
+        }
+        return false;
+    }
+
+    /*public static void main(String[] args) {
+        System.out.println(judgeIp("222.196.35.220", "222.196.35.220"));
+        System.out.println(judgeIp("222.196.35.220", "222.196.35.221"));
+        System.out.println(judgeIp("222.196.35.22\\d", "222.196.35.221"));
+    }*/
 }
 
