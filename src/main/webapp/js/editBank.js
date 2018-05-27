@@ -12,7 +12,7 @@ var program = {
     knowNameArr: [],
     couseNamesArr: [],
     levelArr: [],
-    examId: '',
+    examId: null,
     expmId: '',
     tempProbIds: [],
     tempProbId: '',
@@ -43,7 +43,6 @@ var program = {
     },
     //通过考试Id来展示本场考试
     selectByExamId: function () {
-        console.log(program.examId);
         $.ajax({
             type: "get",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -56,7 +55,6 @@ var program = {
                 rows: pubMeth.rowsnum
             },
             success: function (result) {
-                console.log(result);
                 program.tempProArr = result.data.examProblemList;
                 program.probArr = result.data.problemInfoList;
                 program.knowNameArr = result.data.knowledgeInfoList;
@@ -83,7 +81,6 @@ var program = {
                 ids: vals
             },
             success: function (result) {
-                console.log(result);
                 if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "删除成功");
                     flag = 0;
@@ -99,41 +96,28 @@ var program = {
     }
 };
 pubMeth.getRowsnum("rowsnum");
-//解析url
 pubMeth.serCourse();
+//解析url
 var par = pubMeth.getQueryObject();
-if (par.examId) {
-    $(".pageName").text("添加考试");
-    program.examId = par.examId;
-    console.log(program.examId);
-    program.selectByExamId();
-}
 //修改考试
-if (par.Id) {
+if (par.examId) {
     $(".pageName").text("修改考试");
-    program.examId = par.Id;
+    program.examId = par.examId;
     program.selectByExamId();
 }
 $(".localBank").click(function () {
     if (par.examId) {
         window.location.href = "probank.html?examId=" + program.examId;
-    } else if (par.Id) {
-        window.location.href = "probank.html?Id=" + program.examId;
     }
-
 });
 $(".upBank").click(function () {
     if (par.examId) {
         window.location.href = "editExam.html?examId=" + program.examId;
-    } else if (par.Id) {
-        window.location.href = "editExam.html?Id=" + par.Id;
     }
 });
 $(".downBank").click(function () {
     if (par.examId) {
         window.location.href = "editParm.html?examId=" + program.examId;
-    } else if (par.Id) {
-        window.location.href = "editParm.html?Id=" + par.Id;
     }
 });
 $(".deletePro").click(function () {

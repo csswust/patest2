@@ -59,7 +59,6 @@ var pubMeth = {
             dataType: 'json',
             async: false,
             success: function (result) {
-                console.log(result);
                 var length = result.total;
                 $(".courseName").empty();
                 $(".courseName").append("<option>课程</option>");
@@ -83,7 +82,6 @@ var pubMeth = {
                 courseId: courseId
             },
             success: function (result) {
-                console.log(result);
                 pubMeth.course = result.knowledgeInfoList;
             }
         });

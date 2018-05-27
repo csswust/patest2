@@ -5,9 +5,8 @@ $(".sttemplate").addClass("on");
 
 var flag = 0;
 var opreation = "";
-var savetip = "";
 var program = {
-    examId: '',
+    examId: null,
     kown: '',
     score: '',
     level: '',
@@ -54,13 +53,10 @@ var program = {
                 scores: program.scoreArr
             },
             success: function (result) {
-                console.log(result);
                 if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "添加成功！");
                     if (par.examId) {
                         window.location.href = 'editUplist.html?examId=' + program.examId;
-                    } else if (par.Id) {
-                        $(".saveTemp").css("display", "none");
                     }
                 } else {
                     pubMeth.alertInfo("alert-danger", result.desc);
@@ -82,7 +78,7 @@ var program = {
                 examId: program.examId,
                 knowIds: program.kownArr,
                 levels: program.levelArr,
-                scores: program.scoreArr,
+                scores: program.scoreArr
             },
             success: function (result) {
                 if (result.status > 0) {
@@ -161,7 +157,6 @@ var program = {
                 examId: program.examId
             },
             success: function (result) {
-                console.log(result);
                 var length = result.data.examParamList.length;
                 for (var i = 0; i < length; i++) {
                     var id = "courseName-" + i;
@@ -186,7 +181,6 @@ var program = {
             }
         });
     },
-
     bserCourse: function () {
         $.ajax({
             type: "get",
@@ -194,11 +188,8 @@ var program = {
             url: "../courseInfo/selectByCondition",
             dataType: 'json',
             async: false,
-            data: {
-                /*examId: program.examId,*/
-            },
+            data: {},
             success: function (result) {
-                console.log(result);
                 // 查询所有课程
                 program.courseName = result.list;
                 // 查询所有知识点
@@ -211,20 +202,14 @@ var program = {
 //获取url
 var par = pubMeth.getQueryObject();
 if (par.examId) {
-    $(".pageName").text("添加考试");
-    program.examId = par.examId;
-    program.bserCourse();
-    program.getExamInfoById();
-}
-if (par.Id) {
     $(".pageName").text("修改考试");
-    program.examId = par.Id;
+    program.examId = par.examId;
     program.bserCourse();
     program.getExamInfoById();
 }
 // 添加问题模板
 $(".addTemplate").click(function () {
-    if (par.Id) {
+    if (program.examId) {
         opreation = '<button type="button" class="btn btn-info saveTemp" id="' + flag + '+' + flag + '">保存</button>';
     }
     program.addTemplate();
@@ -241,13 +226,11 @@ $("#queTempla").on('click', '.saveTemp', function () {
     var levelId = $(".level-" + rowIndex + " option:selected").val();
     var score = $(".score-" + rowIndex).val();
     var allscore = 0;
-    var allquestion = 0;
     var num = /^[0-9]+.?[0-9]*$/;
     //获取文本框中的内容
     var kownArr = [],
         levelArr = [],
-        scoreArr = [],
-        quesArr = [];
+        scoreArr = [];
     $(".iknowName").each(function (i) {
         if ($(this).val() == "知识点") {
             kownArr[i] = "";
@@ -255,7 +238,6 @@ $("#queTempla").on('click', '.saveTemp', function () {
             kownArr[i] = $(this).val();
         }
     });
-    console.log(kownArr);
     $(".level").each(function (i) {
         if ($(this).val() == "知识点") {
             levelArr[i] = "";
@@ -329,8 +311,6 @@ $("#queTempla").delegate('.courseName', 'change', function () {
 $(".upParm").click(function () {
     if (par.examId) {
         window.location.href = 'editBank.html?examId=' + program.examId;
-    } else if (par.Id) {
-        window.location.href = 'editBank.html?Id=' + program.examId;
     }
 });
 //点击下一步到上传学生名单
@@ -374,35 +354,11 @@ $(".downParm").click(function () {
                 if (program.count == 0) {
                     pubMeth.alertInfo("alert-info", "问题总量不可为0，请修改参数");
                 } else {
-                    $("#modaladdpram").modal({
-                        //backdrop: 'static'
-                    });
+                    $("#modaladdpram").modal({});
                     $(".allscore").html(allscore);
                     $(".allques").html(allquestion);
                     $(".parmadd").click(function () {
                         program.insertExamParam();
-                    });
-                }
-            }
-        } else {
-            pubMeth.alertInfo("alert-info", "试卷参数的为必填");
-        }
-    } else if (par.Id) {
-        if (program.kownArr != "" && program.levelArr != "" && program.scoreArr != "") {
-            var num = /^[0-9]+.?[0-9]*$/;
-            if (!num.test(allscore)) {
-                pubMeth.alertInfo("alert-info", "分数请输入数字");
-            } else {
-                if (program.count == 0) {
-                    pubMeth.alertInfo("alert-info", "问题总量不可为0，请修改参数");
-                } else {
-                    $("#modaladdpram").modal({
-                        //backdrop: 'static'
-                    });
-                    $(".allscore").html(allscore);
-                    $(".allques").html(allquestion);
-                    $(".parmadd").click(function () {
-                        program.updateExamParam();
                     });
                 }
             }

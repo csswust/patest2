@@ -33,10 +33,9 @@ var program = {
             data: {
                 knowId: program.know,
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
-                console.log(result);
                 result = result.data;
                 program.count = result.total;
                 program.data = result;
@@ -166,12 +165,9 @@ var program = {
                 examId: program.examId
             },
             success: function (result) {
-                console.log(result);
                 if (result.status >= 1) {
                     if (parm.examId) {
                         window.location.href = "editBank.html?examId=" + parm.examId;
-                    } else if (parm.Id) {
-                        window.location.href = "editBank.html?Id=" + parm.Id;
                     }
                     pubMeth.alertInfo("alert-success", "保存成功");
                 } else if (result.status == 0) {
@@ -238,34 +234,21 @@ var program = {
                 program.showbank();
             }
         });
-    },
+    }
 };
 pubMeth.getRowsnum("rowsnum");
 var parm = pubMeth.getQueryObject();
-if (parm["id"] != null) {
-    program.know = parm["id"];
-}
+
 program.getProblemInfo();
 pubMeth.serCourse();
 program.allcheckbank();
 $('.addbank').on('click', function (e) {
     if (program.bankIds != "") {
         if (parm.examId) {
-            $("#modaladdbank").modal({
-                //backdrop: 'static'
-            });
+            $("#modaladdbank").modal({});
             $(".confirmadd").click(function () {
                 program.getproblemInfoById();
                 program.examId = parm["examId"];
-                program.insertTempProblem();
-            });
-        } else if (parm.Id) {
-            $("#modaladdbank").modal({
-                //backdrop: 'static'
-            });
-            $(".confirmadd").click(function () {
-                program.getproblemInfoById();
-                program.examId = parm["Id"];
                 program.insertTempProblem();
             });
         }
@@ -275,11 +258,7 @@ $('.addbank').on('click', function (e) {
 });
 $(".backexam").click(function () {
     if (parm.examId) {
-        window.location.href = "editBank.html?examId="
-            + parm.examId;
-    } else if (parm.Id) {
-        window.location.href = "editBank.html?Id="
-            + parm.Id;
+        window.location.href = "editBank.html?examId=" + parm.examId;
     }
 });
 $(".search").click(function () {
