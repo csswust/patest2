@@ -41,16 +41,6 @@ var program = {
             }
         });
     },
-    findCourseName: function (courseId) {
-        var length = pubMeth.courseName.length;
-        for (var i = 0; i < length; i++) {
-            if (pubMeth.courseName[i].knowId == courseId) {
-                program.courseName = pubMeth.courseName[i].knowName;
-                break;
-            }
-        }
-        return program.courseName;
-    },
     showInfo: function () {
         var length = program.data.length;
         var order = 1;
@@ -90,7 +80,7 @@ var program = {
                             ids: vals
                         },
                         success: function (result) {
-                            if (result.status == 1) {
+                            if (result.status >= 1) {
                                 pubMeth.alertInfo("alert-success", "删除成功！");
                                 program.getExamInfo();
                                 $("#modalexamdelete").modal('hide');
