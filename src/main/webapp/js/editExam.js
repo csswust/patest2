@@ -8,7 +8,7 @@ var program = {
     startTime: "",
     endTime: '',
     description: '',
-    examId: '',
+    examId: null,
     count: '',
     expmArr: "",
     expmIds: [],
@@ -27,7 +27,7 @@ var program = {
                 startTime: program.startTime,
                 endTime: program.endTime,
                 description: program.description,
-                allowIp: program.examip,
+                allowIp: program.examip
             },
             success: function (result) {
                 console.log(result);
@@ -157,8 +157,8 @@ $(".downInfo").click(function () {
     program.startTime = $(".startTime").val();
     program.endTime = $(".endTime").val();
     program.examip = $(".examip").val();
-    if (program.examId == "") {
-        if (program.title != "" && program.startTime != "" && program.endTime != "" && program.examip != "") {
+    if (program.examId) {
+        if (program.title && program.startTime&& program.endTime) {
             if (pubMeth.legTimeRange(program.startTime, program.endTime)) {
                 program.addExam();
             } else {
@@ -168,7 +168,7 @@ $(".downInfo").click(function () {
             pubMeth.alertInfo("alert-info", "带*号的为必填");
         }
     } else if (par.Id) {
-        if (program.title != "" && program.startTime != "" && program.endTime != "") {
+        if (program.title && program.startTime && program.endTime) {
             if (pubMeth.legTimeRange(program.startTime, program.endTime)) {
                 program.updateExam();
             } else {
