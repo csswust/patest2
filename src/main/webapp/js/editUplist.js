@@ -5,7 +5,7 @@ $(".stlist").addClass("on");
 
 var program = {
     page: '1',
-    examId: '',
+    examId: null,
     html: '',
     examPaper: '',
     userInfo: '',
@@ -44,7 +44,6 @@ var program = {
     },
     //上传学生名单
     importList: function () {
-        console.log(123);
         $.ajaxFileUpload({
             url: "../examPaper/uploadUserByExamId",
             secureuri: false,
@@ -54,7 +53,6 @@ var program = {
                 examId: program.examId
             },
             success: function (result) {
-                console.log(result);
                 if (result.status > 0) {
                     pubMeth.alertInfo("alert-success", "上传成功");
                     program.path = result.data.dirPath;
@@ -79,10 +77,9 @@ var program = {
             data: {
                 examId: program.examId,
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
-                console.log(result);
                 program.count = result.data.total;
                 program.examPaper = result.data.examPaperList;
                 program.userInfo = result.data.userInfoList;
@@ -122,27 +119,19 @@ var program = {
         }
     },
     change: function (tagert, className) {
-        console.log('changed');
         $(tagert).change(function () {
-            console.log(0);
             var path = $(this).val();
             var path1 = path.lastIndexOf("\\");
             var name = path.substring(path1 + 1);
-
-            console.log(name);
             $(className).val(name);
         });
-    },
+    }
 };
 pubMeth.getRowsnum("rowsnum");
 var par = pubMeth.getQueryObject();
 if (par.examId) {
-    $(".pageName").text("添加考试");
-    program.examId = par.examId;
-}
-if (par.Id) {
     $(".pageName").text("修改考试");
-    program.examId = par.Id;
+    program.examId = par.examId;
 }
 
 program.selectUserBaseInfo();
@@ -150,23 +139,14 @@ program.selectUserBaseInfo();
 program.pagingFun();
 $(".importList").click(function () {
     $(".namefile").val("");
-    $('#import').modal({
-        //backdrop: 'static'
-    });
+    $('#import').modal({});
     program.change("input[type=file]", ".namefile");
 });
-
 $(".comImport").click(function () {
     program.importList();
 });
 $(".save").click(function () {
     if (par.examId) {
-        if (program.userInfo) {
-            window.location.href = "exam.html";
-        } else {
-            pubMeth.alertInfo("alert-warning", "考生名单没有上传");
-        }
-    } else if (par.Id) {
         if (program.userInfo) {
             window.location.href = "exam.html";
         } else {
@@ -180,7 +160,5 @@ $(".downloada").attr("href", "../system/download?path=/static/考生信息导入
 $(".upList").click(function () {
     if (par.examId) {
         window.location.href = 'editParm.html?examId=' + program.examId;
-    } else if (par.Id) {
-        window.location.href = 'editParm.html?Id=' + program.examId;
     }
 });

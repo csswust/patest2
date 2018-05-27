@@ -27,7 +27,7 @@ var program = {
             program.html += '<tr>'
                 + '<td><input type="checkbox" name="title"/></td>'
                 + '<td>' + program.submitSimilarityList[i].subSimId + '</td>'
-                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle + '"><a href="editExam.html?Id=' + examId + '">' + examTitle + '</a></td>'
+                + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + examTitle + '"><a href="editExam.html?examId=' + examId + '">' + examTitle + '</a></td>'
                 + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + problemTitle + '"><a href="question.html?id=' + problemId + '">' + problemTitle + '</a></td>'
                 + '<td>' + program.userInfoList1[i].username + '_' + program.userProfileList1[i].realName + '</td>'
                 + '<td>' + program.userInfoList2[i].username + '_' + program.userProfileList2[i].realName + '</td>'

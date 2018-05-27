@@ -58,7 +58,7 @@ var program = {
         for (var i = 0; i < length; i++) {
             program.html += '<tr><td><input type="checkbox" value="' + program.data[i].examId + '" name="title"/></td>'
                 + '<td>' + program.data[i].examId + '</td>'
-                + '<td><a class="title" href="editExam.html?Id=' + program.data[i].examId + '">' + program.data[i].title + '</a></td>'
+                + '<td><a class="title" href="editExam.html?examId=' + program.data[i].examId + '">' + program.data[i].title + '</a></td>'
                 + '<td>' + program.peototal[i] + '</td>'
                 + '<td>' + program.data[i].startTime + '</td>'
                 + '<td>' + program.data[i].endTime + '</td>'

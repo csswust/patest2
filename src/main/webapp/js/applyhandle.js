@@ -203,7 +203,7 @@ $("#listInfo").on('click', '.selectApply', function () {
 $("#listInfo").on('click', '.addexam', function () {
     var index = this.id;
     if (index !== "null") {
-        window.location.href = "editExam.html?Id=" + index;
+        window.location.href = "editExam.html?examId=" + index;
     } else {
         patest.alertInfo("alert-danger", "未付款");
     }

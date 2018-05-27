@@ -122,7 +122,7 @@ var common = {
             dataType: 'json',
             async: false,
             success: function (result) {
-                if (result.status == "1") {
+                if (result.status === 1) {
                     window.location.href = "login.html";
                 }
             }
@@ -154,7 +154,6 @@ var common = {
                 examId: par.id
             },
             success: function (result) {
-                console.log(result);
                 if (result.status === 1) {
                     common.path = result.data.fileDir;
                     window.location.href = '../system/download?path=' + common.path;
@@ -223,36 +222,24 @@ $(".stinfo").click(function () {
     if (par.examId) {
         common.examId = par.examId;
         window.location.href = 'editExam.html?examId=' + common.examId;
-    } else if (par.Id) {
-        common.examId = par.Id;
-        window.location.href = 'editExam.html?Id=' + common.examId;
     }
 });
 $(".stbank").click(function () {
     if (par.examId) {
         common.examId = par.examId;
         window.location.href = 'editBank.html?examId=' + common.examId;
-    } else if (par.Id) {
-        common.examId = par.Id;
-        window.location.href = 'editBank.html?Id=' + common.examId;
     }
 });
 $(".sttemplate").click(function () {
     if (par.examId) {
         common.examId = par.examId;
         window.location.href = 'editParm.html?examId=' + common.examId;
-    } else if (par.Id) {
-        common.examId = par.Id;
-        window.location.href = 'editParm.html?Id=' + common.examId;
     }
 });
 $(".stlist").click(function () {
     if (par.examId) {
         common.examId = par.examId;
         window.location.href = 'editUplist.html?examId=' + common.examId;
-    } else if (par.Id) {
-        common.examId = par.Id;
-        window.location.href = 'editUplist.html?Id=' + common.examId;
     }
 });
 
