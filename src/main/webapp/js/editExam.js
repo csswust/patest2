@@ -15,7 +15,6 @@ var program = {
     examip: '',
     //增加一场考试
     addExam: function () {
-        console.log(program.examip);
         $.ajax({
             type: "post",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -30,7 +29,6 @@ var program = {
                 allowIp: program.examip
             },
             success: function (result) {
-                console.log(result);
                 program.examId = result.examId;
                 if (result.status === 1) {
                     pubMeth.alertInfo("alert-success", "保存成功");
@@ -58,12 +56,12 @@ var program = {
                 startTime: program.startTime,
                 endTime: program.endTime,
                 description: program.description,
-                allowIp: program.examip,
+                allowIp: program.examip
             },
             success: function (result) {
-                console.log(result);
                 if (result.status === 1) {
                     pubMeth.alertInfo("alert-success", "修改成功");
+                    window.location.href = "editBank.html?examId=" + program.examId;
                 }
                 else {
                     pubMeth.alertInfo("alert-warning", "修改失败！");
@@ -86,7 +84,6 @@ var program = {
                 examId: program.examId
             },
             success: function (result) {
-                console.log(result);
                 program.title = result.data.examInfoList[0].title;
                 program.startTime = result.data.examInfoList[0].startTime;
                 program.endTime = result.data.examInfoList[0].endTime;
@@ -95,61 +92,27 @@ var program = {
             }
         });
     },
-    //日期的设置
-    legTimeRange: function () {
-        var stadate = program.startTime.split(" ");
-        var enddate = program.endTime.split(" ");
-        var stayear = stadate[0].split('-');
-        var endyear = enddate[0].split('-');
-        var stadate = stadate[1].split(':');
-        var enddate = enddate[1].split(':');
-
-        //年份更大，同年月份更大，同年同月日更大，同年同月同日时更大，同年同月同日同时分更大，同年同月同日同时同分秒更大
-        if (stayear[0] > endyear[0] || stayear[0] == endyear[0] && stayear[1] > endyear[1] ||
-            stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] > endyear[2] ||
-            stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] == endyear[2] && stadate[0] > enddate[0] ||
-            stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] == endyear[2] && stadate[0] == enddate[0] && stadate[1] > enddate[1] ||
-            stayear[0] == endyear[0] && stayear[1] == endyear[1] && stayear[2] == endyear[2] && stadate[0] == enddate[0] && stadate[1] == enddate[1] && stadate[2] > enddate[2]) {
-            return false;
-        }
-        return true;
-    },
     setValue: function () {
         $(".examTitle").val(program.title);
         $(".description").val(program.description);
         $(".startTime").val(program.startTime);
         $(".endTime").val(program.endTime);
         $(".examip").val(program.examip);
-    },
+    }
 };
 
-function getUrlParam(name) {
-    var reg = new RegExp();
-}
 var date = new Date();
 $(".form_datetime").datetimepicker({
     format: 'yyyy-mm-dd hh:ii:ss',
     startDate: date
 });
 var par = pubMeth.getQueryObject();
+//编辑考试
 if (par.examId) {
-    $(".pageName").text("添加考试");
+    $(".pageName").text("修改考试");
     program.examId = par.examId;
     program.getExamInfoById();
     program.setValue();
-    $(".downInfo").click(function () {
-        window.location.href = "editBank.html?examId=" + program.examId;
-    });
-}
-//编辑考试
-if (par.Id) {
-    $(".pageName").text("修改考试");
-    program.examId = par.Id;
-    program.getExamInfoById();
-    program.setValue();
-    $(".downInfo").click(function () {
-        window.location.href = "editBank.html?Id=" + program.examId;
-    });
 }
 $(".downInfo").click(function () {
     program.title = $(".examTitle").val();
@@ -157,8 +120,8 @@ $(".downInfo").click(function () {
     program.startTime = $(".startTime").val();
     program.endTime = $(".endTime").val();
     program.examip = $(".examip").val();
-    if (program.examId) {
-        if (program.title && program.startTime&& program.endTime) {
+    if (!program.examId) {
+        if (program.title && program.startTime && program.endTime) {
             if (pubMeth.legTimeRange(program.startTime, program.endTime)) {
                 program.addExam();
             } else {
@@ -167,7 +130,7 @@ $(".downInfo").click(function () {
         } else {
             pubMeth.alertInfo("alert-info", "带*号的为必填");
         }
-    } else if (par.Id) {
+    } else {
         if (program.title && program.startTime && program.endTime) {
             if (pubMeth.legTimeRange(program.startTime, program.endTime)) {
                 program.updateExam();

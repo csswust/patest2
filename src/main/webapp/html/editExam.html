@@ -60,11 +60,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 control-label"><span class="require">*</span>IP：</label>
+                            <label class="col-md-2 control-label"><span class="require"></span>IP：</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control examip" required/>
                             </div>
-                            <div class="col-md-3" style="margin-top:7px;margin-left:-15px">各IP之间用“,”隔开</div>
+                            <div class="col-md-3" style="margin-top:7px;margin-left:-15px">
+                                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+                                      data-toggle="tooltip" data-placement="left"
+                                      title="各IP之间用“,”隔开，IP采用正则表达式匹配，比如222.196.35.22\\d表示最后一位可以为0-9"
+                                >
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label"><span class="require">*</span>时间：</label>
