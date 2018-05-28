@@ -49,14 +49,19 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
     private void getEffectiveSession(String userName, String studentNumber,
                                      List<Integer> userIdList, List<String> sessionIdList) {
         Map<String, HttpSession> map = OnlineListener.onlineMap;
+        Iterator<Map.Entry<String, HttpSession>> it = map.entrySet().iterator();
         Set<Integer> set = new HashSet<>();// 去重
-        for (Map.Entry<String, HttpSession> entry : map.entrySet()) {
+        while (it.hasNext()) {
+            Map.Entry<String, HttpSession> entry = it.next();
             String sessionId = entry.getKey();
             HttpSession session = entry.getValue();
-            if (sessionId == null || session == null) {
-                continue;
+            if (sessionId == null || session == null) continue;
+            Integer userId = null;
+            try {
+                userId = (Integer) session.getAttribute("userId");
+            } catch (Exception e) {
+                it.remove();
             }
-            Integer userId = (Integer) session.getAttribute("userId");
             if (userId != null && !set.contains(userId)) {
                 if (StringUtils.isNotBlank(userName) || StringUtils.isNotBlank(studentNumber)) {
                     UserInfo userInfo = userInfoDao.selectByPrimaryKey(userId);
@@ -83,7 +88,11 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
                                       Integer page, Integer rows) {
         List<Integer> userIdList = new ArrayList<>();
         List<String> sessionIdList = new ArrayList<>();
-        getEffectiveSession(userName, studentNumber, userIdList, sessionIdList);
+        try {
+            getEffectiveSession(userName, studentNumber, userIdList, sessionIdList);
+        } catch (Exception e) {
+            log.error("getEffectiveSession error: {}", e);
+        }
         int start = 0, end = userIdList.size();
         if (page != null && rows != null) {
             start = (page - 1) * rows;
@@ -142,7 +151,11 @@ public class OnlineUserServiceImpl extends BaseService implements OnlineUserServ
         if (userIds == null || userIds.size() == 0) return judgeResult;
         List<Integer> userIdList = new ArrayList<>();
         List<String> sessionIdList = new ArrayList<>();
-        getEffectiveSession(userIdList, sessionIdList);
+        try {
+            getEffectiveSession(userIdList, sessionIdList);
+        } catch (Exception e) {
+            log.error("getEffectiveSession error: {}", e);
+        }
         Map<Integer, String> map = new HashMap<>();
         for (int i = 0; i < userIdList.size(); i++) {
             map.put(userIdList.get(i), sessionIdList.get(i));
