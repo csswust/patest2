@@ -183,8 +183,14 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         String[] strs = allowIp.split(",");
         for (int i = 0; i < strs.length; i++) {
             String pattern = strs[i];
-            boolean isMatch = Pattern.matches(pattern, ip);
-            if (isMatch) return true;
+            if (StringUtils.isBlank(pattern)) continue;
+            if (pattern.equals("*")) return true;
+            try {
+                boolean isMatch = Pattern.matches(pattern, ip);
+                if (isMatch) return true;
+            } catch (Exception e) {
+                log.error("Pattern.matches({},{}) error: {}", pattern, ip, e.getMessage());
+            }
         }
         return false;
     }
