@@ -26,7 +26,7 @@ var program = {
                 + '<td>' + program.examPaper[i].exaPapId + '</td>'
                 + '<td>' + program.userProfile[i].realName + '</td>'
                 + '<td>' + program.userProfile[i].studentNumber + '</td>'
-                + '<td><a href="showPaper.html?exaPapId='+program.examPaper[i].exaPapId+'" class="title">'+program.userInfo[i].username+'</a></td>'
+                + '<td><a href="showPaper.html?exaPapId=' + program.examPaper[i].exaPapId + '" class="title">' + program.userInfo[i].username + '</a></td>'
                 + '<td>' + program.userProfile[i].className + '</td>'
                 + '<td>' + program.examPaper[i].classroom + '</td>'
                 + '</tr>';
@@ -112,7 +112,7 @@ var program = {
     },
     //通过问题Id来删除题目
     deleteAllByExamId: function () {
-        if (confirm("你确定要删除所有试卷吗？此操作不可有风险")) {
+        if (confirm("你确定要删除所有试卷吗？此操作有风险")) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
