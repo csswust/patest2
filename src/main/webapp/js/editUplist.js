@@ -27,9 +27,6 @@ var program = {
                 + '<td>' + program.userProfile[i].realName + '</td>'
                 + '<td>' + program.userProfile[i].studentNumber + '</td>'
                 + '<td><a href="showPaper.html?exaPapId='+program.examPaper[i].exaPapId+'" class="title">'+program.userInfo[i].username+'</a></td>'
-
-
-                /*+ '<td>' + program.userInfo[i].username + '</td>'*/
                 + '<td>' + program.userProfile[i].className + '</td>'
                 + '<td>' + program.examPaper[i].classroom + '</td>'
                 + '</tr>';

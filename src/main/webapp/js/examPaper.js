@@ -41,7 +41,7 @@ var program = {
                 studentNumber: program.studentNumber,
                 userName: program.searuserName,
                 page: program.page,
-                rows: pubMeth.rowsnum,
+                rows: pubMeth.rowsnum
             },
             success: function (result) {
                 program.count = result.data.total;
