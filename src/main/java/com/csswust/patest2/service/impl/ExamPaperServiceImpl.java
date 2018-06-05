@@ -163,9 +163,9 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         // 删除原本的数据
         // int userInfoDelete = userInfoDao.deleteByExamId(examId);
         UserInfo userCondition = new UserInfo();
-        userCondition.setExamId(examId);
+        // userCondition.setExamId(examId);
         int index = userInfoDao.selectByConditionGetCount(userCondition, new BaseQuery());
-        int examPaperDelete = examPaperDao.deleteByExamId(examId);
+        // int examPaperDelete = examPaperDao.deleteByExamId(examId);
         String examYear;  // 获取年份
         Calendar now = Calendar.getInstance();
         examYear = String.format("%02d", (now.get(Calendar.YEAR)) % 2000);

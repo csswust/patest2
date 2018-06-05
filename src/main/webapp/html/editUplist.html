@@ -48,22 +48,41 @@
                                 <div class="col-md-2">
                                     <div class="banktitle"><label class="control-label">参考人员</label></div>
                                 </div>
-                                <div class="col-md-1">
-                                    <button type="button" class="btn btn-primary btn-sm importList "><span
-                                            class="glyphicon glyphicon-cloud-upload"></span> 上传学生名单
-                                    </button>
-                                </div>
-                                <div class="col-md-1 col-md-offset-8  excelInfo">
 
+
+                                <div class="btn-group col-md-5" role="group">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-primary importList"><span
+                                            class="glyphicon glyphicon-cloud-upload"></span> 上传学生名单
+                                        </button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn  btn-warning deletePaper">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                                        </button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn  btn-danger deleteAllPaper">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>清空所有
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <table class="table table-bordered table-hover table-condensed table-striped">
-                            <thead id="stuhead">
-
+                            <thead id="listhead">
+                            <tr>
+                                <th><input type="checkbox" class="check_list">全选</th>
+                                <th>ID</th>
+                                <th>姓名</th>
+                                <th>学号</th>
+                                <th>考号</th>
+                                <th>班级</th>
+                                <th>考场</th>
+                            </tr>
                             </thead>
-                            <tbody id="stuInfo">
+                            <tbody id="listInfo">
 
                             </tbody>
                         </table>

@@ -136,6 +136,18 @@ public class ExamPaperAction extends BaseAction {
         return res;
     }
 
+    @RequestMapping(value = "/deleteAllByExamId", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object deleteAllByExamId(@RequestParam Integer examId) {
+        APIResult apiResult = new APIResult();
+        if (examId == null) {
+            apiResult.setStatusAndDesc(-1, "examId不能为空");
+            return apiResult;
+        }
+        int status = examPaperDao.deleteByExamId(examId);
+        apiResult.setStatusAndDesc(status, status > 0 ? "成功" : "失败");
+        return apiResult;
+    }
+
     @RequestMapping(value = "/uploadUserByExamId", method = {RequestMethod.GET, RequestMethod.POST})
     public Object uploadUserByExamId(
             @RequestParam Integer examId,

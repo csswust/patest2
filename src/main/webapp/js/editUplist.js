@@ -18,25 +18,18 @@ var program = {
     expmId: '',
     showInfo: function () {
         var length = program.userInfo.length;
-        if (length != 0) {
-            var stulist = '<tr>'
-                + '<th>序号</th>'
-                + '<th>姓名</th>'
-                + '<th>学号</th>'
-                + '<th>考号</th>'
-                + '<th>班级</th>'
-                + '<th>考场</th>'
-                + '<tr>';
-            $("#stuhead").html(stulist);
-        }
         program.html = "";
         for (var i = 0; i < length; i++) {
             var order = i + 1;
             program.html += '<tr>'
-                + '<td>' + order + '</td>'
+                + '<td style="width:80px;"><input type="checkbox" value="' + program.examPaper[i].exaPapId + '" name="title"/></td>'
+                + '<td>' + program.examPaper[i].exaPapId + '</td>'
                 + '<td>' + program.userProfile[i].realName + '</td>'
                 + '<td>' + program.userProfile[i].studentNumber + '</td>'
-                + '<td>' + program.userInfo[i].username + '</td>'
+                + '<td><a href="showPaper.html?exaPapId='+program.examPaper[i].exaPapId+'" class="title">'+program.userInfo[i].username+'</a></td>'
+
+
+                /*+ '<td>' + program.userInfo[i].username + '</td>'*/
                 + '<td>' + program.userProfile[i].className + '</td>'
                 + '<td>' + program.examPaper[i].classroom + '</td>'
                 + '</tr>';
@@ -85,14 +78,66 @@ var program = {
                 program.userInfo = result.data.userInfoList;
                 program.userProfile = result.data.userProfileList;
                 program.showInfo();
-                $("#stuInfo").empty();
-                $("#stuInfo").append(program.html);
+                $("#listInfo").empty();
+                $("#listInfo").append(program.html);
                 program.pagingFun();
             },
             error: function () {
                 pubMeth.alertInfo("alert-danger", "请求失败");
             }
         });
+    },
+    //通过问题Id来删除题目
+    deletePaperById: function (vals) {
+        if (confirm("你确定要删除这些" + vals + "试卷吗？")) {
+            $.ajax({
+                type: "post",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../examPaper/deleteByIds",
+                dataType: 'json',
+                async: false,
+                data: {
+                    ids: vals
+                },
+                success: function (result) {
+                    if (result.status > 0) {
+                        pubMeth.alertInfo("alert-success", "删除成功");
+                        program.selectUserBaseInfo();
+                    } else {
+                        pubMeth.alertInfo("alert-danger", "删除失败")
+                    }
+                },
+                error: function () {
+                    pubMeth.alertInfo("alert-danger", "请求失败");
+                }
+            });
+        }
+    },
+    //通过问题Id来删除题目
+    deleteAllByExamId: function () {
+        if (confirm("你确定要删除所有试卷吗？此操作不可有风险")) {
+            $.ajax({
+                type: "post",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../examPaper/deleteAllByExamId",
+                dataType: 'json',
+                async: false,
+                data: {
+                    examId: program.examId
+                },
+                success: function (result) {
+                    if (result.status > 0) {
+                        pubMeth.alertInfo("alert-success", "删除成功");
+                        program.selectUserBaseInfo();
+                    } else {
+                        pubMeth.alertInfo("alert-danger", "删除失败")
+                    }
+                },
+                error: function () {
+                    pubMeth.alertInfo("alert-danger", "请求失败");
+                }
+            });
+        }
     },
     pagingFun: function () {
         if (program.count > 0) {
@@ -144,6 +189,21 @@ $(".importList").click(function () {
 });
 $(".comImport").click(function () {
     program.importList();
+});
+$(".deletePaper").click(function () {
+    var valArr = new Array;
+    $(":checkbox[name='title']:checked").each(function (i) {
+        valArr[i] = $(this).val();
+    });
+    var vals = valArr.join(',');// 转换为逗号隔开的字符串
+    if (vals != "") {
+        program.deletePaperById(vals);
+    } else {
+        pubMeth.alertInfo("alert-info", "请先勾选删除项！");
+    }
+});
+$(".deleteAllPaper").click(function () {
+    program.deleteAllByExamId();
 });
 $(".save").click(function () {
     if (par.examId) {
