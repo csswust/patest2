@@ -170,12 +170,9 @@ var program = {
                         window.location.href = "editBank.html?examId=" + parm.examId;
                     }
                     pubMeth.alertInfo("alert-success", "保存成功");
-                } else if (result.status == 0) {
+                } else {
                     $("#modaladdbank").modal('hide');
-                    pubMeth.alertInfo("alert-danger", "保存失败,请查看是否有相同题目");
-                } else if (result.status == -1) {
-                    $("#modaladdbank").modal('hide');
-                    pubMeth.alertInfo("alert-danger", "不允许添加相同的题目");
+                    pubMeth.alertInfo("alert-danger", result.desc);
                 }
             },
             error: function () {

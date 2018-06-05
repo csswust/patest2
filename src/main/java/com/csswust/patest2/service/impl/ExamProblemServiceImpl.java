@@ -78,7 +78,7 @@ public class ExamProblemServiceImpl extends BaseService implements ExamProblemSe
         }
         int count = examProblemDao.insertBatch(examProblemList);
         if (count != probIdList.length) {
-            apiResult.setStatusAndDesc(-2, "插入失败");
+            apiResult.setStatusAndDesc(-2, "保存失败,请查看是否有相同题目");
         } else {
             apiResult.setStatusAndDesc(count, "插入成功");
             ExamInfo examInfo = new ExamInfo();
