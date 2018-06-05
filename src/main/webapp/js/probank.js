@@ -169,7 +169,7 @@ var program = {
                     if (parm.examId) {
                         window.location.href = "editBank.html?examId=" + parm.examId;
                     }
-                    pubMeth.alertInfo("alert-success", "保存成功");
+                    pubMeth.alertInfo("alert-success", result.desc);
                 } else {
                     $("#modaladdbank").modal('hide');
                     pubMeth.alertInfo("alert-danger", result.desc);

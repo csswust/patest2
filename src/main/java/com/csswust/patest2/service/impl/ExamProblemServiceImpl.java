@@ -78,7 +78,21 @@ public class ExamProblemServiceImpl extends BaseService implements ExamProblemSe
         }
         int count = examProblemDao.insertBatch(examProblemList);
         if (count != probIdList.length) {
-            apiResult.setStatusAndDesc(-2, "保存失败,请查看是否有相同题目");
+            // 批量插入失败，尝试单个插入
+            int tmpSum = 0;
+            for (int i = 0; i < probIdList.length; i++) {
+                ExamProblem examProblem = new ExamProblem();
+                examProblem.setExamId(examId);
+                examProblem.setProblemId(probIdList[i]);
+                tmpSum += examProblemDao.insertSelective(examProblem);
+            }
+            if (tmpSum == 0) apiResult.setStatusAndDesc(0, "插入全部失败");
+            else if (tmpSum == probIdList.length) {
+                apiResult.setStatusAndDesc(tmpSum, "插入全部成功");
+            } else {
+                apiResult.setStatusAndDesc(tmpSum, "插入成功" + tmpSum +
+                        "个，失败" + (probIdList.length - tmpSum) + "个");
+            }
         } else {
             apiResult.setStatusAndDesc(count, "插入成功");
             ExamInfo examInfo = new ExamInfo();
