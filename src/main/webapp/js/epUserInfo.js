@@ -65,25 +65,27 @@ var program = {
     },
     //删除账号
     deleteUser: function (vals) {
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../epUserInfo/deleteByIds.do",
-            dataType: 'json',
-            async: false,
-            data: {
-                ids: vals
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status > 0) {
-                    pubMeth.alertInfo("alert-success", result.desc);
-                    program.selectAccount();
-                } else {
-                    pubMeth.alertInfo("alert-danger", result.desc);
+        if (confirm("你确定要删除这些" + vals + "用户吗？")) {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../epUserInfo/deleteByIds.do",
+                dataType: 'json',
+                async: false,
+                data: {
+                    ids: vals
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status > 0) {
+                        pubMeth.alertInfo("alert-success", result.desc);
+                        program.selectAccount();
+                    } else {
+                        pubMeth.alertInfo("alert-danger", result.desc);
+                    }
                 }
-            }
-        });
+            });
+        }
     },
     //更新账号
     updateUser: function () {

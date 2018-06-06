@@ -136,11 +136,7 @@ var program = {
             });
             var vals = valArr.join(',');// 转换为逗号隔开的字符串
             if (vals != "") {
-                $("#modalexamdelete").modal(function () {
-                    backdrop : 'static'
-                });
-                $(".examquess").html(vals);
-                $(".examdelete").click(function () {
+                if (confirm("你确定要删除这些" + vals + "申请吗？")) {
                     $.ajax({
                         type: "post",
                         content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -161,7 +157,7 @@ var program = {
                             }
                         }
                     });
-                });
+                }
             } else {
                 pubMeth.alertInfo("alert-info", "请先勾选删除项！");
             }

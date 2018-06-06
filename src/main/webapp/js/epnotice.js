@@ -12,9 +12,6 @@ var program = {
     html: '',
     epnoId: '',
     epnoIds: [],
-    /**
-     * 添加公告
-     */
     addNotice: function () {
         $.ajax({
             type: "get",
@@ -39,9 +36,6 @@ var program = {
             }
         });
     },
-    /**
-     * 查询某个公告
-     */
     selectId: function () {
         $.ajax({
             type: "get",
@@ -68,9 +62,6 @@ var program = {
             }
         });
     },
-    /**
-     * 查询公告
-     */
     selectNotice: function () {
         $.ajax({
             type: "get",
@@ -108,9 +99,6 @@ var program = {
             }
         });
     },
-    /**
-     * 展示公告
-     */
     showNotice: function () {
         program.html = "";
         var length = program.data.length;
@@ -126,9 +114,6 @@ var program = {
                 + '</tr>';
         }
     },
-    /**
-     * 删除公告
-     */
     deleteNotice: function () {
         $('.delnotice').on('click', function (e) {
             var valArr = new Array;
@@ -137,11 +122,7 @@ var program = {
             });
             var vals = valArr.join(',');// 转换为逗号隔开的字符串
             if (vals != "") {
-                $("#modalexamdelete").modal(function () {
-                    backdrop : 'static'
-                });
-                $(".examquess").html(vals);
-                $(".examdelete").click(function () {
+                if (confirm("你确定要删除这些" + vals + "公告吗？")) {
                     $.ajax({
                         type: "post",
                         content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -161,7 +142,7 @@ var program = {
                             }
                         }
                     });
-                });
+                }
             } else {
                 pubMeth.alertInfo("alert-info", "请先勾选删除项！");
             }
