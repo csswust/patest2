@@ -30,7 +30,6 @@ var program = {
                 rows: pubMeth.rowsnum
             },
             success: function (result) {
-                console.log(result);
                 program.count = result.data.total;
                 program.data = result.data.examInfoList;
                 program.peototal = result.data.peopleTotal;

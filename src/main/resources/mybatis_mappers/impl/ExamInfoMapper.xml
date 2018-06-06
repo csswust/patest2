@@ -28,9 +28,9 @@
             AND
             allow_ip = #{record.allowIp}
         </if>
-        <if test="record.allowJudgerIds != null">
+        <if test="record.isDrawProblem != null">
             AND
-            allow_judger_ids = #{record.allowJudgerIds}
+            is_draw_problem = #{record.isDrawProblem}
         </if>
         <if test="record.isSimTest != null">
             AND
@@ -83,9 +83,9 @@
             AND
             allow_ip = #{record.allowIp}
         </if>
-        <if test="record.allowJudgerIds != null">
+        <if test="record.isDrawProblem != null">
             AND
-            allow_judger_ids = #{record.allowJudgerIds}
+            is_draw_problem = #{record.isDrawProblem}
         </if>
         <if test="record.isSimTest != null">
             AND
@@ -133,9 +133,9 @@
     </select>
     <select id="insertBatch" parameterType="java.util.Map">
         insert into exam_info
-        (title, start_time, end_time, allow_ip, allow_judger_ids, is_sim_test, create_time, modify_time, modify_user_id, description) values
+        (title, start_time, end_time, allow_ip, is_draw_problem, is_sim_test, create_time, modify_time, modify_user_id, description) values
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.title}, #{item.startTime}, #{item.endTime}, #{item.allowIp}, #{item.allowJudgerIds}, #{item.isSimTest}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.description})
+            (#{item.title}, #{item.startTime}, #{item.endTime}, #{item.allowIp}, #{item.isDrawProblem}, #{item.isSimTest}, #{item.createTime}, #{item.modifyTime}, #{item.modifyUserId}, #{item.description})
         </foreach>
     </select>
 </mapper>

@@ -160,12 +160,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             apiResult.setStatusAndDesc(-8, "解析excel失败");
             return apiResult;
         }
-        // 删除原本的数据
-        // int userInfoDelete = userInfoDao.deleteByExamId(examId);
         UserInfo userCondition = new UserInfo();
-        // userCondition.setExamId(examId);
         int index = userInfoDao.selectByConditionGetCount(userCondition, new BaseQuery());
-        // int examPaperDelete = examPaperDao.deleteByExamId(examId);
         String examYear;  // 获取年份
         Calendar now = Calendar.getInstance();
         examYear = String.format("%02d", (now.get(Calendar.YEAR)) % 2000);
@@ -401,6 +397,12 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             apiResult.setStatusAndDesc(-100, "插入失败");
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return apiResult;
+        }
+        if (userId == null) {
+            ExamInfo record = new ExamInfo();
+            record.setExamId(examId);
+            record.setIsDrawProblem(1);
+            examInfoDao.updateByPrimaryKeySelective(record);
         }
         apiResult.setStatusAndDesc(sum, "抽题成功");
         return apiResult;

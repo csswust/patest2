@@ -72,27 +72,25 @@ var program = {
         program.html = "";
         for (var i = 0; i < length; i++) {
             title = '<a  href="examInfo.html?id=' + program.data[i].examId + '">' + program.data[i].title + '</a>';
-            if (program.state[i] == '2') {
-                if (program.prostate[i] == '1') {
-                    stateInfo = '已结束&nbsp;<a href="remark.html?id=' +
-                        program.data[i].examId + ' "class="markPaper">阅卷</a>';
+            if (program.state[i] === 2) {
+                if (program.data[i].isDrawProblem === 1) {
+                    stateInfo = '已结束&nbsp;<a href="remark.html?id=' + program.data[i].examId + ' "class="markPaper">阅卷</a>';
                     if (program.data[i].isSimTest === 0) {
-                        stateInfo += '&nbsp;<a href="#" id=' + program.data[i].examId +
-                            ' class="simTest">检测相似度</a>';
+                        stateInfo += '&nbsp;<a href="#" id=' + program.data[i].examId + ' class="simTest">检测相似度</a>';
                     }
-                } else if (program.prostate[i] == '0') {
+                } else if (program.data[i].isDrawProblem === 0) {
                     stateInfo = '已结束 未抽题';
                 }
-            } else if (program.state[i] == '1') {
-                if (program.prostate[i] == '1') {
+            } else if (program.state[i] === 1) {
+                if (program.data[i].isDrawProblem === 1) {
                     stateInfo = "进行中";
-                } else if (program.prostate[i] == '0') {
+                } else if (program.data[i].isDrawProblem === 0) {
                     stateInfo = '进行中&nbsp;未抽题&nbsp;<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">抽题</a>&nbsp;<span class="loading"><img /></span>';
                 }
-            } else if (program.state[i] == '0') {
-                if (program.prostate[i] == '0') {
+            } else if (program.state[i] === 0) {
+                if (program.data[i].isDrawProblem === 0) {
                     stateInfo = '未开始&nbsp;未抽题&nbsp;<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">抽题</a>&nbsp;<span class="loading"><img /></span>';
-                } else if (program.prostate[i] == '1') {
+                } else if (program.data[i].isDrawProblem === 1) {
                     stateInfo = '未开始&nbsp;已抽题&nbsp;<a href="#" class="drawQuestion" id="' + program.data[i].examId + '">重新抽题</a>&nbsp;<span class="loading"><img /></span>';
                 }
             }

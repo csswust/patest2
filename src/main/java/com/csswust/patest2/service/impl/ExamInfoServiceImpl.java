@@ -551,14 +551,12 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
     public APIResult buildExamState(APIResult apiResult, List<ExamInfo> examInfoList, boolean containUModify) {
         List<Integer> peopleTotal = new ArrayList<>();
         List<Integer> statusList = new ArrayList<>();
-        List<Integer> proState = new ArrayList<>();
         ExamPaper examPaper = new ExamPaper();
         Date time = new Date();
         for (int i = 0; i < examInfoList.size(); i++) {
             ExamInfo item = examInfoList.get(i);
             if (item.getExamId() == null) {
                 statusList.add(0);
-                proState.add(0);
                 continue;
             }
             examPaper.setExamId(item.getExamId());
@@ -573,10 +571,6 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                 status = 0;
             }
             statusList.add(status);
-            PaperProblem paperProblem = new PaperProblem();
-            paperProblem.setExamId(item.getExamId());
-            int size = paperProblemDao.selectByConditionGetCount(paperProblem, new BaseQuery());
-            proState.add(size == 0 ? 0 : 1);
         }
         if (containUModify) {
             List<UserInfo> userInfoList = selectRecordByIds(
@@ -590,7 +584,6 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
         }
         apiResult.setDataKey("peopleTotal", peopleTotal);
         apiResult.setDataKey("statusList", statusList);
-        apiResult.setDataKey("proState", proState);
         return apiResult;
     }
 }

@@ -7,7 +7,7 @@
         <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
         <result column="allow_ip" property="allowIp" jdbcType="VARCHAR" />
-        <result column="allow_judger_ids" property="allowJudgerIds" jdbcType="VARCHAR" />
+        <result column="is_draw_problem" property="isDrawProblem" jdbcType="INTEGER" />
         <result column="is_sim_test" property="isSimTest" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
@@ -17,7 +17,7 @@
         <result column="description" property="description" jdbcType="LONGVARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
-        exam_id, title, start_time, end_time, allow_ip, allow_judger_ids, is_sim_test, create_time, 
+        exam_id, title, start_time, end_time, allow_ip, is_draw_problem, is_sim_test, create_time, 
         modify_time, modify_user_id
     </sql>
     <sql id="Blob_Column_List" >
@@ -37,11 +37,11 @@
     </delete>
     <insert id="insert" parameterType="com.csswust.patest2.entity.ExamInfo" useGeneratedKeys="true" keyProperty="examId" >
         insert into exam_info (title, start_time, end_time, 
-            allow_ip, allow_judger_ids, is_sim_test, 
+            allow_ip, is_draw_problem, is_sim_test, 
             create_time, modify_time, modify_user_id, 
             description)
         values (#{title,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-            #{allowIp,jdbcType=VARCHAR}, #{allowJudgerIds,jdbcType=VARCHAR}, #{isSimTest,jdbcType=INTEGER}, 
+            #{allowIp,jdbcType=VARCHAR}, #{isDrawProblem,jdbcType=INTEGER}, #{isSimTest,jdbcType=INTEGER}, 
             #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}, 
             #{description,jdbcType=LONGVARCHAR})
     </insert>
@@ -60,8 +60,8 @@
             <if test="allowIp != null" >
                 allow_ip,
             </if>
-            <if test="allowJudgerIds != null" >
-                allow_judger_ids,
+            <if test="isDrawProblem != null" >
+                is_draw_problem,
             </if>
             <if test="isSimTest != null" >
                 is_sim_test,
@@ -92,8 +92,8 @@
             <if test="allowIp != null" >
                 #{allowIp,jdbcType=VARCHAR},
             </if>
-            <if test="allowJudgerIds != null" >
-                #{allowJudgerIds,jdbcType=VARCHAR},
+            <if test="isDrawProblem != null" >
+                #{isDrawProblem,jdbcType=INTEGER},
             </if>
             <if test="isSimTest != null" >
                 #{isSimTest,jdbcType=INTEGER},
@@ -127,8 +127,8 @@
             <if test="allowIp != null" >
                 allow_ip = #{allowIp,jdbcType=VARCHAR},
             </if>
-            <if test="allowJudgerIds != null" >
-                allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
+            <if test="isDrawProblem != null" >
+                is_draw_problem = #{isDrawProblem,jdbcType=INTEGER},
             </if>
             <if test="isSimTest != null" >
                 is_sim_test = #{isSimTest,jdbcType=INTEGER},
@@ -154,7 +154,7 @@
             start_time = #{startTime,jdbcType=TIMESTAMP},
             end_time = #{endTime,jdbcType=TIMESTAMP},
             allow_ip = #{allowIp,jdbcType=VARCHAR},
-            allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
+            is_draw_problem = #{isDrawProblem,jdbcType=INTEGER},
             is_sim_test = #{isSimTest,jdbcType=INTEGER},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP},
@@ -168,7 +168,7 @@
             start_time = #{startTime,jdbcType=TIMESTAMP},
             end_time = #{endTime,jdbcType=TIMESTAMP},
             allow_ip = #{allowIp,jdbcType=VARCHAR},
-            allow_judger_ids = #{allowJudgerIds,jdbcType=VARCHAR},
+            is_draw_problem = #{isDrawProblem,jdbcType=INTEGER},
             is_sim_test = #{isSimTest,jdbcType=INTEGER},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             modify_time = #{modifyTime,jdbcType=TIMESTAMP},

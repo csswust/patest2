@@ -13,7 +13,7 @@ public class ExamInfo {
 
     private String allowIp;
 
-    private String allowJudgerIds;
+    private Integer isDrawProblem;
 
     private Integer isSimTest;
 
@@ -65,12 +65,12 @@ public class ExamInfo {
         this.allowIp = allowIp == null ? null : allowIp.trim();
     }
 
-    public String getAllowJudgerIds() {
-        return allowJudgerIds;
+    public Integer getIsDrawProblem() {
+        return isDrawProblem;
     }
 
-    public void setAllowJudgerIds(String allowJudgerIds) {
-        this.allowJudgerIds = allowJudgerIds == null ? null : allowJudgerIds.trim();
+    public void setIsDrawProblem(Integer isDrawProblem) {
+        this.isDrawProblem = isDrawProblem;
     }
 
     public Integer getIsSimTest() {
