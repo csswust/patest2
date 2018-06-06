@@ -46,12 +46,10 @@ var program = {
                 var length = result.list.length;
                 for (var i = 0; i < length; i++) {
                     program.school.push(result.list[i].academyName);
-                    /*program.major.push(result.list[i].majorName);*/
                     $("#listInfo").append('<tr>' +
                         '<td style="width:80px;"><input type="checkbox" value="' + result.list[i].acaId + '" name="title"/></td>' +
                         '<td>' + result.list[i].acaId + '</td>' +
                         '<td>' + result.list[i].academyName + '</td>' +
-                        /*'<td>' + result.list[i].majorName + '</td>' +*/
                         '<td>' + result.list[i].createTime + '</td>' +
                         '<td>' + result.list[i].modifyTime + '</td>' +
                         '<td><a href="javascript:;" class="title" value="' + result.list[i].acaId + '">修改</a></td>' +
@@ -60,9 +58,7 @@ var program = {
                 $("#listInfo tr").each(function (i) {
                     $("td:last a.title", this).click(function () {
                         program.id = $(this).attr("value");
-                        $('#major').modal({
-                            //backdrop: 'static'
-                        });
+                        $('#major').modal({});
                         $(".majorName").empty();
                         $(".schoolName").empty();
                         program.selectbyId();
@@ -83,7 +79,6 @@ var program = {
             dataType: 'json',
             async: false,
             data: {
-                /*"academyInfo.majorName": program.majorName,*/
                 "academyName": program.schoolName
             },
             success: function (result) {
@@ -100,26 +95,27 @@ var program = {
         });
     },
     deleteAcademyInfo: function (vals) {
-        console.log(vals);
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../academyInfo/deleteByIds",
-            dataType: 'json',
-            async: false,
-            data: {
-                ids: vals
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status > 0) {
-                    pubMeth.alertInfo("alert-success", "删除成功！");
-                    program.getAcademyInfo();
-                } else {
-                    pubMeth.alertInfo("alert-danger", "删除失败！");
+        if (confirm("你确定要删除这些" + vals + "学院吗？")) {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../academyInfo/deleteByIds",
+                dataType: 'json',
+                async: false,
+                data: {
+                    ids: vals
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status > 0) {
+                        pubMeth.alertInfo("alert-success", "删除成功！");
+                        program.getAcademyInfo();
+                    } else {
+                        pubMeth.alertInfo("alert-danger", "删除失败！");
+                    }
                 }
-            }
-        });
+            });
+        }
     },
     updateAcademyInfo: function () {
         $.ajax({

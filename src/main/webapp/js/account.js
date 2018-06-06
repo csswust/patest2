@@ -134,26 +134,27 @@ var program = {
     },
     //删除账号
     deleteUser: function (vals) {
-        console.log(vals);
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../userInfo/deleteByIds",
-            dataType: 'json',
-            async: false,
-            data: {
-                ids: vals
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status > 0) {
-                    pubMeth.alertInfo("alert-success", "删除成功！");
-                    program.selectAccount();
-                } else {
-                    pubMeth.alertInfo("alert-danger", "删除失败！");
+        if (confirm("你确定要删除这些" + vals + "考生吗？")) {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../userInfo/deleteByIds",
+                dataType: 'json',
+                async: false,
+                data: {
+                    ids: vals
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status > 0) {
+                        pubMeth.alertInfo("alert-success", "删除成功！");
+                        program.selectAccount();
+                    } else {
+                        pubMeth.alertInfo("alert-danger", "删除失败！");
+                    }
                 }
-            }
-        });
+            });
+        }
     },
     //更新账号
     updateUser: function () {

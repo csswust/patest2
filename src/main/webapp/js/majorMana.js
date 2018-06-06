@@ -101,26 +101,27 @@ var program = {
         });
     },
     deleteMagor: function (vals) {
-        console.log(vals);
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../majorInfo/deleteByIds",
-            dataType: 'json',
-            async: false,
-            data: {
-                ids: vals
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status > 0) {
-                    pubMeth.alertInfo("alert-success", "删除成功！");
-                    program.getMajor();
-                } else {
-                    pubMeth.alertInfo("alert-danger", "删除失败！");
+        if (confirm("你确定要删除这些" + vals + "专业吗？")) {
+            $.ajax({
+                type: "get",
+                content: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "../majorInfo/deleteByIds",
+                dataType: 'json',
+                async: false,
+                data: {
+                    ids: vals
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status > 0) {
+                        pubMeth.alertInfo("alert-success", "删除成功！");
+                        program.getMajor();
+                    } else {
+                        pubMeth.alertInfo("alert-danger", "删除失败！");
+                    }
                 }
-            }
-        });
+            });
+        }
     },
     updateMajor: function () {
         $.ajax({

@@ -27,27 +27,15 @@ var program = {
                 "containSum": false
             },
             success: function (result) {
-                console.log(result);
                 $(".courseName").empty();
                 $(".courseName").append("<option>课程</option>");
                 program.selectOnlyCourse();
                 for (var i = 0; i < program.courseName.length; i++) {
                     $(".courseName").append("<option value=" + program.courseName[i].couId + ">" + program.courseName[i].courseName + "</option>");
                 }
-                /*if (result.knowledgeInfoList[0].isCourse == 1) {*/
-                /*$(".isCourse").show();
-                 $(".isknow").hide();
-                 /!*$(".choose option[value="+ result.data[0].isCourse +"]").attr("selected",true);*!/
-                 $(".choose").val(1);
-                 $(".coName").val(result.courseList[0].knowName);
-                 } else {*/
-                /*                        $(".isCourse").hide();
-                 $(".isknow").show();*/
-                /*$(".choose option[value="+ result.data[0].isCourse +"]").attr("selected",true);*/
                 $(".choose").val(0);
                 $(".courseName option[value=" + result.knowledgeInfoList[0].courseId + "]").attr("selected", true);
                 $(".knowName").val(result.knowledgeInfoList[0].knowName);
-                /*}*/
             },
             error: function () {
                 console.log("error");
@@ -65,7 +53,6 @@ var program = {
             sumList: {},
             success: function (result) {
                 console.log(result);
-                /*var length = result.total;*/
                 program.count = result.total;
                 $("#ClistInfo").empty();
                 $("#datalistInfo").empty();
@@ -74,7 +61,6 @@ var program = {
                 program.sumList = result.sumList;
                 program.course = result.knowledgeInfoList;
                 for (var i = 0; i < result.knowledgeInfoList.length; i++) {
-                    /*if (result.data[i].isCourse == 0) {*/
                     if (result.courseInfoList[i].courseName == 'C程序设计') {
                         $("#ClistInfo").append('<li class="list-group-item">' +
                             '<span><input type="checkbox" value="' + program.course[i].knowId + '" name="title"/></span>' +
@@ -97,15 +83,12 @@ var program = {
                             '<span style="float:right;margin-right:30px;">' + program.sumList[i] + '</span>' +
                             '</li>');
                     }
-                    /*}*/
                 }
                 $("#ClistInfo li").each(function (i) {
                     $("a.title", this).click(function () {
                         program.id = $(this).attr("value");
                         console.log(i);
-                        $('#addKnow').modal({
-                            //backdrop: 'static'
-                        });
+                        $('#addKnow').modal({});
                         $(".coName").empty();
                         $(".knowName").empty();
                         $(".courseName").empty();
@@ -118,9 +101,7 @@ var program = {
                     $("a.title", this).click(function () {
                         program.id = $(this).attr("value");
                         console.log(i);
-                        $('#addKnow').modal({
-                            //backdrop: 'static'
-                        });
+                        $('#addKnow').modal({});
                         $(".coName").empty();
                         $(".knowName").empty();
                         $(".courseName").empty();
@@ -133,9 +114,7 @@ var program = {
                     $("a.title", this).click(function () {
                         program.id = $(this).attr("value");
                         console.log(i);
-                        $('#addKnow').modal({
-                            //backdrop: 'static'
-                        });
+                        $('#addKnow').modal({});
                         $(".coName").empty();
                         $(".knowName").empty();
                         $(".courseName").empty();
@@ -156,9 +135,7 @@ var program = {
             url: "../courseInfo/selectByCondition",
             dataType: 'json',
             async: false,
-            data: {
-                /*'knowledge.isCourse': 1,*/
-            },
+            data: {},
             success: function (result) {
                 console.log(result);
                 program.courseName = result.list;
@@ -174,7 +151,6 @@ var program = {
             async: false,
             data: {
                 "knowName": program.kName,
-                /*"knowledge.isCourse": program.chval,*/
                 "courseId": program.parentId
             },
             success: function (result) {
@@ -196,7 +172,7 @@ var program = {
         });
     },
     deleteKnow: function (vals) {
-        if (confirm("你确定要删除吗？")) {
+        if (confirm("你确定要删除这些" + vals + "知识点吗？")) {
             $.ajax({
                 type: "post",
                 content: "application/x-www-form-urlencoded;charset=UTF-8",
