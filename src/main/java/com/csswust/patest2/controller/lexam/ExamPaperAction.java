@@ -143,6 +143,10 @@ public class ExamPaperAction extends BaseAction {
             apiResult.setStatusAndDesc(-1, "examId不能为空");
             return apiResult;
         }
+        OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
+                getUrl(), "删除试卷", examId);
+        insert.setArgcData("examId", examId);
+        operateLogService.insertOne(insert);
         int status = examPaperDao.deleteByExamId(examId);
         apiResult.setStatusAndDesc(status, status > 0 ? "成功" : "失败");
         return apiResult;
