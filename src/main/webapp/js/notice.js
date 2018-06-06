@@ -61,7 +61,7 @@ var program = {
                 $("#listInfo").empty();
                 $("#listInfo").append(program.html);
 
-                $("#listInfo").on('click', '.show', function () {
+                $("#listInfo").on('click', '.show_click', function () {
                     var index = this.id.split("-")[0];
                     $("#updatenotice").modal();
                     $(".updatenotice").val(program.data[index].title);
@@ -83,7 +83,7 @@ var program = {
             program.html +=
                 '<tr><td><input type="checkbox" value="' + program.data[i].exaNotId + '" name="title"/></td>'
                 + '<td>' + program.data[i].exaNotId + '</td>'
-                + '<td class="show" id="' + flag + '-' + flag + '"><a class="title" >' + program.data[i].title + '</a></td>'
+                + '<td class="show_click" id="' + flag + '-' + flag + '"><a class="title" >' + program.data[i].title + '</a></td>'
                 + '<td class="tdhidden" data-toggle="tooltip" data-placement="top" title="' + program.data[i].content + '">' + program.data[i].content + '</td>'
                 + '<td>' + program.data[i].createTime + '</td>'
                 + '</tr>';
@@ -98,11 +98,7 @@ var program = {
             });
             var vals = valArr.join(',');// 转换为逗号隔开的字符串
             if (vals != "") {
-                $("#modalexamdelete").modal(function () {
-                    backdrop : 'static'
-                });
-                $(".examquess").html(vals);
-                $(".examdelete").click(function () {
+                if (confirm("你确定要删除这些" + vals + "公告吗？")) {
                     $.ajax({
                         type: "post",
                         content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -110,7 +106,7 @@ var program = {
                         dataType: 'json',
                         async: false,
                         data: {
-                            ids: vals,
+                            ids: vals
                         },
                         success: function (result) {
                             if (result.status > 0) {
@@ -122,7 +118,7 @@ var program = {
                             }
                         }
                     });
-                });
+                }
             } else {
                 pubMeth.alertInfo("alert-info", "请先勾选删除项！");
             }
@@ -184,14 +180,6 @@ $(".addnotice").click(function () {
     });
 
 });
-/*$("#listInfo").on('click', '.show', function () {
- var index = this.id.split("-")[0];
- $("#updatenotice").modal();
- $(".updatenotice").val(program.data[index].title);
- $(".updatedes").val(program.data[index].content);
- program.stnoId = program.data[index].stnoId;
-
- });*/
 $(".saveupdate").click(function () {
     program.title = $(".updatenotice").val();
     program.describle = $(".updatedes").val();
