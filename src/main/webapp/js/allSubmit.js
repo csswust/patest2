@@ -190,9 +190,8 @@ var program = {
                 }
             });
         } else {
-            $(".pagenum").css("display", "none");
+            $(".countnum").html("0");
         }
-
     },
 
     getSubmitResult: function () {
