@@ -1,5 +1,6 @@
 package com.csswust.patest2.controller.lexam;
 
+import com.csswust.patest2.common.APIResult;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.AcademyInfoDao;
 import com.csswust.patest2.dao.MajorInfoDao;
@@ -10,7 +11,6 @@ import com.csswust.patest2.entity.AcademyInfo;
 import com.csswust.patest2.entity.MajorInfo;
 import com.csswust.patest2.entity.UserProfile;
 import com.csswust.patest2.service.UserProfileService;
-import com.csswust.patest2.service.result.UserProfileLoadRe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -87,12 +87,9 @@ public class UserProfileAction extends BaseAction {
     }
 
     @RequestMapping(value = "/insertByExcel", method = {RequestMethod.GET, RequestMethod.POST})
-    public Map<String, Object> insertByExcel(
+    public APIResult insertByExcel(
             @RequestParam MultipartFile namefile,
             @RequestParam(required = false, defaultValue = "false") Boolean isIgnoreError) {
-        Map<String, Object> res = new HashMap<String, Object>();
-        UserProfileLoadRe result = userProfileService.insertByExcel(namefile, isIgnoreError);
-        res.put("userProfileLoadRe", result);
-        return res;
+        return userProfileService.insertByExcel(namefile, isIgnoreError);
     }
 }

@@ -279,18 +279,43 @@ var program = {
             },
             success: function (result) {
                 console.log(result);
-                console.log(result.status);
-                var errorList = result.userProfileLoadRe.errorList;
-                if (result.userProfileLoadRe.status >= 0) {
-                    var x = "上传成功" + result.userProfileLoadRe.status + "条";
-                    if (errorList) {
-                        x = x + ",失败" + errorList.length + "条";
+                var error = result.data.error;
+                var count = result.data.count;
+                if (result.status > 0) {
+                    var x = "上传成功" + count + "条";
+                    if (error) {
+                        x = x + ", 跳过重复" + error + "条";
                     }
                     pubMeth.alertInfo("alert-success", x);
                     program.selectProfile();
                 } else {
-                    pubMeth.alertInfo("alert-danger", result.userProfileLoadRe.desc);
-                    /*pubMeth.alertInfo("alert-warning", "上传失败");*/
+                    if (result.status !== -200) {
+                        pubMeth.alertInfo("alert-danger", result.desc);
+                        return;
+                    }
+                    var errorInfo = "";
+                    var numberList = result.data.numberExistErrorList;
+                    var academyList = result.data.academyExistErrorList;
+                    var majorList = result.data.majorExistErrorList;
+                    if (numberList) {
+                        errorInfo += "下列学号已存在（可以勾选上忽略重复）：";
+                        for (var i = 0; i < numberList.length; i++) {
+                            errorInfo += numberList[i] + ", ";
+                        }
+                    }
+                    if (academyList) {
+                        errorInfo += "下列学院不存在（请在学院管理添加）：";
+                        for (var i = 0; i < academyList.length; i++) {
+                            errorInfo += academyList[i] + ", ";
+                        }
+                    }
+                    if (majorList) {
+                        errorInfo += "下列专业不存在（请在专业管理添加）：";
+                        for (var i = 0; i < majorList.length; i++) {
+                            errorInfo += majorList[i] + ", ";
+                        }
+                    }
+                    pubMeth.alertInfo("alert-danger", errorInfo);
                 }
             },
             error: function () {
