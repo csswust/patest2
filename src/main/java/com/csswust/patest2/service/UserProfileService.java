@@ -1,7 +1,6 @@
 package com.csswust.patest2.service;
 
 import com.csswust.patest2.common.APIResult;
-import com.csswust.patest2.service.result.UserProfileLoadRe;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
