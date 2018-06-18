@@ -65,6 +65,7 @@
                         <th>序号</th>
                         <th>问题</th>
                         <th>ACed</th>
+                        <th>分数</th>
                         <th>提交次数</th>
                         <th>最后一次提交时间</th>
                         <th>时间消耗</th>
@@ -89,6 +90,7 @@
         {{else}}
         <td><span class="glyphicon glyphicon-remove" aria-hidden="true" style="color:red;"></span></td>
         {{/if}}
+        <td>{{value.score}}</td>
         <td>{{value.submitCount}}</td>
         <td>{{value.lastSubmitTime}}</td>
         <td>{{value.usedTime}}</td>
