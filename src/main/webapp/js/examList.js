@@ -157,12 +157,14 @@ var program = {
 };
 pubMeth.getRowsnum("rowsnum");
 program.getExamInfo();
-$(".drawQuestion").on('click', function () {
+
+$("#listInfo").on('click', '.drawQuestion', function () {
     console.log(this.id);
     program.examId = this.id;
     program.drawQuestion();
+    return false;
 });
-$(".simTest").on('click', function () {
+$("#listInfo").on('click', '.simTest', function () {
     console.log(this.id);
     program.examId = this.id;
     program.simTest();

@@ -96,8 +96,6 @@ var program = {
                 + '<td>' + stateInfo + '</td>'
                 + '</tr>';
         }
-
-
     },
     getServerInfo: function () {
         $.ajax({
@@ -128,13 +126,9 @@ var program = {
 };
 program.getExamInfo();
 program.getServerInfo();
-$(".drawQuestion").on('click', function () {
+$("#listInfo").on('click', '.drawQuestion', function () {
     console.log(this.id);
     program.examId = this.id;
-    $(".loading img").attr("src", "../img/loading.gif");
-    $(".loading img").css({
-        width: 20,
-        height: 20,
-    })
     program.drawQuestion();
+    return false;
 });
