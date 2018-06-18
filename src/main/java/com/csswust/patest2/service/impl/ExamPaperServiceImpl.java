@@ -529,26 +529,22 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             apiResult.setStatusAndDesc(-11, JSON.toJSONString(userInfo) + "插入失败");
             return apiResult;
         }
-        if (userInfo == null) {
-            apiResult.setStatusAndDesc(-1, "用户不存在");
+        ExamPaper examPaper = new ExamPaper();
+        examPaper.setExamId(examId);
+        examPaper.setUserId(userInfo.getUserId());
+        examPaper.setAcedCount(0);
+        examPaper.setScore(0.0);
+        examPaper.setIsMarked(0);
+        int status1 = examPaperDao.insertSelective(examPaper);
+        UserInfo record = new UserInfo();
+        record.setUserId(userInfo.getUserId());
+        record.setExamId(examId);
+        int status2 = userInfoDao.updateByPrimaryKeySelective(record);
+        if (status1 != 1 || status2 != 1) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            apiResult.setStatusAndDesc(-2, format("插入失败：examID: %d,%s", examId, studentNumber));
         } else {
-            ExamPaper examPaper = new ExamPaper();
-            examPaper.setExamId(examId);
-            examPaper.setUserId(userInfo.getUserId());
-            examPaper.setAcedCount(0);
-            examPaper.setScore(0.0);
-            examPaper.setIsMarked(0);
-            int status1 = examPaperDao.insertSelective(examPaper);
-            UserInfo record = new UserInfo();
-            record.setUserId(userInfo.getUserId());
-            record.setExamId(examId);
-            int status2 = userInfoDao.updateByPrimaryKeySelective(record);
-            if (status1 != 1 || status2 != 1) {
-                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                apiResult.setStatusAndDesc(-2, format("插入失败：examID: %d,%s", examId, studentNumber));
-            } else {
-                apiResult.setStatusAndDesc(1, "添加成功");
-            }
+            apiResult.setStatusAndDesc(1, "添加成功");
         }
         return apiResult;
     }
