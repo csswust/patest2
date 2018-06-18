@@ -206,7 +206,6 @@ var program = {
             },
             success: function (result) {
                 var acNum = 0, length = 0, flag = 1, mainHtml = "", color = "";
-                /*if (result.status == 1) {*/
                 for (var i = 0, length = result.submitResultList.length; i < length; i++) {
                     if (result.submitResultList[i].status == 1) {
                         color = "acColor";
@@ -227,19 +226,11 @@ var program = {
                 program.statuhtml = '<div class="panel panel-default"><div class="panel-body">' +
                     '<div class="page-header">' +
                     '<h3>测试数据组数：' + length + '<small>&nbsp&nbsp&nbsp;通过数：' + acNum + '</small></h3></div>' +
-                    /*'<table style="border:1px solid black">'+'<tr>'+'<td>Test</td>'+'<td>Result</td>'+'<td>Time[Ms]</td>'+'<td>Memory[KB]</td>'+'</tr>'+'</table>'*/
-                    /*'<table id=listhead style="border:1px solid black">'*/
-                    /*'<tr><td>'+123+'</td>'
-                     +'<td>'+123+'</td>'
-                     +'<td>'+123+'</td>'
-                     +'</tr>'*/
-                    /*+'</table>'*/
                     '<div class="row"><div class="col-md-3">Test</div>' +
                     '<div class="col-md-3">Result</div>' +
                     '<div class="col-md-3">Time[Ms]</div>' +
                     '<div class="col-md-3">Memory[KB]</div></div>'
                     + mainHtml + '</div></div>';
-                /*}*/
             },
             error: function () {
                 pubMeth.alertInfo("alert-info", "请求错误");
