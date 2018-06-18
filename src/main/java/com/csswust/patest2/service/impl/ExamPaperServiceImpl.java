@@ -102,9 +102,46 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         return apiResult;
     }
 
-    @Transactional
-    @Override
-    public APIResult insertByExcel(MultipartFile multipartFile, Integer examId, boolean isIgnoreError) {
+    private final class ExcelInfo {
+        private String studentNumber;
+        private String classRoom;
+        private Integer userProfileId;
+        private UserProfile userProfile;
+
+        public String getStudentNumber() {
+            return studentNumber;
+        }
+
+        public void setStudentNumber(String studentNumber) {
+            this.studentNumber = studentNumber;
+        }
+
+        public String getClassRoom() {
+            return classRoom;
+        }
+
+        public void setClassRoom(String classRoom) {
+            this.classRoom = classRoom;
+        }
+
+        public Integer getUserProfileId() {
+            return userProfileId;
+        }
+
+        public void setUserProfileId(Integer userProfileId) {
+            this.userProfileId = userProfileId;
+        }
+
+        public UserProfile getUserProfile() {
+            return userProfile;
+        }
+
+        public void setUserProfile(UserProfile userProfile) {
+            this.userProfile = userProfile;
+        }
+    }
+
+    private APIResult checkExcel(MultipartFile multipartFile, Integer examId) {
         APIResult apiResult = new APIResult();
         if (examId == null) {
             apiResult.setStatusAndDesc(-1, "考试Id不能为空");
@@ -160,89 +197,142 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             apiResult.setStatusAndDesc(-8, "解析excel失败");
             return apiResult;
         }
-        UserInfo userCondition = new UserInfo();
-        int index = userInfoDao.selectByConditionGetCount(userCondition, new BaseQuery());
-        String examYear;  // 获取年份
-        Calendar now = Calendar.getInstance();
-        examYear = String.format("%02d", (now.get(Calendar.YEAR)) % 2000);
-        String examIdFormat = String.format("%03d", examId % 1000);
-
-        List<UserProfile> userProfileList = new ArrayList<>();
-        List<UserInfo> userInfoList = new ArrayList<>();
-        List<String> passwordList = new ArrayList<>();
-        List<ExamPaper> examPaperList = new ArrayList<>();
-        Random random = new Random();
-        int count = 0, flag = index + 1;
+        List<ExcelInfo> excelInfoList = new ArrayList<>();
+        List<String> numberDigitErrorList = new ArrayList<>();
+        List<String> numberExistErrorList = new ArrayList<>();
         here:
         for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
             Sheet sheet = workbook.getSheet(i);
             int rowNum = sheet.getRows();
             for (int j = 1; j < rowNum; j++) {
+                ExcelInfo excelInfo = new ExcelInfo();
                 String studentNumber = sheet.getCell(0, j).getContents();
-                if (studentNumber == null || studentNumber.length() < 4) {
-                    apiResult.setStatusAndDesc(-9, "学号长度必须大于4");
-                    apiResult.setDataKey("userNameError", studentNumber);
+                String classRoom = sheet.getCell(1, j).getContents();
+                excelInfo.setStudentNumber(studentNumber);
+                excelInfo.setClassRoom(classRoom);
+                excelInfoList.add(excelInfo);
+
+                // 校验学号
+                if (StringUtils.isBlank(studentNumber)) {
+                    apiResult.setStatusAndDesc(-7, "学号不能为空");
                     break here;
                 }
-                String classRoom = sheet.getCell(1, j).getContents();
+                if (studentNumber.length() < 4) {
+                    if (!numberDigitErrorList.contains(studentNumber)) {
+                        numberDigitErrorList.add(studentNumber);// 学号长度必须大于4
+                    }
+                    continue;
+                }
                 UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
                 if (userProfile == null) {
-                    apiResult.setStatusAndDesc(-10, studentNumber + "学号不存在信息");
-                    apiResult.setDataKey("userNameError", studentNumber);
-                    break here;
+                    if (!numberExistErrorList.contains(studentNumber)) {
+                        numberExistErrorList.add(studentNumber);// 学号不存在
+                    }
+                    continue;
                 }
-                UserInfo userInfo = new UserInfo();
-                String indexString = null;
-                if (flag >= 10000) indexString = String.valueOf(flag);
-                else indexString = String.format("%04d", flag % 10000);
-
-                int lenth = studentNumber.length();
-                String numberString = studentNumber.substring(lenth - 4, lenth);
-                userInfo.setUsername(examYear + examIdFormat + indexString + numberString);
-                userInfo.setUserProfileId(userProfile.getUseProId());
-                StringBuilder StringBuilder = new StringBuilder();
-                for (int l = 0; l < 8; l++) {
-                    StringBuilder.append(random.nextInt(9));
-                }
-                userInfo.setPassword(getPassword(StringBuilder.toString()));
-                userInfo.setIsAdmin(0);
-                userInfo.setIsTeacher(0);
-                userInfo.setExamId(examId);
-                userInfo.setIsActive(1);
-                int temp = userInfoDao.insertSelective(userInfo);
-                if (temp != 1) {
-                    apiResult.setStatusAndDesc(-11, JSON.toJSONString(userInfo) + "插入失败");
-                    apiResult.setDataKey("userNameError", studentNumber);
-                    break here;
-                }
-                ExamPaper examPaper = new ExamPaper();
-                examPaper.setExamId(examId);
-                examPaper.setExamId(examId);
-                examPaper.setUserId(userInfo.getUserId());
-                examPaper.setClassroom(classRoom);
-                examPaper.setAcedCount(0);
-                examPaper.setUsedTime(0);
-                examPaper.setIsMarked(0);
-                examPaper.setScore(0.0);
-                temp = examPaperDao.insertSelective(examPaper);
-                if (temp != 1) {
-                    apiResult.setStatusAndDesc(-12, JSON.toJSONString(examPaper) + "插入失败");
-                    apiResult.setDataKey("userNameError", studentNumber);
-                    break here;
-                }
-                userProfileList.add(userProfile);
-                userInfoList.add(userInfo);
-                passwordList.add(StringBuilder.toString());
-                examPaperList.add(examPaper);
-                count = count + 1;
-                flag = flag + 1;
+                excelInfo.setUserProfileId(userProfile.getUseProId());
+                excelInfo.setUserProfile(userProfile);
             }
         }
         if (apiResult.getStatus() != 0) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return apiResult;
         }
+        try {
+            workbook.close();
+            in.close();
+        } catch (IOException e) {
+            log.error("workbook.close file: {} error: {}", tempFile.getAbsoluteFile(), e);
+        }
+        if (apiResult.getStatus() == 0) {
+            apiResult.setDataKey("excelInfoList", excelInfoList);
+            apiResult.setDataKey("numberDigitErrorList", numberDigitErrorList);
+            apiResult.setDataKey("numberExistErrorList", numberExistErrorList);
+            apiResult.setStatusAndDesc(1, "解析成功");
+        }
+        return apiResult;
+    }
+
+    @Transactional
+    @Override
+    public APIResult insertByExcel(MultipartFile multipartFile, Integer examId, boolean isIgnoreError) {
+        APIResult apiResult = new APIResult();
+        APIResult checkResult = checkExcel(multipartFile, examId);
+        if (checkResult.getStatus() != 1) {
+            apiResult.setStatusAndDesc(checkResult.getStatus(), checkResult.getDesc());
+            return apiResult;
+        }
+        List<ExcelInfo> excelInfoList = (List<ExcelInfo>) checkResult.getData().get("excelInfoList");
+        List<String> numberDigitErrorList = (List<String>) checkResult.getData().get("numberDigitErrorList");
+        List<String> numberExistErrorList = (List<String>) checkResult.getData().get("numberExistErrorList");
+        boolean flagTemp = false;
+        if (numberDigitErrorList.size() != 0) {
+            flagTemp = true;
+            apiResult.setDataKey("numberDigitErrorList", numberDigitErrorList);
+        }
+        if (numberExistErrorList.size() != 0) {
+            flagTemp = true;
+            apiResult.setDataKey("numberExistErrorList", numberExistErrorList);
+        }
+        if (flagTemp) {
+            apiResult.setStatusAndDesc(-200, "学号位数错误或者不存在错误");
+            return apiResult;
+        }
+
+        List<UserInfo> userInfoList = new ArrayList<>();
+        List<String> passwordList = new ArrayList<>();
+        List<ExamPaper> examPaperList = new ArrayList<>();
+
+        Random random = new Random();
+        int count = 0, flag = getLastByExam(examId);
+        String prefixStr = getUsernamePrefix(examId);
+        for (ExcelInfo excelInfo : excelInfoList) {
+            String studentNumber = excelInfo.getStudentNumber();
+            Integer userProfileId = excelInfo.getUserProfileId();
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUsername(getUsername(prefixStr, flag, studentNumber));
+            userInfo.setUserProfileId(userProfileId);
+            StringBuilder StringBuilder = new StringBuilder();
+            for (int l = 0; l < 8; l++) {
+                StringBuilder.append(random.nextInt(9));
+            }
+            userInfo.setPassword(getPassword(StringBuilder.toString()));
+            userInfo.setIsAdmin(0);
+            userInfo.setIsTeacher(0);
+            userInfo.setExamId(examId);
+            userInfo.setIsActive(1);
+            int temp = userInfoDao.insertSelective(userInfo);
+            if (temp != 1) {
+                apiResult.setStatusAndDesc(-11, JSON.toJSONString(userInfo) + "插入失败");
+                break;
+            }
+            ExamPaper examPaper = new ExamPaper();
+            examPaper.setExamId(examId);
+            examPaper.setExamId(examId);
+            examPaper.setUserId(userInfo.getUserId());
+            examPaper.setClassroom(excelInfo.getClassRoom());
+            examPaper.setAcedCount(0);
+            examPaper.setUsedTime(0);
+            examPaper.setIsMarked(0);
+            examPaper.setScore(0.0);
+            temp = examPaperDao.insertSelective(examPaper);
+            if (temp != 1) {
+                apiResult.setStatusAndDesc(-12, JSON.toJSONString(examPaper) + "插入失败");
+                break;
+            }
+            userInfoList.add(userInfo);
+            passwordList.add(StringBuilder.toString());
+            examPaperList.add(examPaper);
+            count = count + 1;
+            flag = flag + 1;
+        }
+        if (apiResult.getStatus() != 0) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return apiResult;
+        }
+
         String fname = "loginsheet" + new Date().getTime() + ".xls";
+        String path = Config.get(SiteKey.UPLOAD_TEMP_DIR, SiteKey.UPLOAD_TEMP_DIR_DE);
         File downFile = new File(path, fname);
         WritableWorkbook work = null;
         try {
@@ -264,8 +354,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             sheet.addCell(new Label(5, 0, "考场"));
             for (int i = 0; i < count; i++) {
                 sheet.addCell(new Label(0, i + 1, String.valueOf(i + 1)));
-                sheet.addCell(new Label(1, i + 1, userProfileList.get(i).getStudentNumber()));
-                sheet.addCell(new Label(2, i + 1, userProfileList.get(i).getRealName()));
+                sheet.addCell(new Label(1, i + 1, excelInfoList.get(i).getStudentNumber()));
+                sheet.addCell(new Label(2, i + 1, excelInfoList.get(i).getUserProfile().getRealName()));
                 sheet.addCell(new Label(3, i + 1, userInfoList.get(i).getUsername()));
                 sheet.addCell(new Label(4, i + 1, passwordList.get(i)));
                 sheet.addCell(new Label(5, i + 1, examPaperList.get(i).getClassroom()));
@@ -287,6 +377,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             return apiResult;
         }
         ExamInfo record = new ExamInfo();
+        ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
         examInfo.setExamId(examId);
         examInfoDao.updateByPrimaryKeySelective(record);
         apiResult.setDataKey("dirPath", downFile.getPath());
@@ -410,13 +501,34 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
 
     @Transactional
     @Override
-    public APIResult insertOne(Integer examId, String userName) {
+    public APIResult insertOne(Integer examId, String studentNumber, String password) {
         APIResult apiResult = new APIResult();
-        if (examId == null || StringUtils.isBlank(userName)) {
+        if (examId == null || StringUtils.isBlank(studentNumber)
+                || StringUtils.isBlank(password)) {
             apiResult.setStatusAndDesc(-501, "参数不合法");
             return apiResult;
         }
-        UserInfo userInfo = userInfoDao.selectByUsername(userName);
+        UserProfile userProfile = userProfileDao.selectByStudentNumber(studentNumber);
+        if (userProfile == null) {
+            apiResult.setStatusAndDesc(-1, "学号不存在");
+            return apiResult;
+        }
+        Integer userProfileId = userProfile.getUseProId();
+        UserInfo userInfo = new UserInfo();
+        int flag = getLastByExam(examId);
+        String prefixStr = getUsernamePrefix(examId);
+        userInfo.setUsername(getUsername(prefixStr, flag, studentNumber));
+        userInfo.setUserProfileId(userProfileId);
+        userInfo.setPassword(password);
+        userInfo.setIsAdmin(0);
+        userInfo.setIsTeacher(0);
+        userInfo.setExamId(examId);
+        userInfo.setIsActive(1);
+        int temp = userInfoDao.insertSelective(userInfo);
+        if (temp != 1) {
+            apiResult.setStatusAndDesc(-11, JSON.toJSONString(userInfo) + "插入失败");
+            return apiResult;
+        }
         if (userInfo == null) {
             apiResult.setStatusAndDesc(-1, "用户不存在");
         } else {
@@ -433,8 +545,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             int status2 = userInfoDao.updateByPrimaryKeySelective(record);
             if (status1 != 1 || status2 != 1) {
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                apiResult.setStatusAndDesc(-2,
-                        format("插入失败：examID: %d,%s", examId, userName));
+                apiResult.setStatusAndDesc(-2, format("插入失败：examID: %d,%s", examId, studentNumber));
             } else {
                 apiResult.setStatusAndDesc(1, "添加成功");
             }
@@ -450,5 +561,46 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             log.error("CipherUtil.encode({}) error: {}", pass, e);
         }
         return null;
+    }
+
+    private int getLastByExam(int examId) {
+        if (examId == 0) return 1;
+        UserInfo userCondition = new UserInfo();
+        userCondition.setExamId(examId);
+        int index = userInfoDao.selectByConditionGetCount(userCondition, new BaseQuery());
+        int result = index + 1;
+        List<UserInfo> userInfoList = userInfoDao.selectByCondition(userCondition, new BaseQuery(1, 1));
+        if (userInfoList != null && userInfoList.size() != 0) {
+            UserInfo userInfo = userInfoList.get(0);
+            if (userInfo == null) return result;
+            String username = userInfo.getUsername();
+            if (StringUtils.isBlank(username)) return result;
+            if (username.length() < 13) return result;
+            StringBuilder builder = new StringBuilder();
+            for (int i = 5; i < username.length() - 4; i++) {
+                builder.append(username.charAt(i));
+            }
+            Integer toInt = StringToInt(builder.toString());
+            if (toInt == null) return result;
+            return Math.max(toInt + 1, result);
+        }
+        return result;
+    }
+
+    private String getUsernamePrefix(int examId) {
+        String examYear;  // 获取年份
+        Calendar now = Calendar.getInstance();
+        examYear = String.format("%02d", (now.get(Calendar.YEAR)) % 2000);
+        String examIdFormat = String.format("%03d", examId % 1000);
+        return examYear + examIdFormat;
+    }
+
+    private String getUsername(String prefix, int flag, String studentNumber) {
+        String indexString = null;
+        if (flag >= 10000) indexString = String.valueOf(flag);
+        else indexString = String.format("%04d", flag % 10000);
+        int lenth = studentNumber.length();
+        String numberString = studentNumber.substring(lenth - 4, lenth);
+        return prefix + indexString + numberString;
     }
 }

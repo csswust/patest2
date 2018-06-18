@@ -32,6 +32,28 @@ var program = {
                 + '</tr>';
         }
     },
+    addPerExam: function () {
+        $.ajax({
+            type: "get",
+            content: "application/x-www-form-urlencoded;charset=UTF-8",
+            url: "../examPaper/insertOne",
+            dataType: 'json',
+            async: false,
+            data: {
+                studentNumber: program.istudentNumber,
+                password:program.ipassword,
+                examId: program.examId
+            },
+            success: function (result) {
+                if (result.status === 1) {
+                    pubMeth.alertInfo("alert-success", "添加成功！");
+                    program.selectUserBaseInfo();
+                } else {
+                    pubMeth.alertInfo("alert-danger", result.desc);
+                }
+            }
+        });
+    },
     //上传学生名单
     importList: function () {
         $.ajaxFileUpload({
@@ -49,7 +71,26 @@ var program = {
                     window.location.href = '../system/download?path=' + program.path;
                     program.selectUserBaseInfo();
                 } else {
-                    pubMeth.alertInfo("alert-danger", result.desc);
+                    if (result.status !== -200) {
+                        pubMeth.alertInfo("alert-danger", result.desc);
+                        return;
+                    }
+                    var errorInfo = "";
+                    var digitList = result.data.numberDigitErrorList;
+                    var existList = result.data.numberExistErrorList;
+                    if (digitList) {
+                        errorInfo += "下列学号小于4位：";
+                        for (var i = 0; i < digitList.length; i++) {
+                            errorInfo += digitList[i] + ", ";
+                        }
+                    }
+                    if (existList) {
+                        errorInfo += "下列学号对应学生不存在（请在学生信息管理添加）：";
+                        for (var i = 0; i < existList.length; i++) {
+                            errorInfo += existList[i] + ", ";
+                        }
+                    }
+                    pubMeth.alertInfo("alert-danger", errorInfo);
                 }
             },
             error: function () {
@@ -218,4 +259,13 @@ $(".upList").click(function () {
     if (par.examId) {
         window.location.href = 'editParm.html?examId=' + program.examId;
     }
+});
+$(".addPaper").click(function () {
+    $("#addpaperexam").modal();
+});
+$(".addPerExam").click(function () {
+    program.istudentNumber = $(".istudentNumber").val();
+    program.ipassword = $(".ipassword").val();
+    program.addPerExam();
+    $("#addpaperexam").modal('hide');
 });

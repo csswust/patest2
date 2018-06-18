@@ -538,7 +538,7 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
             apiResult.setStatusAndDesc(-2, "examInfo不能为空");
             return apiResult;
         }
-        int result = examInfoDao.updateByPrimaryKey(examInfo);
+        int result = examInfoDao.updateByPrimaryKeySelective(examInfo);
         if (result != 1) {
             apiResult.setStatusAndDesc(-1, "更新失败");
         } else {

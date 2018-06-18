@@ -16,5 +16,5 @@ public interface ExamPaperService {
 
     APIResult drawProblemByExamId(Integer examId, Integer userId);
 
-    APIResult insertOne(Integer examId, String userName);
+    APIResult insertOne(Integer examId, String studentNumber,String password);
 }

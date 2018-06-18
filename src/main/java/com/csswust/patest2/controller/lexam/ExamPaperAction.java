@@ -104,12 +104,15 @@ public class ExamPaperAction extends BaseAction {
     }
 
     @RequestMapping(value = "/insertOne", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object insertOne(@RequestParam Integer examId, @RequestParam String userName) {
+    public Object insertOne(@RequestParam Integer examId,
+                            @RequestParam String studentNumber,
+                            @RequestParam String password) {
         OperateLogInsert insert = new OperateLogInsert(getUserId(), getIp(),
                 getUrl(), "插入单张试卷", examId);
-        insert.setArgcData("userName", userName);
+        insert.setArgcData("userName", studentNumber);
+        insert.setArgcData("password", password);
         operateLogService.insertOne(insert);
-        return examPaperService.insertOne(examId, userName);
+        return examPaperService.insertOne(examId, studentNumber, password);
     }
 
     @RequestMapping(value = "/updateById", method = {RequestMethod.GET, RequestMethod.POST})

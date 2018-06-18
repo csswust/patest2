@@ -72,29 +72,6 @@ var program = {
             $(".pagenum").css("display", "none");
         }
     },
-    addPerExam: function () {
-        console.log(program.stuID + "&&&&&" + program.examID);
-        $.ajax({
-            type: "get",
-            content: "application/x-www-form-urlencoded;charset=UTF-8",
-            url: "../examPaper/insertOne",
-            dataType: 'json',
-            async: false,
-            data: {
-                userName: program.stuID,
-                examId: program.examID
-            },
-            success: function (result) {
-                console.log(result);
-                if (result.status === 1) {
-                    pubMeth.alertInfo("alert-success", "添加成功！");
-                    program.getPaper();
-                } else {
-                    pubMeth.alertInfo("alert-danger", result.desc);
-                }
-            }
-        });
-    },
     deletePerExam: function () {
         $(".delete").click(function () {
             var valArr = new Array;
@@ -148,7 +125,7 @@ var program = {
     }
 };
 pubMeth.getRowsnum();
-program.getExam();
+//program.getExam();
 program.deletePerExam();
 program.ser();
 var param = pubMeth.getQueryObject();
@@ -156,12 +133,3 @@ if (param.studentNumber) {
     program.studentNumber = param.studentNumber;
 }
 program.getPaper();
-$(".addPaper").click(function () {
-    $("#addpaperexam").modal();
-});
-$(".addPerExam").click(function () {
-    program.stuID = $(".studentNum").val();
-    program.examID = $(".examId option:selected").val();
-    program.addPerExam();
-    $("#addpaperexam").modal('hide');
-});
