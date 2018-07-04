@@ -1,11 +1,12 @@
 package com.csswust.patest2.dao;
 
+import com.csswust.patest2.dao.common.BaseDao;
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.UserInfo;
 
 import java.util.List;
 
-public interface UserInfoDao {
+public interface UserInfoDao extends BaseDao<UserInfo, BaseQuery> {
     int deleteByPrimaryKey(Integer userId);
 
     int insert(UserInfo record);

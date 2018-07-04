@@ -1,6 +1,8 @@
 package com.csswust.patest2.controller.lexam;
 
 import com.csswust.patest2.common.APIResult;
+import com.csswust.patest2.common.config.Config;
+import com.csswust.patest2.common.config.SiteKey;
 import com.csswust.patest2.controller.common.BaseAction;
 import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseDao;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -177,5 +181,24 @@ public class ExamPaperAction extends BaseAction {
         insert.setArgcData("examId", examId);
         operateLogService.insertOne(insert);
         return examPaperService.drawProblemByExamId(examId, null);
+    }
+
+    @RequestMapping(value = "/exportExamPaper", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object exportExamPaper(@RequestParam Integer examId) throws IOException {
+
+        File zip = examPaperService.exportInfoByExamId(examId);
+        response.setHeader("Content-Disposition", "attachment;filename="+URLEncoder.encode(zip.getName(), "UTF-8"));
+        response.setHeader("Connection", "close");
+        response.setHeader("Content-Type", "application/octet-stream");
+        InputStream inputStream = new FileInputStream(zip);
+        OutputStream outputStream = response.getOutputStream();
+        byte[] bytes = new byte[1024];
+        int len;
+        while ((len = inputStream.read(bytes)) != -1) {
+            outputStream.write(bytes,0,len);
+        }
+        inputStream.close();
+        outputStream.close();
+        return "success";
     }
 }

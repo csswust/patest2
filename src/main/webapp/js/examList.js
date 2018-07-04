@@ -100,6 +100,7 @@ var program = {
                 + '<td>' + program.data[i].endTime + '</td>'
                 + '<td>' + program.studentTotalList[i] + '</td>'
                 + '<td>' + stateInfo + '</td>'
+                + '<td><a href="../examPaper/exportExamPaper?examId='+program.data[i].examId+'" style="visibility:  '+(stateInfo.slice(0,1)==='已'?'visible':'hidden')+'" class="btn btn-primary">' + '导出' + '</a></td>'
                 + '</tr>';
         }
     },
