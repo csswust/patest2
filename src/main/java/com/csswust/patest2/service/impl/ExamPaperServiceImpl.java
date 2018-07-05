@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.*;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipOutputStream;
 
 import static com.csswust.patest2.service.common.BatchQueryService.getFieldByList;
@@ -617,13 +618,20 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zip));
         for (PersonExamPaper person : classPaper) {
             UserProfile userProfile = person.getUserProfile();
+            if (userProfile == null) {
+                System.out.println(9999);
+            }
             File temp = new File(path + "/" + userProfile.getRealName() + "-" + userProfile.getStudentNumber() + ".html");
             temp.createNewFile();
             OutputStream outputStream = new FileOutputStream(temp);
             printPerson(person, outputStream);
             outputStream.close();
             byte[] buf = new byte[1024];
-            zos.putNextEntry(new ZipEntry(temp.getName()));
+            try {
+                zos.putNextEntry(new ZipEntry(temp.getName()));
+            } catch (ZipException e) {//重复的内容
+                zos.putNextEntry(new ZipEntry(System.currentTimeMillis() + temp.getName()));
+            }
             int len;
             FileInputStream in = new FileInputStream(temp);
             while ((len = in.read(buf)) != -1) {
@@ -690,30 +698,35 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
     public List<PersonExamPaper> getClassPaperScore(Integer examId) {
         //结果集合
         Map<Integer, String> results = getResultInfos();
-        //参数集
+        //参数集<参数id，分数>
         Map<Integer, Integer> params = getScores(examId);
+        //考试信息
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
-        //获取所有的考号
+        //获取所有的试卷
         ExamPaper examPaperQuery = new ExamPaper();
         examPaperQuery.setExamId(examId);
         List<ExamPaper> examPapers = examPaperDao.selectByCondition(examPaperQuery, new BaseQuery());
-        //获取所有用户信息存到<id,UserProfile>中
-        Map<Integer, Integer> proIdAndUserId = new HashMap<>(examPapers.size());
+        //获取所有的ids,再根据ids查所有的考生
         List<Integer> userids = new ArrayList<>(examPapers.size());
         for (ExamPaper userInfo : examPapers) {
             userids.add(userInfo.getUserId());
         }
         List<UserInfo> userInfos = userInfoDao.selectByIdsList(userids);
+        Map<Integer,Integer> useridAndProId = new HashMap<>(userids.size());//userid到userprofileId的映射
+        for (UserInfo userInfo:userInfos) {
+            useridAndProId.put(userInfo.getUserId(),userInfo.getUserProfileId());
+        }
         List<Integer> userproids = new ArrayList<>(examPapers.size());
         for (UserInfo userInfo : userInfos) {
             userproids.add(userInfo.getUserProfileId());
-            proIdAndUserId.put(userInfo.getUserProfileId(), userInfo.getUserId());
         }
+        //所有的学生信息
         List<UserProfile> userProfiles = userProfileDao.selectByIdsList(userproids);
         Map<Integer, UserProfile> userProfileMap = new HashMap<>(userProfiles.size());
         for (UserProfile userProfile : userProfiles) {
-            userProfileMap.put(proIdAndUserId.get(userProfile.getUseProId()), userProfile);
+            userProfileMap.put(userProfile.getUseProId(), userProfile);
         }
+
         //所有的成绩单
         List<PersonExamPaper> classPaper = new ArrayList<>(examPapers.size());
         for (ExamPaper examPaper : examPapers) {
@@ -737,7 +750,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             }
             PersonExamPaper personExamPaper = new PersonExamPaper(
                     examInfo
-                    , userProfileMap.get(examPaper.getUserId())
+                    , userProfileMap.get(useridAndProId.get(examPaper.getUserId()))
                     , examPaper
                     , problemInfos
                     , status
