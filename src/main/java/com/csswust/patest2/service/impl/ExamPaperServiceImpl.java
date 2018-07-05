@@ -12,7 +12,6 @@ import com.csswust.patest2.service.ExamPaperService;
 import com.csswust.patest2.service.OnlineUserService;
 import com.csswust.patest2.service.common.BaseService;
 import com.csswust.patest2.service.common.ConditionBuild;
-import com.csswust.patest2.service.input.OperateLogInsert;
 import com.csswust.patest2.service.result.DrawProblemParam;
 import com.csswust.patest2.utils.CipherUtil;
 import com.csswust.patest2.vo.PersonExamPaper;
@@ -68,7 +67,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
     private OnlineUserService onlineUserService;
 
     @Autowired
-    private SubmitInfoDao submitInfoDao;
+    private ResultInfoDao resultInfoDao;
 
     @Override
     public APIResult selectByCondition(ExamPaper examPaper, Boolean onlyPaper, Boolean containOnline, String userName, String studentNumber, Integer page, Integer rows) {
@@ -608,17 +607,17 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         Config.refreshConfig();
         String tempPath = Config.get("examPaperTem");
         //下载文件路径
-        File path =  new File(tempPath + "/" + System.currentTimeMillis());
-        if(!path.exists())
+        File path = new File(tempPath + "/" + System.currentTimeMillis());
+        if (!path.exists())
             path.mkdirs();
         List<PersonExamPaper> classPaper = getClassPaperScore(examId);
         ExamInfo examInfo = classPaper.get(0).getExamInfo();
-        File zip = new File(path + "/" + examInfo.getTitle()+"试卷成绩.zip");
+        File zip = new File(path + "/" + examInfo.getTitle() + "试卷成绩.zip");
         zip.createNewFile();
         ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zip));
         for (PersonExamPaper person : classPaper) {
             UserProfile userProfile = person.getUserProfile();
-            File temp = new File( path + "/" + userProfile.getRealName() + "-" + examInfo.getTitle()+ ".html");
+            File temp = new File(path + "/" + userProfile.getRealName() + "-" + userProfile.getStudentNumber() + ".html");
             temp.createNewFile();
             OutputStream outputStream = new FileOutputStream(temp);
             printPerson(person, outputStream);
@@ -627,7 +626,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             zos.putNextEntry(new ZipEntry(temp.getName()));
             int len;
             FileInputStream in = new FileInputStream(temp);
-            while ((len = in.read(buf)) != -1){
+            while ((len = in.read(buf)) != -1) {
                 zos.write(buf, 0, len);
             }
             zos.closeEntry();
@@ -641,6 +640,11 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
     private void printPerson(PersonExamPaper person, OutputStream outputStream) throws UnsupportedEncodingException {
         ExamPaper examPaper = person.getExamPaper();
         UserProfile userProfile = person.getUserProfile();
+        //获取总分
+        int total = 0;
+        for (Integer integer : person.getAllScore()) {
+            total += integer;
+        }
         PrintWriter print = new PrintWriter(new OutputStreamWriter(outputStream, "utf-8"));
         print.println("<!DOCTYPE html>\n" +
                 "<html lang=\"zh-CN\">\n" +
@@ -648,15 +652,20 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 "    <meta charset=\"utf-8\">\n" +
                 "</head>\n");
         print.println("<h1>");
+        print.println(person.getExamInfo().getTitle());
+        print.println("</h1>");
+        print.println("<h1>");
         print.println(userProfile.getRealName() + "-" + userProfile.getClassName()
-                + "  Ac:" + examPaper.getAcedCount() + "  得分：" + examPaper.getScore());
+                + "  Ac:" + examPaper.getAcedCount() + " / " + person.getProblemInfos().size()
+                + "  得分：" + examPaper.getScore() + "/" + total);
         print.println("</h1>");
         print.println("<br>");
         int order = 0;
-        for (ProblemInfo problemInfo:person.getProblemInfos()) {
-            print.println("<h2>-------------题目 " + (char)('A' + order) + " " + problemInfo.getTitle() + "  ----------</h2>");
+        for (ProblemInfo problemInfo : person.getProblemInfos()) {
+            print.println("<h2>-------------题目 " + (char) ('A' + order) + " " + problemInfo.getTitle() + "  ----------</h2>");
             print.println("<br>");
-            print.println("<span style=\"font-weight:700\">是否AC</span> ：" +"<span style=\"color:green\">" + person.getIsAc().get(order++) + "</span>");
+            print.println("<span style=\"font-weight:700\">结果</span> ：" + "<span style=\"color:green\">" + person.getStatus().get(order) + "</span>");
+            print.println("<span style=\"font-weight:700\">得分</span> ：" + "<span style=\"color:green\">" + person.getScore().get(order) + " / " + person.getAllScore().get(order++)+ "</span>");
             print.println("<br>");
             print.println("<p>");
             print.println(problemInfo.getDescription());
@@ -678,54 +687,84 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
 
     @Override
     public List<PersonExamPaper> getClassPaperScore(Integer examId) {
+        //结果集合
+        Map<Integer, String> results = getResultInfos();
+        //参数集
+        Map<Integer, Integer> params = getScores(examId);
         ExamInfo examInfo = examInfoDao.selectByPrimaryKey(examId);
         //获取所有的考号
         ExamPaper examPaperQuery = new ExamPaper();
         examPaperQuery.setExamId(examId);
-        List<ExamPaper> examPapers = examPaperDao.selectByCondition(examPaperQuery,new BaseQuery());
+        List<ExamPaper> examPapers = examPaperDao.selectByCondition(examPaperQuery, new BaseQuery());
         //获取所有用户信息存到<id,UserProfile>中
         Map<Integer, Integer> proIdAndUserId = new HashMap<>(examPapers.size());
         List<Integer> userids = new ArrayList<>(examPapers.size());
-        for (ExamPaper userInfo: examPapers) {
+        for (ExamPaper userInfo : examPapers) {
             userids.add(userInfo.getUserId());
         }
         List<UserInfo> userInfos = userInfoDao.selectByIdsList(userids);
         List<Integer> userproids = new ArrayList<>(examPapers.size());
-        for (UserInfo userInfo: userInfos) {
+        for (UserInfo userInfo : userInfos) {
             userproids.add(userInfo.getUserProfileId());
-            proIdAndUserId.put(userInfo.getUserProfileId(),userInfo.getUserId());
+            proIdAndUserId.put(userInfo.getUserProfileId(), userInfo.getUserId());
         }
         List<UserProfile> userProfiles = userProfileDao.selectByIdsList(userproids);
-        Map<Integer,UserProfile> userProfileMap = new HashMap<>(userProfiles.size());
-        for (UserProfile userProfile: userProfiles) {
-            userProfileMap.put(proIdAndUserId.get(userProfile.getUseProId()),userProfile);
+        Map<Integer, UserProfile> userProfileMap = new HashMap<>(userProfiles.size());
+        for (UserProfile userProfile : userProfiles) {
+            userProfileMap.put(proIdAndUserId.get(userProfile.getUseProId()), userProfile);
         }
         //所有的成绩单
         List<PersonExamPaper> classPaper = new ArrayList<>(examPapers.size());
-        for (ExamPaper examPaper:examPapers) {
+        for (ExamPaper examPaper : examPapers) {
             //获取该生的所有题目
             PaperProblem paperProblem = new PaperProblem();
             paperProblem.setExamPaperId(examPaper.getExaPapId());
             paperProblem.setExamId(examId);
-            List<PaperProblem> problems = paperProblemDao.selectByCondition(paperProblem,new BaseQuery());
+            List<PaperProblem> problems = paperProblemDao.selectByCondition(paperProblem, new BaseQuery());
             //获取所有题目详情
             List<ProblemInfo> problemInfos = new ArrayList<>(problems.size());
             //所有题目的结果
-            List<Boolean> ac = new ArrayList<>(problems.size());
-            for (PaperProblem problem:problems) {
+            List<String> status = new ArrayList<>(problems.size());
+            List<Integer> allScore = new ArrayList<>(problems.size());
+            List<Double> scores = new ArrayList<>(problems.size());
+            for (PaperProblem problem : problems) {
                 ProblemInfo tem = problemInfoDao.selectByPrimaryKey(problem.getProblemId());
                 problemInfos.add(tem);
-                boolean isAc = problem.getIsAced() == 1 ? true : false;
-                ac.add(isAc);
+                status.add(results.get(problem.getIsAced()));
+                allScore.add(params.get(tem.getLevelId()));
+                scores.add(problem.getScore());
             }
             PersonExamPaper personExamPaper = new PersonExamPaper(
                     examInfo
-                    ,userProfileMap.get(examPaper.getUserId())
-                    ,examPaper
-                    ,problemInfos
-                    ,ac);
+                    , userProfileMap.get(examPaper.getUserId())
+                    , examPaper
+                    , problemInfos
+                    , status
+                    ,allScore
+                    ,scores);
             classPaper.add(personExamPaper);
         }
         return classPaper;
+    }
+
+    private Map<Integer, String> getResultInfos() {
+        List<ResultInfo> infos = resultInfoDao.selectByCondition(new ResultInfo(),new BaseQuery());
+        Map<Integer, String> map = new HashMap<>(infos.size());
+        for (ResultInfo result : infos) {
+            map.put(result.getResuId(),result.getName());
+        }
+        map.put(0,"未做");
+        return map;
+    }
+
+    private Map<Integer,Integer> getScores(Integer examId) {
+        ExamParam examParam = new ExamParam();
+        examParam.setExamId(examId);
+        List<ExamParam> examParams = examParamDao.selectByCondition(examParam,new BaseQuery());
+        Map<Integer, Integer> map = new HashMap<>(examParams.size());
+        for (ExamParam parm : examParams) {
+                map.put(parm.getLevelId(),parm.getScore());
+        }
+        return map;
     }
 }

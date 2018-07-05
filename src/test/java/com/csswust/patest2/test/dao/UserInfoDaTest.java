@@ -1,13 +1,9 @@
 package com.csswust.patest2.test.dao;
 
 import com.alibaba.fastjson.JSON;
-import com.csswust.patest2.dao.ExamProblemDao;
-import com.csswust.patest2.dao.ProblemInfoDao;
-import com.csswust.patest2.dao.UserInfoDao;
+import com.csswust.patest2.dao.*;
 import com.csswust.patest2.dao.common.BaseQuery;
-import com.csswust.patest2.entity.ExamProblem;
-import com.csswust.patest2.entity.ProblemInfo;
-import com.csswust.patest2.entity.UserInfo;
+import com.csswust.patest2.entity.*;
 import com.csswust.patest2.test.base.JunitBaseServiceDaoTest;
 import com.csswust.patest2.utils.CipherUtil;
 import org.junit.Test;
@@ -19,6 +15,26 @@ import java.util.List;
 public class UserInfoDaTest extends JunitBaseServiceDaoTest {
     @Autowired
     private UserInfoDao userInfoDao;
+
+    @Autowired
+    private ResultInfoDao resultInfoDao;
+
+    @Autowired
+    private ExamParamDao examParamDao;
+
+    @Test
+    public void test() {
+        List<ResultInfo> infos = resultInfoDao.selectByCondition(new ResultInfo(),new BaseQuery());
+        System.out.println(infos);
+    }
+    @Test
+    public void test2() {
+        ExamParam examParam = new ExamParam();
+        examParam.setExamId(19);
+        List<ExamParam> examParams = examParamDao.selectByCondition(examParam,new BaseQuery());
+        System.out.println(examParams);
+    }
+
 
     @Test
     public void insertSelective() {

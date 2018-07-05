@@ -17,14 +17,18 @@ public class PersonExamPaper {
     private UserProfile userProfile;//考生信息
     private ExamPaper examPaper;//试卷信息
     private List<ProblemInfo> problemInfos;//问题集合
-    private List<Boolean> isAc;//是否ac
+    private List<String> status;
+    private List<Integer> allScore;
+    private List<Double> score;
 
-    public PersonExamPaper(ExamInfo examInfo, UserProfile userProfile, ExamPaper examPaper, List<ProblemInfo> problemInfos, List<Boolean> isAc) {
+    public PersonExamPaper(ExamInfo examInfo, UserProfile userProfile, ExamPaper examPaper, List<ProblemInfo> problemInfos, List<String> status, List<Integer> allScore, List<Double> score) {
         this.examInfo = examInfo;
         this.userProfile = userProfile;
         this.examPaper = examPaper;
         this.problemInfos = problemInfos;
-        this.isAc = isAc;
+        this.status = status;
+        this.allScore = allScore;
+        this.score = score;
     }
 
     public ExamInfo getExamInfo() {
@@ -59,11 +63,27 @@ public class PersonExamPaper {
         this.problemInfos = problemInfos;
     }
 
-    public List<Boolean> getIsAc() {
-        return isAc;
+    public List<String> getStatus() {
+        return status;
     }
 
-    public void setIsAc(List<Boolean> isAc) {
-        this.isAc = isAc;
+    public void setStatus(List<String> status) {
+        this.status = status;
+    }
+
+    public List<Integer> getAllScore() {
+        return allScore;
+    }
+
+    public void setAllScore(List<Integer> allScore) {
+        this.allScore = allScore;
+    }
+
+    public List<Double> getScore() {
+        return score;
+    }
+
+    public void setScore(List<Double> score) {
+        this.score = score;
     }
 }
