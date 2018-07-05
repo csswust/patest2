@@ -732,7 +732,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
                 ProblemInfo tem = problemInfoDao.selectByPrimaryKey(problem.getProblemId());
                 problemInfos.add(tem);
                 status.add(results.get(problem.getIsAced()));
-                allScore.add(params.get(tem.getLevelId()));
+                allScore.add(params.get(problem.getExamParamId()));
                 scores.add(problem.getScore());
             }
             PersonExamPaper personExamPaper = new PersonExamPaper(
@@ -764,7 +764,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         List<ExamParam> examParams = examParamDao.selectByCondition(examParam,new BaseQuery());
         Map<Integer, Integer> map = new HashMap<>(examParams.size());
         for (ExamParam parm : examParams) {
-                map.put(parm.getLevelId(),parm.getScore());
+                map.put(parm.getExaParId(),parm.getScore());
         }
         return map;
     }
