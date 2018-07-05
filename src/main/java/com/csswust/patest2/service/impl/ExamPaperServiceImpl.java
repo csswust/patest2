@@ -655,7 +655,8 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
         print.println(person.getExamInfo().getTitle());
         print.println("</h1>");
         print.println("<h1>");
-        print.println(userProfile.getRealName() + "-" + userProfile.getClassName()
+        print.println(userProfile.getRealName() + "-" + userProfile.getStudentNumber()
+                + "-" + userProfile.getClassName()
                 + "  Ac:" + examPaper.getAcedCount() + " / " + person.getProblemInfos().size()
                 + "  得分：" + examPaper.getScore() + "/" + total);
         print.println("</h1>");
