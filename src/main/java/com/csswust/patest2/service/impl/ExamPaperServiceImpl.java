@@ -621,7 +621,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             if (userProfile == null) {
                 System.out.println(9999);
             }
-            File temp = new File(path + "/" + userProfile.getRealName() + "-" + userProfile.getStudentNumber() + ".html");
+            File temp = new File(path + "/" + userProfile.getStudentNumber()   + "-"+ userProfile.getRealName()+ ".html");
             temp.createNewFile();
             OutputStream outputStream = new FileOutputStream(temp);
             printPerson(person, outputStream);
@@ -630,7 +630,7 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             try {
                 zos.putNextEntry(new ZipEntry(temp.getName()));
             } catch (ZipException e) {//重复的内容
-                zos.putNextEntry(new ZipEntry(System.currentTimeMillis() + temp.getName()));
+                zos.putNextEntry(new ZipEntry(temp.getName().substring(0,temp.getName().length()-5) + System.currentTimeMillis() + "重复.html"));
             }
             int len;
             FileInputStream in = new FileInputStream(temp);
