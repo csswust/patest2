@@ -492,12 +492,10 @@ public class ExamPaperServiceImpl extends BaseService implements ExamPaperServic
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return apiResult;
         }
-        if (userId == null) {
-            ExamInfo record = new ExamInfo();
-            record.setExamId(examId);
-            record.setIsDrawProblem(1);
-            examInfoDao.updateByPrimaryKeySelective(record);
-        }
+        ExamInfo record = new ExamInfo();
+        record.setExamId(examId);
+        record.setIsDrawProblem(1);
+        examInfoDao.updateByPrimaryKeySelective(record);
         apiResult.setStatusAndDesc(sum, "抽题成功");
         return apiResult;
     }
