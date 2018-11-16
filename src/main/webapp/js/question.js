@@ -263,6 +263,10 @@ var program = {
         });
     },
     uploadByForm: function () {
+        var tmp_out = [];
+        for (var i = 0; i < program.output.length; i++) {
+            tmp_out.push(program.output[i] + '#');
+        }
         $.ajax({
             type: "post",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -273,7 +277,7 @@ var program = {
             data: {
                 probId: program.probId,
                 input: program.input,
-                output: program.output
+                output: tmp_out
             },
             success: function (result) {
                 console.log(result);

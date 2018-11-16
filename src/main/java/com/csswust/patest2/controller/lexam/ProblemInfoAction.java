@@ -51,6 +51,11 @@ public class ProblemInfoAction extends BaseAction {
             @RequestParam String[] output,
             @RequestParam Integer probId) {
         Map<String, Object> res = new HashMap<>();
+        for (int i = 0; i < output.length; i++) {
+          if (output[i] != null) {
+            output[i] = output[i].substring(0, output[i].length() - 1);
+          }
+        }
         List<String> inputList = Arrays.asList(input);
         List<String> outputList = Arrays.asList(output);
         APIResult result = problemInfoService.insertProblemData(probId, inputList, outputList);

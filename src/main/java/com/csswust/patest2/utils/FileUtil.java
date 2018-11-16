@@ -1,5 +1,6 @@
 package com.csswust.patest2.utils;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
@@ -138,15 +139,8 @@ public class FileUtil {
     public static String readFile(String path, String fileName)
             throws IOException {
         String filePath = path + File.separator + fileName;
-        BufferedReader br = new BufferedReader(
-                new FileReader(new File(filePath)));
-        StringBuffer sb = new StringBuffer();
-        String line = "";
-        while ((line = br.readLine()) != null) {
-            sb.append(line).append("\n");
-        }
-        br.close();
-        return sb.toString();
+        FileUtils.readFileToString(new File(filePath),"utf-8");
+        return FileUtils.readFileToString(new File(filePath),"utf-8");
     }
 
     /**
