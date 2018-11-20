@@ -3,6 +3,8 @@ $(".examRoom").addClass("leftActive");
 $(".examination").css("color", "white");
 
 var program = {
+    result:['waiting', 'Accepted', 'Presentation Error', 'Time Limit Exceeded', 'Memory Limit Exceeded', 'Wrong Answer', 'Runtime Error',
+        'Output Limit Exceeded', 'Compile Error', 'System Error', 'Unknow Error', 'Oops. Waiting', 'Oops. Judging', 'Rejudge.Waiting'],
     examId: '',
     userId: [],
     exaPapId: [],
@@ -125,7 +127,7 @@ var program = {
                 + '<div style="margin:0 auto;width:800px;"><ul class="nav-pills nav-justified" style="text-align:center;color:#3c8dbc;">'
                 + '<li>提交时间:' + program.paperProblemList[tmp].lastSubmitTime
                 + '</li><li>时间:' + program.paperProblemList[tmp].usedTime
-                + '</li>' + '<li>状态:' + program.codeList[tmp].status
+                + '</li>' + '<li>结果:' + (program.codeList[tmp].status == null ? '未提交': program.result[program.codeList[tmp].status])
                 + '</li><li>分数:' + program.paperProblemList[tmp].score
                 + '</li></ul></div>' + '<div class="allcon"><div class="changed"><pre class="prettyprint linenums pre-scrollable">'
                 + source + '</pre></div><div class="addcss"><pre class="addchanged"></pre></div></div></div>';

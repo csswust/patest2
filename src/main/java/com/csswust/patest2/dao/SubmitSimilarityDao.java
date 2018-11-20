@@ -2,6 +2,7 @@ package com.csswust.patest2.dao;
 
 import com.csswust.patest2.dao.common.BaseQuery;
 import com.csswust.patest2.entity.SubmitSimilarity;
+import com.csswust.patest2.vo.SimExportVo;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface SubmitSimilarityDao {
     int selectByConditionGetCount(SubmitSimilarity record, BaseQuery query);
 
     int insertBatch(List<SubmitSimilarity> recordList);
+
+    List<SimExportVo> querySimByExamId(Double sim, Integer exam_id);
 }

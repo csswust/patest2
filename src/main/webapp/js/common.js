@@ -111,7 +111,8 @@ var common = {
             + '"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span> 公告</a></li>'
             + '<li role="presentation"  class="examTabs" style="float:right;border: 10px;margin-right  :10px"><button type="button" class="btn  btn-primary gradePrint"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span>成绩导出</botton></li>'
             + '<li role="presentation"  class="examTabs" style="float:right;border: 10px"><button type="button" class="btn  btn-info codePrint"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span>代码导出</button></li>'
-            + '<li role="presentation"  class="examTabs" style="float:right;border: 10px"><button type="button" class="btn  btn-info paperPrint"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span>试卷导出</button></li>';
+            + '<li role="presentation"  class="examTabs" style="float:right;border: 10px"><button type="button" class="btn  btn-info paperPrint"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span>试卷导出</button></li>'
+            + '<li role="presentation"  class="examTabs" style="float:right;border: 10px"><button type="button" class="btn  btn-info simPrint"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span>相似度导出</button></li>';
         $(".examInfoNav").append(tophtml);
 
     },
@@ -252,4 +253,7 @@ $(".codePrint").click(function () {
 });
 $(".paperPrint").click(function() {
     location.href = '../examPaper/exportExamPaper?examId=' + par.id;
+});
+$(".simPrint").click(function() {
+    location.href = '../submitSimilarity/exportSims?sim=0.8&examId=' + par.id;
 });

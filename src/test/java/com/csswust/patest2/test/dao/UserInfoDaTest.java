@@ -22,6 +22,13 @@ public class UserInfoDaTest extends JunitBaseServiceDaoTest {
     @Autowired
     private ExamParamDao examParamDao;
 
+    @Autowired
+    private SubmitSimilarityDao submitSimilarityDao;
+
+    @Test
+    public void test1() {
+      System.out.println(submitSimilarityDao.querySimByExamId(0.8,36).size());
+    }
     @Test
     public void test() {
         List<ResultInfo> infos = resultInfoDao.selectByCondition(new ResultInfo(),new BaseQuery());
