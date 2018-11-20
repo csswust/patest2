@@ -418,12 +418,12 @@ public class SubmitSimilarityAction extends BaseAction {
       tempPath.mkdirs();
     }
     for (SimExportVo record: sims) {
-      File file = new File(tempPath + File.separator + "相似度" + record.getSim() * 100 + "____" + record.getFollow() + "__follow__" + record.getStudent() + ".txt");
+      File file = new File(tempPath + File.separator + "相似度" + record.getSim() * 100 + "____" + record.getFollow() + "__follow__" + record.getStudent() + System.currentTimeMillis() +".txt");
       file.createNewFile();
       String data = record.getProblem() + "\r\n相似度："
         + record.getSim() + "\r\n-------student------------\r\n"
         + record.getStudent() + "\r\n-----------------------\r\n"
-        + record.getSrc().replace("\n","\r\n") + "\r\n-----------------------\r\n"
+        + record.getSrc().replace("\n","\r\n") + "\r\n------follower-----------\r\n"
         + record.getFollow() + "\r\n-----------------------\r\n"
         + record.getSrc2().replace("\n","\r\n");
       FileUtils.writeStringToFile(file,data,"utf-8");
