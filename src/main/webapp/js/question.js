@@ -267,6 +267,10 @@ var program = {
         for (var i = 0; i < program.output.length; i++) {
             tmp_out.push(program.output[i] + '#');
         }
+        var tmp_in = [];
+        for (var i = 0; i < program.input.length; i++) {
+            tmp_in.push(program.input[i] + '#');
+        }
         $.ajax({
             type: "post",
             content: "application/x-www-form-urlencoded;charset=UTF-8",
@@ -276,7 +280,7 @@ var program = {
             traditional: true,
             data: {
                 probId: program.probId,
-                input: program.input,
+                input: tmp_in,
                 output: tmp_out
             },
             success: function (result) {
@@ -312,6 +316,7 @@ var program = {
             },
             success: function (result) {
                 var length = result.selectProblemDataRe.total;
+                $(".testdatatotal").html('<option>选择条数</option>');
                 for (var i = 0; i < length; i++) {
                     $(".testdatatotal").append('<option>' + i + '</option>');
                     program.input.push(result.selectProblemDataRe.input[i]);

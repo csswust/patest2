@@ -56,6 +56,11 @@ public class ProblemInfoAction extends BaseAction {
             output[i] = output[i].substring(0, output[i].length() - 1);
           }
         }
+        for (int i = 0; i < input.length; i++) {
+            if (input[i] != null) {
+                input[i] = input[i].substring(0, input[i].length() - 1);
+            }
+        }
         List<String> inputList = Arrays.asList(input);
         List<String> outputList = Arrays.asList(output);
         APIResult result = problemInfoService.insertProblemData(probId, inputList, outputList);
