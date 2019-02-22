@@ -466,6 +466,7 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                 PaperProblem paperProblem = new PaperProblem();
                 paperProblem.setExamPaperId(examPaperList.get(i).getExaPapId());
                 List<PaperProblem> paperProblemList = this.paperProblemDao.selectByCondition(paperProblem, new BaseQuery());
+                int count = 0;//未做题目数
                 for (int j = 0; j < paperProblemList.size(); j++) {
                     PaperProblem item = paperProblemList.get(j);
                     Integer probId = item.getProblemId();
@@ -489,8 +490,14 @@ public class ExamInfoServiceImpl extends BaseService implements ExamInfoService 
                     String status = " ";
                     if (resultInfo != null) {
                         status = resultInfo.getName();
+                    } else {
+                        count++;
                     }
                     sheet.addCell(new Label(10 + j * 4, i + 2, status));
+                }
+                if (count == paperProblemList.size()) {
+                    sheet.addCell(new Label(4, i + 2, "缺考！"));
+                    sheet.addCell(new Label(5, i + 2, "缺考！"));
                 }
             }
         } catch (WriteException e) {
